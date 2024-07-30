@@ -19,6 +19,8 @@
               name = "school-env";
               buildInputs = [
                              pkgs.nodejs_21
+                             pkgs.python3
+                             pkgs.lua
                             ];
               shellHook = ''
               '';

@@ -1,0 +1,15 @@
+/node_modules/
+/files/
+/dist/
+/vpnenv-3/
+/.log/
+/.direnv/
+*.js.map
+*.exe
+.DS_Store
+TAGS
+output
+result*
+/out/
+/BlizzardInterfaceCode/
+/dkjson/
