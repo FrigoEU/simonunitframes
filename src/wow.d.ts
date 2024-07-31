@@ -41,8 +41,8 @@ declare global {
   type BlendMode = string;
   type CachedRewardType = any;
   type ChatBubbleFrame = any;
-  type colorRGBA = any;
-  type colorRGB = any;
+  type colorRGBA = {r: number, g: number, b: number, a: number};
+  type colorRGB = {r: number, g: number, b: number};
   type CScriptObject = any;
   type CurveType = string;
   type DrawLayer = string;
@@ -80,6 +80,20 @@ declare global {
   type ItemLocation = any;
   type CalendarGetEventType = any;
   type CharCustomizationType = any;
+  type LFGRole = any;
+  type ArtifactTiers = any;
+  type ConnectionIptype = any;
+  type stringView = any;
+  type SimpleWindow = any;
+  type GameMode = any;
+  type GameRule = any;
+  type ItemCreationContext = any;
+  type mouseButton = any;
+  type LuaValueVariant = any;
+  type JustifyHorizontal = any;
+  type JustifyVertical = any;
+  type Vocalerrorsounds = any;
+  type SpellIdentifier = any;
   const ItemLocation: any;
 
   namespace Enum {
@@ -13873,7 +13887,7 @@ declare global {
     SetValueStep(valueStep: number): void;
   }
 
-  interface SimpleStatusBar {
+  interface SimpleStatusBar extends SimpleFrame {
     GetFillStyle(): StatusBarFillStyle;
     GetMinMaxValues(): LuaMultiReturn<[number, number]>;
     GetOrientation(): Orientation;
@@ -13897,14 +13911,14 @@ declare global {
     SetValue(value: number): void;
   }
 
-  interface SimpleTexture {
+  interface SimpleTexture extends SimpleTextureBase {
     AddMaskTexture(mask: SimpleMaskTexture): void;
     GetMaskTexture(index: number): SimpleMaskTexture;
     GetNumMaskTextures(): size;
     RemoveMaskTexture(mask: SimpleMaskTexture): void;
   }
 
-  interface SimpleTextureBase {
+  interface SimpleTextureBase extends SimpleRegion {
     ClearTextureSlice(): void;
     GetAtlas(): textureAtlas;
     GetBlendMode(): BlendMode;

@@ -13,3 +13,4 @@ result*
 /out/
 /BlizzardInterfaceCode/
 /dkjson/
+/src/**/*.lua

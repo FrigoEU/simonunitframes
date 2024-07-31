@@ -1,6 +1,8 @@
 {
-  "dependencies": {
-    "rambda": "^9.2.0"
+  "dependencies": {},
+  "scripts": {
+    "build": "tstl",
+    "updatetypes": "./updatetypes.sh"
   },
   "devDependencies": {
     "esbuild": "0.19.12",
@@ -11,6 +13,7 @@
     "tsx": "^4.7.1",
     "typescript": "5.5.2",
     "typescript-language-server": "^4.3.3",
-    "typescript-to-lua": "^1.26.2"
+    "typescript-to-lua": "^1.26.2",
+    "vscode-json-languageserver": "^1.3.4"
   }
 }

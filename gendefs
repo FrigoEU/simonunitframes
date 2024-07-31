@@ -17,8 +17,8 @@ UNKOWN_TYPES = {
     "BlendMode": "string",
     "CachedRewardType": "any",
     "ChatBubbleFrame": "any",
-    "colorRGBA": "any",
-    "colorRGB": "any",
+    "colorRGBA": "{r: number, g: number, b: number, a: number}",
+    "colorRGB": "{r: number, g: number, b: number}",
     "CScriptObject": "any",
     "CurveType": "string",
     "DrawLayer": "string",
@@ -56,6 +56,20 @@ UNKOWN_TYPES = {
     "ItemLocation": "any",
     "CalendarGetEventType": "any",
     "CharCustomizationType": "any",
+    "LFGRole": "any",
+    "ArtifactTiers": "any",
+    "ConnectionIptype": "any",
+    "stringView": "any",
+    "SimpleWindow": "any",
+    "GameMode": "any",
+    "GameRule": "any",
+    "ItemCreationContext": "any",
+    "mouseButton": "any",
+    "LuaValueVariant": "any",
+    "JustifyHorizontal": "any",
+    "JustifyVertical": "any",
+    "Vocalerrorsounds": "any",
+    "SpellIdentifier": "any",
 }
 
 UNKOWN_OBJECTS = {
@@ -72,6 +86,9 @@ EXTENDS = {
     "SimpleScriptRegion": "SimpleObject",
     "SimpleObject": "SimpleFrameScriptObject",
     "SimpleFont": "SimpleFrameScriptObject",
+    "SimpleTextureBase": "SimpleRegion",
+    "SimpleTexture": "SimpleTextureBase",
+    "SimpleStatusBar": "SimpleFrame",
 }
 
 class Emitter:
