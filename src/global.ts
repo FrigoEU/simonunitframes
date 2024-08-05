@@ -16,6 +16,21 @@ declare global {
   type specName = string;
   type role = "DAMAGER" | "TANK" | "HEALER";
   type UnitIdArena = "arena1" | "arena2" | "arena3";
+  type className =
+    | "WARRIOR"
+    | "DEATHKNIGHT"
+    | "PALADIN"
+    | "MONK"
+    | "PRIEST"
+    | "SHAMAN"
+    | "DRUID"
+    | "ROGUE"
+    | "MAGE"
+    | "WARLOCK"
+    | "HUNTER"
+    | "DEMONHUNTER"
+    | "EVOKER";
+
   type UnitIdRaidPlayer =
     | "raid1"
     | "raid2"
@@ -118,6 +133,10 @@ declare global {
     | UnitIdRaidPlayerPet
     | UnitIdPartyPet
     | UnitIdOther;
+  type dispelType = "Magic" | "Curse" | "Poison" | "Disease";
+
+  type auraFullDuration = number;
+  type auraExpirationTime = number; // get remaining duration: expirationtime - GetTime(),
 
   const UIParent: SimpleFrame;
 
@@ -150,10 +169,7 @@ declare global {
     ]
   >;
   function GetSpecialization(this: void): null | specIndex;
-  function GetSpecializationInfo(
-    this: void,
-    index: specIndex,
-  ): null | LuaMultiReturn<
+  type specInfo = LuaMultiReturn<
     [
       specializationId,
       specName,
@@ -163,6 +179,59 @@ declare global {
       role,
     ]
   >;
+  function GetSpecializationInfo(this: void, index: specIndex): null | specInfo;
+  function GetArenaOpponentSpec(
+    this: void,
+    num: 1 | 2 | 3,
+  ): null | LuaMultiReturn<[specializationId, number /* gender */]>;
   // 0 if not in party / raid
   function GetNumGroupMembers(this: void): number;
+  function UnitBuff(
+    this: void,
+    unit: UnitId,
+    index: number,
+  ): null | LuaMultiReturn<
+    [
+      string /* name */,
+      fileID /* icon */,
+      number /* stacks */,
+      dispelType | null,
+      auraFullDuration,
+      auraExpirationTime, // remaining duration: expirationtime - GetTime(),
+      UnitId, // Source
+      boolean, // stealable
+      spellID,
+      boolean, // canApplyAura,
+      boolean, // isBossDebuff
+      boolean, // castByPlayer
+      boolean, // nameplateShowAll
+      number, // timeMod
+    ]
+  >;
+
+  function CooldownFrame_Set(
+    cooldown: CooldownFrame,
+    left: number,
+    duration: number,
+    something: number,
+  ): void;
+
+  namespace AuraUtil {
+    function ForEachAura(
+      unit: UnitId,
+      filter: "HELPFUL" | "HARMFUL",
+      cb: (
+        this: void,
+        name: string /* name */,
+        icon: fileID /* icon */,
+        stacks: number /* stacks */,
+        dispelType: dispelType | null,
+        auraFullDuration: auraFullDuration,
+        auraExpirationTime: auraExpirationTime, // remaining duration: expirationtime - GetTime(),
+        source: UnitId, // Source
+        stealable: boolean, // stealable
+        spellId: spellID,
+      ) => void,
+    ): void;
+  }
 }

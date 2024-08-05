@@ -1,17 +1,24 @@
 /** @noSelfInFile */
 
-import { context, makeContext } from "./context";
+import { updateFriendlyFrameTargetedBy } from "./arenatargets";
+import { updateFriendlyAuras } from "./auras";
+import { context, makeContext, updateArenaInfo } from "./context";
 import {
+  createArenaTargetFrames,
+  createBuffFrames,
   createUnitFrame,
   setHealth,
-  setHealthbarColor,
-  setMaxHealth,
+  updateHealthbarColor,
+  updateHighlight,
+  updateMaxHealth,
+  updatePosition,
 } from "./draw";
 import {
-  allPlayerPartyAndRaidUnits,
   allPlayerPartyRaidAndArenaUnits,
   unitIsArena,
+  unitIsInPlayerRaidGroup,
   unitIsPlayerPartyRaid,
+  unitIsRaidUnit,
 } from "./unit";
 import { checkAllCasesHandled, isNil } from "./utils";
 
@@ -29,6 +36,7 @@ const eventsWeListenTo = [
   "UNIT_ABSORB_AMOUNT_CHANGED" as const,
   "PLAYER_FOCUS_CHANGED" as const,
   "PLAYER_TARGET_CHANGED" as const,
+  "UNIT_TARGET" as const,
 
   "ARENA_OPPONENT_UPDATE" as const,
   "ARENA_PREP_OPPONENT_SPECIALIZATIONS" as const,
@@ -71,6 +79,10 @@ function handleWowEvent(
       updateFriendlyFrames(context, "all", "all");
       updateFriendlyFrames(context, "all", "all");
       updateFriendlyAuras(context, "all", "all");
+      updateFriendlyFrameTargetedBy(context, "arena1");
+      updateFriendlyFrameTargetedBy(context, "arena2");
+      updateFriendlyFrameTargetedBy(context, "arena3");
+      context.arenaInfo = null;
       return;
     }
     case "GROUP_ROSTER_UPDATE": {
@@ -89,6 +101,7 @@ function handleWowEvent(
       } else {
         updateFriendlyFrames(context, "all", "all");
       }
+      updateArenaInfo(context);
       return;
     }
     case "PLAYER_REGEN_ENABLED": {
@@ -135,6 +148,10 @@ function handleWowEvent(
     case "PLAYER_TARGET_CHANGED": {
       return updateFriendlyFrames(context, "all", "highlight");
     }
+    case "UNIT_TARGET": {
+      const unitId = arg1 as UnitId;
+      return updateFriendlyFrameTargetedBy(context, unitId);
+    }
     case "UNIT_AURA": {
       const unitId = arg1 as UnitId;
       if (unitIsPlayerPartyRaid(unitId)) {
@@ -173,9 +190,47 @@ function updateFriendlyFrames(
 ) {
   const units = target === "all" ? allPlayerPartyRaidAndArenaUnits : [target];
   const frameParts = part_in === "all" ? allFrameparts : [part_in];
+
   for (let unit of units) {
-    const ufstruct = context.unitFrames[unit] || createUnitFrame(context, unit);
-    if (!UnitExists(unit)) {
+    let ufstruct = context.unitFrames[unit];
+    if (!ufstruct) {
+      ufstruct = createUnitFrame(context, unit);
+      if (unit === "player" || unit === "party1" || unit === "party2") {
+        context.unitFrames[unit] = {
+          ...ufstruct,
+          ...createArenaTargetFrames(context, unit, ufstruct.cooldownSection),
+          ...createBuffFrames(
+            context,
+            unit,
+            ufstruct.healthbar,
+            ufstruct.cooldownSection,
+          ),
+        };
+      } else if (
+        unit === "party3" ||
+        unit === "party4" ||
+        unitIsRaidUnit(unit)
+      ) {
+        context.unitFrames[unit] = {
+          ...ufstruct,
+          ...createBuffFrames(
+            context,
+            unit,
+            ufstruct.healthbar,
+            ufstruct.cooldownSection,
+          ),
+        };
+      } else {
+        context.unitFrames[unit] = ufstruct;
+      }
+    }
+
+    if (
+      !UnitExists(unit) ||
+      (unitIsRaidUnit(unit) &&
+        // We don't show the "raid" group of player, just the party
+        unitIsInPlayerRaidGroup(unit))
+    ) {
       ufstruct.container.Hide();
       return;
     } else {
@@ -183,25 +238,21 @@ function updateFriendlyFrames(
     }
 
     for (let framePart of frameParts) {
+      if (part_in === "all") {
+        updatePosition(context, unit, ufstruct);
+      }
       if (framePart === "health") {
         setHealth(unit, ufstruct);
       } else if (framePart === "maxhealth") {
-        setMaxHealth(unit, ufstruct);
+        updateMaxHealth(unit, ufstruct);
       } else if (framePart === "character") {
-        setHealthbarColor(unit, ufstruct);
+        updateHealthbarColor(unit, ufstruct);
         // setHealthbarText(unit, ufstruct) TODO!;
       } else if (framePart === "power" || framePart === "absorb") {
         // TODO!
       } else if (framePart === "highlight") {
+        updateHighlight(context, unit, ufstruct);
       }
     }
   }
-}
-
-function updateFriendlyAuras(
-  context: context,
-  target: "all" | UnitIdPlayer | UnitIdParty | UnitIdRaidPlayer,
-  range: "all" | UnitAuraUpdateInfo,
-) {
-  const units = target === "all" ? allPlayerPartyAndRaidUnits : [target];
 }
