@@ -1,56 +1,8 @@
-import { context } from "./context";
-import { drawHot } from "./draw";
-import { allPlayerPartyAndRaidUnits } from "./unit";
-import { isNil } from "./utils";
-
-export function updateFriendlyAuras(
-  context: context,
-  target: "all" | UnitIdPlayer | UnitIdParty | UnitIdRaidPlayer,
-  range: "all" | UnitAuraUpdateInfo,
-) {
-  const units = target === "all" ? allPlayerPartyAndRaidUnits : [target];
-  for (let unit of units) {
-    const uf = context.unitFrames[unit];
-    if (!uf) {
-      continue;
-    }
-    if (range === "all") {
-      uf.defensiveCooldownAuraFrame.Hide();
-      uf.externalDefensiveBuffAuraFrame.Hide();
-      uf.hotAuraFrames.forEach((f) => f.Hide());
-      AuraUtil.ForEachAura(
-        unit,
-        "HELPFUL",
-        function handleAura(
-          name,
-          icon,
-          stacks,
-          dispelType,
-          fulldur,
-          exp,
-          source,
-          _st,
-          spellId,
-        ) {
-          const hotIndex = getBuffIndex(
-            context.playerClass,
-            source,
-            name,
-            spellId,
-          );
-          if (!isNil(hotIndex)) {
-            drawHot(uf, hotIndex, icon, stacks, spellId, fulldur, exp);
-          }
-        },
-      );
-    } else {
-      todo();
-    }
-  }
-}
+/** @noSelfInFile */
 
 const defensiveCdsWeTrack = [
   "Barkskin",
+  "Ironbark",
   "Survival Instincts",
   "Die By The Sword",
   "Divine Shield",
@@ -74,8 +26,8 @@ const defensiveCdsWeTrack = [
   "Unending Resolve",
 ].map((s) => s.toLowerCase());
 
-function getBuffIndex(
-  playerClass: { name: className; classId: number },
+export function getBuffIndex(
+  playerClass: { name: className },
   source: string,
   name: string,
   spellId: spellID,

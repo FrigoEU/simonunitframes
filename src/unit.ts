@@ -80,18 +80,71 @@ export const allPlayerPartyAndRaidUnits: (
   "raid40",
 ];
 
-export const allPlayerPartyRaidAndArenaUnits: (
+export const allSupportedTranslatedUnits: (
   | UnitIdPlayer
   | UnitIdParty
-  | UnitIdRaidPlayer
+  | "raid1"
+  | "raid2"
+  | "raid3"
+  | "raid4"
+  | "raid5"
   | UnitIdArena
 )[] = [
-  ...allPlayerPartyAndRaidUnits,
-  ...[
-    "arena1" as UnitIdArena,
-    "arena2" as UnitIdArena,
-    "arena3" as UnitIdArena,
-  ],
+  "player",
+
+  "party1",
+  "party2",
+  "party3",
+  "party4",
+
+  "raid1",
+  "raid2",
+  "raid3",
+  "raid4",
+  "raid5",
+
+  "arena1",
+  "arena2",
+  "arena3",
+];
+
+export const allSupportedUnits: (
+  | UnitIdPlayer
+  | UnitIdParty
+  | "raid1"
+  | "raid2"
+  | "raid3"
+  | "raid4"
+  | "raid5"
+  | "raid6"
+  | "raid7"
+  | "raid8"
+  | "raid9"
+  | "raid10"
+  | UnitIdArena
+)[] = [
+  "player",
+
+  "party1",
+  "party2",
+  "party3",
+  "party4",
+
+  "raid1",
+  "raid2",
+  "raid3",
+  "raid4",
+  "raid5",
+
+  "raid6",
+  "raid7",
+  "raid8",
+  "raid9",
+  "raid10",
+
+  "arena1",
+  "arena2",
+  "arena3",
 ];
 
 export function unitIsInPlayerRaidGroup(unit: UnitIdRaidPlayer): boolean {
