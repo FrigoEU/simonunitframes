@@ -117,7 +117,12 @@ export type sources = {
     dotInfo;
 } & {
   // Index is calculated, not the real UnitID!
-  [raid in "raid1" | "raid2" | "raid3" | "raid4" | "raid5"]: healthinfo &
+  [raid in
+    | "myraid1"
+    | "myraid2"
+    | "myraid3"
+    | "myraid4"
+    | "myraid5"]: healthinfo &
     defensiveCdInfo &
     externalDefFromPlayerInfo &
     hotInfo &
@@ -149,11 +154,11 @@ export function makeSources(): sources {
     party3: makePartySources(),
     party4: makePartySources(),
 
-    raid1: makeRaidSources(),
-    raid2: makeRaidSources(),
-    raid3: makeRaidSources(),
-    raid4: makeRaidSources(),
-    raid5: makeRaidSources(),
+    myraid1: makeRaidSources(),
+    myraid2: makeRaidSources(),
+    myraid3: makeRaidSources(),
+    myraid4: makeRaidSources(),
+    myraid5: makeRaidSources(),
 
     arena1: makeArenaSources(),
     arena2: makeArenaSources(),
@@ -172,7 +177,7 @@ export function makeSources(): sources {
     };
   }
 
-  function makeRaidSources(): sources["raid1"] {
+  function makeRaidSources(): sources["myraid1"] {
     return {
       ...makeHealthInfo(),
       ...makeDefensiveCdInfo(),

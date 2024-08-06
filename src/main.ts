@@ -12,6 +12,7 @@ import { auraInfo, makeSources, sources } from "./sources";
 import {
   allSupportedTranslatedUnits,
   allSupportedUnits,
+  supportedUnit,
   unitIsArena,
   unitIsParty,
   unitIsPlayer,
@@ -165,20 +166,17 @@ function handleWowEvent(
     }
     case "UNIT_AURA": {
       const unitId = arg1 as UnitId;
-      if (unitIsPlayerPartyRaid(unitId)) {
-        if (isNil(arg2)) {
-          return updateInfo(sources, unitId, {
-            tag: "aura",
-            auraUpdateInfo: null,
-          });
-        } else {
-          return updateInfo(sources, unitId, {
-            tag: "aura",
-            auraUpdateInfo: arg2,
-          });
-        }
+      if (isNil(arg2)) {
+        return updateInfo(sources, unitId, {
+          tag: "aura",
+          auraUpdateInfo: null,
+        });
+      } else {
+        return updateInfo(sources, unitId, {
+          tag: "aura",
+          auraUpdateInfo: arg2,
+        });
       }
-      return;
     }
     default: {
       return checkAllCasesHandled(eventName);
@@ -308,21 +306,7 @@ function updateInfo(
 function translateUnit(
   sources: sources,
   target_: "all" | UnitId,
-):
-  | null
-  | "player"
-  | "party1"
-  | "party2"
-  | "party3"
-  | "party4"
-  | "raid1"
-  | "raid2"
-  | "raid3"
-  | "raid4"
-  | "raid5"
-  | "arena1"
-  | "arena2"
-  | "arena3" {
+): null | supportedUnit {
   if (
     target_ === "player" ||
     target_ === "party1" ||
@@ -347,7 +331,17 @@ function translateUnit(
       // we ignore first raid group if we are in it
       return null;
     } else {
-      return target_;
+      return target_ === "raid1"
+        ? "myraid1"
+        : target_ === "raid2"
+          ? "myraid2"
+          : target_ === "raid3"
+            ? "myraid3"
+            : target_ === "raid4"
+              ? "myraid4"
+              : target_ === "raid5"
+                ? "myraid5"
+                : checkAllCasesHandled(target_);
     }
   }
 
@@ -360,15 +354,15 @@ function translateUnit(
   ) {
     if (sources.playerGroupIndexZeroBased.get() === 0) {
       return target_ === "raid6"
-        ? "raid1"
+        ? "myraid1"
         : target_ === "raid7"
-          ? "raid2"
+          ? "myraid2"
           : target_ === "raid8"
-            ? "raid3"
+            ? "myraid3"
             : target_ === "raid9"
-              ? "raid4"
+              ? "myraid4"
               : target_ === "raid10"
-                ? "raid5"
+                ? "myraid5"
                 : checkAllCasesHandled(target_);
     } else {
       return null;

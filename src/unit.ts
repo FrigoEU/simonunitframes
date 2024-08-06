@@ -1,24 +1,35 @@
 import { isNil } from "./utils";
 
-export function unitIsPlayer(u: UnitId): u is UnitIdPlayer {
+export function unitIsPlayer(u: supportedUnit): u is UnitIdPlayer {
   return u === "player";
 }
 
-export function unitIsParty(u: UnitId): u is UnitIdParty {
+export function unitIsParty(u: supportedUnit): u is UnitIdParty {
   return u.startsWith("party");
 }
 
-export function unitIsRaidUnit(u: UnitId): u is UnitIdRaidPlayer {
+export function unitIsRaidUnit(
+  u: supportedUnit,
+): u is "myraid1" | "myraid2" | "myraid3" | "myraid4" | "myraid5" {
   return u.startsWith("raid");
 }
 
 export function unitIsPlayerPartyRaid(
-  u: UnitId,
-): u is UnitIdPlayer | UnitIdParty | UnitIdRaidPlayer {
+  u: supportedUnit,
+): u is
+  | UnitIdPlayer
+  | UnitIdParty
+  | "myraid1"
+  | "myraid2"
+  | "myraid3"
+  | "myraid4"
+  | "myraid5" {
   return unitIsPlayer(u) || unitIsParty(u) || unitIsRaidUnit(u);
 }
 
-export function unitIsArena(u: UnitId): u is UnitIdArena {
+export function unitIsArena(
+  u: supportedUnit,
+): u is "arena1" | "arena2" | "arena3" {
   if (u.startsWith("arena")) {
     return true;
   } else {
@@ -80,14 +91,16 @@ export const allPlayerPartyAndRaidUnits: (
   "raid40",
 ];
 
+export type supportedUnit = (typeof allSupportedTranslatedUnits)[number];
+
 export const allSupportedTranslatedUnits: (
   | UnitIdPlayer
   | UnitIdParty
-  | "raid1"
-  | "raid2"
-  | "raid3"
-  | "raid4"
-  | "raid5"
+  | "myraid1"
+  | "myraid2"
+  | "myraid3"
+  | "myraid4"
+  | "myraid5"
   | UnitIdArena
 )[] = [
   "player",
@@ -97,11 +110,11 @@ export const allSupportedTranslatedUnits: (
   "party3",
   "party4",
 
-  "raid1",
-  "raid2",
-  "raid3",
-  "raid4",
-  "raid5",
+  "myraid1",
+  "myraid2",
+  "myraid3",
+  "myraid4",
+  "myraid5",
 
   "arena1",
   "arena2",
