@@ -1,3 +1,5 @@
+/** @noSelfInFile */
+
 import { isNil } from "./utils";
 
 export function unitIsPlayer(u: supportedUnit): u is UnitIdPlayer {

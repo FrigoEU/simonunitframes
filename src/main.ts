@@ -1,7 +1,7 @@
 /** @noSelfInFile */
 
 import { getBuffIndex } from "./auras";
-import { makeConfig } from "./context";
+import { makeConfig } from "./config";
 import { drawArenaTargetFrames } from "./draw/arenatargets";
 import { drawFriendlyCooldownSection } from "./draw/cooldowns";
 import { drawHealthbarFrames } from "./draw/healthbar";

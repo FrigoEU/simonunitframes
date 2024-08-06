@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { config } from "../context";
+import { config } from "../config";
 import { healthinfo } from "../sources";
 
 const barTexturePath = "Interface\\TargetingFrame\\UI-StatusBar";

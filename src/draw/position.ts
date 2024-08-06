@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { config } from "../context";
+import { config } from "../config";
 import {
   allSupportedTranslatedUnits,
   unitIsArena,

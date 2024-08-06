@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { config } from "../context";
+import { config } from "../config";
 import { defensiveCdInfo, externalDefFromPlayerInfo } from "../sources";
 import { applyAuraToAuraframe, createAuraFrame } from "./shared";
 

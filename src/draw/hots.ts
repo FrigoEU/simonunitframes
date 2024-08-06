@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { config } from "../context";
+import { config } from "../config";
 import { hotInfo } from "../sources";
 import { checkAllCasesHandled } from "../utils";
 import { applyAuraToAuraframe, createAuraFrame } from "./shared";

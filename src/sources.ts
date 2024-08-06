@@ -1,3 +1,5 @@
+/** @noSelfInFile */
+
 export type healthinfo = {
   guid: Source<WOWGUID>;
   exists: Source<boolean>;

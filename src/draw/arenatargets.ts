@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { config } from "../context";
+import { config } from "../config";
 import { healthinfo, observeAll, sources } from "../sources";
 import { applyAuraToAuraframe, createAuraFrame } from "./shared";
 

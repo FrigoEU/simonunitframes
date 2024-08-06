@@ -1,8 +1,16 @@
 /** @noSelfInFile */
 
-import { myAuraFrame } from "../context";
 import { auraInfo } from "../sources";
 import { isNil } from "../utils";
+
+export type myAuraFrame = SimpleFrame & {
+  // Comes from template, via parentKey
+  icon: SimpleTexture;
+  count: SimpleFontString;
+  name: SimpleFontString;
+  border: SimpleTexture;
+  cooldown: SimpleFrame & CooldownFrame;
+};
 
 export function createAuraFrame(
   name: string,
