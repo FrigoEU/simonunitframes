@@ -3,6 +3,8 @@
 const defensiveCdsWeTrack = [
   "Barkskin",
   "Ironbark",
+  "Obsidian Scales",
+  "Renewing Blaze",
   "Survival Instincts",
   "Die By The Sword",
   "Divine Shield",
@@ -26,12 +28,58 @@ const defensiveCdsWeTrack = [
   "Unending Resolve",
 ].map((s) => s.toLowerCase());
 
+const offensiveSpellsWeTrack = [
+  "Apocalypse",
+  "Feral Frenzy",
+  "Final Reckoning",
+  "Vendetta",
+  "Deathmark",
+  "Summon Demonic Tyrant",
+];
+
+const offensiveCdsWeTrack = [
+  "Avatar",
+  "Bladestorm",
+  "Recklessness",
+
+  "Metamorphosis",
+
+  "Pillar of Frost",
+  "Unholy Frenzy",
+
+  "Berserk",
+  "Celestial Alignment",
+
+  "Ascendance",
+  "Bloodlust",
+
+  "Trueshot Aura",
+  "Bestial Wrath",
+
+  "Combustion",
+  "Icy Veins",
+  "Arcane Power",
+
+  "Serenity",
+
+  "Avenging Wrath",
+
+  "Power Infusion",
+  "Voidform",
+
+  "Shadow Dance",
+  "Adrenaline Rush",
+
+  "Dark Soul: Instability",
+  "Dark Soul: Misery",
+].map((s) => s.toLowerCase());
+
 export function getBuffIndex(
   playerClass: { name: className },
   source: string,
   name: string,
   spellId: spellID,
-): null | "defcd" | "externaldefbuff" | 0 | 1 | 2 | 3 | 4 {
+): null | "defcd" | "externaldefbuff" | "offcd" | 0 | 1 | 2 | 3 | 4 | 5 | 6 {
   if (source === "player") {
     if (playerClass.name === "DRUID") {
       if (name === "Ironbark") {
@@ -53,6 +101,32 @@ export function getBuffIndex(
         return 4;
       }
     }
+    if (playerClass.name === "EVOKER") {
+      if (name === "Time Dilation") {
+        return "externaldefbuff";
+      }
+      if (spellId === 366155) {
+        return 0; // Reversion
+      }
+      if (spellId === 367364) {
+        return 1; // Echo Reversion
+      }
+      if (spellId === 355941) {
+        return 2; // Dream Breath
+      }
+      if (spellId === 376788) {
+        return 3; // Echo Dream Breath
+      }
+      if (name === "Spiritbloom") {
+        return 4;
+      }
+      if (name === "Echo") {
+        return 5;
+      }
+      if (name === "Lifebind") {
+        return 6;
+      }
+    }
     if (playerClass.name === "SHAMAN") {
       if (name === "Earthen Wall Totem") {
         return "externaldefbuff";
@@ -67,6 +141,9 @@ export function getBuffIndex(
   }
   if (defensiveCdsWeTrack.includes(name.toLowerCase())) {
     return "defcd";
+  }
+  if (offensiveCdsWeTrack.includes(name.toLowerCase())) {
+    return "offcd";
   }
   return null;
 }

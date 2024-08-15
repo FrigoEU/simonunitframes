@@ -2,8 +2,10 @@
 
 import { getBuffIndex } from "./auras";
 import { makeConfig } from "./config";
+import { playerCanDispelFromParty } from "./dispellable";
 import { drawArenaTargetFrames } from "./draw/arenatargets";
 import { drawFriendlyCooldownSection } from "./draw/cooldowns";
+import { drawDotFrames } from "./draw/dots";
 import { drawHealthbarFrames } from "./draw/healthbar";
 import { drawHighlightFrames } from "./draw/highlight";
 import { drawHotFrames, hotIndexToHotName } from "./draw/hots";
@@ -38,7 +40,6 @@ const eventsWeListenTo = [
 
   "ARENA_OPPONENT_UPDATE" as const,
   "ARENA_PREP_OPPONENT_SPECIALIZATIONS" as const,
-  // "UNIT_TARGET" as const, // Could be useful for arena targets
 
   // "UNIT_HEAL_PREDICTION" as const
   // "UNIT_PORTRAIT_UPDATE" as const,
@@ -79,6 +80,7 @@ function start() {
       drawHighlightFrames(config, nameP, container, unitSource, sources.player);
       drawFriendlyCooldownSection(config, nameP, container, unitSource);
       drawHotFrames(config, nameP, container, unitSource);
+      drawDotFrames(config, nameP, container, unitSource);
     }
     if (unitIsPlayer(unit) || unitIsParty(unit)) {
       const unitSource = sources[unit];
@@ -286,6 +288,10 @@ function updateInfo(
                 if ("externalDefFromPlayerActive" in unitSource) {
                   unitSource.externalDefFromPlayerActive.set(makeAuraInfo());
                 }
+              } else if (hotIndex === "offcd") {
+                if ("offensiveCooldownActive" in unitSource) {
+                  unitSource.offensiveCooldownActive.set(makeAuraInfo());
+                }
               } else {
                 const hotname = hotIndexToHotName(hotIndex);
                 if ("hot0" in unitSource) {
@@ -295,6 +301,45 @@ function updateInfo(
               }
             },
           );
+
+          if ("dots" in unitSource) {
+            const newDots = [] as auraInfo[];
+            AuraUtil.ForEachAura(
+              unit,
+              "HARMFUL",
+              function handleAura(
+                name,
+                icon,
+                stacks,
+                dispelType,
+                duration,
+                expiration,
+                source,
+                _st,
+                spellId,
+              ) {
+                function makeAuraInfo(): auraInfo {
+                  return {
+                    name,
+                    icon,
+                    duration,
+                    expiration,
+                    stacks,
+                    source,
+                    spellId,
+                  };
+                }
+                if (
+                  dispelType !== null &&
+                  playerCanDispelFromParty(dispelType)
+                ) {
+                  newDots.push(makeAuraInfo());
+                }
+              },
+            );
+            newDots.sort((a, b) => (a.spellId > b.spellId ? -1 : 1));
+            unitSource.dots.set(newDots);
+          }
         }
       } else {
         checkAllCasesHandled(info);

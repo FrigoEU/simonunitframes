@@ -11,7 +11,7 @@ export function drawHotFrames(
   parent: SimpleFrame,
   sources: hotInfo,
 ) {
-  for (let i of [0, 1, 2, 3, 4] as const) {
+  for (let i of [0, 1, 2, 3, 4, 5, 6] as const) {
     const hotAuraFrame = createAuraFrame(nameP + "Hot" + i, parent, {
       r: 0,
       g: 0,
@@ -37,8 +37,8 @@ export function drawHotFrames(
 }
 
 export function hotIndexToHotName(
-  i: 0 | 1 | 2 | 3 | 4,
-): "hot0" | "hot1" | "hot2" | "hot3" | "hot4" {
+  i: 0 | 1 | 2 | 3 | 4 | 5 | 6,
+): "hot0" | "hot1" | "hot2" | "hot3" | "hot4" | "hot5" | "hot6" {
   return i === 0
     ? ("hot0" as const)
     : i === 1
@@ -49,5 +49,9 @@ export function hotIndexToHotName(
           ? "hot3"
           : i === 4
             ? "hot4"
-            : checkAllCasesHandled(i);
+            : i === 5
+              ? "hot5"
+              : i === 6
+                ? "hot6"
+                : checkAllCasesHandled(i);
 }

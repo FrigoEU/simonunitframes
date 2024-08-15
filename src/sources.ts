@@ -79,6 +79,8 @@ export type hotInfo = {
   hot2: Source<null | auraInfo>;
   hot3: Source<null | auraInfo>;
   hot4: Source<null | auraInfo>;
+  hot5: Source<null | auraInfo>;
+  hot6: Source<null | auraInfo>;
 };
 function makeHotInfo(): hotInfo {
   return {
@@ -87,6 +89,8 @@ function makeHotInfo(): hotInfo {
     hot2: new Source(null as null | auraInfo),
     hot3: new Source(null as null | auraInfo),
     hot4: new Source(null as null | auraInfo),
+    hot5: new Source(null as null | auraInfo),
+    hot6: new Source(null as null | auraInfo),
   };
 }
 
