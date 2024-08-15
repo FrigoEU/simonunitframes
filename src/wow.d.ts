@@ -35,14 +35,38 @@ declare global {
   type WOWMONEY = string;
   type luaFunction = (this: void, ...args: any[]) => any;
   type AnimationDataEnum = any;
-  type AuraData = any;
+  type AuraData = {
+    applications: number;
+    auraInstanceID: number;
+    canApplyAura: boolean;
+    charges: number;
+    dispelName?: string;
+    duration: number;
+    expirationTime: number;
+    icon: number;
+    isBossAura: boolean;
+    isFromPlayerOrPlayerPet: boolean;
+    isHarmful: boolean;
+    isHelpful: boolean;
+    isNameplateOnly: boolean;
+    isRaid: boolean;
+    isStealable: boolean;
+    maxCharges: number;
+    name: string;
+    nameplateShowAll: boolean;
+    nameplateShowPersonal: boolean;
+    points: any[];
+    sourceUnit?: string;
+    spellId: number;
+    timeMod: number;
+  };
   type AzeriteEmpoweredItemLocation = any;
   type AzeriteItemLocation = any;
   type BlendMode = string;
   type CachedRewardType = any;
   type ChatBubbleFrame = any;
-  type colorRGBA = {r: number, g: number, b: number, a: number};
-  type colorRGB = {r: number, g: number, b: number};
+  type colorRGBA = { r: number; g: number; b: number; a: number };
+  type colorRGB = { r: number; g: number; b: number };
   type CScriptObject = any;
   type CurveType = string;
   type DrawLayer = string;
@@ -5855,19 +5879,27 @@ declare global {
     }
   }
 
-  namespace C_AccessibilityOptions {
-  }
+  namespace C_AccessibilityOptions {}
 
   namespace C_AccountInfo {
-    function GetIDFromBattleNetAccountGUID(this: void, battleNetAccountGUID: WOWGUID): number;
+    function GetIDFromBattleNetAccountGUID(
+      this: void,
+      battleNetAccountGUID: WOWGUID,
+    ): number;
     function IsGUIDBattleNetAccountType(this: void, guid: WOWGUID): boolean;
     function IsGUIDRelatedToLocalAccount(this: void, guid: WOWGUID): boolean;
   }
 
   namespace C_AchievementInfo {
     function AreGuildAchievementsEnabled(this: void): boolean;
-    function GetRewardItemID(this: void, achievementID: number): number|undefined;
-    function GetSupercedingAchievements(this: void, achievementID: number): number[];
+    function GetRewardItemID(
+      this: void,
+      achievementID: number,
+    ): number | undefined;
+    function GetSupercedingAchievements(
+      this: void,
+      achievementID: number,
+    ): number[];
     function IsGuildAchievement(this: void, achievementId: number): boolean;
     function IsValidAchievement(this: void, achievementId: number): boolean;
     function SetPortraitTexture(this: void, textureObject: SimpleTexture): void;
@@ -5880,23 +5912,50 @@ declare global {
       noMana: boolean;
     }
 
-    function EnableActionRangeCheck(this: void, actionID: number, enable: boolean): void;
+    function EnableActionRangeCheck(
+      this: void,
+      actionID: number,
+      enable: boolean,
+    ): void;
     function FindFlyoutActionButtons(this: void, flyoutID: number): number[];
     function FindPetActionButtons(this: void, petActionID: number): number[];
     function FindSpellActionButtons(this: void, spellID: number): number[];
-    function GetBonusBarIndexForSlot(this: void, slotID: number): number|undefined;
-    function GetItemActionOnEquipSpellID(this: void, actionID: number): number|undefined;
-    function GetPetActionPetBarIndices(this: void, petActionID: number): number[];
-    function GetProfessionQuality(this: void, actionID: number): number|undefined;
+    function GetBonusBarIndexForSlot(
+      this: void,
+      slotID: number,
+    ): number | undefined;
+    function GetItemActionOnEquipSpellID(
+      this: void,
+      actionID: number,
+    ): number | undefined;
+    function GetPetActionPetBarIndices(
+      this: void,
+      petActionID: number,
+    ): number[];
+    function GetProfessionQuality(
+      this: void,
+      actionID: number,
+    ): number | undefined;
     function GetSpell(this: void, actionID: number): number;
     function HasFlyoutActionButtons(this: void, flyoutID: number): boolean;
     function HasPetActionButtons(this: void, petActionID: number): boolean;
-    function HasPetActionPetBarIndices(this: void, petActionID: number): boolean;
+    function HasPetActionPetBarIndices(
+      this: void,
+      petActionID: number,
+    ): boolean;
     function HasSpellActionButtons(this: void, spellID: number): boolean;
     function IsAutoCastPetAction(this: void, slotID: number): boolean;
     function IsEnabledAutoCastPetAction(this: void, slotID: number): boolean;
-    function IsHarmfulAction(this: void, actionID: number, useNeutral: boolean): boolean;
-    function IsHelpfulAction(this: void, actionID: number, useNeutral: boolean): boolean;
+    function IsHarmfulAction(
+      this: void,
+      actionID: number,
+      useNeutral: boolean,
+    ): boolean;
+    function IsHelpfulAction(
+      this: void,
+      actionID: number,
+      useNeutral: boolean,
+    ): boolean;
     function IsOnBarOrSpecialBar(this: void, spellID: number): boolean;
     function PutActionInSlot(this: void, slotID: number): void;
     function ShouldOverrideBarShowHealthBar(this: void): boolean;
@@ -5926,25 +5985,48 @@ declare global {
     function EnableAddOn(this: void, name: uiAddon, character?: string): void;
     function EnableAllAddOns(this: void, character?: string): void;
     function GetAddOnDependencies(this: void, name: uiAddon): string;
-    function GetAddOnEnableState(this: void, name: uiAddon, character?: string): Enum.AddOnEnableState;
-    function GetAddOnInfo(this: void, name: uiAddon): LuaMultiReturn<[string, string, string, boolean, string, string, boolean]>;
-    function GetAddOnMetadata(this: void, name: uiAddon, variable: string): string;
+    function GetAddOnEnableState(
+      this: void,
+      name: uiAddon,
+      character?: string,
+    ): Enum.AddOnEnableState;
+    function GetAddOnInfo(
+      this: void,
+      name: uiAddon,
+    ): LuaMultiReturn<
+      [string, string, string, boolean, string, string, boolean]
+    >;
+    function GetAddOnMetadata(
+      this: void,
+      name: uiAddon,
+      variable: string,
+    ): string;
     function GetAddOnOptionalDependencies(this: void, name: uiAddon): string;
     function GetNumAddOns(this: void): number;
     function GetScriptsDisallowedForBeta(this: void): boolean;
     function IsAddOnLoadOnDemand(this: void, name: uiAddon): boolean;
-    function IsAddOnLoadable(this: void, name: uiAddon, character?: string, demandLoaded?: boolean): LuaMultiReturn<[boolean, string]>;
-    function IsAddOnLoaded(this: void, name: uiAddon): LuaMultiReturn<[boolean, boolean]>;
+    function IsAddOnLoadable(
+      this: void,
+      name: uiAddon,
+      character?: string,
+      demandLoaded?: boolean,
+    ): LuaMultiReturn<[boolean, string]>;
+    function IsAddOnLoaded(
+      this: void,
+      name: uiAddon,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function IsAddonVersionCheckEnabled(this: void): boolean;
-    function LoadAddOn(this: void, name: uiAddon): LuaMultiReturn<[boolean|undefined, string|undefined]>;
+    function LoadAddOn(
+      this: void,
+      name: uiAddon,
+    ): LuaMultiReturn<[boolean | undefined, string | undefined]>;
     function ResetAddOns(this: void): void;
     function ResetDisabledAddOns(this: void): void;
     function SaveAddOns(this: void): void;
     function SetAddonVersionCheck(this: void, enabled: boolean): void;
   }
 
-  namespace C_AdventureJournal {
-  }
+  namespace C_AdventureJournal {}
 
   namespace C_AdventureMap {
     function GetAdventureMapTextureKit(this: void): textureKit;
@@ -5971,7 +6053,10 @@ declare global {
       icon: fileID;
     }
 
-    function GetAllRacialAbilitiesFromID(this: void, raceID: number): AlliedRaceRacialAbility[];
+    function GetAllRacialAbilitiesFromID(
+      this: void,
+      raceID: number,
+    ): AlliedRaceRacialAbility[];
     function GetRaceInfoByID(this: void, raceID: number): AlliedRaceInfo;
   }
 
@@ -6000,11 +6085,15 @@ declare global {
 
     function CloseUI(this: void): void;
     function GetAnimaDiversionNodes(this: void): AnimaDiversionNodeInfo[];
-    function GetOriginPosition(this: void): vector2|undefined;
+    function GetOriginPosition(this: void): vector2 | undefined;
     function GetReinforceProgress(this: void): number;
     function GetTextureKit(this: void): textureKit;
     function OpenAnimaDiversionUI(this: void): void;
-    function SelectAnimaNode(this: void, talentID: number, temporary: boolean): void;
+    function SelectAnimaNode(
+      this: void,
+      talentID: number,
+      temporary: boolean,
+    ): void;
   }
 
   interface AppearanceSourceInfo {
@@ -6061,21 +6150,40 @@ declare global {
     }
 
     function GetAreaPOIForMap(this: void, uiMapID: number): number[];
-    function GetAreaPOIInfo(this: void, uiMapID: number, areaPoiID: number): AreaPOIInfo;
+    function GetAreaPOIInfo(
+      this: void,
+      uiMapID: number,
+      areaPoiID: number,
+    ): AreaPOIInfo;
     function GetAreaPOISecondsLeft(this: void, areaPoiID: number): number;
     function GetDelvesForMap(this: void, uiMapID: number): number[];
     function GetDragonridingRacesForMap(this: void, uiMapID: number): number[];
     function GetEventsForMap(this: void, uiMapID: number): number[];
     function GetQuestHubsForMap(this: void, uiMapID: number): number[];
-    function IsAreaPOITimed(this: void, areaPoiID: number): LuaMultiReturn<[boolean, boolean|undefined]>;
+    function IsAreaPOITimed(
+      this: void,
+      areaPoiID: number,
+    ): LuaMultiReturn<[boolean, boolean | undefined]>;
   }
 
   function AcceptArenaTeam(this: void): void;
   function ArenaTeamDisband(this: void, index: number): void;
-  function ArenaTeamInviteByName(this: void, index: number, target: string): void;
+  function ArenaTeamInviteByName(
+    this: void,
+    index: number,
+    target: string,
+  ): void;
   function ArenaTeamLeave(this: void, index: number): void;
-  function ArenaTeamSetLeaderByName(this: void, index: number, target: string): void;
-  function ArenaTeamUninviteByName(this: void, index: number, target: string): void;
+  function ArenaTeamSetLeaderByName(
+    this: void,
+    index: number,
+    target: string,
+  ): void;
+  function ArenaTeamUninviteByName(
+    this: void,
+    index: number,
+    target: string,
+  ): void;
   function DeclineArenaTeam(this: void): void;
 
   namespace C_ArtifactUI {
@@ -6158,33 +6266,150 @@ declare global {
 
     function AddPower(this: void, powerID: number): boolean;
     function ApplyCursorRelicToSlot(this: void, relicSlotIndex: number): void;
-    function CanApplyArtifactRelic(this: void, relicItemID: number, onlyUnlocked: boolean): boolean;
-    function CanApplyCursorRelicToSlot(this: void, relicSlotIndex: number): boolean;
-    function CanApplyRelicItemIDToEquippedArtifactSlot(this: void, relicItemID: number, relicSlotIndex: number): boolean;
-    function CanApplyRelicItemIDToSlot(this: void, relicItemID: number, relicSlotIndex: number): boolean;
+    function CanApplyArtifactRelic(
+      this: void,
+      relicItemID: number,
+      onlyUnlocked: boolean,
+    ): boolean;
+    function CanApplyCursorRelicToSlot(
+      this: void,
+      relicSlotIndex: number,
+    ): boolean;
+    function CanApplyRelicItemIDToEquippedArtifactSlot(
+      this: void,
+      relicItemID: number,
+      relicSlotIndex: number,
+    ): boolean;
+    function CanApplyRelicItemIDToSlot(
+      this: void,
+      relicItemID: number,
+      relicSlotIndex: number,
+    ): boolean;
     function CheckRespecNPC(this: void): boolean;
     function Clear(this: void): void;
     function ClearForgeCamera(this: void): void;
     function ConfirmRespec(this: void): void;
     function DoesEquippedArtifactHaveAnyRelicsSlotted(this: void): boolean;
-    function GetAppearanceInfo(this: void, appearanceSetIndex: number, appearanceIndex: number): LuaMultiReturn<[number, string, number, boolean, string|undefined, number, number|undefined, number, number, number, number, number, boolean]>;
-    function GetAppearanceInfoByID(this: void, artifactAppearanceID: number): LuaMultiReturn<[number, number, string, number, boolean, string|undefined, number, number|undefined, number, number, number, number, number, boolean]>;
-    function GetAppearanceSetInfo(this: void, appearanceSetIndex: number): LuaMultiReturn<[number, string, string, number]>;
+    function GetAppearanceInfo(
+      this: void,
+      appearanceSetIndex: number,
+      appearanceIndex: number,
+    ): LuaMultiReturn<
+      [
+        number,
+        string,
+        number,
+        boolean,
+        string | undefined,
+        number,
+        number | undefined,
+        number,
+        number,
+        number,
+        number,
+        number,
+        boolean,
+      ]
+    >;
+    function GetAppearanceInfoByID(
+      this: void,
+      artifactAppearanceID: number,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        string,
+        number,
+        boolean,
+        string | undefined,
+        number,
+        number | undefined,
+        number,
+        number,
+        number,
+        number,
+        number,
+        boolean,
+      ]
+    >;
+    function GetAppearanceSetInfo(
+      this: void,
+      appearanceSetIndex: number,
+    ): LuaMultiReturn<[number, string, string, number]>;
     function GetArtifactArtInfo(this: void): ArtifactArtInfo;
-    function GetArtifactInfo(this: void): LuaMultiReturn<[number, number|undefined, string, fileID, number, number, number, number, number, number|undefined, number|undefined, boolean, ArtifactTiers]>;
+    function GetArtifactInfo(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number | undefined,
+        string,
+        fileID,
+        number,
+        number,
+        number,
+        number,
+        number,
+        number | undefined,
+        number | undefined,
+        boolean,
+        ArtifactTiers,
+      ]
+    >;
     function GetArtifactItemID(this: void): number;
-    function GetArtifactTier(this: void): ArtifactTiers|undefined;
-    function GetArtifactXPRewardTargetInfo(this: void, artifactCategoryID: number): LuaMultiReturn<[string, fileID]>;
-    function GetCostForPointAtRank(this: void, rank: number, tier: ArtifactTiers): number;
+    function GetArtifactTier(this: void): ArtifactTiers | undefined;
+    function GetArtifactXPRewardTargetInfo(
+      this: void,
+      artifactCategoryID: number,
+    ): LuaMultiReturn<[string, fileID]>;
+    function GetCostForPointAtRank(
+      this: void,
+      rank: number,
+      tier: ArtifactTiers,
+    ): number;
     function GetEquippedArtifactArtInfo(this: void): ArtifactArtInfo;
-    function GetEquippedArtifactInfo(this: void): LuaMultiReturn<[number, number|undefined, string, fileID, number, number, number, number, number, number|undefined, number|undefined, boolean, ArtifactTiers]>;
+    function GetEquippedArtifactInfo(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number | undefined,
+        string,
+        fileID,
+        number,
+        number,
+        number,
+        number,
+        number,
+        number | undefined,
+        number | undefined,
+        boolean,
+        ArtifactTiers,
+      ]
+    >;
     function GetEquippedArtifactItemID(this: void): number;
-    function GetEquippedArtifactNumRelicSlots(this: void, onlyUnlocked?: boolean): number;
-    function GetEquippedArtifactRelicInfo(this: void, relicSlotIndex: number): LuaMultiReturn<[string, fileID, string, string]>;
-    function GetEquippedRelicLockedReason(this: void, relicSlotIndex: number): string|undefined;
-    function GetForgeRotation(this: void): LuaMultiReturn<[number, number, number]>;
-    function GetItemLevelIncreaseProvidedByRelic(this: void, itemLinkOrID: ItemInfo): number;
-    function GetMetaPowerInfo(this: void): LuaMultiReturn<[number, number, number]>;
+    function GetEquippedArtifactNumRelicSlots(
+      this: void,
+      onlyUnlocked?: boolean,
+    ): number;
+    function GetEquippedArtifactRelicInfo(
+      this: void,
+      relicSlotIndex: number,
+    ): LuaMultiReturn<[string, fileID, string, string]>;
+    function GetEquippedRelicLockedReason(
+      this: void,
+      relicSlotIndex: number,
+    ): string | undefined;
+    function GetForgeRotation(
+      this: void,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetItemLevelIncreaseProvidedByRelic(
+      this: void,
+      itemLinkOrID: ItemInfo,
+    ): number;
+    function GetMetaPowerInfo(
+      this: void,
+    ): LuaMultiReturn<[number, number, number]>;
     function GetNumAppearanceSets(this: void): number;
     function GetNumObtainedArtifacts(this: void): number;
     function GetNumRelicSlots(this: void, onlyUnlocked?: boolean): number;
@@ -6193,17 +6418,55 @@ declare global {
     function GetPowerInfo(this: void, powerID: number): ArtifactPowerInfo;
     function GetPowerLinks(this: void, powerID: number): number[];
     function GetPowers(this: void): number[];
-    function GetPowersAffectedByRelic(this: void, relicSlotIndex: number): number;
-    function GetPowersAffectedByRelicItemLink(this: void, relicItemInfo: ItemInfo): number;
-    function GetPreviewAppearance(this: void): number|undefined;
-    function GetRelicInfo(this: void, relicSlotIndex: number): LuaMultiReturn<[string, fileID, string, string]>;
-    function GetRelicInfoByItemID(this: void, itemID: number): LuaMultiReturn<[string, fileID, string, string]>;
-    function GetRelicLockedReason(this: void, relicSlotIndex: number): string|undefined;
+    function GetPowersAffectedByRelic(
+      this: void,
+      relicSlotIndex: number,
+    ): number;
+    function GetPowersAffectedByRelicItemLink(
+      this: void,
+      relicItemInfo: ItemInfo,
+    ): number;
+    function GetPreviewAppearance(this: void): number | undefined;
+    function GetRelicInfo(
+      this: void,
+      relicSlotIndex: number,
+    ): LuaMultiReturn<[string, fileID, string, string]>;
+    function GetRelicInfoByItemID(
+      this: void,
+      itemID: number,
+    ): LuaMultiReturn<[string, fileID, string, string]>;
+    function GetRelicLockedReason(
+      this: void,
+      relicSlotIndex: number,
+    ): string | undefined;
     function GetRelicSlotType(this: void, relicSlotIndex: number): string;
     function GetRespecArtifactArtInfo(this: void): ArtifactArtInfo;
-    function GetRespecArtifactInfo(this: void): LuaMultiReturn<[number, number|undefined, string, fileID, number, number, number, number, number, number|undefined, number|undefined, boolean, ArtifactTiers]>;
+    function GetRespecArtifactInfo(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number | undefined,
+        string,
+        fileID,
+        number,
+        number,
+        number,
+        number,
+        number,
+        number | undefined,
+        number | undefined,
+        boolean,
+        ArtifactTiers,
+      ]
+    >;
     function GetRespecCost(this: void): number;
-    function GetTotalPowerCost(this: void, startingTrait: number, numTraits: number, artifactTier: ArtifactTiers): number;
+    function GetTotalPowerCost(
+      this: void,
+      startingTrait: number,
+      numTraits: number,
+      artifactTier: ArtifactTiers,
+    ): number;
     function GetTotalPurchasedRanks(this: void): number;
     function IsArtifactDisabled(this: void): boolean;
     function IsArtifactItem(this: void, itemLocation: ItemLocation): boolean;
@@ -6215,8 +6478,16 @@ declare global {
     function IsViewedArtifactEquipped(this: void): boolean;
     function SetAppearance(this: void, artifactAppearanceID: number): void;
     function SetForgeCamera(this: void): void;
-    function SetForgeRotation(this: void, forgeRotationX: number, forgeRotationY: number, forgeRotationZ: number): void;
-    function SetPreviewAppearance(this: void, artifactAppearanceID?: number): void;
+    function SetForgeRotation(
+      this: void,
+      forgeRotationX: number,
+      forgeRotationY: number,
+      forgeRotationZ: number,
+    ): void;
+    function SetPreviewAppearance(
+      this: void,
+      artifactAppearanceID?: number,
+    ): void;
     function ShouldSuppressForgeRotation(this: void): boolean;
   }
 
@@ -6359,42 +6630,99 @@ declare global {
       hasAllInfo?: boolean;
     }
 
-    function CalculateCommodityDeposit(this: void, itemID: number, duration: number, quantity: number): number|undefined;
-    function CalculateItemDeposit(this: void, item: ItemLocation, duration: number, quantity: number): number|undefined;
+    function CalculateCommodityDeposit(
+      this: void,
+      itemID: number,
+      duration: number,
+      quantity: number,
+    ): number | undefined;
+    function CalculateItemDeposit(
+      this: void,
+      item: ItemLocation,
+      duration: number,
+      quantity: number,
+    ): number | undefined;
     function CanCancelAuction(this: void, ownedAuctionID: number): boolean;
     function CancelAuction(this: void, ownedAuctionID: number): void;
     function CancelCommoditiesPurchase(this: void): void;
     function CancelSell(this: void): void;
     function CloseAuctionHouse(this: void): void;
-    function ConfirmCommoditiesPurchase(this: void, itemID: number, quantity: number): void;
-    function ConfirmPostCommodity(this: void, item: ItemLocation, duration: number, quantity: number, unitPrice: BigUInteger): void;
-    function ConfirmPostItem(this: void, item: ItemLocation, duration: number, quantity: number, bid?: BigUInteger, buyout?: BigUInteger): void;
+    function ConfirmCommoditiesPurchase(
+      this: void,
+      itemID: number,
+      quantity: number,
+    ): void;
+    function ConfirmPostCommodity(
+      this: void,
+      item: ItemLocation,
+      duration: number,
+      quantity: number,
+      unitPrice: BigUInteger,
+    ): void;
+    function ConfirmPostItem(
+      this: void,
+      item: ItemLocation,
+      duration: number,
+      quantity: number,
+      bid?: BigUInteger,
+      buyout?: BigUInteger,
+    ): void;
     function FavoritesAreAvailable(this: void): boolean;
-    function GetAuctionInfoByID(this: void, auctionID: number): AuctionInfo|undefined;
+    function GetAuctionInfoByID(
+      this: void,
+      auctionID: number,
+    ): AuctionInfo | undefined;
     function GetAuctionItemSubClasses(this: void, classID: number): number[];
     function GetAvailablePostCount(this: void, item: ItemLocation): number;
-    function GetBidInfo(this: void, bidIndex: number): BidInfo|undefined;
-    function GetBidType(this: void, bidTypeIndex: number): ItemKey|undefined;
+    function GetBidInfo(this: void, bidIndex: number): BidInfo | undefined;
+    function GetBidType(this: void, bidTypeIndex: number): ItemKey | undefined;
     function GetBids(this: void): BidInfo[];
     function GetBrowseResults(this: void): BrowseResultInfo[];
     function GetCancelCost(this: void, ownedAuctionID: number): BigUInteger;
-    function GetCommoditySearchResultInfo(this: void, itemID: number, commoditySearchResultIndex: number): CommoditySearchResultInfo|undefined;
-    function GetCommoditySearchResultsQuantity(this: void, itemID: number): number;
+    function GetCommoditySearchResultInfo(
+      this: void,
+      itemID: number,
+      commoditySearchResultIndex: number,
+    ): CommoditySearchResultInfo | undefined;
+    function GetCommoditySearchResultsQuantity(
+      this: void,
+      itemID: number,
+    ): number;
     function GetExtraBrowseInfo(this: void, itemKey: ItemKey): number;
     function GetFilterGroups(this: void): AuctionHouseFilterGroup[];
-    function GetItemCommodityStatus(this: void, item: ItemLocation): Enum.ItemCommodityStatus;
+    function GetItemCommodityStatus(
+      this: void,
+      item: ItemLocation,
+    ): Enum.ItemCommodityStatus;
     function GetItemKeyFromItem(this: void, item: ItemLocation): ItemKey;
-    function GetItemKeyInfo(this: void, itemKey: ItemKey, restrictQualityToFilter?: boolean): ItemKeyInfo|undefined;
+    function GetItemKeyInfo(
+      this: void,
+      itemKey: ItemKey,
+      restrictQualityToFilter?: boolean,
+    ): ItemKeyInfo | undefined;
     function GetItemKeyRequiredLevel(this: void, itemKey: ItemKey): number;
-    function GetItemSearchResultInfo(this: void, itemKey: ItemKey, itemSearchResultIndex: number): ItemSearchResultInfo|undefined;
+    function GetItemSearchResultInfo(
+      this: void,
+      itemKey: ItemKey,
+      itemSearchResultIndex: number,
+    ): ItemSearchResultInfo | undefined;
     function GetItemSearchResultsQuantity(this: void, itemKey: ItemKey): number;
-    function GetMaxBidItemBid(this: void): BigUInteger|undefined;
-    function GetMaxBidItemBuyout(this: void): BigUInteger|undefined;
-    function GetMaxCommoditySearchResultPrice(this: void, itemID: number): BigUInteger|undefined;
-    function GetMaxItemSearchResultBid(this: void, itemKey: ItemKey): BigUInteger|undefined;
-    function GetMaxItemSearchResultBuyout(this: void, itemKey: ItemKey): BigUInteger|undefined;
-    function GetMaxOwnedAuctionBid(this: void): BigUInteger|undefined;
-    function GetMaxOwnedAuctionBuyout(this: void): BigUInteger|undefined;
+    function GetMaxBidItemBid(this: void): BigUInteger | undefined;
+    function GetMaxBidItemBuyout(this: void): BigUInteger | undefined;
+    function GetMaxCommoditySearchResultPrice(
+      this: void,
+      itemID: number,
+    ): BigUInteger | undefined;
+    function GetMaxItemSearchResultBid(
+      this: void,
+      itemKey: ItemKey,
+    ): BigUInteger | undefined;
+    function GetMaxItemSearchResultBuyout(
+      this: void,
+      itemKey: ItemKey,
+    ): BigUInteger | undefined;
+    function GetMaxOwnedAuctionBid(this: void): BigUInteger | undefined;
+    function GetMaxOwnedAuctionBuyout(this: void): BigUInteger | undefined;
     function GetNumBidTypes(this: void): number;
     function GetNumBids(this: void): number;
     function GetNumCommoditySearchResults(this: void, itemID: number): number;
@@ -6402,15 +6730,54 @@ declare global {
     function GetNumOwnedAuctionTypes(this: void): number;
     function GetNumOwnedAuctions(this: void): number;
     function GetNumReplicateItems(this: void): number;
-    function GetOwnedAuctionInfo(this: void, ownedAuctionIndex: number): OwnedAuctionInfo|undefined;
-    function GetOwnedAuctionType(this: void, ownedAuctionTypeIndex: number): ItemKey|undefined;
+    function GetOwnedAuctionInfo(
+      this: void,
+      ownedAuctionIndex: number,
+    ): OwnedAuctionInfo | undefined;
+    function GetOwnedAuctionType(
+      this: void,
+      ownedAuctionTypeIndex: number,
+    ): ItemKey | undefined;
     function GetOwnedAuctions(this: void): OwnedAuctionInfo[];
     function GetQuoteDurationRemaining(this: void): number;
-    function GetReplicateItemBattlePetInfo(this: void, index: number): LuaMultiReturn<[number, number]>;
-    function GetReplicateItemInfo(this: void, index: number): LuaMultiReturn<[string|undefined, fileID|undefined, number, number, boolean|undefined, number, string|undefined, BigUInteger, BigUInteger, BigUInteger, BigUInteger, string|undefined, string|undefined, string|undefined, string|undefined, number, number, boolean|undefined]>;
-    function GetReplicateItemLink(this: void, index: number): string|undefined;
+    function GetReplicateItemBattlePetInfo(
+      this: void,
+      index: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetReplicateItemInfo(
+      this: void,
+      index: number,
+    ): LuaMultiReturn<
+      [
+        string | undefined,
+        fileID | undefined,
+        number,
+        number,
+        boolean | undefined,
+        number,
+        string | undefined,
+        BigUInteger,
+        BigUInteger,
+        BigUInteger,
+        BigUInteger,
+        string | undefined,
+        string | undefined,
+        string | undefined,
+        string | undefined,
+        number,
+        number,
+        boolean | undefined,
+      ]
+    >;
+    function GetReplicateItemLink(
+      this: void,
+      index: number,
+    ): string | undefined;
     function GetReplicateItemTimeLeft(this: void, index: number): number;
-    function GetTimeLeftBandInfo(this: void, timeLeftBand: Enum.AuctionHouseTimeLeftBand): LuaMultiReturn<[number, number]>;
+    function GetTimeLeftBandInfo(
+      this: void,
+      timeLeftBand: Enum.AuctionHouseTimeLeftBand,
+    ): LuaMultiReturn<[number, number]>;
     function HasFavorites(this: void): boolean;
     function HasFullBidResults(this: void): boolean;
     function HasFullBrowseResults(this: void): boolean;
@@ -6420,29 +6787,104 @@ declare global {
     function HasMaxFavorites(this: void): boolean;
     function HasSearchResults(this: void, itemKey: ItemKey): boolean;
     function IsFavoriteItem(this: void, itemKey: ItemKey): boolean;
-    function IsSellItemValid(this: void, item: ItemLocation, displayError?: boolean): boolean;
+    function IsSellItemValid(
+      this: void,
+      item: ItemLocation,
+      displayError?: boolean,
+    ): boolean;
     function IsThrottledMessageSystemReady(this: void): boolean;
-    function MakeItemKey(this: void, itemID: number, itemLevel?: number, itemSuffix?: number, battlePetSpeciesID?: number): ItemKey;
-    function PlaceBid(this: void, auctionID: number, bidAmount: BigUInteger): void;
-    function PostCommodity(this: void, item: ItemLocation, duration: number, quantity: number, unitPrice: BigUInteger): boolean;
-    function PostItem(this: void, item: ItemLocation, duration: number, quantity: number, bid?: BigUInteger, buyout?: BigUInteger): boolean;
-    function QueryBids(this: void, sorts: AuctionHouseSortType[], auctionIDs: number[]): void;
-    function QueryOwnedAuctions(this: void, sorts: AuctionHouseSortType[]): void;
+    function MakeItemKey(
+      this: void,
+      itemID: number,
+      itemLevel?: number,
+      itemSuffix?: number,
+      battlePetSpeciesID?: number,
+    ): ItemKey;
+    function PlaceBid(
+      this: void,
+      auctionID: number,
+      bidAmount: BigUInteger,
+    ): void;
+    function PostCommodity(
+      this: void,
+      item: ItemLocation,
+      duration: number,
+      quantity: number,
+      unitPrice: BigUInteger,
+    ): boolean;
+    function PostItem(
+      this: void,
+      item: ItemLocation,
+      duration: number,
+      quantity: number,
+      bid?: BigUInteger,
+      buyout?: BigUInteger,
+    ): boolean;
+    function QueryBids(
+      this: void,
+      sorts: AuctionHouseSortType[],
+      auctionIDs: number[],
+    ): void;
+    function QueryOwnedAuctions(
+      this: void,
+      sorts: AuctionHouseSortType[],
+    ): void;
     function RefreshCommoditySearchResults(this: void, itemID: number): void;
-    function RefreshItemSearchResults(this: void, itemKey: ItemKey, minLevelFilter?: number, maxLevelFilter?: number): void;
+    function RefreshItemSearchResults(
+      this: void,
+      itemKey: ItemKey,
+      minLevelFilter?: number,
+      maxLevelFilter?: number,
+    ): void;
     function ReplicateItems(this: void): void;
     function RequestFavorites(this: void): void;
     function RequestMoreBrowseResults(this: void): void;
-    function RequestMoreCommoditySearchResults(this: void, itemID: number): boolean;
-    function RequestMoreItemSearchResults(this: void, itemKey: ItemKey): boolean;
-    function RequestOwnedAuctionBidderInfo(this: void, auctionID: number): string;
-    function SearchForFavorites(this: void, sorts: AuctionHouseSortType[]): void;
-    function SearchForItemKeys(this: void, itemKeys: ItemKey[], sorts: AuctionHouseSortType[]): void;
+    function RequestMoreCommoditySearchResults(
+      this: void,
+      itemID: number,
+    ): boolean;
+    function RequestMoreItemSearchResults(
+      this: void,
+      itemKey: ItemKey,
+    ): boolean;
+    function RequestOwnedAuctionBidderInfo(
+      this: void,
+      auctionID: number,
+    ): string;
+    function SearchForFavorites(
+      this: void,
+      sorts: AuctionHouseSortType[],
+    ): void;
+    function SearchForItemKeys(
+      this: void,
+      itemKeys: ItemKey[],
+      sorts: AuctionHouseSortType[],
+    ): void;
     function SendBrowseQuery(this: void, query: AuctionHouseBrowseQuery): void;
-    function SendSearchQuery(this: void, itemKey: ItemKey, sorts: AuctionHouseSortType[], separateOwnerItems: boolean, minLevelFilter?: number, maxLevelFilter?: number): void;
-    function SendSellSearchQuery(this: void, itemKey: ItemKey, sorts: AuctionHouseSortType[], separateOwnerItems: boolean): void;
-    function SetFavoriteItem(this: void, itemKey: ItemKey, setFavorite: boolean): void;
-    function StartCommoditiesPurchase(this: void, itemID: number, quantity: number): void;
+    function SendSearchQuery(
+      this: void,
+      itemKey: ItemKey,
+      sorts: AuctionHouseSortType[],
+      separateOwnerItems: boolean,
+      minLevelFilter?: number,
+      maxLevelFilter?: number,
+    ): void;
+    function SendSellSearchQuery(
+      this: void,
+      itemKey: ItemKey,
+      sorts: AuctionHouseSortType[],
+      separateOwnerItems: boolean,
+    ): void;
+    function SetFavoriteItem(
+      this: void,
+      itemKey: ItemKey,
+      setFavorite: boolean,
+    ): void;
+    function StartCommoditiesPurchase(
+      this: void,
+      itemID: number,
+      quantity: number,
+    ): void;
   }
 
   namespace C_AzeriteEmpoweredItem {
@@ -6466,24 +6908,77 @@ declare global {
       specID: number;
     }
 
-    function CanSelectPower(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation, powerID: number): boolean;
-    function ConfirmAzeriteEmpoweredItemRespec(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation): void;
-    function GetAllTierInfo(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation): AzeriteEmpoweredItemTierInfo[];
-    function GetAllTierInfoByItemID(this: void, itemInfo: ItemInfo, classID?: number): AzeriteEmpoweredItemTierInfo[];
+    function CanSelectPower(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+      powerID: number,
+    ): boolean;
+    function ConfirmAzeriteEmpoweredItemRespec(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+    ): void;
+    function GetAllTierInfo(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+    ): AzeriteEmpoweredItemTierInfo[];
+    function GetAllTierInfoByItemID(
+      this: void,
+      itemInfo: ItemInfo,
+      classID?: number,
+    ): AzeriteEmpoweredItemTierInfo[];
     function GetAzeriteEmpoweredItemRespecCost(this: void): number;
-    function GetPowerInfo(this: void, powerID: number): AzeriteEmpoweredItemPowerInfo;
-    function GetPowerText(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation, powerID: number, level: Enum.AzeritePowerLevel): AzeriteEmpoweredItemPowerText;
+    function GetPowerInfo(
+      this: void,
+      powerID: number,
+    ): AzeriteEmpoweredItemPowerInfo;
+    function GetPowerText(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+      powerID: number,
+      level: Enum.AzeritePowerLevel,
+    ): AzeriteEmpoweredItemPowerText;
     function GetSpecsForPower(this: void, powerID: number): AzeriteSpecInfo[];
-    function HasAnyUnselectedPowers(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation): boolean;
-    function HasBeenViewed(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation): boolean;
-    function IsAzeriteEmpoweredItem(this: void, itemLocation: ItemLocation): boolean;
-    function IsAzeriteEmpoweredItemByID(this: void, itemInfo: ItemInfo): boolean;
-    function IsAzeritePreviewSourceDisplayable(this: void, itemInfo: ItemInfo, classID?: number): boolean;
+    function HasAnyUnselectedPowers(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+    ): boolean;
+    function HasBeenViewed(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+    ): boolean;
+    function IsAzeriteEmpoweredItem(
+      this: void,
+      itemLocation: ItemLocation,
+    ): boolean;
+    function IsAzeriteEmpoweredItemByID(
+      this: void,
+      itemInfo: ItemInfo,
+    ): boolean;
+    function IsAzeritePreviewSourceDisplayable(
+      this: void,
+      itemInfo: ItemInfo,
+      classID?: number,
+    ): boolean;
     function IsHeartOfAzerothEquipped(this: void): boolean;
-    function IsPowerAvailableForSpec(this: void, powerID: number, specID: number): boolean;
-    function IsPowerSelected(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation, powerID: number): boolean;
-    function SelectPower(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation, powerID: number): boolean;
-    function SetHasBeenViewed(this: void, azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation): void;
+    function IsPowerAvailableForSpec(
+      this: void,
+      powerID: number,
+      specID: number,
+    ): boolean;
+    function IsPowerSelected(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+      powerID: number,
+    ): boolean;
+    function SelectPower(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+      powerID: number,
+    ): boolean;
+    function SetHasBeenViewed(
+      this: void,
+      azeriteEmpoweredItemLocation: AzeriteEmpoweredItemLocation,
+    ): void;
   }
 
   namespace C_AzeriteEssence {
@@ -6505,17 +7000,32 @@ declare global {
       slot?: Enum.AzeriteEssenceSlot;
     }
 
-    function ActivateEssence(this: void, essenceID: number, milestoneID: number): void;
-    function CanActivateEssence(this: void, essenceID: number, milestoneID: number): boolean;
+    function ActivateEssence(
+      this: void,
+      essenceID: number,
+      milestoneID: number,
+    ): void;
+    function CanActivateEssence(
+      this: void,
+      essenceID: number,
+      milestoneID: number,
+    ): boolean;
     function CanDeactivateEssence(this: void, milestoneID: number): boolean;
     function CanOpenUI(this: void): boolean;
     function ClearPendingActivationEssence(this: void): void;
     function CloseForge(this: void): void;
-    function GetEssenceHyperlink(this: void, essenceID: number, rank: number): string;
+    function GetEssenceHyperlink(
+      this: void,
+      essenceID: number,
+      rank: number,
+    ): string;
     function GetEssenceInfo(this: void, essenceID: number): AzeriteEssenceInfo;
     function GetEssences(this: void): AzeriteEssenceInfo[];
     function GetMilestoneEssence(this: void, milestoneID: number): number;
-    function GetMilestoneInfo(this: void, milestoneID: number): AzeriteMilestoneInfo;
+    function GetMilestoneInfo(
+      this: void,
+      milestoneID: number,
+    ): AzeriteMilestoneInfo;
     function GetMilestoneSpell(this: void, milestoneID: number): number;
     function GetMilestones(this: void): AzeriteMilestoneInfo[];
     function GetNumUnlockedEssences(this: void): number;
@@ -6535,14 +7045,26 @@ declare global {
     }
 
     function FindActiveAzeriteItem(this: void): AzeriteItemLocation;
-    function GetAzeriteItemXPInfo(this: void, azeriteItemLocation: AzeriteItemLocation): LuaMultiReturn<[number, number]>;
-    function GetPowerLevel(this: void, azeriteItemLocation: AzeriteItemLocation): number;
-    function GetUnlimitedPowerLevel(this: void, azeriteItemLocation: AzeriteItemLocation): number;
+    function GetAzeriteItemXPInfo(
+      this: void,
+      azeriteItemLocation: AzeriteItemLocation,
+    ): LuaMultiReturn<[number, number]>;
+    function GetPowerLevel(
+      this: void,
+      azeriteItemLocation: AzeriteItemLocation,
+    ): number;
+    function GetUnlimitedPowerLevel(
+      this: void,
+      azeriteItemLocation: AzeriteItemLocation,
+    ): number;
     function HasActiveAzeriteItem(this: void): boolean;
     function IsAzeriteItem(this: void, itemLocation: ItemLocation): boolean;
     function IsAzeriteItemAtMaxLevel(this: void): boolean;
     function IsAzeriteItemByID(this: void, itemInfo: ItemInfo): boolean;
-    function IsAzeriteItemEnabled(this: void, azeriteItemLocation: AzeriteItemLocation): boolean;
+    function IsAzeriteItemEnabled(
+      this: void,
+      azeriteItemLocation: AzeriteItemLocation,
+    ): boolean;
     function IsUnlimitedLevelingUnlocked(this: void): boolean;
   }
 
@@ -6555,54 +7077,108 @@ declare global {
       depositFlags: Enum.BagSlotFlags;
     }
 
-    function AutoDepositItemsIntoBank(this: void, bankType: Enum.BankType): void;
+    function AutoDepositItemsIntoBank(
+      this: void,
+      bankType: Enum.BankType,
+    ): void;
     function CanDepositMoney(this: void, bankType: Enum.BankType): boolean;
     function CanPurchaseBankTab(this: void, bankType: Enum.BankType): boolean;
     function CanUseBank(this: void, bankType: Enum.BankType): boolean;
     function CanViewBank(this: void, bankType: Enum.BankType): boolean;
     function CanWithdrawMoney(this: void, bankType: Enum.BankType): boolean;
     function CloseBankFrame(this: void): void;
-    function DepositMoney(this: void, bankType: Enum.BankType, amount: WOWMONEY): void;
+    function DepositMoney(
+      this: void,
+      bankType: Enum.BankType,
+      amount: WOWMONEY,
+    ): void;
     function FetchDepositedMoney(this: void, bankType: Enum.BankType): WOWMONEY;
-    function FetchNextPurchasableBankTabCost(this: void, bankType: Enum.BankType): BigUInteger|undefined;
-    function FetchNumPurchasedBankTabs(this: void, bankType: Enum.BankType): number;
-    function FetchPurchasedBankTabData(this: void, bankType: Enum.BankType): BankTabData[];
-    function FetchPurchasedBankTabIDs(this: void, bankType: Enum.BankType): Enum.BagIndex[];
+    function FetchNextPurchasableBankTabCost(
+      this: void,
+      bankType: Enum.BankType,
+    ): BigUInteger | undefined;
+    function FetchNumPurchasedBankTabs(
+      this: void,
+      bankType: Enum.BankType,
+    ): number;
+    function FetchPurchasedBankTabData(
+      this: void,
+      bankType: Enum.BankType,
+    ): BankTabData[];
+    function FetchPurchasedBankTabIDs(
+      this: void,
+      bankType: Enum.BankType,
+    ): Enum.BagIndex[];
     function HasMaxBankTabs(this: void, bankType: Enum.BankType): boolean;
-    function IsItemAllowedInBankType(this: void, bankType: Enum.BankType, itemLocation: ItemLocation): boolean;
+    function IsItemAllowedInBankType(
+      this: void,
+      bankType: Enum.BankType,
+      itemLocation: ItemLocation,
+    ): boolean;
     function PurchaseBankTab(this: void, bankType: Enum.BankType): void;
-    function UpdateBankTabSettings(this: void, bankType: Enum.BankType, tabID: Enum.BagIndex, tabName: string, tabIcon: string, depositFlags: Enum.BagSlotFlags): void;
-    function WithdrawMoney(this: void, bankType: Enum.BankType, amount: WOWMONEY): void;
+    function UpdateBankTabSettings(
+      this: void,
+      bankType: Enum.BankType,
+      tabID: Enum.BagIndex,
+      tabName: string,
+      tabIcon: string,
+      depositFlags: Enum.BagSlotFlags,
+    ): void;
+    function WithdrawMoney(
+      this: void,
+      bankType: Enum.BankType,
+      amount: WOWMONEY,
+    ): void;
   }
 
   namespace C_BarberShop {
     function ApplyCustomizationChoices(this: void): boolean;
     function Cancel(this: void): void;
     function ClearPreviewChoices(this: void, clearSavedChoices?: boolean): void;
-    function GetAvailableCustomizations(this: void): CharCustomizationCategory[];
+    function GetAvailableCustomizations(
+      this: void,
+    ): CharCustomizationCategory[];
     function GetCurrentCameraZoom(this: void): number;
     function GetCurrentCharacterData(this: void): PlayerInfoCharacterData;
     function GetCurrentCost(this: void): number;
     function GetCustomizationScope(this: void): number;
-    function GetViewingChrModel(this: void): number|undefined;
+    function GetViewingChrModel(this: void): number | undefined;
     function HasAnyChanges(this: void): boolean;
     function IsViewingAlteredForm(this: void): boolean;
     function MarkCustomizationChoiceAsSeen(this: void, choiceID: number): void;
     function MarkCustomizationOptionAsSeen(this: void, optionID: number): void;
-    function PreviewCustomizationChoice(this: void, optionID: number, choiceID: number): void;
+    function PreviewCustomizationChoice(
+      this: void,
+      optionID: number,
+      choiceID: number,
+    ): void;
     function RandomizeCustomizationChoices(this: void): void;
     function ResetCameraRotation(this: void): void;
     function ResetCustomizationChoices(this: void): void;
     function RotateCamera(this: void, diffDegrees: number): void;
     function SaveSeenChoices(this: void): void;
     function SetCameraDistanceOffset(this: void, offset: number): void;
-    function SetCameraZoomLevel(this: void, zoomLevel: number, keepCustomZoom?: boolean): void;
-    function SetCustomizationChoice(this: void, optionID: number, choiceID: number): void;
+    function SetCameraZoomLevel(
+      this: void,
+      zoomLevel: number,
+      keepCustomZoom?: boolean,
+    ): void;
+    function SetCustomizationChoice(
+      this: void,
+      optionID: number,
+      choiceID: number,
+    ): void;
     function SetModelDressState(this: void, dressedState: boolean): void;
     function SetSelectedSex(this: void, sex: number): void;
-    function SetViewingAlteredForm(this: void, isViewingAlteredForm: boolean): void;
+    function SetViewingAlteredForm(
+      this: void,
+      isViewingAlteredForm: boolean,
+    ): void;
     function SetViewingChrModel(this: void, chrModelID?: number): void;
-    function SetViewingShapeshiftForm(this: void, shapeshiftFormID?: number): void;
+    function SetViewingShapeshiftForm(
+      this: void,
+      shapeshiftFormID?: number,
+    ): void;
     function ZoomCamera(this: void, zoomAmount: number): void;
   }
 
@@ -6610,8 +7186,7 @@ declare global {
     function SetQAMode(this: void, qaModeEnabled: boolean): void;
   }
 
-  interface ScriptObject {
-  }
+  interface ScriptObject {}
 
   namespace C_BattleNet {
     interface BNetAccountInfo {
@@ -6658,24 +7233,48 @@ declare global {
       timerunningSeasonID?: number;
     }
 
-    function GetAccountInfoByGUID(this: void, guid: WOWGUID): BNetAccountInfo|undefined;
-    function GetAccountInfoByID(this: void, id: number, wowAccountGUID?: WOWGUID): BNetAccountInfo|undefined;
-    function GetFriendAccountInfo(this: void, friendIndex: number, wowAccountGUID?: WOWGUID): BNetAccountInfo|undefined;
-    function GetFriendGameAccountInfo(this: void, friendIndex: number, accountIndex: number): BNetGameAccountInfo|undefined;
+    function GetAccountInfoByGUID(
+      this: void,
+      guid: WOWGUID,
+    ): BNetAccountInfo | undefined;
+    function GetAccountInfoByID(
+      this: void,
+      id: number,
+      wowAccountGUID?: WOWGUID,
+    ): BNetAccountInfo | undefined;
+    function GetFriendAccountInfo(
+      this: void,
+      friendIndex: number,
+      wowAccountGUID?: WOWGUID,
+    ): BNetAccountInfo | undefined;
+    function GetFriendGameAccountInfo(
+      this: void,
+      friendIndex: number,
+      accountIndex: number,
+    ): BNetGameAccountInfo | undefined;
     function GetFriendNumGameAccounts(this: void, friendIndex: number): number;
-    function GetGameAccountInfoByGUID(this: void, guid: WOWGUID): BNetGameAccountInfo|undefined;
-    function GetGameAccountInfoByID(this: void, id: number): BNetGameAccountInfo|undefined;
+    function GetGameAccountInfoByGUID(
+      this: void,
+      guid: WOWGUID,
+    ): BNetGameAccountInfo | undefined;
+    function GetGameAccountInfoByID(
+      this: void,
+      id: number,
+    ): BNetGameAccountInfo | undefined;
   }
 
-  namespace C_BattlePet {
-  }
+  namespace C_BattlePet {}
 
   namespace C_BehavioralMessaging {
-    function SendNotificationReceipt(this: void, dbId: NotificationDbId, openTimeSeconds: number, readTimeSeconds: number): void;
+    function SendNotificationReceipt(
+      this: void,
+      dbId: NotificationDbId,
+      openTimeSeconds: number,
+      readTimeSeconds: number,
+    ): void;
   }
 
-  namespace C_BlackMarketInfo {
-  }
+  namespace C_BlackMarketInfo {}
 
   interface BountyInfo {
     questID: number;
@@ -6685,10 +7284,11 @@ declare global {
     turninRequirementText?: string;
   }
 
-  namespace C_Browser {
-  }
+  namespace C_Browser {}
 
-  function GetBuildInfo(this: void): LuaMultiReturn<[string, string, string, number, string, string]>;
+  function GetBuildInfo(
+    this: void,
+  ): LuaMultiReturn<[string, string, string, number, string, string]>;
   function Is64BitClient(this: void): boolean;
   function IsBetaBuild(this: void): boolean;
   function IsDebugBuild(this: void): boolean;
@@ -6833,13 +7433,32 @@ declare global {
     function CanAddEvent(this: void): boolean;
     function CanSendInvite(this: void): boolean;
     function CloseEvent(this: void): void;
-    function ContextMenuEventCanComplain(this: void, offsetMonths: number, monthDay: number, eventIndex: number): boolean;
-    function ContextMenuEventCanEdit(this: void, offsetMonths: number, monthDay: number, eventIndex: number): boolean;
-    function ContextMenuEventCanRemove(this: void, offsetMonths: number, monthDay: number, eventIndex: number): boolean;
+    function ContextMenuEventCanComplain(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+      eventIndex: number,
+    ): boolean;
+    function ContextMenuEventCanEdit(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+      eventIndex: number,
+    ): boolean;
+    function ContextMenuEventCanRemove(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+      eventIndex: number,
+    ): boolean;
     function ContextMenuEventClipboard(this: void): boolean;
     function ContextMenuEventCopy(this: void): void;
-    function ContextMenuEventGetCalendarType(this: void): string|undefined;
-    function ContextMenuEventPaste(this: void, offsetMonths: number, monthDay: number): void;
+    function ContextMenuEventGetCalendarType(this: void): string | undefined;
+    function ContextMenuEventPaste(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+    ): void;
     function ContextMenuEventRemove(this: void): void;
     function ContextMenuEventSignUp(this: void): void;
     function ContextMenuGetEventIndex(this: void): CalendarEventIndexInfo;
@@ -6847,7 +7466,12 @@ declare global {
     function ContextMenuInviteDecline(this: void): void;
     function ContextMenuInviteRemove(this: void): void;
     function ContextMenuInviteTentative(this: void): void;
-    function ContextMenuSelectEvent(this: void, offsetMonths: number, monthDay: number, eventIndex: number): void;
+    function ContextMenuSelectEvent(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+      eventIndex: number,
+    ): void;
     function CreateCommunitySignUpEvent(this: void): void;
     function CreateGuildAnnouncementEvent(this: void): void;
     function CreateGuildSignUpEvent(this: void): void;
@@ -6858,16 +7482,32 @@ declare global {
     function EventClearLocked(this: void): void;
     function EventClearModerator(this: void, inviteIndex: number): void;
     function EventDecline(this: void): void;
-    function EventGetCalendarType(this: void): string|undefined;
-    function EventGetClubId(this: void): ClubId|undefined;
-    function EventGetInvite(this: void, eventIndex: number): CalendarEventInviteInfo;
-    function EventGetInviteResponseTime(this: void, eventIndex: number): CalendarTime;
-    function EventGetInviteSortCriterion(this: void): LuaMultiReturn<[string, boolean]>;
-    function EventGetSelectedInvite(this: void): number|undefined;
-    function EventGetStatusOptions(this: void, eventIndex: number): CalendarEventStatusOption[];
-    function EventGetTextures(this: void, eventType: Enum.CalendarEventType): CalendarEventTextureInfo[];
+    function EventGetCalendarType(this: void): string | undefined;
+    function EventGetClubId(this: void): ClubId | undefined;
+    function EventGetInvite(
+      this: void,
+      eventIndex: number,
+    ): CalendarEventInviteInfo;
+    function EventGetInviteResponseTime(
+      this: void,
+      eventIndex: number,
+    ): CalendarTime;
+    function EventGetInviteSortCriterion(
+      this: void,
+    ): LuaMultiReturn<[string, boolean]>;
+    function EventGetSelectedInvite(this: void): number | undefined;
+    function EventGetStatusOptions(
+      this: void,
+      eventIndex: number,
+    ): CalendarEventStatusOption[];
+    function EventGetTextures(
+      this: void,
+      eventType: Enum.CalendarEventType,
+    ): CalendarEventTextureInfo[];
     function EventGetTypes(this: void): string[];
-    function EventGetTypesDisplayOrdered(this: void): CalendarEventTypeDisplayInfo[];
+    function EventGetTypesDisplayOrdered(
+      this: void,
+    ): CalendarEventTypeDisplayInfo[];
     function EventHasPendingInvite(this: void): boolean;
     function EventHaveSettingsChanged(this: void): boolean;
     function EventInvite(this: void, name: string): void;
@@ -6876,9 +7516,18 @@ declare global {
     function EventSelectInvite(this: void, inviteIndex: number): void;
     function EventSetAutoApprove(this: void): void;
     function EventSetClubId(this: void, clubId?: ClubId): void;
-    function EventSetDate(this: void, month: number, monthDay: number, year: number): void;
+    function EventSetDate(
+      this: void,
+      month: number,
+      monthDay: number,
+      year: number,
+    ): void;
     function EventSetDescription(this: void, description: string): void;
-    function EventSetInviteStatus(this: void, eventIndex: number, status: Enum.CalendarStatus): void;
+    function EventSetInviteStatus(
+      this: void,
+      eventIndex: number,
+      status: Enum.CalendarStatus,
+    ): void;
     function EventSetLocked(this: void): void;
     function EventSetModerator(this: void, inviteIndex: number): void;
     function EventSetTextureID(this: void, textureIndex: number): void;
@@ -6886,33 +7535,92 @@ declare global {
     function EventSetTitle(this: void, title: string): void;
     function EventSetType(this: void, typeIndex: Enum.CalendarEventType): void;
     function EventSignUp(this: void): void;
-    function EventSortInvites(this: void, criterion: string, reverse: boolean): void;
+    function EventSortInvites(
+      this: void,
+      criterion: string,
+      reverse: boolean,
+    ): void;
     function EventTentative(this: void): void;
-    function GetClubCalendarEvents(this: void, clubId: ClubId, startTime: CalendarTime, endTime: CalendarTime): CalendarDayEvent[];
-    function GetDayEvent(this: void, monthOffset: number, monthDay: number, index: number): CalendarDayEvent;
+    function GetClubCalendarEvents(
+      this: void,
+      clubId: ClubId,
+      startTime: CalendarTime,
+      endTime: CalendarTime,
+    ): CalendarDayEvent[];
+    function GetDayEvent(
+      this: void,
+      monthOffset: number,
+      monthDay: number,
+      index: number,
+    ): CalendarDayEvent;
     function GetDefaultGuildFilter(this: void): CalendarGuildFilterInfo;
     function GetEventIndex(this: void): CalendarEventIndexInfo;
-    function GetEventIndexInfo(this: void, eventID: CalendarEventID, monthOffset?: number, monthDay?: number): CalendarEventIndexInfo|undefined;
+    function GetEventIndexInfo(
+      this: void,
+      eventID: CalendarEventID,
+      monthOffset?: number,
+      monthDay?: number,
+    ): CalendarEventIndexInfo | undefined;
     function GetEventInfo(this: void): CalendarEventInfo;
-    function GetFirstPendingInvite(this: void, offsetMonths: number, monthDay: number): number|undefined;
-    function GetGuildEventInfo(this: void, index: number): CalendarGuildEventInfo;
-    function GetGuildEventSelectionInfo(this: void, index: number): CalendarEventIndexInfo;
-    function GetHolidayInfo(this: void, monthOffset: number, monthDay: number, index: number): CalendarHolidayInfo;
+    function GetFirstPendingInvite(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+    ): number | undefined;
+    function GetGuildEventInfo(
+      this: void,
+      index: number,
+    ): CalendarGuildEventInfo;
+    function GetGuildEventSelectionInfo(
+      this: void,
+      index: number,
+    ): CalendarEventIndexInfo;
+    function GetHolidayInfo(
+      this: void,
+      monthOffset: number,
+      monthDay: number,
+      index: number,
+    ): CalendarHolidayInfo;
     function GetMaxCreateDate(this: void): CalendarTime;
     function GetMinDate(this: void): CalendarTime;
     function GetMonthInfo(this: void, offsetMonths?: number): CalendarMonthInfo;
-    function GetNextClubId(this: void): ClubId|undefined;
-    function GetNumDayEvents(this: void, offsetMonths: number, monthDay: number): number;
+    function GetNextClubId(this: void): ClubId | undefined;
+    function GetNumDayEvents(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+    ): number;
     function GetNumGuildEvents(this: void): number;
     function GetNumInvites(this: void): number;
     function GetNumPendingInvites(this: void): number;
-    function GetRaidInfo(this: void, offsetMonths: number, monthDay: number, eventIndex: number): CalendarRaidInfo;
+    function GetRaidInfo(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+      eventIndex: number,
+    ): CalendarRaidInfo;
     function IsActionPending(this: void): boolean;
     function IsEventOpen(this: void): boolean;
-    function MassInviteCommunity(this: void, clubId: ClubId, minLevel: number, maxLevel: number, maxRankOrder?: number): void;
-    function MassInviteGuild(this: void, minLevel: number, maxLevel: number, maxRankOrder: number): void;
+    function MassInviteCommunity(
+      this: void,
+      clubId: ClubId,
+      minLevel: number,
+      maxLevel: number,
+      maxRankOrder?: number,
+    ): void;
+    function MassInviteGuild(
+      this: void,
+      minLevel: number,
+      maxLevel: number,
+      maxRankOrder: number,
+    ): void;
     function OpenCalendar(this: void): void;
-    function OpenEvent(this: void, offsetMonths: number, monthDay: number, index: number): boolean;
+    function OpenEvent(
+      this: void,
+      offsetMonths: number,
+      monthDay: number,
+      index: number,
+    ): boolean;
     function RemoveEvent(this: void): void;
     function SetAbsMonth(this: void, month: number, year: number): void;
     function SetMonth(this: void, offsetMonths: number): void;
@@ -6920,8 +7628,26 @@ declare global {
     function UpdateEvent(this: void): void;
   }
 
-  function GetCameraFOVDefaults(this: void): LuaMultiReturn<[number, number, number]>;
-  function GetUICameraInfo(this: void, uiCameraID: number): LuaMultiReturn<[number, number, number, number, number, number, number, number, number, boolean]>;
+  function GetCameraFOVDefaults(
+    this: void,
+  ): LuaMultiReturn<[number, number, number]>;
+  function GetUICameraInfo(
+    this: void,
+    uiCameraID: number,
+  ): LuaMultiReturn<
+    [
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      boolean,
+    ]
+  >;
 
   namespace C_ChallengeMode {
     interface ChallengeModeCompletionMemberInfo {
@@ -6943,25 +7669,68 @@ declare global {
       members: ChallengeModeGuildAttemptMember[];
     }
 
-    function CanUseKeystoneInCurrentMap(this: void, itemLocation: ItemLocation): boolean;
+    function CanUseKeystoneInCurrentMap(
+      this: void,
+      itemLocation: ItemLocation,
+    ): boolean;
     function ClearKeystone(this: void): void;
     function CloseKeystoneFrame(this: void): void;
-    function GetActiveChallengeMapID(this: void): number|undefined;
-    function GetActiveKeystoneInfo(this: void): LuaMultiReturn<[number, number[], boolean]>;
-    function GetAffixInfo(this: void, affixID: number): LuaMultiReturn<[string, string, number]>;
-    function GetCompletionInfo(this: void): LuaMultiReturn<[number, number, number, boolean, number, boolean, number|undefined, number|undefined, boolean, boolean, number, boolean, ChallengeModeCompletionMemberInfo[]]>;
+    function GetActiveChallengeMapID(this: void): number | undefined;
+    function GetActiveKeystoneInfo(
+      this: void,
+    ): LuaMultiReturn<[number, number[], boolean]>;
+    function GetAffixInfo(
+      this: void,
+      affixID: number,
+    ): LuaMultiReturn<[string, string, number]>;
+    function GetCompletionInfo(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        number,
+        boolean,
+        number,
+        boolean,
+        number | undefined,
+        number | undefined,
+        boolean,
+        boolean,
+        number,
+        boolean,
+        ChallengeModeCompletionMemberInfo[],
+      ]
+    >;
     function GetDeathCount(this: void): LuaMultiReturn<[number, number]>;
-    function GetDungeonScoreRarityColor(this: void, dungeonScore: number): colorRGB;
+    function GetDungeonScoreRarityColor(
+      this: void,
+      dungeonScore: number,
+    ): colorRGB;
     function GetGuildLeaders(this: void): ChallengeModeGuildTopAttempt[];
     function GetKeystoneLevelRarityColor(this: void, level: number): colorRGB;
     function GetMapScoreInfo(this: void): MythicPlusRatingLinkInfo[];
     function GetMapTable(this: void): number[];
-    function GetMapUIInfo(this: void, mapChallengeModeID: number): LuaMultiReturn<[string, number, number, number|undefined, number]>;
+    function GetMapUIInfo(
+      this: void,
+      mapChallengeModeID: number,
+    ): LuaMultiReturn<[string, number, number, number | undefined, number]>;
     function GetOverallDungeonScore(this: void): number;
-    function GetPowerLevelDamageHealthMod(this: void, powerLevel: number): LuaMultiReturn<[number, number]>;
-    function GetSlottedKeystoneInfo(this: void): LuaMultiReturn<[number, number[], number]>;
-    function GetSpecificDungeonOverallScoreRarityColor(this: void, specificDungeonOverallScore: number): colorRGB;
-    function GetSpecificDungeonScoreRarityColor(this: void, specificDungeonScore: number): colorRGB;
+    function GetPowerLevelDamageHealthMod(
+      this: void,
+      powerLevel: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetSlottedKeystoneInfo(
+      this: void,
+    ): LuaMultiReturn<[number, number[], number]>;
+    function GetSpecificDungeonOverallScoreRarityColor(
+      this: void,
+      specificDungeonOverallScore: number,
+    ): colorRGB;
+    function GetSpecificDungeonScoreRarityColor(
+      this: void,
+      specificDungeonScore: number,
+    ): colorRGB;
     function HasSlottedKeystone(this: void): boolean;
     function IsChallengeModeActive(this: void): boolean;
     function RemoveKeystone(this: void): boolean;
@@ -7012,7 +7781,10 @@ declare global {
   }
 
   namespace C_ChatBubbles {
-    function GetAllChatBubbles(this: void, includeForbidden?: boolean): ChatBubbleFrame[];
+    function GetAllChatBubbles(
+      this: void,
+      includeForbidden?: boolean,
+    ): ChatBubbleFrame[];
   }
 
   interface ChatChannelInfo {
@@ -7033,40 +7805,95 @@ declare global {
     }
 
     function CanPlayerSpeakLanguage(this: void, languageId: number): boolean;
-    function GetChannelInfoFromIdentifier(this: void, channelIdentifier: string): ChatChannelInfo|undefined;
-    function GetChannelRosterInfo(this: void, channelIndex: number, rosterIndex: number): LuaMultiReturn<[string, boolean, boolean, WOWGUID]>;
-    function GetChannelRuleset(this: void, channelIndex: number): Enum.ChatChannelRuleset;
-    function GetChannelRulesetForChannelID(this: void, channelID: number): Enum.ChatChannelRuleset;
+    function GetChannelInfoFromIdentifier(
+      this: void,
+      channelIdentifier: string,
+    ): ChatChannelInfo | undefined;
+    function GetChannelRosterInfo(
+      this: void,
+      channelIndex: number,
+      rosterIndex: number,
+    ): LuaMultiReturn<[string, boolean, boolean, WOWGUID]>;
+    function GetChannelRuleset(
+      this: void,
+      channelIndex: number,
+    ): Enum.ChatChannelRuleset;
+    function GetChannelRulesetForChannelID(
+      this: void,
+      channelID: number,
+    ): Enum.ChatChannelRuleset;
     function GetChannelShortcut(this: void, channelIndex: number): string;
-    function GetChannelShortcutForChannelID(this: void, channelID: number): string;
+    function GetChannelShortcutForChannelID(
+      this: void,
+      channelID: number,
+    ): string;
     function GetChatLineSenderGUID(this: void, chatLine: number): WOWGUID;
     function GetChatLineSenderName(this: void, chatLine: number): string;
     function GetChatLineText(this: void, chatLine: number): string;
-    function GetChatTypeName(this: void, typeID: number): string|undefined;
+    function GetChatTypeName(this: void, typeID: number): string | undefined;
     function GetClubStreamIDs(this: void, clubID: ClubId): ClubStreamId[];
-    function GetColorForChatType(this: void, chatType: string): colorRGB|undefined;
+    function GetColorForChatType(
+      this: void,
+      chatType: string,
+    ): colorRGB | undefined;
     function GetGeneralChannelID(this: void): number;
-    function GetGeneralChannelLocalID(this: void): number|undefined;
+    function GetGeneralChannelLocalID(this: void): number | undefined;
     function GetMentorChannelID(this: void): number;
     function GetNumActiveChannels(this: void): number;
     function GetNumReservedChatWindows(this: void): number;
     function GetRegisteredAddonMessagePrefixes(this: void): string[];
-    function IsAddonMessagePrefixRegistered(this: void, prefix: string): boolean;
+    function IsAddonMessagePrefixRegistered(
+      this: void,
+      prefix: string,
+    ): boolean;
     function IsChannelRegional(this: void, channelIndex: number): boolean;
-    function IsChannelRegionalForChannelID(this: void, channelID: number): boolean;
+    function IsChannelRegionalForChannelID(
+      this: void,
+      channelID: number,
+    ): boolean;
     function IsChatLineCensored(this: void, chatLine: number): boolean;
-    function IsPartyChannelType(this: void, channelType: Enum.ChatChannelType): boolean;
+    function IsPartyChannelType(
+      this: void,
+      channelType: Enum.ChatChannelType,
+    ): boolean;
     function IsRegionalServiceAvailable(this: void): boolean;
     function IsTimerunningPlayer(this: void, playerGUID: WOWGUID): boolean;
     function IsValidChatLine(this: void, chatLine?: number): boolean;
     function IsValidCombatFilterName(this: void, name: string): boolean;
-    function RegisterAddonMessagePrefix(this: void, prefix: string): Enum.RegisterAddonMessagePrefixResult;
-    function ReplaceIconAndGroupExpressions(this: void, input: string, noIconReplacement?: boolean, noGroupReplacement?: boolean): string;
-    function RequestCanLocalWhisperTarget(this: void, whisperTarget: WOWGUID): void;
+    function RegisterAddonMessagePrefix(
+      this: void,
+      prefix: string,
+    ): Enum.RegisterAddonMessagePrefixResult;
+    function ReplaceIconAndGroupExpressions(
+      this: void,
+      input: string,
+      noIconReplacement?: boolean,
+      noGroupReplacement?: boolean,
+    ): string;
+    function RequestCanLocalWhisperTarget(
+      this: void,
+      whisperTarget: WOWGUID,
+    ): void;
     function ResetDefaultZoneChannels(this: void): void;
-    function SendAddonMessage(this: void, prefix: string, message: string, chatType?: string, target?: string): Enum.SendAddonMessageResult;
-    function SendAddonMessageLogged(this: void, prefix: string, message: string, chatType?: string, target?: string): Enum.SendAddonMessageResult|undefined;
-    function SwapChatChannelsByChannelIndex(this: void, firstChannelIndex: number, secondChannelIndex: number): void;
+    function SendAddonMessage(
+      this: void,
+      prefix: string,
+      message: string,
+      chatType?: string,
+      target?: string,
+    ): Enum.SendAddonMessageResult;
+    function SendAddonMessageLogged(
+      this: void,
+      prefix: string,
+      message: string,
+      chatType?: string,
+      target?: string,
+    ): Enum.SendAddonMessageResult | undefined;
+    function SwapChatChannelsByChannelIndex(
+      this: void,
+      firstChannelIndex: number,
+      secondChannelIndex: number,
+    ): void;
     function UncensorChatLine(this: void, chatLine: number): void;
   }
 
@@ -7084,15 +7911,36 @@ declare global {
     }
 
     function CloseUI(this: void): void;
-    function GetChromieTimeExpansionOption(this: void, expansionRecID: number): ChromieTimeExpansionInfo|undefined;
-    function GetChromieTimeExpansionOptions(this: void): ChromieTimeExpansionInfo[];
-    function SelectChromieTimeOption(this: void, chromieTimeExpansionInfoId: number): void;
+    function GetChromieTimeExpansionOption(
+      this: void,
+      expansionRecID: number,
+    ): ChromieTimeExpansionInfo | undefined;
+    function GetChromieTimeExpansionOptions(
+      this: void,
+    ): ChromieTimeExpansionInfo[];
+    function SelectChromieTimeOption(
+      this: void,
+      chromieTimeExpansionInfoId: number,
+    ): void;
   }
 
-  function CinematicFinished(this: void, movieType: Enum.CinematicType, userCanceled?: boolean, didError?: boolean): void;
-  function CinematicStarted(this: void, movieType: Enum.CinematicType, movieID: number, canCancel?: boolean): void;
+  function CinematicFinished(
+    this: void,
+    movieType: Enum.CinematicType,
+    userCanceled?: boolean,
+    didError?: boolean,
+  ): void;
+  function CinematicStarted(
+    this: void,
+    movieType: Enum.CinematicType,
+    movieID: number,
+    canCancel?: boolean,
+  ): void;
   function InCinematic(this: void): boolean;
-  function MouseOverrideCinematicDisable(this: void, doOverride?: boolean): void;
+  function MouseOverrideCinematicDisable(
+    this: void,
+    doOverride?: boolean,
+  ): void;
   function OpeningCinematic(this: void): void;
   function StopCinematic(this: void): void;
 
@@ -7108,37 +7956,81 @@ declare global {
       selectionEntryID: number;
     }
 
-    function CanChangeTalents(this: void): LuaMultiReturn<[boolean, boolean, string|undefined]>;
+    function CanChangeTalents(
+      this: void,
+    ): LuaMultiReturn<[boolean, boolean, string | undefined]>;
     function CanCreateNewConfig(this: void): boolean;
     function CanEditTalents(this: void): LuaMultiReturn<[boolean, string]>;
     function CommitConfig(this: void, savedConfigID?: number): boolean;
     function DeleteConfig(this: void, configID: number): boolean;
-    function GetActiveConfigID(this: void): number|undefined;
-    function GetActiveHeroTalentSpec(this: void): number|undefined;
+    function GetActiveConfigID(this: void): number | undefined;
+    function GetActiveHeroTalentSpec(this: void): number | undefined;
     function GetConfigIDsBySpecID(this: void, specID?: number): number[];
     function GetHasStarterBuild(this: void): boolean;
-    function GetHeroTalentSpecsForClassSpec(this: void, configID?: number, classSpecID?: number): LuaMultiReturn<[number[]|undefined, number|undefined]>;
-    function GetLastSelectedSavedConfigID(this: void, specID: number): number|undefined;
-    function GetNextStarterBuildPurchase(this: void): LuaMultiReturn<[number|undefined, number|undefined]>;
+    function GetHeroTalentSpecsForClassSpec(
+      this: void,
+      configID?: number,
+      classSpecID?: number,
+    ): LuaMultiReturn<[number[] | undefined, number | undefined]>;
+    function GetLastSelectedSavedConfigID(
+      this: void,
+      specID: number,
+    ): number | undefined;
+    function GetNextStarterBuildPurchase(
+      this: void,
+    ): LuaMultiReturn<[number | undefined, number | undefined]>;
     function GetStarterBuildActive(this: void): boolean;
-    function GetTraitTreeForSpec(this: void, specID: number): number|undefined;
-    function HasUnspentHeroTalentPoints(this: void): LuaMultiReturn<[boolean, number]>;
-    function HasUnspentTalentPoints(this: void): LuaMultiReturn<[boolean, number, number]>;
-    function ImportLoadout(this: void, configID: number, entries: ImportLoadoutEntryInfo[], name: string): LuaMultiReturn<[boolean, string]>;
-    function InitializeViewLoadout(this: void, specID: number, level: number): void;
+    function GetTraitTreeForSpec(
+      this: void,
+      specID: number,
+    ): number | undefined;
+    function HasUnspentHeroTalentPoints(
+      this: void,
+    ): LuaMultiReturn<[boolean, number]>;
+    function HasUnspentTalentPoints(
+      this: void,
+    ): LuaMultiReturn<[boolean, number, number]>;
+    function ImportLoadout(
+      this: void,
+      configID: number,
+      entries: ImportLoadoutEntryInfo[],
+      name: string,
+    ): LuaMultiReturn<[boolean, string]>;
+    function InitializeViewLoadout(
+      this: void,
+      specID: number,
+      level: number,
+    ): void;
     function IsConfigPopulated(this: void, configID: number): boolean;
-    function LoadConfig(this: void, configID: number, autoApply: boolean): LuaMultiReturn<[Enum.LoadConfigResult, string|undefined, number[]]>;
+    function LoadConfig(
+      this: void,
+      configID: number,
+      autoApply: boolean,
+    ): LuaMultiReturn<[Enum.LoadConfigResult, string | undefined, number[]]>;
     function RenameConfig(this: void, configID: number, name: string): boolean;
     function RequestNewConfig(this: void, name: string): boolean;
     function SaveConfig(this: void, configID: number): boolean;
-    function SetStarterBuildActive(this: void, active: boolean): Enum.LoadConfigResult;
-    function SetUsesSharedActionBars(this: void, configID: number, usesShared: boolean): void;
-    function UpdateLastSelectedSavedConfigID(this: void, specID: number, configID?: number): void;
-    function ViewLoadout(this: void, entries: ImportLoadoutEntryInfo[]): boolean;
+    function SetStarterBuildActive(
+      this: void,
+      active: boolean,
+    ): Enum.LoadConfigResult;
+    function SetUsesSharedActionBars(
+      this: void,
+      configID: number,
+      usesShared: boolean,
+    ): void;
+    function UpdateLastSelectedSavedConfigID(
+      this: void,
+      specID: number,
+      configID?: number,
+    ): void;
+    function ViewLoadout(
+      this: void,
+      entries: ImportLoadoutEntryInfo[],
+    ): boolean;
   }
 
-  namespace C_ClassTrial {
-  }
+  namespace C_ClassTrial {}
 
   interface ClickBindingInfo {
     type: Enum.ClickBindingType;
@@ -7149,9 +8041,22 @@ declare global {
 
   namespace C_ClickBindings {
     function CanSpellBeClickBound(this: void, spellID: number): boolean;
-    function ExecuteBinding(this: void, targetToken: string, button: string, modifiers: number): void;
-    function GetBindingType(this: void, button: string, modifiers: number): Enum.ClickBindingType;
-    function GetEffectiveInteractionButton(this: void, button: string, modifiers: number): string;
+    function ExecuteBinding(
+      this: void,
+      targetToken: string,
+      button: string,
+      modifiers: number,
+    ): void;
+    function GetBindingType(
+      this: void,
+      button: string,
+      modifiers: number,
+    ): Enum.ClickBindingType;
+    function GetEffectiveInteractionButton(
+      this: void,
+      button: string,
+      modifiers: number,
+    ): string;
     function GetProfileInfo(this: void): ClickBindingInfo[];
     function GetStringFromModifiers(this: void, modifiers: number): string;
     function GetTutorialShown(this: void): boolean;
@@ -7171,8 +8076,7 @@ declare global {
   function Screenshot(this: void): void;
   function UpdateWindow(this: void): void;
 
-  namespace C_ClientScene {
-  }
+  namespace C_ClientScene {}
 
   namespace C_Club {
     interface ClubInfo {
@@ -7344,85 +8248,302 @@ declare global {
     }
 
     function AcceptInvitation(this: void, clubId: ClubId): void;
-    function AddClubStreamChatChannel(this: void, clubId: ClubId, streamId: ClubStreamId): void;
-    function AdvanceStreamViewMarker(this: void, clubId: ClubId, streamId: ClubStreamId): void;
-    function AssignMemberRole(this: void, clubId: ClubId, memberId: number, roleId: Enum.ClubRoleIdentifier): void;
-    function CanResolvePlayerLocationFromClubMessageData(this: void, clubId: ClubId, streamId: ClubStreamId, epoch: BigUInteger, position: BigUInteger): boolean;
+    function AddClubStreamChatChannel(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): void;
+    function AdvanceStreamViewMarker(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): void;
+    function AssignMemberRole(
+      this: void,
+      clubId: ClubId,
+      memberId: number,
+      roleId: Enum.ClubRoleIdentifier,
+    ): void;
+    function CanResolvePlayerLocationFromClubMessageData(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      epoch: BigUInteger,
+      position: BigUInteger,
+    ): boolean;
     function ClearAutoAdvanceStreamViewMarker(this: void): void;
     function ClearClubPresenceSubscription(this: void): void;
-    function CompareBattleNetDisplayName(this: void, clubId: ClubId, lhsMemberId: number, rhsMemberId: number): number;
-    function CreateClub(this: void, name: string, shortName: string|undefined, description: string, clubType: Enum.ClubType, avatarId: number, isCrossFaction?: boolean): void;
-    function CreateStream(this: void, clubId: ClubId, name: string, subject: string, leadersAndModeratorsOnly: boolean): void;
-    function CreateTicket(this: void, clubId: ClubId, allowedRedeemCount?: number, duration?: number, defaultStreamId?: ClubStreamId, isCrossFaction?: boolean): void;
+    function CompareBattleNetDisplayName(
+      this: void,
+      clubId: ClubId,
+      lhsMemberId: number,
+      rhsMemberId: number,
+    ): number;
+    function CreateClub(
+      this: void,
+      name: string,
+      shortName: string | undefined,
+      description: string,
+      clubType: Enum.ClubType,
+      avatarId: number,
+      isCrossFaction?: boolean,
+    ): void;
+    function CreateStream(
+      this: void,
+      clubId: ClubId,
+      name: string,
+      subject: string,
+      leadersAndModeratorsOnly: boolean,
+    ): void;
+    function CreateTicket(
+      this: void,
+      clubId: ClubId,
+      allowedRedeemCount?: number,
+      duration?: number,
+      defaultStreamId?: ClubStreamId,
+      isCrossFaction?: boolean,
+    ): void;
     function DeclineInvitation(this: void, clubId: ClubId): void;
     function DestroyClub(this: void, clubId: ClubId): void;
-    function DestroyMessage(this: void, clubId: ClubId, streamId: ClubStreamId, messageId: ClubMessageIdentifier): void;
-    function DestroyStream(this: void, clubId: ClubId, streamId: ClubStreamId): void;
+    function DestroyMessage(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      messageId: ClubMessageIdentifier,
+    ): void;
+    function DestroyStream(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): void;
     function DestroyTicket(this: void, clubId: ClubId, ticketId: string): void;
     function DoesAnyCommunityHaveUnreadMessages(this: void): boolean;
-    function DoesCommunityHaveMembersOfTheOppositeFaction(this: void, clubId: ClubId): boolean;
-    function EditClub(this: void, clubId: ClubId, name?: string, shortName?: string, description?: string, avatarId?: number, broadcast?: string, crossFaction?: boolean): void;
-    function EditMessage(this: void, clubId: ClubId, streamId: ClubStreamId, messageId: ClubMessageIdentifier, message: string): void;
-    function EditStream(this: void, clubId: ClubId, streamId: ClubStreamId, name?: string, subject?: string, leadersAndModeratorsOnly?: boolean): void;
+    function DoesCommunityHaveMembersOfTheOppositeFaction(
+      this: void,
+      clubId: ClubId,
+    ): boolean;
+    function EditClub(
+      this: void,
+      clubId: ClubId,
+      name?: string,
+      shortName?: string,
+      description?: string,
+      avatarId?: number,
+      broadcast?: string,
+      crossFaction?: boolean,
+    ): void;
+    function EditMessage(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      messageId: ClubMessageIdentifier,
+      message: string,
+    ): void;
+    function EditStream(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      name?: string,
+      subject?: string,
+      leadersAndModeratorsOnly?: boolean,
+    ): void;
     function Flush(this: void): void;
     function FocusCommunityStreams(this: void): void;
-    function FocusStream(this: void, clubId: ClubId, streamId: ClubStreamId): boolean;
-    function GetAssignableRoles(this: void, clubId: ClubId, memberId: number): Enum.ClubRoleIdentifier[];
-    function GetAvatarIdList(this: void, clubType: Enum.ClubType): number[]|undefined;
+    function FocusStream(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): boolean;
+    function GetAssignableRoles(
+      this: void,
+      clubId: ClubId,
+      memberId: number,
+    ): Enum.ClubRoleIdentifier[];
+    function GetAvatarIdList(
+      this: void,
+      clubType: Enum.ClubType,
+    ): number[] | undefined;
     function GetClubCapacity(this: void): number;
-    function GetClubInfo(this: void, clubId: ClubId): ClubInfo|undefined;
+    function GetClubInfo(this: void, clubId: ClubId): ClubInfo | undefined;
     function GetClubLimits(this: void, clubType: Enum.ClubType): ClubLimits;
-    function GetClubMembers(this: void, clubId: ClubId, streamId?: ClubStreamId): number[];
+    function GetClubMembers(
+      this: void,
+      clubId: ClubId,
+      streamId?: ClubStreamId,
+    ): number[];
     function GetClubPrivileges(this: void, clubId: ClubId): ClubPrivilegeInfo;
-    function GetClubStreamNotificationSettings(this: void, clubId: ClubId): ClubStreamNotificationSetting[];
-    function GetCommunityNameResultText(this: void, result: Enum.ValidateNameResult): string|undefined;
-    function GetGuildClubId(this: void): ClubId|undefined;
-    function GetInfoFromLastCommunityChatLine(this: void): LuaMultiReturn<[ClubMessageInfo, ClubId, ClubStreamId, Enum.ClubType]>;
-    function GetInvitationCandidates(this: void, filter: string|undefined, maxResults: number|undefined, cursorPosition: number|undefined, allowFullMatch: boolean|undefined, clubId: ClubId): ClubInvitationCandidateInfo[];
-    function GetInvitationInfo(this: void, clubId: ClubId): ClubSelfInvitationInfo|undefined;
-    function GetInvitationsForClub(this: void, clubId: ClubId): ClubInvitationInfo[];
+    function GetClubStreamNotificationSettings(
+      this: void,
+      clubId: ClubId,
+    ): ClubStreamNotificationSetting[];
+    function GetCommunityNameResultText(
+      this: void,
+      result: Enum.ValidateNameResult,
+    ): string | undefined;
+    function GetGuildClubId(this: void): ClubId | undefined;
+    function GetInfoFromLastCommunityChatLine(
+      this: void,
+    ): LuaMultiReturn<[ClubMessageInfo, ClubId, ClubStreamId, Enum.ClubType]>;
+    function GetInvitationCandidates(
+      this: void,
+      filter: string | undefined,
+      maxResults: number | undefined,
+      cursorPosition: number | undefined,
+      allowFullMatch: boolean | undefined,
+      clubId: ClubId,
+    ): ClubInvitationCandidateInfo[];
+    function GetInvitationInfo(
+      this: void,
+      clubId: ClubId,
+    ): ClubSelfInvitationInfo | undefined;
+    function GetInvitationsForClub(
+      this: void,
+      clubId: ClubId,
+    ): ClubInvitationInfo[];
     function GetInvitationsForSelf(this: void): ClubSelfInvitationInfo[];
-    function GetLastTicketResponse(this: void, ticket: string): LuaMultiReturn<[Enum.ClubErrorType, ClubInfo|undefined, boolean]>;
-    function GetMemberInfo(this: void, clubId: ClubId, memberId: number): ClubMemberInfo|undefined;
-    function GetMemberInfoForSelf(this: void, clubId: ClubId): ClubMemberInfo|undefined;
-    function GetMessageInfo(this: void, clubId: ClubId, streamId: ClubStreamId, messageId: ClubMessageIdentifier): ClubMessageInfo|undefined;
-    function GetMessageRanges(this: void, clubId: ClubId, streamId: ClubStreamId): ClubMessageRange[];
-    function GetMessagesBefore(this: void, clubId: ClubId, streamId: ClubStreamId, newest: ClubMessageIdentifier, count: number): ClubMessageInfo[];
-    function GetMessagesInRange(this: void, clubId: ClubId, streamId: ClubStreamId, oldest: ClubMessageIdentifier, newest: ClubMessageIdentifier): ClubMessageInfo[];
-    function GetStreamInfo(this: void, clubId: ClubId, streamId: ClubStreamId): ClubStreamInfo|undefined;
-    function GetStreamViewMarker(this: void, clubId: ClubId, streamId: ClubStreamId): BigUInteger|undefined;
+    function GetLastTicketResponse(
+      this: void,
+      ticket: string,
+    ): LuaMultiReturn<[Enum.ClubErrorType, ClubInfo | undefined, boolean]>;
+    function GetMemberInfo(
+      this: void,
+      clubId: ClubId,
+      memberId: number,
+    ): ClubMemberInfo | undefined;
+    function GetMemberInfoForSelf(
+      this: void,
+      clubId: ClubId,
+    ): ClubMemberInfo | undefined;
+    function GetMessageInfo(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      messageId: ClubMessageIdentifier,
+    ): ClubMessageInfo | undefined;
+    function GetMessageRanges(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): ClubMessageRange[];
+    function GetMessagesBefore(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      newest: ClubMessageIdentifier,
+      count: number,
+    ): ClubMessageInfo[];
+    function GetMessagesInRange(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      oldest: ClubMessageIdentifier,
+      newest: ClubMessageIdentifier,
+    ): ClubMessageInfo[];
+    function GetStreamInfo(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): ClubStreamInfo | undefined;
+    function GetStreamViewMarker(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): BigUInteger | undefined;
     function GetStreams(this: void, clubId: ClubId): ClubStreamInfo[];
     function GetSubscribedClubs(this: void): ClubInfo[];
     function GetTickets(this: void, clubId: ClubId): ClubTicketInfo[];
     function IsAccountMuted(this: void, clubId: ClubId): boolean;
-    function IsBeginningOfStream(this: void, clubId: ClubId, streamId: ClubStreamId, messageId: ClubMessageIdentifier): boolean;
+    function IsBeginningOfStream(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      messageId: ClubMessageIdentifier,
+    ): boolean;
     function IsEnabled(this: void): boolean;
     function IsRestricted(this: void): Enum.ClubRestrictionReason;
-    function IsSubscribedToStream(this: void, clubId: ClubId, streamId: ClubStreamId): boolean;
+    function IsSubscribedToStream(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): boolean;
     function KickMember(this: void, clubId: ClubId, memberId: number): void;
     function LeaveClub(this: void, clubId: ClubId): void;
     function RedeemTicket(this: void, ticketId: string): void;
     function RequestInvitationsForClub(this: void, clubId: ClubId): void;
-    function RequestMoreMessagesBefore(this: void, clubId: ClubId, streamId: ClubStreamId, messageId?: ClubMessageIdentifier, count?: number): boolean;
+    function RequestMoreMessagesBefore(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      messageId?: ClubMessageIdentifier,
+      count?: number,
+    ): boolean;
     function RequestTicket(this: void, ticketId: string): void;
     function RequestTickets(this: void, clubId: ClubId): void;
-    function RevokeInvitation(this: void, clubId: ClubId, memberId: number): void;
-    function SendBattleTagFriendRequest(this: void, guildClubId: ClubId, memberId: number): void;
-    function SendCharacterInvitation(this: void, clubId: ClubId, character: string): void;
+    function RevokeInvitation(
+      this: void,
+      clubId: ClubId,
+      memberId: number,
+    ): void;
+    function SendBattleTagFriendRequest(
+      this: void,
+      guildClubId: ClubId,
+      memberId: number,
+    ): void;
+    function SendCharacterInvitation(
+      this: void,
+      clubId: ClubId,
+      character: string,
+    ): void;
     function SendInvitation(this: void, clubId: ClubId, memberId: number): void;
-    function SendMessage(this: void, clubId: ClubId, streamId: ClubStreamId, message: string): void;
-    function SetAutoAdvanceStreamViewMarker(this: void, clubId: ClubId, streamId: ClubStreamId): void;
-    function SetAvatarTexture(this: void, texture: SimpleTexture, avatarId: number, clubType: Enum.ClubType): void;
-    function SetClubMemberNote(this: void, clubId: ClubId, memberId: number, note: string): void;
+    function SendMessage(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+      message: string,
+    ): void;
+    function SetAutoAdvanceStreamViewMarker(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): void;
+    function SetAvatarTexture(
+      this: void,
+      texture: SimpleTexture,
+      avatarId: number,
+      clubType: Enum.ClubType,
+    ): void;
+    function SetClubMemberNote(
+      this: void,
+      clubId: ClubId,
+      memberId: number,
+      note: string,
+    ): void;
     function SetClubPresenceSubscription(this: void, clubId: ClubId): void;
-    function SetClubStreamNotificationSettings(this: void, clubId: ClubId, settings: ClubStreamNotificationSetting[]): void;
+    function SetClubStreamNotificationSettings(
+      this: void,
+      clubId: ClubId,
+      settings: ClubStreamNotificationSetting[],
+    ): void;
     function SetCommunityID(this: void, communityID: BigUInteger): void;
     function SetFavorite(this: void, clubId: ClubId, isFavorite: boolean): void;
-    function SetSocialQueueingEnabled(this: void, clubId: ClubId, enabled: boolean): void;
+    function SetSocialQueueingEnabled(
+      this: void,
+      clubId: ClubId,
+      enabled: boolean,
+    ): void;
     function ShouldAllowClubType(this: void, clubType: Enum.ClubType): boolean;
     function UnfocusAllStreams(this: void, unsubscribe: boolean): void;
-    function UnfocusStream(this: void, clubId: ClubId, streamId: ClubStreamId): void;
-    function ValidateText(this: void, clubType: Enum.ClubType, text: string, clubFieldType: Enum.ClubFieldType): Enum.ValidateNameResult;
+    function UnfocusStream(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): void;
+    function ValidateText(
+      this: void,
+      clubType: Enum.ClubType,
+      text: string,
+      clubFieldType: Enum.ClubFieldType,
+    ): Enum.ValidateNameResult;
   }
 
   namespace C_ClubFinder {
@@ -7486,65 +8607,171 @@ declare global {
       realmName?: string;
     }
 
-    function ApplicantAcceptClubInvite(this: void, clubFinderGUID: WOWGUID): void;
-    function ApplicantDeclineClubInvite(this: void, clubFinderGUID: WOWGUID): void;
+    function ApplicantAcceptClubInvite(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): void;
+    function ApplicantDeclineClubInvite(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): void;
     function CancelMembershipRequest(this: void, clubFinderGUID: WOWGUID): void;
     function CheckAllPlayerApplicantSettings(this: void): void;
     function ClearAllFinderCache(this: void): void;
     function ClearClubApplicantsCache(this: void): void;
     function ClearClubFinderPostingsCache(this: void): void;
-    function DoesPlayerBelongToClubFromClubGUID(this: void, clubFinderGUID: WOWGUID): boolean;
-    function GetClubFinderDisableReason(this: void): Enum.ClubFinderDisableReason|undefined;
+    function DoesPlayerBelongToClubFromClubGUID(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): boolean;
+    function GetClubFinderDisableReason(
+      this: void,
+    ): Enum.ClubFinderDisableReason | undefined;
     function GetClubRecruitmentSettings(this: void): ClubSettingsInfo;
-    function GetClubTypeFromFinderGUID(this: void, clubFinderGUID: WOWGUID): Enum.ClubFinderRequestType;
+    function GetClubTypeFromFinderGUID(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): Enum.ClubFinderRequestType;
     function GetFocusIndexFromFlag(this: void, flags: number): number;
     function GetPlayerApplicantLocaleFlags(this: void): number;
     function GetPlayerApplicantSettings(this: void): ClubSettingsInfo;
-    function GetPlayerClubApplicationStatus(this: void, clubFinderGUID: WOWGUID): Enum.PlayerClubRequestStatus;
+    function GetPlayerClubApplicationStatus(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): Enum.PlayerClubRequestStatus;
     function GetPlayerSettingsFocusFlagsSelectedCount(this: void): number;
-    function GetPostingIDFromClubFinderGUID(this: void, clubFinderGUID: WOWGUID): number|undefined;
-    function GetRecruitingClubInfoFromClubID(this: void, clubId: ClubId): RecruitingClubInfo|undefined;
-    function GetRecruitingClubInfoFromFinderGUID(this: void, clubFinderGUID: WOWGUID): RecruitingClubInfo;
-    function GetStatusOfPostingFromClubId(this: void, postingID: ClubId): Enum.ClubFinderClubPostingStatusFlags[];
+    function GetPostingIDFromClubFinderGUID(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): number | undefined;
+    function GetRecruitingClubInfoFromClubID(
+      this: void,
+      clubId: ClubId,
+    ): RecruitingClubInfo | undefined;
+    function GetRecruitingClubInfoFromFinderGUID(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): RecruitingClubInfo;
+    function GetStatusOfPostingFromClubId(
+      this: void,
+      postingID: ClubId,
+    ): Enum.ClubFinderClubPostingStatusFlags[];
     function GetTotalMatchingCommunityListSize(this: void): number;
     function GetTotalMatchingGuildListSize(this: void): number;
-    function HasAlreadyAppliedToLinkedPosting(this: void, clubFinderGUID: WOWGUID): boolean;
+    function HasAlreadyAppliedToLinkedPosting(
+      this: void,
+      clubFinderGUID: WOWGUID,
+    ): boolean;
     function HasPostingBeenDelisted(this: void, postingID: ClubId): boolean;
     function IsCommunityFinderEnabled(this: void): boolean;
     function IsEnabled(this: void): boolean;
     function IsListingEnabledFromFlags(this: void, flags: number): boolean;
     function IsPostingBanned(this: void, postingID: ClubId): boolean;
     function IsValidSearchString(this: void, name: string): boolean;
-    function LookupClubPostingFromClubFinderGUID(this: void, clubFinderGUID: WOWGUID, isLinkedPosting: boolean): void;
+    function LookupClubPostingFromClubFinderGUID(
+      this: void,
+      clubFinderGUID: WOWGUID,
+      isLinkedPosting: boolean,
+    ): void;
     function PlayerGetClubInvitationList(this: void): RecruitingClubInfo[];
-    function PlayerRequestPendingClubsList(this: void, type: Enum.ClubFinderRequestType): void;
-    function PlayerReturnPendingCommunitiesList(this: void): RecruitingClubInfo[];
+    function PlayerRequestPendingClubsList(
+      this: void,
+      type: Enum.ClubFinderRequestType,
+    ): void;
+    function PlayerReturnPendingCommunitiesList(
+      this: void,
+    ): RecruitingClubInfo[];
     function PlayerReturnPendingGuildsList(this: void): RecruitingClubInfo[];
-    function PostClub(this: void, clubId: ClubId, itemLevelRequirement: number, name: string, description: string, avatarId: number, specs: number[], type: Enum.ClubFinderRequestType, crossFaction?: boolean): boolean;
-    function RequestApplicantList(this: void, type: Enum.ClubFinderRequestType): void;
-    function RequestClubsList(this: void, guildListRequested: boolean, searchString: string, specIDs: number[]): void;
-    function RequestMembershipToClub(this: void, clubFinderGUID: WOWGUID, comment: string, specIDs: number[]): void;
-    function RequestNextCommunityPage(this: void, startingIndex: number, pageSize: number): void;
-    function RequestNextGuildPage(this: void, startingIndex: number, pageSize: number): void;
-    function RequestPostingInformationFromClubId(this: void, clubId: ClubId): boolean;
+    function PostClub(
+      this: void,
+      clubId: ClubId,
+      itemLevelRequirement: number,
+      name: string,
+      description: string,
+      avatarId: number,
+      specs: number[],
+      type: Enum.ClubFinderRequestType,
+      crossFaction?: boolean,
+    ): boolean;
+    function RequestApplicantList(
+      this: void,
+      type: Enum.ClubFinderRequestType,
+    ): void;
+    function RequestClubsList(
+      this: void,
+      guildListRequested: boolean,
+      searchString: string,
+      specIDs: number[],
+    ): void;
+    function RequestMembershipToClub(
+      this: void,
+      clubFinderGUID: WOWGUID,
+      comment: string,
+      specIDs: number[],
+    ): void;
+    function RequestNextCommunityPage(
+      this: void,
+      startingIndex: number,
+      pageSize: number,
+    ): void;
+    function RequestNextGuildPage(
+      this: void,
+      startingIndex: number,
+      pageSize: number,
+    ): void;
+    function RequestPostingInformationFromClubId(
+      this: void,
+      clubId: ClubId,
+    ): boolean;
     function RequestSubscribedClubPostingIDs(this: void): void;
     function ResetClubPostingMapCache(this: void): void;
-    function RespondToApplicant(this: void, clubFinderGUID: WOWGUID, playerGUID: WOWGUID, shouldAccept: boolean, requestType: Enum.ClubFinderRequestType, playerName: string, forceAccept: boolean, reported?: boolean): void;
-    function ReturnClubApplicantList(this: void, clubId: ClubId): ClubFinderApplicantInfo[];
+    function RespondToApplicant(
+      this: void,
+      clubFinderGUID: WOWGUID,
+      playerGUID: WOWGUID,
+      shouldAccept: boolean,
+      requestType: Enum.ClubFinderRequestType,
+      playerName: string,
+      forceAccept: boolean,
+      reported?: boolean,
+    ): void;
+    function ReturnClubApplicantList(
+      this: void,
+      clubId: ClubId,
+    ): ClubFinderApplicantInfo[];
     function ReturnMatchingCommunityList(this: void): RecruitingClubInfo[];
     function ReturnMatchingGuildList(this: void): RecruitingClubInfo[];
-    function ReturnPendingClubApplicantList(this: void, clubId: ClubId): ClubFinderApplicantInfo[];
-    function SendChatWhisper(this: void, clubFinderGUID: WOWGUID, playerGUID: WOWGUID, applicantType: Enum.ClubFinderRequestType, name: string): void;
+    function ReturnPendingClubApplicantList(
+      this: void,
+      clubId: ClubId,
+    ): ClubFinderApplicantInfo[];
+    function SendChatWhisper(
+      this: void,
+      clubFinderGUID: WOWGUID,
+      playerGUID: WOWGUID,
+      applicantType: Enum.ClubFinderRequestType,
+      name: string,
+    ): void;
     function SetAllRecruitmentSettings(this: void, value: number): void;
-    function SetPlayerApplicantLocaleFlags(this: void, localeFlags: number): void;
-    function SetPlayerApplicantSettings(this: void, index: number, checked: boolean): void;
+    function SetPlayerApplicantLocaleFlags(
+      this: void,
+      localeFlags: number,
+    ): void;
+    function SetPlayerApplicantSettings(
+      this: void,
+      index: number,
+      checked: boolean,
+    ): void;
     function SetRecruitmentLocale(this: void, locale: number): void;
-    function SetRecruitmentSettings(this: void, index: number, checked: boolean): void;
+    function SetRecruitmentSettings(
+      this: void,
+      index: number,
+      checked: boolean,
+    ): void;
     function ShouldShowClubFinder(this: void): boolean;
   }
 
-  namespace C_CombatLog {
-  }
+  namespace C_CombatLog {}
 
   namespace C_Commentator {
     interface CommentatorHistory {
@@ -7608,34 +8835,73 @@ declare global {
       overrideName: string;
     }
 
-    function AddPlayerOverrideName(this: void, playerName: string, overrideName: string): void;
+    function AddPlayerOverrideName(
+      this: void,
+      playerName: string,
+      overrideName: string,
+    ): void;
     function AddTrackedDefensiveAuras(this: void, spellIDs: number[]): void;
     function AddTrackedOffensiveAuras(this: void, spellIDs: number[]): void;
     function AreTeamsSwapped(this: void): boolean;
-    function AssignPlayerToTeam(this: void, playerName: string, teamName: string): void;
-    function AssignPlayersToTeam(this: void, playerName: string[], teamName: string): void;
-    function AssignPlayersToTeamInCurrentInstance(this: void, teamIndex: number, teamName: string): void;
+    function AssignPlayerToTeam(
+      this: void,
+      playerName: string,
+      teamName: string,
+    ): void;
+    function AssignPlayersToTeam(
+      this: void,
+      playerName: string[],
+      teamName: string,
+    ): void;
+    function AssignPlayersToTeamInCurrentInstance(
+      this: void,
+      teamIndex: number,
+      teamName: string,
+    ): void;
     function CanUseCommentatorCheats(this: void): boolean;
     function ClearCameraTarget(this: void): void;
     function ClearFollowTarget(this: void): void;
     function ClearLookAtTarget(this: void, lookAtIndex?: number): void;
     function EnterInstance(this: void): void;
     function ExitInstance(this: void): void;
-    function FindSpectatedUnit(this: void, unitToken: UnitToken): LuaMultiReturn<[number, number, boolean]>;
-    function FindTeamNameInCurrentInstance(this: void, teamIndex: number): string|undefined;
-    function FindTeamNameInDirectory(this: void, playerNames: string[]): string|undefined;
+    function FindSpectatedUnit(
+      this: void,
+      unitToken: UnitToken,
+    ): LuaMultiReturn<[number, number, boolean]>;
+    function FindTeamNameInCurrentInstance(
+      this: void,
+      teamIndex: number,
+    ): string | undefined;
+    function FindTeamNameInDirectory(
+      this: void,
+      playerNames: string[],
+    ): string | undefined;
     function FlushCommentatorHistory(this: void): void;
-    function FollowPlayer(this: void, factionIndex: number, playerIndex: number, forceInstantTransition?: boolean): void;
+    function FollowPlayer(
+      this: void,
+      factionIndex: number,
+      playerIndex: number,
+      forceInstantTransition?: boolean,
+    ): void;
     function FollowUnit(this: void, token: string): void;
     function ForceFollowTransition(this: void): void;
-    function GetAdditionalCameraWeight(this: void): LuaMultiReturn<[number, number]>;
-    function GetAdditionalCameraWeightByToken(this: void, unitToken: UnitToken): number;
+    function GetAdditionalCameraWeight(
+      this: void,
+    ): LuaMultiReturn<[number, number]>;
+    function GetAdditionalCameraWeightByToken(
+      this: void,
+      unitToken: UnitToken,
+    ): number;
     function GetAllPlayerOverrideNames(this: void): NameOverrideEntry[];
-    function GetCamera(this: void): LuaMultiReturn<[number, number, number, number, number, number, number]>;
+    function GetCamera(
+      this: void,
+    ): LuaMultiReturn<[number, number, number, number, number, number, number]>;
     function GetCameraCollision(this: void): boolean;
-    function GetCameraPosition(this: void): LuaMultiReturn<[number, number, number]>;
+    function GetCameraPosition(
+      this: void,
+    ): LuaMultiReturn<[number, number, number]>;
     function GetCommentatorHistory(this: void): CommentatorHistory;
-    function GetCurrentMapID(this: void): number|undefined;
+    function GetCurrentMapID(this: void): number | undefined;
     function GetDampeningPercent(this: void): number;
     function GetDistanceBeforeForcedHorizontalConvergence(this: void): number;
     function GetDurationToForceHorizontalConvergence(this: void): number;
@@ -7643,9 +8909,16 @@ declare global {
     function GetHardlockWeight(this: void): number;
     function GetHorizontalAngleThresholdToSmooth(this: void): number;
     function GetIndirectSpellID(this: void, trackedSpellID: number): number;
-    function GetInstanceInfo(this: void, mapIndex: number, instanceIndex: number): LuaMultiReturn<[number, string|undefined, number, number, number]>;
+    function GetInstanceInfo(
+      this: void,
+      mapIndex: number,
+      instanceIndex: number,
+    ): LuaMultiReturn<[number, string | undefined, number, number, number]>;
     function GetLookAtLerpAmount(this: void): number;
-    function GetMapInfo(this: void, mapIndex: number): LuaMultiReturn<[number, number, number, number]>;
+    function GetMapInfo(
+      this: void,
+      mapIndex: number,
+    ): LuaMultiReturn<[number, number, number, number]>;
     function GetMatchDuration(this: void): time_t;
     function GetMaxNumPlayersPerTeam(this: void): number;
     function GetMaxNumTeams(this: void): number;
@@ -7656,21 +8929,76 @@ declare global {
     function GetMsToSmoothVerticalChange(this: void): number;
     function GetNumMaps(this: void): number;
     function GetNumPlayers(this: void, factionIndex: number): number;
-    function GetOrCreateSeries(this: void, teamName1: string, teamName2: string): CommentatorSeries;
-    function GetPlayerAuraInfo(this: void, teamIndex: number, playerIndex: number, spellID: number): LuaMultiReturn<[number, number, boolean]>;
-    function GetPlayerAuraInfoByUnit(this: void, token: UnitToken, spellID: number): LuaMultiReturn<[number, number, boolean]>;
-    function GetPlayerCooldownInfo(this: void, teamIndex: number, playerIndex: number, spellID: number): LuaMultiReturn<[number, number, boolean]>;
-    function GetPlayerCooldownInfoByUnit(this: void, unitToken: UnitToken, spellID: number): LuaMultiReturn<[number, number, boolean]>;
-    function GetPlayerCrowdControlInfo(this: void, teamIndex: number, playerIndex: number): LuaMultiReturn<[number, number, number]>;
-    function GetPlayerCrowdControlInfoByUnit(this: void, token: UnitToken): LuaMultiReturn<[number, number, number]>;
-    function GetPlayerData(this: void, teamIndex: number, playerIndex: number): CommentatorPlayerData|undefined;
-    function GetPlayerFlagInfo(this: void, teamIndex: number, playerIndex: number): boolean;
+    function GetOrCreateSeries(
+      this: void,
+      teamName1: string,
+      teamName2: string,
+    ): CommentatorSeries;
+    function GetPlayerAuraInfo(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+      spellID: number,
+    ): LuaMultiReturn<[number, number, boolean]>;
+    function GetPlayerAuraInfoByUnit(
+      this: void,
+      token: UnitToken,
+      spellID: number,
+    ): LuaMultiReturn<[number, number, boolean]>;
+    function GetPlayerCooldownInfo(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+      spellID: number,
+    ): LuaMultiReturn<[number, number, boolean]>;
+    function GetPlayerCooldownInfoByUnit(
+      this: void,
+      unitToken: UnitToken,
+      spellID: number,
+    ): LuaMultiReturn<[number, number, boolean]>;
+    function GetPlayerCrowdControlInfo(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetPlayerCrowdControlInfoByUnit(
+      this: void,
+      token: UnitToken,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetPlayerData(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+    ): CommentatorPlayerData | undefined;
+    function GetPlayerFlagInfo(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+    ): boolean;
     function GetPlayerFlagInfoByUnit(this: void, unitToken: UnitToken): boolean;
-    function GetPlayerItemCooldownInfo(this: void, teamIndex: number, playerIndex: number, itemID: number): LuaMultiReturn<[number, number, boolean]>;
-    function GetPlayerItemCooldownInfoByUnit(this: void, unitToken: UnitToken, itemID: number): LuaMultiReturn<[number, number, boolean]>;
+    function GetPlayerItemCooldownInfo(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+      itemID: number,
+    ): LuaMultiReturn<[number, number, boolean]>;
+    function GetPlayerItemCooldownInfoByUnit(
+      this: void,
+      unitToken: UnitToken,
+      itemID: number,
+    ): LuaMultiReturn<[number, number, boolean]>;
     function GetPlayerOverrideName(this: void, originalName: string): string;
-    function GetPlayerSpellCharges(this: void, teamIndex: number, playerIndex: number, spellID: number): LuaMultiReturn<[number, number, number, number]>;
-    function GetPlayerSpellChargesByUnit(this: void, unitToken: UnitToken, spellID: number): LuaMultiReturn<[number, number, number, number]>;
+    function GetPlayerSpellCharges(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+      spellID: number,
+    ): LuaMultiReturn<[number, number, number, number]>;
+    function GetPlayerSpellChargesByUnit(
+      this: void,
+      unitToken: UnitToken,
+      spellID: number,
+    ): LuaMultiReturn<[number, number, number, number]>;
     function GetPositionLerpAmount(this: void): number;
     function GetSmoothFollowTransitioning(this: void): boolean;
     function GetSoftlockWeight(this: void): number;
@@ -7678,46 +9006,136 @@ declare global {
     function GetStartLocation(this: void, mapID: number): vector3;
     function GetTeamColor(this: void, teamIndex: number): colorRGB;
     function GetTeamColorByUnit(this: void, unitToken: UnitToken): colorRGB;
-    function GetTimeLeftInMatch(this: void): number|undefined;
+    function GetTimeLeftInMatch(this: void): number | undefined;
     function GetTrackedSpellID(this: void, indirectSpellID: number): number;
-    function GetTrackedSpells(this: void, teamIndex: number, playerIndex: number, category: Enum.TrackedSpellCategory): number[]|undefined;
-    function GetTrackedSpellsByUnit(this: void, unitToken: UnitToken, category: Enum.TrackedSpellCategory): number[]|undefined;
+    function GetTrackedSpells(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+      category: Enum.TrackedSpellCategory,
+    ): number[] | undefined;
+    function GetTrackedSpellsByUnit(
+      this: void,
+      unitToken: UnitToken,
+      category: Enum.TrackedSpellCategory,
+    ): number[] | undefined;
     function GetUnitData(this: void, unitToken: UnitToken): CommentatorUnitData;
-    function GetWargameInfo(this: void, listID: number): LuaMultiReturn<[string, number, number, boolean]>;
-    function HasTrackedAuras(this: void, token: UnitToken): LuaMultiReturn<[boolean, boolean]>;
+    function GetWargameInfo(
+      this: void,
+      listID: number,
+    ): LuaMultiReturn<[string, number, number, boolean]>;
+    function HasTrackedAuras(
+      this: void,
+      token: UnitToken,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function IsSmartCameraLocked(this: void): boolean;
     function IsSpectating(this: void): boolean;
     function IsTrackedDefensiveAura(this: void, spellID: number): boolean;
     function IsTrackedOffensiveAura(this: void, spellID: number): boolean;
-    function IsTrackedSpell(this: void, teamIndex: number, playerIndex: number, spellID: number, category: Enum.TrackedSpellCategory): boolean;
-    function IsTrackedSpellByUnit(this: void, unitToken: UnitToken, spellID: number, category: Enum.TrackedSpellCategory): boolean;
+    function IsTrackedSpell(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+      spellID: number,
+      category: Enum.TrackedSpellCategory,
+    ): boolean;
+    function IsTrackedSpellByUnit(
+      this: void,
+      unitToken: UnitToken,
+      spellID: number,
+      category: Enum.TrackedSpellCategory,
+    ): boolean;
     function IsUsingSmartCamera(this: void): boolean;
-    function LookAtPlayer(this: void, factionIndex: number, playerIndex: number, lookAtIndex?: number): void;
+    function LookAtPlayer(
+      this: void,
+      factionIndex: number,
+      playerIndex: number,
+      lookAtIndex?: number,
+    ): void;
     function RemoveAllOverrideNames(this: void): void;
-    function RemovePlayerOverrideName(this: void, originalPlayerName: string): void;
-    function RequestPlayerCooldownInfo(this: void, teamIndex: number, playerIndex: number): void;
+    function RemovePlayerOverrideName(
+      this: void,
+      originalPlayerName: string,
+    ): void;
+    function RequestPlayerCooldownInfo(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+    ): void;
     function ResetFoVTarget(this: void): void;
-    function ResetSeriesScores(this: void, teamName1: string, teamName2: string): void;
+    function ResetSeriesScores(
+      this: void,
+      teamName1: string,
+      teamName2: string,
+    ): void;
     function ResetSettings(this: void): void;
     function ResetTrackedAuras(this: void): void;
-    function SetAdditionalCameraWeight(this: void, teamIndex: number, playerIndex: number, weight: number): void;
-    function SetAdditionalCameraWeightByToken(this: void, unitToken: UnitToken, weight: number): void;
+    function SetAdditionalCameraWeight(
+      this: void,
+      teamIndex: number,
+      playerIndex: number,
+      weight: number,
+    ): void;
+    function SetAdditionalCameraWeightByToken(
+      this: void,
+      unitToken: UnitToken,
+      weight: number,
+    ): void;
     function SetBlocklistedAuras(this: void, spellIDs: number[]): void;
-    function SetBlocklistedCooldowns(this: void, specID: number, spellIDs: number[]): void;
+    function SetBlocklistedCooldowns(
+      this: void,
+      specID: number,
+      spellIDs: number[],
+    ): void;
     function SetBlocklistedItemCooldowns(this: void, itemIDs: number[]): void;
-    function SetCamera(this: void, xPos: number, yPos: number, zPos: number, yaw: number, pitch: number, roll: number, fov: number): void;
+    function SetCamera(
+      this: void,
+      xPos: number,
+      yPos: number,
+      zPos: number,
+      yaw: number,
+      pitch: number,
+      roll: number,
+      fov: number,
+    ): void;
     function SetCameraCollision(this: void, collide: boolean): void;
-    function SetCameraPosition(this: void, xPos: number, yPos: number, zPos: number, snapToLocation: boolean): void;
+    function SetCameraPosition(
+      this: void,
+      xPos: number,
+      yPos: number,
+      zPos: number,
+      snapToLocation: boolean,
+    ): void;
     function SetCheatsEnabled(this: void, enableCheats: boolean): void;
-    function SetCommentatorHistory(this: void, history: CommentatorHistory): void;
-    function SetDistanceBeforeForcedHorizontalConvergence(this: void, distance: number): void;
-    function SetDurationToForceHorizontalConvergence(this: void, ms: number): void;
+    function SetCommentatorHistory(
+      this: void,
+      history: CommentatorHistory,
+    ): void;
+    function SetDistanceBeforeForcedHorizontalConvergence(
+      this: void,
+      distance: number,
+    ): void;
+    function SetDurationToForceHorizontalConvergence(
+      this: void,
+      ms: number,
+    ): void;
     function SetExcludeDistance(this: void, excludeDistance: number): void;
-    function SetFollowCameraSpeeds(this: void, elasticSpeed: number, minSpeed: number): void;
+    function SetFollowCameraSpeeds(
+      this: void,
+      elasticSpeed: number,
+      minSpeed: number,
+    ): void;
     function SetHardlockWeight(this: void, weight: number): void;
-    function SetHorizontalAngleThresholdToSmooth(this: void, angle: number): void;
+    function SetHorizontalAngleThresholdToSmooth(
+      this: void,
+      angle: number,
+    ): void;
     function SetLookAtLerpAmount(this: void, amount: number): void;
-    function SetMapAndInstanceIndex(this: void, mapIndex: number, instanceIndex: number): void;
+    function SetMapAndInstanceIndex(
+      this: void,
+      mapIndex: number,
+      instanceIndex: number,
+    ): void;
     function SetMouseDisabled(this: void, disabled: boolean): void;
     function SetMoveSpeed(this: void, newSpeed: number): void;
     function SetMsToHoldForHorizontalMovement(this: void, ms: number): void;
@@ -7725,12 +9143,36 @@ declare global {
     function SetMsToSmoothHorizontalChange(this: void, ms: number): void;
     function SetMsToSmoothVerticalChange(this: void, ms: number): void;
     function SetPositionLerpAmount(this: void, amount: number): void;
-    function SetRequestedDebuffCooldowns(this: void, specID: number, spellIDs: number[]): void;
-    function SetRequestedDefensiveCooldowns(this: void, specID: number, spellIDs: number[]): void;
+    function SetRequestedDebuffCooldowns(
+      this: void,
+      specID: number,
+      spellIDs: number[],
+    ): void;
+    function SetRequestedDefensiveCooldowns(
+      this: void,
+      specID: number,
+      spellIDs: number[],
+    ): void;
     function SetRequestedItemCooldowns(this: void, itemIDs: number[]): void;
-    function SetRequestedOffensiveCooldowns(this: void, specID: number, spellIDs: number[]): void;
-    function SetSeriesScore(this: void, teamName1: string, teamName2: string, scoringTeamName: string, score: number): void;
-    function SetSeriesScores(this: void, teamName1: string, teamName2: string, score1: number, score2: number): void;
+    function SetRequestedOffensiveCooldowns(
+      this: void,
+      specID: number,
+      spellIDs: number[],
+    ): void;
+    function SetSeriesScore(
+      this: void,
+      teamName1: string,
+      teamName2: string,
+      scoringTeamName: string,
+      score: number,
+    ): void;
+    function SetSeriesScores(
+      this: void,
+      teamName1: string,
+      teamName2: string,
+      score1: number,
+      score2: number,
+    ): void;
     function SetSmartCameraLocked(this: void, locked: boolean): void;
     function SetSmoothFollowTransitioning(this: void, enabled: boolean): void;
     function SetSoftlockWeight(this: void, weight: number): void;
@@ -7738,7 +9180,14 @@ declare global {
     function SetTargetHeightOffset(this: void, offset: number): void;
     function SetUseSmartCamera(this: void, useSmartCamera: boolean): void;
     function SnapCameraLookAtPoint(this: void): void;
-    function StartWargame(this: void, listID: number, teamSize: number, tournamentRules: boolean, teamOneCaptain: string, teamTwoCaptain: string): void;
+    function StartWargame(
+      this: void,
+      listID: number,
+      teamSize: number,
+      tournamentRules: boolean,
+      teamOneCaptain: string,
+      teamTwoCaptain: string,
+    ): void;
     function SwapTeamSides(this: void): void;
     function ToggleCheats(this: void): void;
     function UpdateMapInfo(this: void, targetPlayer?: string): void;
@@ -7749,14 +9198,25 @@ declare global {
     function ZoomOut_Position(this: void, zoomAmount?: number): void;
   }
 
-  namespace C_CompactUnitFrames {
-  }
+  namespace C_CompactUnitFrames {}
 
   namespace C_ConfigurationWarnings {
-    function GetConfigurationWarningSeen(this: void, configurationWarning: Enum.ConfigurationWarning): boolean;
-    function GetConfigurationWarningString(this: void, configurationWarning: Enum.ConfigurationWarning): string;
-    function GetConfigurationWarnings(this: void, includeSeenWarnings?: boolean): Enum.ConfigurationWarning[];
-    function SetConfigurationWarningSeen(this: void, configurationWarning: Enum.ConfigurationWarning): void;
+    function GetConfigurationWarningSeen(
+      this: void,
+      configurationWarning: Enum.ConfigurationWarning,
+    ): boolean;
+    function GetConfigurationWarningString(
+      this: void,
+      configurationWarning: Enum.ConfigurationWarning,
+    ): string;
+    function GetConfigurationWarnings(
+      this: void,
+      includeSeenWarnings?: boolean,
+    ): Enum.ConfigurationWarning[];
+    function SetConfigurationWarningSeen(
+      this: void,
+      configurationWarning: Enum.ConfigurationWarning,
+    ): void;
   }
 
   function CancelLogout(this: void): void;
@@ -7780,14 +9240,28 @@ declare global {
     scriptParameters: string;
   }
 
-  function CalculateStringEditDistance(this: void, firstString: stringView, secondString: stringView): number;
+  function CalculateStringEditDistance(
+    this: void,
+    firstString: stringView,
+    secondString: stringView,
+  ): number;
   function ConsoleAddMessage(this: void, message: string): void;
-  function ConsoleExec(this: void, command: string, addToHistory?: boolean): boolean;
+  function ConsoleExec(
+    this: void,
+    command: string,
+    addToHistory?: boolean,
+  ): boolean;
   function ConsoleGetAllCommands(this: void): ConsoleCommandInfo[];
-  function ConsoleGetColorFromType(this: void, colorType: Enum.ConsoleColorType): colorRGB;
+  function ConsoleGetColorFromType(
+    this: void,
+    colorType: Enum.ConsoleColorType,
+  ): colorRGB;
   function ConsoleGetFontHeight(this: void): number;
   function ConsoleIsActive(this: void): boolean;
-  function ConsolePrintAllMatchingCommands(this: void, partialCommandText: string): void;
+  function ConsolePrintAllMatchingCommands(
+    this: void,
+    partialCommandText: string,
+  ): void;
   function ConsoleSetFontHeight(this: void, fontHeightInPixels: number): void;
   function SetConsoleKey(this: void, keystring: string): void;
 
@@ -7816,10 +9290,22 @@ declare global {
       description: string;
     }
 
-    function GetCollectionDataByID(this: void, collectionID: number): ConsoleScriptCollectionData|undefined;
-    function GetCollectionDataByTag(this: void, collectionTag: string): ConsoleScriptCollectionData|undefined;
-    function GetElements(this: void, collectionID: number): ConsoleScriptCollectionElementData[];
-    function GetScriptData(this: void, consoleScriptID: number): ConsoleScriptData;
+    function GetCollectionDataByID(
+      this: void,
+      collectionID: number,
+    ): ConsoleScriptCollectionData | undefined;
+    function GetCollectionDataByTag(
+      this: void,
+      collectionTag: string,
+    ): ConsoleScriptCollectionData | undefined;
+    function GetElements(
+      this: void,
+      collectionID: number,
+    ): ConsoleScriptCollectionElementData[];
+    function GetScriptData(
+      this: void,
+      consoleScriptID: number,
+    ): ConsoleScriptData;
   }
 
   namespace C_Container {
@@ -7864,72 +9350,249 @@ declare global {
       isActive: boolean;
     }
 
-    function ContainerIDToInventoryID(this: void, containerID: Enum.BagIndex): number;
-    function ContainerRefundItemPurchase(this: void, containerIndex: Enum.BagIndex, slotIndex: number, isEquipped?: boolean): void;
+    function ContainerIDToInventoryID(
+      this: void,
+      containerID: Enum.BagIndex,
+    ): number;
+    function ContainerRefundItemPurchase(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+      isEquipped?: boolean,
+    ): void;
     function GetBackpackAutosortDisabled(this: void): boolean;
     function GetBackpackSellJunkDisabled(this: void): boolean;
     function GetBagName(this: void, bagIndex: Enum.BagIndex): string;
-    function GetBagSlotFlag(this: void, bagIndex: Enum.BagIndex, flag: Enum.BagSlotFlags): boolean;
+    function GetBagSlotFlag(
+      this: void,
+      bagIndex: Enum.BagIndex,
+      flag: Enum.BagSlotFlags,
+    ): boolean;
     function GetBankAutosortDisabled(this: void): boolean;
-    function GetContainerFreeSlots(this: void, containerIndex: Enum.BagIndex): number[];
-    function GetContainerItemCooldown(this: void, containerIndex: Enum.BagIndex, slotIndex: number): LuaMultiReturn<[number, number, number]>;
-    function GetContainerItemDurability(this: void, containerIndex: Enum.BagIndex, slotIndex: number): LuaMultiReturn<[number, number]>;
-    function GetContainerItemEquipmentSetInfo(this: void, containerIndex: Enum.BagIndex, slotIndex: number): LuaMultiReturn<[boolean, string]>;
-    function GetContainerItemID(this: void, containerIndex: Enum.BagIndex, slotIndex: number): number;
-    function GetContainerItemInfo(this: void, containerIndex: Enum.BagIndex, slotIndex: number): ContainerItemInfo;
-    function GetContainerItemLink(this: void, containerIndex: Enum.BagIndex, slotIndex: number): string;
-    function GetContainerItemPurchaseCurrency(this: void, containerIndex: Enum.BagIndex, slotIndex: number, itemIndex: number, isEquipped: boolean): ItemPurchaseCurrency;
-    function GetContainerItemPurchaseInfo(this: void, containerIndex: Enum.BagIndex, slotIndex: number, isEquipped: boolean): ItemPurchaseInfo;
-    function GetContainerItemPurchaseItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number, itemIndex: number, isEquipped: boolean): ItemPurchaseItem;
-    function GetContainerItemQuestInfo(this: void, containerIndex: Enum.BagIndex, slotIndex: number): ItemQuestInfo;
-    function GetContainerNumFreeSlots(this: void, bagIndex: Enum.BagIndex): LuaMultiReturn<[number, number|undefined]>;
-    function GetContainerNumSlots(this: void, containerIndex: Enum.BagIndex): number;
+    function GetContainerFreeSlots(
+      this: void,
+      containerIndex: Enum.BagIndex,
+    ): number[];
+    function GetContainerItemCooldown(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetContainerItemDurability(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetContainerItemEquipmentSetInfo(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): LuaMultiReturn<[boolean, string]>;
+    function GetContainerItemID(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): number;
+    function GetContainerItemInfo(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): ContainerItemInfo;
+    function GetContainerItemLink(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): string;
+    function GetContainerItemPurchaseCurrency(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+      itemIndex: number,
+      isEquipped: boolean,
+    ): ItemPurchaseCurrency;
+    function GetContainerItemPurchaseInfo(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+      isEquipped: boolean,
+    ): ItemPurchaseInfo;
+    function GetContainerItemPurchaseItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+      itemIndex: number,
+      isEquipped: boolean,
+    ): ItemPurchaseItem;
+    function GetContainerItemQuestInfo(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): ItemQuestInfo;
+    function GetContainerNumFreeSlots(
+      this: void,
+      bagIndex: Enum.BagIndex,
+    ): LuaMultiReturn<[number, number | undefined]>;
+    function GetContainerNumSlots(
+      this: void,
+      containerIndex: Enum.BagIndex,
+    ): number;
     function GetInsertItemsLeftToRight(this: void): boolean;
-    function GetItemCooldown(this: void, itemID: number): LuaMultiReturn<[number, number, number]>;
+    function GetItemCooldown(
+      this: void,
+      itemID: number,
+    ): LuaMultiReturn<[number, number, number]>;
     function GetMaxArenaCurrency(this: void): number;
     function GetSortBagsRightToLeft(this: void): boolean;
-    function IsBattlePayItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number): boolean;
-    function IsContainerFiltered(this: void, containerIndex: Enum.BagIndex): boolean;
-    function PickupContainerItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number): void;
-    function PlayerHasHearthstone(this: void): number|undefined;
+    function IsBattlePayItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): boolean;
+    function IsContainerFiltered(
+      this: void,
+      containerIndex: Enum.BagIndex,
+    ): boolean;
+    function PickupContainerItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): void;
+    function PlayerHasHearthstone(this: void): number | undefined;
     function SetBackpackAutosortDisabled(this: void, disable: boolean): void;
     function SetBackpackSellJunkDisabled(this: void, disable: boolean): void;
-    function SetBagPortraitTexture(this: void, texture: SimpleTexture, bagIndex: Enum.BagIndex): void;
-    function SetBagSlotFlag(this: void, bagIndex: Enum.BagIndex, flag: Enum.BagSlotFlags, isSet: boolean): void;
+    function SetBagPortraitTexture(
+      this: void,
+      texture: SimpleTexture,
+      bagIndex: Enum.BagIndex,
+    ): void;
+    function SetBagSlotFlag(
+      this: void,
+      bagIndex: Enum.BagIndex,
+      flag: Enum.BagSlotFlags,
+      isSet: boolean,
+    ): void;
     function SetBankAutosortDisabled(this: void, disable: boolean): void;
     function SetInsertItemsLeftToRight(this: void, enable: boolean): void;
     function SetItemSearch(this: void, searchString: string): void;
     function SetSortBagsRightToLeft(this: void, enable: boolean): void;
-    function ShowContainerSellCursor(this: void, containerIndex: Enum.BagIndex, slotIndex: number): void;
-    function SocketContainerItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number): boolean;
+    function ShowContainerSellCursor(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): void;
+    function SocketContainerItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): boolean;
     function SortAccountBankBags(this: void): void;
     function SortBags(this: void): void;
     function SortBankBags(this: void): void;
     function SortReagentBankBags(this: void): void;
-    function SplitContainerItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number, amount: number): void;
-    function UseContainerItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number, unitToken?: UnitToken, bankType?: Enum.BankType, reagentBankOpen?: boolean): void;
+    function SplitContainerItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+      amount: number,
+    ): void;
+    function UseContainerItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+      unitToken?: UnitToken,
+      bankType?: Enum.BankType,
+      reagentBankOpen?: boolean,
+    ): void;
     function UseHearthstone(this: void): boolean;
   }
 
   namespace C_ContentTracking {
-    function GetBestMapForTrackable(this: void, trackableType: Enum.ContentTrackingType, trackableID: number, ignoreWaypoint?: boolean): LuaMultiReturn<[Enum.ContentTrackingResult, number|undefined]>;
+    function GetBestMapForTrackable(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+      trackableID: number,
+      ignoreWaypoint?: boolean,
+    ): LuaMultiReturn<[Enum.ContentTrackingResult, number | undefined]>;
     function GetCollectableSourceTrackingEnabled(this: void): boolean;
     function GetCollectableSourceTypes(this: void): Enum.ContentTrackingType[];
-    function GetCurrentTrackingTarget(this: void, type: Enum.ContentTrackingType, id: number): LuaMultiReturn<[Enum.ContentTrackingTargetType, number]>;
-    function GetEncounterTrackingInfo(this: void, journalEncounterID: number): EncounterTrackingInfo;
-    function GetNextWaypointForTrackable(this: void, trackableType: Enum.ContentTrackingType, trackableID: number, uiMapID: number): LuaMultiReturn<[Enum.ContentTrackingResult, ContentTrackingMapInfo|undefined]>;
-    function GetObjectiveText(this: void, targetType: Enum.ContentTrackingTargetType, targetID: number, includeHyperlinks?: boolean): string;
-    function GetTitle(this: void, trackableType: Enum.ContentTrackingType, trackableID: number): string;
-    function GetTrackablesOnMap(this: void, trackableType: Enum.ContentTrackingType, uiMapID: number): LuaMultiReturn<[Enum.ContentTrackingResult, ContentTrackingMapInfo[]]>;
-    function GetTrackedIDs(this: void, trackableType: Enum.ContentTrackingType): number[];
-    function GetVendorTrackingInfo(this: void, collectableEntryID: number): VendorTrackingInfo;
-    function GetWaypointText(this: void, trackableType: Enum.ContentTrackingType, trackableID: number): string;
-    function IsNavigable(this: void, trackableType: Enum.ContentTrackingType, trackableID: number): LuaMultiReturn<[Enum.ContentTrackingResult, boolean]>;
-    function IsTrackable(this: void, type: Enum.ContentTrackingType, id: number): boolean;
-    function IsTracking(this: void, type: Enum.ContentTrackingType, id: number): boolean;
-    function StartTracking(this: void, type: Enum.ContentTrackingType, id: number): Enum.ContentTrackingError|undefined;
-    function StopTracking(this: void, type: Enum.ContentTrackingType, id: number, stopType: Enum.ContentTrackingStopType): void;
-    function ToggleTracking(this: void, type: Enum.ContentTrackingType, id: number, stopType: Enum.ContentTrackingStopType): Enum.ContentTrackingError|undefined;
+    function GetCurrentTrackingTarget(
+      this: void,
+      type: Enum.ContentTrackingType,
+      id: number,
+    ): LuaMultiReturn<[Enum.ContentTrackingTargetType, number]>;
+    function GetEncounterTrackingInfo(
+      this: void,
+      journalEncounterID: number,
+    ): EncounterTrackingInfo;
+    function GetNextWaypointForTrackable(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+      trackableID: number,
+      uiMapID: number,
+    ): LuaMultiReturn<
+      [Enum.ContentTrackingResult, ContentTrackingMapInfo | undefined]
+    >;
+    function GetObjectiveText(
+      this: void,
+      targetType: Enum.ContentTrackingTargetType,
+      targetID: number,
+      includeHyperlinks?: boolean,
+    ): string;
+    function GetTitle(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+      trackableID: number,
+    ): string;
+    function GetTrackablesOnMap(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+      uiMapID: number,
+    ): LuaMultiReturn<[Enum.ContentTrackingResult, ContentTrackingMapInfo[]]>;
+    function GetTrackedIDs(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+    ): number[];
+    function GetVendorTrackingInfo(
+      this: void,
+      collectableEntryID: number,
+    ): VendorTrackingInfo;
+    function GetWaypointText(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+      trackableID: number,
+    ): string;
+    function IsNavigable(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+      trackableID: number,
+    ): LuaMultiReturn<[Enum.ContentTrackingResult, boolean]>;
+    function IsTrackable(
+      this: void,
+      type: Enum.ContentTrackingType,
+      id: number,
+    ): boolean;
+    function IsTracking(
+      this: void,
+      type: Enum.ContentTrackingType,
+      id: number,
+    ): boolean;
+    function StartTracking(
+      this: void,
+      type: Enum.ContentTrackingType,
+      id: number,
+    ): Enum.ContentTrackingError | undefined;
+    function StopTracking(
+      this: void,
+      type: Enum.ContentTrackingType,
+      id: number,
+      stopType: Enum.ContentTrackingStopType,
+    ): void;
+    function ToggleTracking(
+      this: void,
+      type: Enum.ContentTrackingType,
+      id: number,
+      stopType: Enum.ContentTrackingStopType,
+    ): Enum.ContentTrackingError | undefined;
   }
 
   interface ContentTrackingMapInfo {
@@ -7984,19 +9647,49 @@ declare global {
     function GetActive(this: void): number;
     function GetAtlases(this: void, contributionID: number): textureAtlas[];
     function GetBuffs(this: void, contributionID: number): number;
-    function GetContributionAppearance(this: void, contributionID: number, contributionState: Enum.ContributionState): ContributionAppearance|undefined;
-    function GetContributionCollectorsForMap(this: void, uiMapID: number): ContributionMapInfo[];
-    function GetContributionResult(this: void, contributionID: number): Enum.ContributionResult;
+    function GetContributionAppearance(
+      this: void,
+      contributionID: number,
+      contributionState: Enum.ContributionState,
+    ): ContributionAppearance | undefined;
+    function GetContributionCollectorsForMap(
+      this: void,
+      uiMapID: number,
+    ): ContributionMapInfo[];
+    function GetContributionResult(
+      this: void,
+      contributionID: number,
+    ): Enum.ContributionResult;
     function GetDescription(this: void, contributionID: number): string;
-    function GetManagedContributionsForCreatureID(this: void, creatureID: number): number;
+    function GetManagedContributionsForCreatureID(
+      this: void,
+      creatureID: number,
+    ): number;
     function GetName(this: void, contributionID: number): string;
     function GetOrderIndex(this: void, contributionID: number): number;
-    function GetRequiredContributionCurrency(this: void, contributionID: number): LuaMultiReturn<[number, number]>;
-    function GetRequiredContributionItem(this: void, contributionID: number): LuaMultiReturn<[number, number]>;
+    function GetRequiredContributionCurrency(
+      this: void,
+      contributionID: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetRequiredContributionItem(
+      this: void,
+      contributionID: number,
+    ): LuaMultiReturn<[number, number]>;
     function GetRewardQuestID(this: void, contributionID: number): number;
-    function GetState(this: void, contributionID: number): LuaMultiReturn<[Enum.ContributionState, number, time_t|undefined, time_t]>;
-    function HasPendingContribution(this: void, contributionID: number): boolean;
-    function IsAwaitingRewardQuestData(this: void, contributionID: number): boolean;
+    function GetState(
+      this: void,
+      contributionID: number,
+    ): LuaMultiReturn<
+      [Enum.ContributionState, number, time_t | undefined, time_t]
+    >;
+    function HasPendingContribution(
+      this: void,
+      contributionID: number,
+    ): boolean;
+    function IsAwaitingRewardQuestData(
+      this: void,
+      contributionID: number,
+    ): boolean;
   }
 
   interface CooldownFrame {
@@ -8013,7 +9706,13 @@ declare global {
     IsPaused(): boolean;
     Pause(): void;
     Resume(): void;
-    SetBlingTexture(texture: FileAsset, colorR: number, colorG: number, colorB: number, colorA: number): void;
+    SetBlingTexture(
+      texture: FileAsset,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      colorA: number,
+    ): void;
     SetCooldown(start: number, duration: number, modRate?: number): void;
     SetCooldownDuration(duration: number, modRate?: number): void;
     SetCooldownUNIX(start: number, duration: number, modRate?: number): void;
@@ -8023,12 +9722,29 @@ declare global {
     SetDrawEdge(drawEdge?: boolean): void;
     SetDrawSwipe(drawSwipe?: boolean): void;
     SetEdgeScale(scale: number): void;
-    SetEdgeTexture(texture: FileAsset, colorR: number, colorG: number, colorB: number, colorA: number): void;
+    SetEdgeTexture(
+      texture: FileAsset,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      colorA: number,
+    ): void;
     SetHideCountdownNumbers(hideNumbers?: boolean): void;
     SetReverse(reverse?: boolean): void;
     SetRotation(rotationRadians: number): void;
-    SetSwipeColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
-    SetSwipeTexture(texture: FileAsset, colorR: number, colorG: number, colorB: number, colorA: number): void;
+    SetSwipeColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
+    SetSwipeTexture(
+      texture: FileAsset,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      colorA: number,
+    ): void;
     SetTexCoordRange(low: vector2, high: vector2): void;
     SetUseCircularEdge(useCircularEdge?: boolean): void;
   }
@@ -8073,7 +9789,10 @@ declare global {
     }
 
     function CloseFromUI(this: void): void;
-    function GetCovenantInfoForPlayerChoiceResponseID(this: void, playerChoiceResponseID: number): CovenantPreviewInfo;
+    function GetCovenantInfoForPlayerChoiceResponseID(
+      this: void,
+      playerChoiceResponseID: number,
+    ): CovenantPreviewInfo;
   }
 
   namespace C_CovenantSanctumUI {
@@ -8111,12 +9830,21 @@ declare global {
     function DepositAnima(this: void): void;
     function EndInteraction(this: void): void;
     function GetAnimaInfo(this: void): LuaMultiReturn<[number, number]>;
-    function GetCurrentTalentTreeID(this: void): number|undefined;
+    function GetCurrentTalentTreeID(this: void): number | undefined;
     function GetFeatures(this: void): CovenantSanctumFeatureInfo[];
     function GetRenownLevel(this: void): number;
-    function GetRenownLevels(this: void, covenantID: number): CovenantSanctumRenownLevelInfo[];
-    function GetRenownRewardsForLevel(this: void, covenantID: number, renownLevel: number): CovenantSanctumRenownRewardInfo[];
-    function GetSanctumType(this: void): Enum.GarrTalentFeatureSubtype|undefined;
+    function GetRenownLevels(
+      this: void,
+      covenantID: number,
+    ): CovenantSanctumRenownLevelInfo[];
+    function GetRenownRewardsForLevel(
+      this: void,
+      covenantID: number,
+      renownLevel: number,
+    ): CovenantSanctumRenownRewardInfo[];
+    function GetSanctumType(
+      this: void,
+    ): Enum.GarrTalentFeatureSubtype | undefined;
     function GetSoulCurrencies(this: void): number[];
     function HasMaximumRenown(this: void): boolean;
     function IsPlayerInRenownCatchUpMode(this: void): boolean;
@@ -8143,7 +9871,10 @@ declare global {
     }
 
     function GetActiveCovenantID(this: void): number;
-    function GetCovenantData(this: void, covenantID: number): CovenantData|undefined;
+    function GetCovenantData(
+      this: void,
+      covenantID: number,
+    ): CovenantData | undefined;
     function GetCovenantIDs(this: void): number[];
   }
 
@@ -8169,38 +9900,85 @@ declare global {
     }
 
     function AreOrderNotesDisabled(this: void): boolean;
-    function CalculateCraftingOrderPostingFee(this: void, skillLineAbilityID: number, orderType: Enum.CraftingOrderType, orderDuration: Enum.CraftingOrderDuration): WOWMONEY;
-    function CanOrderSkillAbility(this: void, skillLineAbilityID: number): boolean;
+    function CalculateCraftingOrderPostingFee(
+      this: void,
+      skillLineAbilityID: number,
+      orderType: Enum.CraftingOrderType,
+      orderDuration: Enum.CraftingOrderDuration,
+    ): WOWMONEY;
+    function CanOrderSkillAbility(
+      this: void,
+      skillLineAbilityID: number,
+    ): boolean;
     function CancelOrder(this: void, orderID: BigUInteger): void;
-    function ClaimOrder(this: void, orderID: BigUInteger, profession: Enum.Profession): void;
+    function ClaimOrder(
+      this: void,
+      orderID: BigUInteger,
+      profession: Enum.Profession,
+    ): void;
     function CloseCrafterCraftingOrders(this: void): void;
     function CloseCustomerCraftingOrders(this: void): void;
-    function FulfillOrder(this: void, orderID: BigUInteger, crafterNote: string, profession: Enum.Profession): void;
-    function GetClaimedOrder(this: void): CraftingOrderInfo|undefined;
+    function FulfillOrder(
+      this: void,
+      orderID: BigUInteger,
+      crafterNote: string,
+      profession: Enum.Profession,
+    ): void;
+    function GetClaimedOrder(this: void): CraftingOrderInfo | undefined;
     function GetCrafterBuckets(this: void): CraftingOrderBucketInfo[];
     function GetCrafterOrders(this: void): CraftingOrderInfo[];
     function GetCraftingOrderTime(this: void): BigUInteger;
     function GetCustomerCategories(this: void): CraftingOrderCustomerCategory[];
-    function GetCustomerOptions(this: void, params: CraftingOrderCustomerSearchParams): CraftingOrderCustomerSearchResults;
+    function GetCustomerOptions(
+      this: void,
+      params: CraftingOrderCustomerSearchParams,
+    ): CraftingOrderCustomerSearchResults;
     function GetCustomerOrders(this: void): CraftingOrderInfo[];
-    function GetDefaultOrdersSkillLine(this: void): number|undefined;
+    function GetDefaultOrdersSkillLine(this: void): number | undefined;
     function GetMyOrders(this: void): CraftingOrderInfo[];
     function GetNumFavoriteCustomerOptions(this: void): BigUInteger;
-    function GetOrderClaimInfo(this: void, profession: Enum.Profession): CraftingOrderClaimsRemainingInfo;
-    function GetPersonalOrdersInfo(this: void): CraftingOrderPersonalOrdersInfo[];
+    function GetOrderClaimInfo(
+      this: void,
+      profession: Enum.Profession,
+    ): CraftingOrderClaimsRemainingInfo;
+    function GetPersonalOrdersInfo(
+      this: void,
+    ): CraftingOrderPersonalOrdersInfo[];
     function HasFavoriteCustomerOptions(this: void): boolean;
     function IsCustomerOptionFavorited(this: void, recipeID: number): boolean;
-    function ListMyOrders(this: void, request: CraftingOrderRequestMyOrdersInfo): void;
+    function ListMyOrders(
+      this: void,
+      request: CraftingOrderRequestMyOrdersInfo,
+    ): void;
     function OpenCrafterCraftingOrders(this: void): void;
     function OpenCustomerCraftingOrders(this: void): void;
     function OrderCanBeRecrafted(this: void, orderID: BigUInteger): boolean;
     function ParseCustomerOptions(this: void): void;
     function PlaceNewOrder(this: void, orderInfo: NewCraftingOrderInfo): void;
-    function RejectOrder(this: void, orderID: BigUInteger, crafterNote: string, profession: Enum.Profession): void;
-    function ReleaseOrder(this: void, orderID: BigUInteger, profession: Enum.Profession): void;
-    function RequestCrafterOrders(this: void, request: CraftingOrderRequestInfo): void;
-    function RequestCustomerOrders(this: void, request: CraftingOrderRequestInfo): void;
-    function SetCustomerOptionFavorited(this: void, recipeID: number, favorited: boolean): void;
+    function RejectOrder(
+      this: void,
+      orderID: BigUInteger,
+      crafterNote: string,
+      profession: Enum.Profession,
+    ): void;
+    function ReleaseOrder(
+      this: void,
+      orderID: BigUInteger,
+      profession: Enum.Profession,
+    ): void;
+    function RequestCrafterOrders(
+      this: void,
+      request: CraftingOrderRequestInfo,
+    ): void;
+    function RequestCustomerOrders(
+      this: void,
+      request: CraftingOrderRequestInfo,
+    ): void;
+    function SetCustomerOptionFavorited(
+      this: void,
+      recipeID: number,
+      favorited: boolean,
+    ): void;
     function ShouldShowCraftingOrderTab(this: void): boolean;
     function SkillLineHasOrders(this: void, skillLineID: number): boolean;
     function UpdateIgnoreList(this: void): void;
@@ -8359,8 +10137,22 @@ declare global {
     orderTarget?: string;
     recraftItem?: WOWGUID;
   }
-  type CraftingOrderRequestCallback = (this: void, result: Enum.CraftingOrderResult, orderType: Enum.CraftingOrderType, displayBuckets: boolean, expectMoreRows: boolean, offset: number, isSorted: boolean) => void;
-  type CraftingOrderRequestMyOrdersCallback = (this: void, result: Enum.CraftingOrderResult, expectMoreRows: boolean, offset: number, isSorted: boolean) => void;
+  type CraftingOrderRequestCallback = (
+    this: void,
+    result: Enum.CraftingOrderResult,
+    orderType: Enum.CraftingOrderType,
+    displayBuckets: boolean,
+    expectMoreRows: boolean,
+    offset: number,
+    isSorted: boolean,
+  ) => void;
+  type CraftingOrderRequestMyOrdersCallback = (
+    this: void,
+    result: Enum.CraftingOrderResult,
+    expectMoreRows: boolean,
+    offset: number,
+    isSorted: boolean,
+  ) => void;
 
   namespace C_CreatureInfo {
     interface ClassInfo {
@@ -8380,9 +10172,12 @@ declare global {
       raceID: number;
     }
 
-    function GetClassInfo(this: void, classID: number): ClassInfo|undefined;
-    function GetFactionInfo(this: void, raceID: number): FactionInfo|undefined;
-    function GetRaceInfo(this: void, raceID: number): RaceInfo|undefined;
+    function GetClassInfo(this: void, classID: number): ClassInfo | undefined;
+    function GetFactionInfo(
+      this: void,
+      raceID: number,
+    ): FactionInfo | undefined;
+    function GetRaceInfo(this: void, raceID: number): RaceInfo | undefined;
   }
 
   namespace C_CurrencyInfo {
@@ -8448,19 +10243,59 @@ declare global {
       timestamp: time_t;
     }
 
-    function CanTransferCurrency(this: void, currencyID: number): LuaMultiReturn<[boolean, Enum.AccountCurrencyTransferResult|undefined]>;
-    function DoesWarModeBonusApply(this: void, currencyID: number): LuaMultiReturn<[boolean|undefined, boolean|undefined]>;
-    function ExpandCurrencyList(this: void, index: number, expand: boolean): void;
-    function FetchCurrencyDataFromAccountCharacters(this: void, currencyID: number): CharacterCurrencyData[];
-    function FetchCurrencyTransferTransactions(this: void): CurrencyTransferTransaction[];
+    function CanTransferCurrency(
+      this: void,
+      currencyID: number,
+    ): LuaMultiReturn<
+      [boolean, Enum.AccountCurrencyTransferResult | undefined]
+    >;
+    function DoesWarModeBonusApply(
+      this: void,
+      currencyID: number,
+    ): LuaMultiReturn<[boolean | undefined, boolean | undefined]>;
+    function ExpandCurrencyList(
+      this: void,
+      index: number,
+      expand: boolean,
+    ): void;
+    function FetchCurrencyDataFromAccountCharacters(
+      this: void,
+      currencyID: number,
+    ): CharacterCurrencyData[];
+    function FetchCurrencyTransferTransactions(
+      this: void,
+    ): CurrencyTransferTransaction[];
     function GetAzeriteCurrencyID(this: void): number;
-    function GetBackpackCurrencyInfo(this: void, index: number): BackpackCurrencyInfo;
-    function GetBasicCurrencyInfo(this: void, currencyType: number, quantity?: number): CurrencyDisplayInfo;
+    function GetBackpackCurrencyInfo(
+      this: void,
+      index: number,
+    ): BackpackCurrencyInfo;
+    function GetBasicCurrencyInfo(
+      this: void,
+      currencyType: number,
+      quantity?: number,
+    ): CurrencyDisplayInfo;
     function GetCoinIcon(this: void, amount: WOWMONEY): fileID;
-    function GetCoinText(this: void, amount: WOWMONEY, separator?: string): string;
-    function GetCoinTextureString(this: void, amount: WOWMONEY, fontHeight?: number): string;
-    function GetCostToTransferCurrency(this: void, currencyID: number, quantity: number): number|undefined;
-    function GetCurrencyContainerInfo(this: void, currencyType: number, quantity: number): CurrencyDisplayInfo;
+    function GetCoinText(
+      this: void,
+      amount: WOWMONEY,
+      separator?: string,
+    ): string;
+    function GetCoinTextureString(
+      this: void,
+      amount: WOWMONEY,
+      fontHeight?: number,
+    ): string;
+    function GetCostToTransferCurrency(
+      this: void,
+      currencyID: number,
+      quantity: number,
+    ): number | undefined;
+    function GetCurrencyContainerInfo(
+      this: void,
+      currencyType: number,
+      quantity: number,
+    ): CurrencyDisplayInfo;
     function GetCurrencyDescription(this: void, type: number): string;
     function GetCurrencyIDFromLink(this: void, currencyLink: string): number;
     function GetCurrencyInfo(this: void, type: number): CurrencyInfo;
@@ -8470,29 +10305,58 @@ declare global {
     function GetCurrencyListLink(this: void, index: number): string;
     function GetCurrencyListSize(this: void): number;
     function GetDragonIslesSuppliesCurrencyID(this: void): number;
-    function GetFactionGrantedByCurrency(this: void, currencyID: number): number|undefined;
-    function GetMaxTransferableAmountFromQuantity(this: void, currencyID: number, requestedQuantity: number): number|undefined;
+    function GetFactionGrantedByCurrency(
+      this: void,
+      currencyID: number,
+    ): number | undefined;
+    function GetMaxTransferableAmountFromQuantity(
+      this: void,
+      currencyID: number,
+      requestedQuantity: number,
+    ): number | undefined;
     function GetWarResourcesCurrencyID(this: void): number;
     function IsAccountCharacterCurrencyDataReady(this: void): boolean;
-    function IsAccountTransferableCurrency(this: void, currencyID: number): boolean;
+    function IsAccountTransferableCurrency(
+      this: void,
+      currencyID: number,
+    ): boolean;
     function IsAccountWideCurrency(this: void, currencyID: number): boolean;
-    function IsCurrencyContainer(this: void, currencyID: number, quantity: number): boolean;
+    function IsCurrencyContainer(
+      this: void,
+      currencyID: number,
+      quantity: number,
+    ): boolean;
     function IsCurrencyTransferTransactionDataReady(this: void): boolean;
     function PickupCurrency(this: void, type: number): void;
     function PlayerHasMaxQuantity(this: void, currencyID: number): boolean;
-    function PlayerHasMaxWeeklyQuantity(this: void, currencyID: number): boolean;
+    function PlayerHasMaxWeeklyQuantity(
+      this: void,
+      currencyID: number,
+    ): boolean;
     function RequestCurrencyDataForAccountCharacters(this: void): void;
-    function RequestCurrencyFromAccountCharacter(this: void, sourceCharacterGUID: WOWGUID, currencyID: number, quantity: number): void;
-    function SetCurrencyBackpack(this: void, index: number, backpack: boolean): void;
-    function SetCurrencyUnused(this: void, index: number, unused: boolean): void;
+    function RequestCurrencyFromAccountCharacter(
+      this: void,
+      sourceCharacterGUID: WOWGUID,
+      currencyID: number,
+      quantity: number,
+    ): void;
+    function SetCurrencyBackpack(
+      this: void,
+      index: number,
+      backpack: boolean,
+    ): void;
+    function SetCurrencyUnused(
+      this: void,
+      index: number,
+      unused: boolean,
+    ): void;
   }
 
   namespace C_Cursor {
     function GetCursorItem(this: void): ItemLocation;
   }
 
-  namespace C_CursorUtil {
-  }
+  namespace C_CursorUtil {}
 
   namespace C_CVar {
     interface CVarInfo {
@@ -8505,23 +10369,56 @@ declare global {
       isReadOnly: boolean;
     }
 
-    function GetCVar(this: void, name: string): string|undefined;
-    function GetCVarBitfield(this: void, name: string, index: number): boolean|undefined;
-    function GetCVarBool(this: void, name: string): boolean|undefined;
-    function GetCVarDefault(this: void, name: string): string|undefined;
-    function GetCVarInfo(this: void, name: string): LuaMultiReturn<[string, string, boolean, boolean, boolean, boolean, boolean]>;
+    function GetCVar(this: void, name: string): string | undefined;
+    function GetCVarBitfield(
+      this: void,
+      name: string,
+      index: number,
+    ): boolean | undefined;
+    function GetCVarBool(this: void, name: string): boolean | undefined;
+    function GetCVarDefault(this: void, name: string): string | undefined;
+    function GetCVarInfo(
+      this: void,
+      name: string,
+    ): LuaMultiReturn<
+      [string, string, boolean, boolean, boolean, boolean, boolean]
+    >;
     function RegisterCVar(this: void, name: string, value?: string): void;
     function ResetTestCVars(this: void): void;
     function SetCVar(this: void, name: string, value?: string): boolean;
-    function SetCVarBitfield(this: void, name: string, index: number, value: boolean): boolean;
+    function SetCVarBitfield(
+      this: void,
+      name: string,
+      index: number,
+      value: boolean,
+    ): boolean;
   }
 
   namespace C_DateAndTime {
-    function AdjustTimeByDays(this: void, date: CalendarTime, days: number): CalendarTime;
-    function AdjustTimeByMinutes(this: void, date: CalendarTime, minutes: number): CalendarTime;
-    function AdjustTimeByMonths(this: void, date: CalendarTime, months: number): CalendarTime;
-    function CompareCalendarTime(this: void, lhsCalendarTime: CalendarTime, rhsCalendarTime: CalendarTime): number;
-    function GetCalendarTimeFromEpoch(this: void, epoch: BigUInteger): CalendarTime;
+    function AdjustTimeByDays(
+      this: void,
+      date: CalendarTime,
+      days: number,
+    ): CalendarTime;
+    function AdjustTimeByMinutes(
+      this: void,
+      date: CalendarTime,
+      minutes: number,
+    ): CalendarTime;
+    function AdjustTimeByMonths(
+      this: void,
+      date: CalendarTime,
+      months: number,
+    ): CalendarTime;
+    function CompareCalendarTime(
+      this: void,
+      lhsCalendarTime: CalendarTime,
+      rhsCalendarTime: CalendarTime,
+    ): number;
+    function GetCalendarTimeFromEpoch(
+      this: void,
+      epoch: BigUInteger,
+    ): CalendarTime;
     function GetCurrentCalendarTime(this: void): CalendarTime;
     function GetSecondsUntilDailyReset(this: void): time_t;
     function GetSecondsUntilWeeklyReset(this: void): time_t;
@@ -8529,8 +10426,7 @@ declare global {
     function GetWeeklyResetStartTime(this: void): time_t;
   }
 
-  namespace C_DeathAlert {
-  }
+  namespace C_DeathAlert {}
 
   namespace C_DeathInfo {
     interface GraveyardMapInfo {
@@ -8551,14 +10447,46 @@ declare global {
       priority: number;
     }
 
-    function GetCorpseMapPosition(this: void, uiMapID: number): vector2|undefined;
-    function GetDeathReleasePosition(this: void, uiMapID: number): vector2|undefined;
-    function GetGraveyardsForMap(this: void, uiMapID: number): GraveyardMapInfo[];
+    function GetCorpseMapPosition(
+      this: void,
+      uiMapID: number,
+    ): vector2 | undefined;
+    function GetDeathReleasePosition(
+      this: void,
+      uiMapID: number,
+    ): vector2 | undefined;
+    function GetGraveyardsForMap(
+      this: void,
+      uiMapID: number,
+    ): GraveyardMapInfo[];
     function GetSelfResurrectOptions(this: void): SelfResurrectOption[];
-    function UseSelfResurrectOption(this: void, optionType: Enum.SelfResurrectOptionType, id: number): void;
+    function UseSelfResurrectOption(
+      this: void,
+      optionType: Enum.SelfResurrectOptionType,
+      id: number,
+    ): void;
   }
 
-  function GetDebugAnimationStats(this: void, unitGUID?: UnitToken): LuaMultiReturn<[string, string, string, string, number, string, number, string, number, string, number, number|undefined, number|undefined]>;
+  function GetDebugAnimationStats(
+    this: void,
+    unitGUID?: UnitToken,
+  ): LuaMultiReturn<
+    [
+      string,
+      string,
+      string,
+      string,
+      number,
+      string,
+      number,
+      string,
+      number,
+      string,
+      number,
+      number | undefined,
+      number | undefined,
+    ]
+  >;
   function GetDebugPerf(this: void): string;
   function GetDebugSpellEffects(this: void): string;
   function GetDebugStats(this: void): string;
@@ -8575,29 +10503,55 @@ declare global {
   function ToggleTris(this: void): void;
 
   namespace C_DelvesUI {
-    function GetCreatureDisplayInfoForCompanion(this: void, companionID?: number): number;
-    function GetCurioNodeForCompanion(this: void, companionID: number|undefined, curioType: Enum.CurioType): number;
-    function GetCurioRarityByTraitCondAccountElementID(this: void, traitCondAccountElementID: number): Enum.CurioRarity;
+    function GetCreatureDisplayInfoForCompanion(
+      this: void,
+      companionID?: number,
+    ): number;
+    function GetCurioNodeForCompanion(
+      this: void,
+      companionID: number | undefined,
+      curioType: Enum.CurioType,
+    ): number;
+    function GetCurioRarityByTraitCondAccountElementID(
+      this: void,
+      traitCondAccountElementID: number,
+    ): Enum.CurioRarity;
     function GetCurrentDelvesSeasonNumber(this: void): number;
     function GetDelvesAffixSpellsForSeason(this: void): number[];
     function GetDelvesFactionForSeason(this: void): number;
-    function GetDelvesMinRequiredLevel(this: void): number|undefined;
+    function GetDelvesMinRequiredLevel(this: void): number | undefined;
     function GetFactionForCompanion(this: void, companionID?: number): number;
-    function GetModelSceneForCompanion(this: void, companionID?: number): number;
+    function GetModelSceneForCompanion(
+      this: void,
+      companionID?: number,
+    ): number;
     function GetRoleNodeForCompanion(this: void, companionID?: number): number;
-    function GetRoleSubtreeForCompanion(this: void, companionID: number|undefined, roleType: Enum.CompanionRoleType): number;
+    function GetRoleSubtreeForCompanion(
+      this: void,
+      companionID: number | undefined,
+      roleType: Enum.CompanionRoleType,
+    ): number;
     function GetTraitTreeForCompanion(this: void, companionID?: number): number;
-    function GetUnseenCuriosBySlotType(this: void, slotType: Enum.CompanionConfigSlotTypes, ownedCurioNodeIDs: number[]): number[];
+    function GetUnseenCuriosBySlotType(
+      this: void,
+      slotType: Enum.CompanionConfigSlotTypes,
+      ownedCurioNodeIDs: number[],
+    ): number[];
     function HasActiveDelve(this: void, mapID?: number): boolean;
-    function IsEligibleForActiveDelveRewards(this: void, unit: UnitToken): boolean;
-    function SaveSeenCuriosBySlotType(this: void, slotType: Enum.CompanionConfigSlotTypes, ownedCurioNodeIDs: number[]): void;
+    function IsEligibleForActiveDelveRewards(
+      this: void,
+      unit: UnitToken,
+    ): boolean;
+    function SaveSeenCuriosBySlotType(
+      this: void,
+      slotType: Enum.CompanionConfigSlotTypes,
+      ownedCurioNodeIDs: number[],
+    ): void;
   }
 
-  namespace C_Deprecated {
-  }
+  namespace C_Deprecated {}
 
-  namespace C_DuelInfo {
-  }
+  namespace C_DuelInfo {}
 
   namespace C_EditMode {
     interface EditModeAnchorInfo {
@@ -8633,21 +10587,35 @@ declare global {
       isInDefaultPosition: boolean;
     }
 
-    function ConvertLayoutInfoToString(this: void, layoutInfo: EditModeLayoutInfo): string;
-    function ConvertStringToLayoutInfo(this: void, layoutInfoAsString: string): EditModeLayoutInfo;
+    function ConvertLayoutInfoToString(
+      this: void,
+      layoutInfo: EditModeLayoutInfo,
+    ): string;
+    function ConvertStringToLayoutInfo(
+      this: void,
+      layoutInfoAsString: string,
+    ): EditModeLayoutInfo;
     function GetAccountSettings(this: void): EditModeSettingInfo[];
     function GetLayouts(this: void): EditModeLayouts;
     function IsValidLayoutName(this: void, name: string): boolean;
     function OnEditModeExit(this: void): void;
-    function OnLayoutAdded(this: void, addedLayoutIndex: number, activateNewLayout: boolean, isLayoutImported: boolean): void;
+    function OnLayoutAdded(
+      this: void,
+      addedLayoutIndex: number,
+      activateNewLayout: boolean,
+      isLayoutImported: boolean,
+    ): void;
     function OnLayoutDeleted(this: void, deletedLayoutIndex: number): void;
     function SaveLayouts(this: void, saveInfo: EditModeLayouts): void;
-    function SetAccountSetting(this: void, setting: Enum.EditModeAccountSetting, value: number): void;
+    function SetAccountSetting(
+      this: void,
+      setting: Enum.EditModeAccountSetting,
+      value: number,
+    ): void;
     function SetActiveLayout(this: void, activeLayout: number): void;
   }
 
-  namespace C_EncounterInfo {
-  }
+  namespace C_EncounterInfo {}
 
   namespace C_EncounterJournal {
     interface DungeonEntranceMapInfo {
@@ -8698,48 +10666,107 @@ declare global {
       startsOpen: boolean;
     }
 
-    function GetDungeonEntrancesForMap(this: void, uiMapID: number): DungeonEntranceMapInfo[];
-    function GetEncounterJournalLink(this: void, linkType: Enum.JournalLinkTypes, ID: number, displayText: string, difficultyID: number): string;
-    function GetEncountersOnMap(this: void, uiMapID: number): EncounterJournalMapEncounterInfo[];
-    function GetInstanceForGameMap(this: void, mapID: number): number|undefined;
+    function GetDungeonEntrancesForMap(
+      this: void,
+      uiMapID: number,
+    ): DungeonEntranceMapInfo[];
+    function GetEncounterJournalLink(
+      this: void,
+      linkType: Enum.JournalLinkTypes,
+      ID: number,
+      displayText: string,
+      difficultyID: number,
+    ): string;
+    function GetEncountersOnMap(
+      this: void,
+      uiMapID: number,
+    ): EncounterJournalMapEncounterInfo[];
+    function GetInstanceForGameMap(
+      this: void,
+      mapID: number,
+    ): number | undefined;
     function GetLootInfo(this: void, id: number): EncounterJournalItemInfo;
-    function GetLootInfoByIndex(this: void, index: number, encounterIndex?: number): EncounterJournalItemInfo;
-    function GetSectionIconFlags(this: void, sectionID: number): number[]|undefined;
-    function GetSectionInfo(this: void, sectionID: number): EncounterJournalSectionInfo;
+    function GetLootInfoByIndex(
+      this: void,
+      index: number,
+      encounterIndex?: number,
+    ): EncounterJournalItemInfo;
+    function GetSectionIconFlags(
+      this: void,
+      sectionID: number,
+    ): number[] | undefined;
+    function GetSectionInfo(
+      this: void,
+      sectionID: number,
+    ): EncounterJournalSectionInfo;
     function GetSlotFilter(this: void): Enum.ItemSlotFilterType;
     function InitalizeSelectedTier(this: void): void;
     function InstanceHasLoot(this: void, instanceID?: number): boolean;
-    function IsEncounterComplete(this: void, journalEncounterID: number): boolean;
+    function IsEncounterComplete(
+      this: void,
+      journalEncounterID: number,
+    ): boolean;
     function OnClose(this: void): void;
     function OnOpen(this: void): void;
     function ResetSlotFilter(this: void): void;
     function SetPreviewMythicPlusLevel(this: void, level: number): void;
     function SetPreviewPvpTier(this: void, tier: number): void;
-    function SetSlotFilter(this: void, filterSlot: Enum.ItemSlotFilterType): void;
+    function SetSlotFilter(
+      this: void,
+      filterSlot: Enum.ItemSlotFilterType,
+    ): void;
     function SetTab(this: void, tabIdx: number): void;
   }
 
   namespace C_EquipmentSet {
-    function AssignSpecToEquipmentSet(this: void, equipmentSetID: number, specIndex: number): void;
+    function AssignSpecToEquipmentSet(
+      this: void,
+      equipmentSetID: number,
+      specIndex: number,
+    ): void;
     function CanUseEquipmentSets(this: void): boolean;
     function ClearIgnoredSlotsForSave(this: void): void;
-    function CreateEquipmentSet(this: void, equipmentSetName: string, icon?: string): void;
+    function CreateEquipmentSet(
+      this: void,
+      equipmentSetName: string,
+      icon?: string,
+    ): void;
     function DeleteEquipmentSet(this: void, equipmentSetID: number): void;
-    function EquipmentSetContainsLockedItems(this: void, equipmentSetID: number): boolean;
-    function GetEquipmentSetAssignedSpec(this: void, equipmentSetID: number): number;
+    function EquipmentSetContainsLockedItems(
+      this: void,
+      equipmentSetID: number,
+    ): boolean;
+    function GetEquipmentSetAssignedSpec(
+      this: void,
+      equipmentSetID: number,
+    ): number;
     function GetEquipmentSetForSpec(this: void, specIndex: number): number;
     function GetEquipmentSetID(this: void, equipmentSetName: string): number;
     function GetEquipmentSetIDs(this: void): number[];
-    function GetEquipmentSetInfo(this: void, equipmentSetID: number): LuaMultiReturn<[string, number, number, boolean, number, number, number, number, number]>;
+    function GetEquipmentSetInfo(
+      this: void,
+      equipmentSetID: number,
+    ): LuaMultiReturn<
+      [string, number, number, boolean, number, number, number, number, number]
+    >;
     function GetIgnoredSlots(this: void, equipmentSetID: number): boolean[];
     function GetItemIDs(this: void, equipmentSetID: number): number[];
     function GetItemLocations(this: void, equipmentSetID: number): number[];
     function GetNumEquipmentSets(this: void): number;
     function IgnoreSlotForSave(this: void, slot: number): void;
     function IsSlotIgnoredForSave(this: void, slot: number): boolean;
-    function ModifyEquipmentSet(this: void, equipmentSetID: number, newName: string, newIcon?: string): void;
+    function ModifyEquipmentSet(
+      this: void,
+      equipmentSetID: number,
+      newName: string,
+      newIcon?: string,
+    ): void;
     function PickupEquipmentSet(this: void, equipmentSetID: number): void;
-    function SaveEquipmentSet(this: void, equipmentSetID: number, icon?: string): void;
+    function SaveEquipmentSet(
+      this: void,
+      equipmentSetID: number,
+      icon?: string,
+    ): void;
     function UnassignEquipmentSetSpec(this: void, equipmentSetID: number): void;
     function UnignoreSlotForSave(this: void, slot: number): void;
     function UseEquipmentSet(this: void, equipmentSetID: number): boolean;
@@ -8768,11 +10795,19 @@ declare global {
   function GetAccountExpansionLevel(this: void): number;
   function GetClientDisplayExpansionLevel(this: void): number;
   function GetCurrentRegionName(this: void): string;
-  function GetExpansionDisplayInfo(this: void, expansionLevel: number): ExpansionDisplayInfo|undefined;
+  function GetExpansionDisplayInfo(
+    this: void,
+    expansionLevel: number,
+  ): ExpansionDisplayInfo | undefined;
   function GetExpansionForLevel(this: void, playerLevel: number): number;
   function GetExpansionLevel(this: void): number;
-  function GetExpansionTrialInfo(this: void): LuaMultiReturn<[boolean, time_t|undefined]>;
-  function GetMaxLevelForExpansionLevel(this: void, expansionLevel: number): number;
+  function GetExpansionTrialInfo(
+    this: void,
+  ): LuaMultiReturn<[boolean, time_t | undefined]>;
+  function GetMaxLevelForExpansionLevel(
+    this: void,
+    expansionLevel: number,
+  ): number;
   function GetMaxLevelForLatestExpansion(this: void): number;
   function GetMaxLevelForPlayerExpansion(this: void): number;
   function GetMaximumExpansionLevel(this: void): number;
@@ -8783,7 +10818,10 @@ declare global {
   function IsExpansionTrial(this: void): boolean;
   function IsTrialAccount(this: void): boolean;
   function IsVeteranTrialAccount(this: void): boolean;
-  function SendSubscriptionInterstitialResponse(this: void, response: Enum.SubscriptionInterstitialResponseType): void;
+  function SendSubscriptionInterstitialResponse(
+    this: void,
+    response: Enum.SubscriptionInterstitialResponseType,
+  ): void;
 
   function ClassicExpansionAtLeast(this: void, expansionLevel: number): boolean;
   function GetClassicExpansionLevel(this: void): number;
@@ -8801,8 +10839,11 @@ declare global {
       maskScalar: number;
     }
 
-    function GetFogOfWarForMap(this: void, uiMapID: number): number|undefined;
-    function GetFogOfWarInfo(this: void, fogOfWarID: number): FogOfWarInfo|undefined;
+    function GetFogOfWarForMap(this: void, uiMapID: number): number | undefined;
+    function GetFogOfWarInfo(
+      this: void,
+      fogOfWarID: number,
+    ): FogOfWarInfo | undefined;
   }
 
   interface FontScriptInfo {
@@ -8818,11 +10859,13 @@ declare global {
     y: number;
   }
 
-  function GetFontInfo(this: void, fontObject: SimpleFont): FontScriptInfo|undefined;
+  function GetFontInfo(
+    this: void,
+    fontObject: SimpleFont,
+  ): FontScriptInfo | undefined;
   function GetFonts(this: void): string[];
 
-  interface FrameAPIArchaeologyDigSiteFrame {
-  }
+  interface FrameAPIArchaeologyDigSiteFrame {}
 
   interface FrameAPIBlob {
     DrawAll(): void;
@@ -8844,7 +10887,11 @@ declare global {
   interface FrameAPICharacterModelBase {
     ApplySpellVisualKit(spellVisualKitID: number, oneShot?: boolean): void;
     CanSetUnit(unit: UnitToken): void;
-    FreezeAnimation(anim: AnimationDataEnum, variation: number, frame: number): void;
+    FreezeAnimation(
+      anim: AnimationDataEnum,
+      variation: number,
+      frame: number,
+    ): void;
     GetDisplayInfo(): number;
     GetDoBlend(): boolean;
     GetKeepModelOnHide(): boolean;
@@ -8858,8 +10905,16 @@ declare global {
     SetCreature(creatureID: number, displayID?: number): void;
     SetDisplayInfo(displayID: number, mountDisplayID?: number): void;
     SetDoBlend(doBlend?: boolean): void;
-    SetItem(itemID: number, appearanceModID?: number, itemVisualID?: number): void;
-    SetItemAppearance(itemAppearanceID: number, itemVisualID?: number, itemSubclass?: Enum.ItemWeaponSubclass): void;
+    SetItem(
+      itemID: number,
+      appearanceModID?: number,
+      itemVisualID?: number,
+    ): void;
+    SetItemAppearance(
+      itemAppearanceID: number,
+      itemVisualID?: number,
+      itemSubclass?: Enum.ItemWeaponSubclass,
+    ): void;
     SetKeepModelOnHide(keepModelOnHide: boolean): void;
     SetPortraitZoom(zoom: number): void;
     SetRotation(radians: number, animate?: boolean): void;
@@ -8874,8 +10929,16 @@ declare global {
     InitializePanCamera(scaleFactor?: number): void;
     RefreshCamera(): void;
     SetAnimOffset(offset: number): void;
-    SetCameraPosition(positionX: number, positionY: number, positionZ: number): void;
-    SetCameraTarget(positionX: number, positionY: number, positionZ: number): void;
+    SetCameraPosition(
+      positionX: number,
+      positionY: number,
+      positionZ: number,
+    ): void;
+    SetCameraTarget(
+      positionX: number,
+      positionY: number,
+      positionZ: number,
+    ): void;
     SetCreatureData(creatureID: number): void;
     SetFacingLeft(isFacingLeft?: boolean): void;
     SetFadeTimes(fadeInSeconds: number, fadeOutSeconds: number): void;
@@ -8884,7 +10947,14 @@ declare global {
     SetPanDistance(scale: number): void;
     SetSpellVisualKit(visualKitID: number): void;
     SetTargetDistance(scale: number): void;
-    StartPan(panType: number, durationSeconds: number, doFade?: boolean, visKitID?: number, startPositionScale?: number, speedMultiplier?: number): void;
+    StartPan(
+      panType: number,
+      durationSeconds: number,
+      doFade?: boolean,
+      visKitID?: number,
+      startPositionScale?: number,
+      speedMultiplier?: number,
+    ): void;
     StopPan(): void;
     UnequipItems(): void;
   }
@@ -8903,7 +10973,13 @@ declare global {
     IsPaused(): boolean;
     Pause(): void;
     Resume(): void;
-    SetBlingTexture(texture: FileAsset, colorR: number, colorG: number, colorB: number, colorA: number): void;
+    SetBlingTexture(
+      texture: FileAsset,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      colorA: number,
+    ): void;
     SetCooldown(start: number, duration: number, modRate?: number): void;
     SetCooldownDuration(duration: number, modRate?: number): void;
     SetCooldownUNIX(start: number, duration: number, modRate?: number): void;
@@ -8913,12 +10989,29 @@ declare global {
     SetDrawEdge(drawEdge?: boolean): void;
     SetDrawSwipe(drawSwipe?: boolean): void;
     SetEdgeScale(scale: number): void;
-    SetEdgeTexture(texture: FileAsset, colorR: number, colorG: number, colorB: number, colorA: number): void;
+    SetEdgeTexture(
+      texture: FileAsset,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      colorA: number,
+    ): void;
     SetHideCountdownNumbers(hideNumbers?: boolean): void;
     SetReverse(reverse?: boolean): void;
     SetRotation(rotationRadians: number): void;
-    SetSwipeColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
-    SetSwipeTexture(texture: FileAsset, colorR: number, colorG: number, colorB: number, colorA: number): void;
+    SetSwipeColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
+    SetSwipeTexture(
+      texture: FileAsset,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      colorA: number,
+    ): void;
     SetTexCoordRange(low: vector2, high: vector2): void;
     SetUseCircularEdge(useCircularEdge?: boolean): void;
   }
@@ -8936,25 +11029,37 @@ declare global {
     IsSlotAllowed(slot: number): boolean;
     IsSlotVisible(slot: number): boolean;
     SetAutoDress(enabled?: boolean): void;
-    SetItemTransmogInfo(itemTransmogInfo: ItemTransmogInfo, inventorySlot?: number, ignoreChildItems?: boolean): Enum.ItemTryOnReason;
+    SetItemTransmogInfo(
+      itemTransmogInfo: ItemTransmogInfo,
+      inventorySlot?: number,
+      ignoreChildItems?: boolean,
+    ): Enum.ItemTryOnReason;
     SetObeyHideInTransmogFlag(enabled?: boolean): void;
     SetSheathed(sheathed?: boolean, hideWeapons?: boolean): void;
     SetUseTransmogChoices(enabled?: boolean): void;
     SetUseTransmogSkin(enabled?: boolean): void;
-    TryOn(linkOrItemModifiedAppearanceID: IDOrLink, handSlotName?: string, spellEnchantID?: number): Enum.ItemTryOnReason|undefined;
+    TryOn(
+      linkOrItemModifiedAppearanceID: IDOrLink,
+      handSlotName?: string,
+      spellEnchantID?: number,
+    ): Enum.ItemTryOnReason | undefined;
     Undress(): void;
     UndressSlot(inventorySlot: number): void;
   }
 
   interface FrameAPIFogOfWarFrame {
     GetFogOfWarBackgroundAtlas(): textureAtlas;
-    GetFogOfWarBackgroundTexture(): FileAsset|undefined;
+    GetFogOfWarBackgroundTexture(): FileAsset | undefined;
     GetFogOfWarMaskAtlas(): textureAtlas;
-    GetFogOfWarMaskTexture(): FileAsset|undefined;
+    GetFogOfWarMaskTexture(): FileAsset | undefined;
     GetMaskScalar(): number;
     GetUiMapID(): number;
     SetFogOfWarBackgroundAtlas(atlas: textureAtlas): void;
-    SetFogOfWarBackgroundTexture(asset: FileAsset, horizontalTile: boolean, verticalTile: boolean): void;
+    SetFogOfWarBackgroundTexture(
+      asset: FileAsset,
+      horizontalTile: boolean,
+      verticalTile: boolean,
+    ): void;
     SetFogOfWarMaskAtlas(atlas: textureAtlas): void;
     SetFogOfWarMaskTexture(asset: FileAsset): void;
     SetMaskScalar(scalar: number): void;
@@ -8973,7 +11078,7 @@ declare global {
     GetModelFileID(): fileID;
     GetModelPath(): string;
     GetModelUnitGUID(): WOWGUID;
-    GetParticleOverrideScale(): number|undefined;
+    GetParticleOverrideScale(): number | undefined;
     GetPitch(): number;
     GetPosition(): LuaMultiReturn<[number, number, number]>;
     GetRoll(): number;
@@ -8987,13 +11092,28 @@ declare global {
     IsVisible(): boolean;
     PlayAnimationKit(animationKit: number, isLooping?: boolean): void;
     SetAlpha(alpha: number): void;
-    SetAnimation(animation: AnimationDataEnum, variation?: number, animSpeed?: number, animOffsetSeconds?: number): void;
+    SetAnimation(
+      animation: AnimationDataEnum,
+      variation?: number,
+      animSpeed?: number,
+      animOffsetSeconds?: number,
+    ): void;
     SetAnimationBlendOperation(blendOp: Enum.ModelBlendOperation): void;
     SetDesaturation(strength: number): void;
-    SetModelByCreatureDisplayID(creatureDisplayID: number, useActivePlayerCustomizations?: boolean): boolean;
+    SetModelByCreatureDisplayID(
+      creatureDisplayID: number,
+      useActivePlayerCustomizations?: boolean,
+    ): boolean;
     SetModelByFileID(asset: FileAsset, useMips?: boolean): boolean;
     SetModelByPath(asset: FileAsset, useMips?: boolean): boolean;
-    SetModelByUnit(unit: UnitToken, sheatheWeapons?: boolean, autoDress?: boolean, hideWeapons?: boolean, usePlayerNativeForm?: boolean, holdBowString?: boolean): boolean;
+    SetModelByUnit(
+      unit: UnitToken,
+      sheatheWeapons?: boolean,
+      autoDress?: boolean,
+      hideWeapons?: boolean,
+      usePlayerNativeForm?: boolean,
+      holdBowString?: boolean,
+    ): boolean;
     SetParticleOverrideScale(scale?: number): void;
     SetPitch(pitch: number): void;
     SetPosition(positionX: number, positionY: number, positionZ: number): void;
@@ -9008,12 +11128,16 @@ declare global {
   }
 
   interface FrameAPIModelSceneFrameActor {
-    AttachToMount(rider: ModelSceneFrameActor, animation: AnimationDataEnum, spellKitVisualID?: number): boolean;
+    AttachToMount(
+      rider: ModelSceneFrameActor,
+      animation: AnimationDataEnum,
+      spellKitVisualID?: number,
+    ): boolean;
     CalculateMountScale(rider: ModelSceneFrameActor): number;
     Dress(): void;
     DressPlayerSlot(invSlot: number): void;
     GetAutoDress(): boolean;
-    GetItemTransmogInfo(inventorySlots: number): ItemTransmogInfo|undefined;
+    GetItemTransmogInfo(inventorySlots: number): ItemTransmogInfo | undefined;
     GetItemTransmogInfoList(): ItemTransmogInfo[];
     GetObeyHideInTransmogFlag(): boolean;
     GetPaused(): LuaMultiReturn<[boolean, boolean]>;
@@ -9026,16 +11150,32 @@ declare global {
     ReleaseFrontEndCharacterDisplays(): boolean;
     ResetNextHandSlot(): void;
     SetAutoDress(autoDress: boolean): void;
-    SetFrontEndLobbyModelFromDefaultCharacterDisplay(characterIndex: number): boolean;
-    SetItemTransmogInfo(transmogInfo: ItemTransmogInfo, inventorySlots?: number, ignoreChildItems?: boolean): Enum.ItemTryOnReason;
+    SetFrontEndLobbyModelFromDefaultCharacterDisplay(
+      characterIndex: number,
+    ): boolean;
+    SetItemTransmogInfo(
+      transmogInfo: ItemTransmogInfo,
+      inventorySlots?: number,
+      ignoreChildItems?: boolean,
+    ): Enum.ItemTryOnReason;
     SetModelByHyperlink(link: string): boolean;
     SetObeyHideInTransmogFlag(obey: boolean): void;
     SetPaused(paused: boolean, affectsGlobalPause?: boolean): void;
-    SetPlayerModelFromGlues(characterIndex?: number, sheatheWeapons?: boolean, autoDress?: boolean, hideWeapons?: boolean, usePlayerNativeForm?: boolean): boolean;
+    SetPlayerModelFromGlues(
+      characterIndex?: number,
+      sheatheWeapons?: boolean,
+      autoDress?: boolean,
+      hideWeapons?: boolean,
+      usePlayerNativeForm?: boolean,
+    ): boolean;
     SetSheathed(sheathed: boolean, hidden?: boolean): void;
     SetUseTransmogChoices(use: boolean): void;
     SetUseTransmogSkin(use: boolean): void;
-    TryOn(itemLinkOrItemModifiedAppearanceID: string, handSlotName?: string, spellEnchantmentID?: number): Enum.ItemTryOnReason|undefined;
+    TryOn(
+      itemLinkOrItemModifiedAppearanceID: string,
+      handSlotName?: string,
+      spellEnchantmentID?: number,
+    ): Enum.ItemTryOnReason | undefined;
     Undress(includeWeapons?: boolean): void;
     UndressSlot(inventorySlots: number): void;
   }
@@ -9059,18 +11199,40 @@ declare global {
     GetLightDiffuseColor(): LuaMultiReturn<[number, number, number]>;
     GetLightDirection(): LuaMultiReturn<[number, number, number]>;
     GetLightPosition(): LuaMultiReturn<[number, number, number]>;
-    GetLightType(): Enum.ModelLightType|undefined;
+    GetLightType(): Enum.ModelLightType | undefined;
     GetNumActors(): number;
     GetViewInsets(): uiRect;
     GetViewTranslation(): LuaMultiReturn<[number, number]>;
     IsLightVisible(): boolean;
-    Project3DPointTo2D(pointX: number, pointY: number, pointZ: number): LuaMultiReturn<[number, number, number]>;
+    Project3DPointTo2D(
+      pointX: number,
+      pointY: number,
+      pointZ: number,
+    ): LuaMultiReturn<[number, number, number]>;
     SetCameraFarClip(farClip: number): void;
     SetCameraFieldOfView(fov: number): void;
     SetCameraNearClip(nearClip: number): void;
-    SetCameraOrientationByAxisVectors(forwardX: number, forwardY: number, forwardZ: number, rightX: number, rightY: number, rightZ: number, upX: number, upY: number, upZ: number): void;
-    SetCameraOrientationByYawPitchRoll(yaw: number, pitch: number, roll: number): void;
-    SetCameraPosition(positionX: number, positionY: number, positionZ: number): void;
+    SetCameraOrientationByAxisVectors(
+      forwardX: number,
+      forwardY: number,
+      forwardZ: number,
+      rightX: number,
+      rightY: number,
+      rightZ: number,
+      upX: number,
+      upY: number,
+      upZ: number,
+    ): void;
+    SetCameraOrientationByYawPitchRoll(
+      yaw: number,
+      pitch: number,
+      roll: number,
+    ): void;
+    SetCameraPosition(
+      positionX: number,
+      positionY: number,
+      positionZ: number,
+    ): void;
     SetDesaturation(strength: number): void;
     SetDrawLayer(layer: DrawLayer): void;
     SetFogColor(colorR: number, colorG: number, colorB: number): void;
@@ -9078,8 +11240,16 @@ declare global {
     SetFogNear(near: number): void;
     SetLightAmbientColor(colorR: number, colorG: number, colorB: number): void;
     SetLightDiffuseColor(colorR: number, colorG: number, colorB: number): void;
-    SetLightDirection(directionX: number, directionY: number, directionZ: number): void;
-    SetLightPosition(positionX: number, positionY: number, positionZ: number): void;
+    SetLightDirection(
+      directionX: number,
+      directionY: number,
+      directionZ: number,
+    ): void;
+    SetLightPosition(
+      positionX: number,
+      positionY: number,
+      positionZ: number,
+    ): void;
     SetLightType(lightType: Enum.ModelLightType): void;
     SetLightVisible(visible?: boolean): void;
     SetPaused(paused: boolean, affectsGlobalPause?: boolean): void;
@@ -9091,11 +11261,14 @@ declare global {
   interface FrameAPIQuestPOI {
     GetNumTooltips(): number;
     GetTooltipIndex(index: number): number;
-    UpdateMouseOverTooltip(x: number, y: number): LuaMultiReturn<[number|undefined, number|undefined]>;
+    UpdateMouseOverTooltip(
+      x: number,
+      y: number,
+    ): LuaMultiReturn<[number | undefined, number | undefined]>;
   }
 
   interface FrameAPIScenarioPOI {
-    GetScenarioTooltipText(): string|undefined;
+    GetScenarioTooltipText(): string | undefined;
     UpdateMouseOverTooltip(x: number, y: number): boolean;
   }
 
@@ -9128,25 +11301,53 @@ declare global {
   }
 
   interface FrameAPIUnitPositionFrame {
-    AddUnit(unitTokenString: string, asset: TextureAssetDisk, width?: uiUnit, height?: uiUnit, r?: number, g?: number, b?: number, a?: number, sublayer?: number, showFacing?: boolean): void;
+    AddUnit(
+      unitTokenString: string,
+      asset: TextureAssetDisk,
+      width?: uiUnit,
+      height?: uiUnit,
+      r?: number,
+      g?: number,
+      b?: number,
+      a?: number,
+      sublayer?: number,
+      showFacing?: boolean,
+    ): void;
     ClearUnits(): void;
     FinalizeUnits(): void;
     GetMouseOverUnits(): string;
     GetPlayerPingScale(): number;
     GetUiMapID(): number;
     SetPlayerPingScale(scale: number): void;
-    SetPlayerPingTexture(textureType: Enum.PingTextureType, asset: FileAsset, width?: uiUnit, height?: uiUnit): void;
+    SetPlayerPingTexture(
+      textureType: Enum.PingTextureType,
+      asset: FileAsset,
+      width?: uiUnit,
+      height?: uiUnit,
+    ): void;
     SetUiMapID(mapID: number): void;
-    SetUnitColor(unit: string, colorR: number, colorG: number, colorB: number, colorA: number): void;
+    SetUnitColor(
+      unit: string,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      colorA: number,
+    ): void;
     StartPlayerPing(duration?: number, fadeDuration?: number): void;
     StopPlayerPing(): void;
   }
 
-  function CreateWindow(this: void, popupStyle?: boolean): SimpleWindow|undefined;
+  function CreateWindow(
+    this: void,
+    popupStyle?: boolean,
+  ): SimpleWindow | undefined;
   function GetCallstackHeight(this: void): number;
-  function GetCurrentEventID(this: void): number|undefined;
-  function GetErrorCallstackHeight(this: void): number|undefined;
-  function GetEventTime(this: void, eventProfileIndex: number): LuaMultiReturn<[number, number, string, number]>;
+  function GetCurrentEventID(this: void): number | undefined;
+  function GetErrorCallstackHeight(this: void): number | undefined;
+  function GetEventTime(
+    this: void,
+    eventProfileIndex: number,
+  ): LuaMultiReturn<[number, number, string, number]>;
   function RunScript(this: void, text: string): void;
   function SetErrorCallstackHeight(this: void, height?: number): void;
 
@@ -9185,13 +11386,13 @@ declare global {
     function DelIgnoreByIndex(this: void, index: number): void;
     function GetFriendInfo(this: void, name: string): FriendInfo;
     function GetFriendInfoByIndex(this: void, index: number): FriendInfo;
-    function GetIgnoreName(this: void, index: number): string|undefined;
+    function GetIgnoreName(this: void, index: number): string | undefined;
     function GetNumFriends(this: void): number;
     function GetNumIgnores(this: void): number;
     function GetNumOnlineFriends(this: void): number;
     function GetNumWhoResults(this: void): LuaMultiReturn<[number, number]>;
-    function GetSelectedFriend(this: void): number|undefined;
-    function GetSelectedIgnore(this: void): number|undefined;
+    function GetSelectedFriend(this: void): number | undefined;
+    function GetSelectedIgnore(this: void): number | undefined;
     function GetWhoInfo(this: void, index: number): WhoInfo;
     function IsFriend(this: void, guid: WOWGUID): boolean;
     function IsIgnored(this: void, token: string): boolean;
@@ -9201,7 +11402,11 @@ declare global {
     function RemoveFriendByIndex(this: void, index: number): void;
     function SendWho(this: void, filter: string, origin?: number): void;
     function SetFriendNotes(this: void, name: string, notes: string): boolean;
-    function SetFriendNotesByIndex(this: void, index: number, notes: string): void;
+    function SetFriendNotesByIndex(
+      this: void,
+      index: number,
+      notes: string,
+    ): void;
     function SetSelectedFriend(this: void, index: number): void;
     function SetSelectedIgnore(this: void, index: number): void;
     function SetWhoToUi(this: void, whoToUi: boolean): void;
@@ -9226,15 +11431,25 @@ declare global {
   function SetCursor(this: void, name?: string): boolean;
   function SetCursorHoveredItem(this: void, item: ItemLocation): void;
   function SetCursorHoveredItemTradeItem(this: void, enabled: boolean): void;
-  function SetCursorVirtualItem(this: void, itemInfo: ItemInfo, cursorType: Enum.UICursorType): void;
+  function SetCursorVirtualItem(
+    this: void,
+    itemInfo: ItemInfo,
+    cursorType: Enum.UICursorType,
+  ): void;
 
   namespace C_GameEnvironmentManager {
     function GetCurrentEventRealmQueues(this: void): Enum.EventRealmQueues;
     function GetCurrentGameEnvironment(this: void): Enum.GameEnvironment;
-    function RequestGameEnvironment(this: void, gameEnvironment: Enum.GameEnvironment): void;
+    function RequestGameEnvironment(
+      this: void,
+      gameEnvironment: Enum.GameEnvironment,
+    ): void;
   }
 
-  function GetGameMessageInfo(this: void, gameErrorIndex: number): LuaMultiReturn<[string, number|undefined, number|undefined]>;
+  function GetGameMessageInfo(
+    this: void,
+    gameErrorIndex: number,
+  ): LuaMultiReturn<[string, number | undefined, number | undefined]>;
   function NotWhileDeadError(this: void): void;
 
   namespace C_GameModeManager {
@@ -9320,33 +11535,72 @@ declare global {
       comment?: string;
     }
 
-    function AddSDLMapping(this: void, platform: Enum.ClientPlatformType, mapping: string): boolean;
+    function AddSDLMapping(
+      this: void,
+      platform: Enum.ClientPlatformType,
+      mapping: string,
+    ): boolean;
     function ApplyConfigs(this: void): void;
-    function AxisIndexToConfigName(this: void, axisIndex: number): string|undefined;
-    function ButtonBindingToIndex(this: void, bindingName: string): number|undefined;
-    function ButtonIndexToBinding(this: void, buttonIndex: number): string|undefined;
-    function ButtonIndexToConfigName(this: void, buttonIndex: number): string|undefined;
+    function AxisIndexToConfigName(
+      this: void,
+      axisIndex: number,
+    ): string | undefined;
+    function ButtonBindingToIndex(
+      this: void,
+      bindingName: string,
+    ): number | undefined;
+    function ButtonIndexToBinding(
+      this: void,
+      buttonIndex: number,
+    ): string | undefined;
+    function ButtonIndexToConfigName(
+      this: void,
+      buttonIndex: number,
+    ): string | undefined;
     function ClearLedColor(this: void): void;
     function DeleteConfig(this: void, configID: GamePadConfigID): void;
     function GetActiveDeviceID(this: void): number;
     function GetAllConfigIDs(this: void): GamePadConfigID[];
     function GetAllDeviceIDs(this: void): number[];
     function GetCombinedDeviceID(this: void): number;
-    function GetConfig(this: void, configID: GamePadConfigID): GamePadConfig|undefined;
-    function GetDeviceMappedState(this: void, deviceID?: number): GamePadMappedState|undefined;
-    function GetDeviceRawState(this: void, deviceID: number): GamePadRawState|undefined;
+    function GetConfig(
+      this: void,
+      configID: GamePadConfigID,
+    ): GamePadConfig | undefined;
+    function GetDeviceMappedState(
+      this: void,
+      deviceID?: number,
+    ): GamePadMappedState | undefined;
+    function GetDeviceRawState(
+      this: void,
+      deviceID: number,
+    ): GamePadRawState | undefined;
     function GetLedColor(this: void): colorRGB;
-    function GetPowerLevel(this: void, deviceID?: number): Enum.GamePadPowerLevel;
+    function GetPowerLevel(
+      this: void,
+      deviceID?: number,
+    ): Enum.GamePadPowerLevel;
     function IsEnabled(this: void): boolean;
     function SetConfig(this: void, config: GamePadConfig): void;
     function SetLedColor(this: void, color: colorRGB): void;
-    function SetVibration(this: void, vibrationType: string, intensity: number): void;
-    function StickIndexToConfigName(this: void, stickIndex: number): string|undefined;
+    function SetVibration(
+      this: void,
+      vibrationType: string,
+      intensity: number,
+    ): void;
+    function StickIndexToConfigName(
+      this: void,
+      stickIndex: number,
+    ): string | undefined;
     function StopVibration(this: void): void;
   }
 
   namespace C_GameRules {
-    function GetGameRuleAsFloat(this: void, gameRule: GameRule, decimalPlaces?: number): number;
+    function GetGameRuleAsFloat(
+      this: void,
+      gameRule: GameRule,
+      decimalPlaces?: number,
+    ): number;
     function IsGameRuleActive(this: void, gameRule: GameRule): boolean;
   }
 
@@ -9563,44 +11817,137 @@ declare global {
       isRare: boolean;
     }
 
-    function AddFollowerToMission(this: void, missionID: number, followerID: GarrisonFollower, boardIndex?: number): boolean;
-    function GetAutoCombatDamageClassValues(this: void): AutoCombatDamageClassString[];
-    function GetAutoMissionBoardState(this: void, missionID: number): AutoMissionTargetingInfo[];
-    function GetAutoMissionEnvironmentEffect(this: void, missionID: number): AutoMissionEnvironmentEffect|undefined;
-    function GetAutoMissionTargetingInfo(this: void, missionID: number, followerID: GarrisonFollower, casterBoardIndex: number): AutoMissionTargetingInfo[];
-    function GetAutoMissionTargetingInfoForSpell(this: void, missionID: number, autoCombatSpellID: number, casterBoardIndex: number): AutoMissionTargetingInfo[];
-    function GetAutoTroops(this: void, followerType: number): AutoCombatTroopInfo[];
-    function GetCombatLogSpellInfo(this: void, autoCombatSpellID: number): AutoCombatSpellInfo|undefined;
+    function AddFollowerToMission(
+      this: void,
+      missionID: number,
+      followerID: GarrisonFollower,
+      boardIndex?: number,
+    ): boolean;
+    function GetAutoCombatDamageClassValues(
+      this: void,
+    ): AutoCombatDamageClassString[];
+    function GetAutoMissionBoardState(
+      this: void,
+      missionID: number,
+    ): AutoMissionTargetingInfo[];
+    function GetAutoMissionEnvironmentEffect(
+      this: void,
+      missionID: number,
+    ): AutoMissionEnvironmentEffect | undefined;
+    function GetAutoMissionTargetingInfo(
+      this: void,
+      missionID: number,
+      followerID: GarrisonFollower,
+      casterBoardIndex: number,
+    ): AutoMissionTargetingInfo[];
+    function GetAutoMissionTargetingInfoForSpell(
+      this: void,
+      missionID: number,
+      autoCombatSpellID: number,
+      casterBoardIndex: number,
+    ): AutoMissionTargetingInfo[];
+    function GetAutoTroops(
+      this: void,
+      followerType: number,
+    ): AutoCombatTroopInfo[];
+    function GetCombatLogSpellInfo(
+      this: void,
+      autoCombatSpellID: number,
+    ): AutoCombatSpellInfo | undefined;
     function GetCurrentCypherEquipmentLevel(this: void): number;
-    function GetCurrentGarrTalentTreeFriendshipFactionID(this: void): number|undefined;
-    function GetCurrentGarrTalentTreeID(this: void): number|undefined;
-    function GetCyphersToNextEquipmentLevel(this: void): number|undefined;
-    function GetFollowerAutoCombatSpells(this: void, garrFollowerID: GarrisonFollower, followerLevel: number): LuaMultiReturn<[AutoCombatSpellInfo[], AutoCombatSpellInfo|undefined]>;
-    function GetFollowerAutoCombatStats(this: void, garrFollowerID: GarrisonFollower): FollowerAutoCombatStatsInfo|undefined;
-    function GetFollowerMissionCompleteInfo(this: void, followerID: GarrisonFollower): FollowerMissionCompleteInfo;
-    function GetGarrisonPlotsInstancesForMap(this: void, uiMapID: number): GarrisonPlotInstanceMapInfo[];
-    function GetGarrisonTalentTreeCurrencyTypes(this: void, garrTalentTreeID: number): number|undefined;
-    function GetGarrisonTalentTreeType(this: void, garrTalentTreeID: number): number;
+    function GetCurrentGarrTalentTreeFriendshipFactionID(
+      this: void,
+    ): number | undefined;
+    function GetCurrentGarrTalentTreeID(this: void): number | undefined;
+    function GetCyphersToNextEquipmentLevel(this: void): number | undefined;
+    function GetFollowerAutoCombatSpells(
+      this: void,
+      garrFollowerID: GarrisonFollower,
+      followerLevel: number,
+    ): LuaMultiReturn<[AutoCombatSpellInfo[], AutoCombatSpellInfo | undefined]>;
+    function GetFollowerAutoCombatStats(
+      this: void,
+      garrFollowerID: GarrisonFollower,
+    ): FollowerAutoCombatStatsInfo | undefined;
+    function GetFollowerMissionCompleteInfo(
+      this: void,
+      followerID: GarrisonFollower,
+    ): FollowerMissionCompleteInfo;
+    function GetGarrisonPlotsInstancesForMap(
+      this: void,
+      uiMapID: number,
+    ): GarrisonPlotInstanceMapInfo[];
+    function GetGarrisonTalentTreeCurrencyTypes(
+      this: void,
+      garrTalentTreeID: number,
+    ): number | undefined;
+    function GetGarrisonTalentTreeType(
+      this: void,
+      garrTalentTreeID: number,
+    ): number;
     function GetMaxCypherEquipmentLevel(this: void): number;
-    function GetMissionCompleteEncounters(this: void, missionID: number): GarrisonEnemyEncounterInfo[];
-    function GetMissionDeploymentInfo(this: void, missionID: number): MissionDeploymentInfo;
-    function GetMissionEncounterIconInfo(this: void, missionID: number): MissionEncounterIconInfo;
+    function GetMissionCompleteEncounters(
+      this: void,
+      missionID: number,
+    ): GarrisonEnemyEncounterInfo[];
+    function GetMissionDeploymentInfo(
+      this: void,
+      missionID: number,
+    ): MissionDeploymentInfo;
+    function GetMissionEncounterIconInfo(
+      this: void,
+      missionID: number,
+    ): MissionEncounterIconInfo;
     function GetTalentInfo(this: void, talentID: number): GarrisonTalentInfo;
-    function GetTalentPointsSpentInTalentTree(this: void, garrTalentTreeID: number): number;
-    function GetTalentTreeIDsByClassID(this: void, garrType: number, classID: number): number[];
-    function GetTalentTreeInfo(this: void, treeID: number): GarrisonTalentTreeInfo;
-    function GetTalentTreeResetInfo(this: void, garrTalentTreeID: number): LuaMultiReturn<[number, GarrisonTalentCurrencyCostInfo[]]>;
-    function GetTalentTreeTalentPointResearchInfo(this: void, garrTalentID: number, researchRank: number, garrTalentTreeID: number, talentPointIndex: number, isRespec: number): LuaMultiReturn<[number, GarrisonTalentCurrencyCostInfo[], number]>;
+    function GetTalentPointsSpentInTalentTree(
+      this: void,
+      garrTalentTreeID: number,
+    ): number;
+    function GetTalentTreeIDsByClassID(
+      this: void,
+      garrType: number,
+      classID: number,
+    ): number[];
+    function GetTalentTreeInfo(
+      this: void,
+      treeID: number,
+    ): GarrisonTalentTreeInfo;
+    function GetTalentTreeResetInfo(
+      this: void,
+      garrTalentTreeID: number,
+    ): LuaMultiReturn<[number, GarrisonTalentCurrencyCostInfo[]]>;
+    function GetTalentTreeTalentPointResearchInfo(
+      this: void,
+      garrTalentID: number,
+      researchRank: number,
+      garrTalentTreeID: number,
+      talentPointIndex: number,
+      isRespec: number,
+    ): LuaMultiReturn<[number, GarrisonTalentCurrencyCostInfo[], number]>;
     function GetTalentUnlockWorldQuest(this: void, talentID: number): number;
     function HasAdventures(this: void): boolean;
     function IsAtGarrisonMissionNPC(this: void): boolean;
     function IsEnvironmentCountered(this: void, missionID: number): boolean;
-    function IsFollowerOnCompletedMission(this: void, followerID: GarrisonFollower): boolean;
-    function IsTalentConditionMet(this: void, talentID: number): LuaMultiReturn<[boolean, string|undefined]>;
+    function IsFollowerOnCompletedMission(
+      this: void,
+      followerID: GarrisonFollower,
+    ): boolean;
+    function IsTalentConditionMet(
+      this: void,
+      talentID: number,
+    ): LuaMultiReturn<[boolean, string | undefined]>;
     function RegenerateCombatLog(this: void, missionID: number): boolean;
-    function RemoveFollowerFromMission(this: void, missionID: number, followerID: GarrisonFollower, boardIndex?: number): void;
+    function RemoveFollowerFromMission(
+      this: void,
+      missionID: number,
+      followerID: GarrisonFollower,
+      boardIndex?: number,
+    ): void;
     function RushHealAllFollowers(this: void, followerType: number): void;
-    function RushHealFollower(this: void, garrFollowerID: GarrisonFollower): void;
+    function RushHealFollower(
+      this: void,
+      garrFollowerID: GarrisonFollower,
+    ): void;
     function SetAutoCombatSpellFastForward(this: void, state: boolean): void;
   }
 
@@ -9678,11 +12025,9 @@ declare global {
 
   function IsOnGlueScreen(this: void): boolean;
 
-  namespace C_GlyphInfo {
-  }
+  namespace C_GlyphInfo {}
 
-  namespace C_GMTicketInfo {
-  }
+  namespace C_GMTicketInfo {}
 
   namespace C_GossipInfo {
     interface FriendshipReputationInfo {
@@ -9756,23 +12101,48 @@ declare global {
     function GetActiveDelveGossip(this: void): GossipOptionUIInfo;
     function GetActiveQuests(this: void): GossipQuestUIInfo[];
     function GetAvailableQuests(this: void): GossipQuestUIInfo[];
-    function GetCompletedOptionDescriptionString(this: void): string|undefined;
-    function GetCustomGossipDescriptionString(this: void): string|undefined;
-    function GetFriendshipReputation(this: void, friendshipFactionID: number): FriendshipReputationInfo;
-    function GetFriendshipReputationRanks(this: void, friendshipFactionID: number): FriendshipReputationRankInfo;
+    function GetCompletedOptionDescriptionString(
+      this: void,
+    ): string | undefined;
+    function GetCustomGossipDescriptionString(this: void): string | undefined;
+    function GetFriendshipReputation(
+      this: void,
+      friendshipFactionID: number,
+    ): FriendshipReputationInfo;
+    function GetFriendshipReputationRanks(
+      this: void,
+      friendshipFactionID: number,
+    ): FriendshipReputationRankInfo;
     function GetGossipDelveMapID(this: void): number;
     function GetNumActiveQuests(this: void): number;
     function GetNumAvailableQuests(this: void): number;
-    function GetOptionUIWidgetSetsAndTypesByOptionID(this: void, gossipOptionID: number): GossipOptionUIWidgetSetAndType[]|undefined;
+    function GetOptionUIWidgetSetsAndTypesByOptionID(
+      this: void,
+      gossipOptionID: number,
+    ): GossipOptionUIWidgetSetAndType[] | undefined;
     function GetOptions(this: void): GossipOptionUIInfo[];
-    function GetPoiForUiMapID(this: void, uiMapID: number): number|undefined;
-    function GetPoiInfo(this: void, uiMapID: number, gossipPoiID: number): GossipPoiInfo|undefined;
+    function GetPoiForUiMapID(this: void, uiMapID: number): number | undefined;
+    function GetPoiInfo(
+      this: void,
+      uiMapID: number,
+      gossipPoiID: number,
+    ): GossipPoiInfo | undefined;
     function GetText(this: void): string;
     function RefreshOptions(this: void): void;
     function SelectActiveQuest(this: void, optionID: number): void;
     function SelectAvailableQuest(this: void, optionID: number): void;
-    function SelectOption(this: void, optionID: number, text?: string, confirmed?: boolean): void;
-    function SelectOptionByIndex(this: void, optionID: number, text?: string, confirmed?: boolean): void;
+    function SelectOption(
+      this: void,
+      optionID: number,
+      text?: string,
+      confirmed?: boolean,
+    ): void;
+    function SelectOptionByIndex(
+      this: void,
+      optionID: number,
+      text?: string,
+      confirmed?: boolean,
+    ): void;
   }
 
   namespace C_GuildBank {
@@ -9803,24 +12173,49 @@ declare global {
     function Disband(this: void): void;
     function GetGuildNewsInfo(this: void, index: number): GuildNewsInfo;
     function GetGuildRankOrder(this: void, guid: WOWGUID): number;
-    function GetGuildTabardInfo(this: void, unit?: UnitToken): GuildTabardInfo|undefined;
+    function GetGuildTabardInfo(
+      this: void,
+      unit?: UnitToken,
+    ): GuildTabardInfo | undefined;
     function GuildControlGetRankFlags(this: void, rankOrder: number): boolean[];
     function GuildRoster(this: void): void;
     function Invite(this: void, name: string): void;
     function IsEncounterGuildNewsEnabled(this: void): boolean;
     function IsGuildOfficer(this: void): boolean;
-    function IsGuildRankAssignmentAllowed(this: void, guid: WOWGUID, rankOrder: number): boolean;
+    function IsGuildRankAssignmentAllowed(
+      this: void,
+      guid: WOWGUID,
+      rankOrder: number,
+    ): boolean;
     function IsGuildReputationEnabled(this: void): boolean;
     function Leave(this: void): void;
     function MemberExistsByName(this: void, name: string): boolean;
     function Promote(this: void, name: string): void;
-    function QueryGuildMemberRecipes(this: void, guildMemberGUID: WOWGUID, skillLineID: number): void;
-    function QueryGuildMembersForRecipe(this: void, skillLineID: number, recipeSpellID: number, recipeLevel?: number): number;
+    function QueryGuildMemberRecipes(
+      this: void,
+      guildMemberGUID: WOWGUID,
+      skillLineID: number,
+    ): void;
+    function QueryGuildMembersForRecipe(
+      this: void,
+      skillLineID: number,
+      recipeSpellID: number,
+      recipeLevel?: number,
+    ): number;
     function RemoveFromGuild(this: void, guid: WOWGUID): void;
-    function SetGuildRankOrder(this: void, guid: WOWGUID, rankOrder: number): void;
+    function SetGuildRankOrder(
+      this: void,
+      guid: WOWGUID,
+      rankOrder: number,
+    ): void;
     function SetLeader(this: void, name: string): void;
     function SetMOTD(this: void, motd: string): void;
-    function SetNote(this: void, guid: WOWGUID, note: string, isPublic: boolean): void;
+    function SetNote(
+      this: void,
+      guid: WOWGUID,
+      note: string,
+      isPublic: boolean,
+    ): void;
     function Uninvite(this: void, name: string): void;
   }
 
@@ -9848,12 +12243,15 @@ declare global {
 
   namespace C_IncomingSummon {
     function HasIncomingSummon(this: void, unit: UnitToken): boolean;
-    function IncomingSummonStatus(this: void, unit: UnitToken): Enum.SummonStatus;
+    function IncomingSummonStatus(
+      this: void,
+      unit: UnitToken,
+    ): Enum.SummonStatus;
   }
 
   namespace C_Navigation {
     function GetDistance(this: void): number;
-    function GetFrame(this: void): ScriptRegion|undefined;
+    function GetFrame(this: void): ScriptRegion | undefined;
     function GetNearestPartyMemberToken(this: void): string;
     function GetTargetState(this: void): Enum.NavigationState;
     function HasValidScreenPosition(this: void): boolean;
@@ -9867,7 +12265,11 @@ declare global {
   function GetMouseFoci(this: void): ScriptRegion[];
   function IsAltKeyDown(this: void): boolean;
   function IsControlKeyDown(this: void): boolean;
-  function IsKeyDown(this: void, keyOrMouseName: string, excludeBindingState?: boolean): boolean|undefined;
+  function IsKeyDown(
+    this: void,
+    keyOrMouseName: string,
+    excludeBindingState?: boolean,
+  ): boolean | undefined;
   function IsLeftAltKeyDown(this: void): boolean;
   function IsLeftControlKeyDown(this: void): boolean;
   function IsLeftMetaKeyDown(this: void): boolean;
@@ -9916,26 +12318,74 @@ declare global {
     lfgDungeonID?: number;
   }
 
-  function CanChangePlayerDifficulty(this: void): LuaMultiReturn<[boolean, boolean]>;
+  function CanChangePlayerDifficulty(
+    this: void,
+  ): LuaMultiReturn<[boolean, boolean]>;
   function CanMapChangeDifficulty(this: void, mapID?: number): boolean;
   function CanShowResetInstances(this: void): boolean;
-  function GetDifficultyInfo(this: void, difficultyID: number): LuaMultiReturn<[string, string, boolean, boolean, boolean, boolean, number|undefined, boolean, number|undefined, number|undefined]>;
+  function GetDifficultyInfo(
+    this: void,
+    difficultyID: number,
+  ): LuaMultiReturn<
+    [
+      string,
+      string,
+      boolean,
+      boolean,
+      boolean,
+      boolean,
+      number | undefined,
+      boolean,
+      number | undefined,
+      number | undefined,
+    ]
+  >;
   function GetDungeonDifficultyID(this: void): number;
   function GetInstanceBootTimeRemaining(this: void): number;
-  function GetInstanceInfo(this: void): LuaMultiReturn<[string, string, number, string, number, number, boolean|undefined, number, number, number|undefined]>;
-  function GetInstanceLockTimeRemaining(this: void): LuaMultiReturn<[number, boolean, number, number]>;
-  function GetInstanceLockTimeRemainingEncounter(this: void, encounterIndex: number): LuaMultiReturn<[string, string, boolean, boolean]>;
-  function GetLegacyRaidDifficultyID(this: void): number|undefined;
-  function GetRaidDifficultyID(this: void): number|undefined;
+  function GetInstanceInfo(
+    this: void,
+  ): LuaMultiReturn<
+    [
+      string,
+      string,
+      number,
+      string,
+      number,
+      number,
+      boolean | undefined,
+      number,
+      number,
+      number | undefined,
+    ]
+  >;
+  function GetInstanceLockTimeRemaining(
+    this: void,
+  ): LuaMultiReturn<[number, boolean, number, number]>;
+  function GetInstanceLockTimeRemainingEncounter(
+    this: void,
+    encounterIndex: number,
+  ): LuaMultiReturn<[string, string, boolean, boolean]>;
+  function GetLegacyRaidDifficultyID(this: void): number | undefined;
+  function GetRaidDifficultyID(this: void): number | undefined;
   function IsInInstance(this: void): LuaMultiReturn<[boolean, string]>;
-  function IsLegacyDifficulty(this: void, difficultyID: number): boolean|undefined;
+  function IsLegacyDifficulty(
+    this: void,
+    difficultyID: number,
+  ): boolean | undefined;
   function ResetInstances(this: void): void;
   function SetDungeonDifficultyID(this: void, difficultyID: number): void;
-  function SetLegacyRaidDifficultyID(this: void, difficultyID: number, force?: boolean): void;
-  function SetRaidDifficultyID(this: void, difficultyID: number, force?: boolean): void;
+  function SetLegacyRaidDifficultyID(
+    this: void,
+    difficultyID: number,
+    force?: boolean,
+  ): void;
+  function SetRaidDifficultyID(
+    this: void,
+    difficultyID: number,
+    force?: boolean,
+  ): void;
 
-  namespace C_InstanceEncounter {
-  }
+  namespace C_InstanceEncounter {}
 
   namespace C_InterfaceFileManifest {
     function GetInterfaceArtFiles(this: void): string[];
@@ -9951,13 +12401,18 @@ declare global {
     }
 
     function AreInvasionsAvailable(this: void): boolean;
-    function GetInvasionForUiMapID(this: void, uiMapID: number): number|undefined;
+    function GetInvasionForUiMapID(
+      this: void,
+      uiMapID: number,
+    ): number | undefined;
     function GetInvasionInfo(this: void, invasionID: number): InvasionMapInfo;
-    function GetInvasionTimeLeft(this: void, invasionID: number): number|undefined;
+    function GetInvasionTimeLeft(
+      this: void,
+      invasionID: number,
+    ): number | undefined;
   }
 
-  namespace C_IslandsInfo {
-  }
+  namespace C_IslandsInfo {}
 
   namespace C_IslandsQueue {
     interface IslandsQueueDifficultyInfo {
@@ -9968,7 +12423,7 @@ declare global {
     function CloseIslandsQueueScreen(this: void): void;
     function GetIslandDifficultyInfo(this: void): IslandsQueueDifficultyInfo[];
     function GetIslandsMaxGroupSize(this: void): number;
-    function GetIslandsWeeklyQuestID(this: void): number|undefined;
+    function GetIslandsWeeklyQuestID(this: void): number | undefined;
     function QueueForIsland(this: void, difficultyID: number): void;
     function RequestPreloadRewardData(this: void, questId: number): void;
   }
@@ -9996,82 +12451,266 @@ declare global {
 
     function ActionBindsItem(this: void): void;
     function BindEnchant(this: void): void;
-    function CanItemTransmogAppearance(this: void, itemLoc: ItemLocation): LuaMultiReturn<[boolean, number]>;
+    function CanItemTransmogAppearance(
+      this: void,
+      itemLoc: ItemLocation,
+    ): LuaMultiReturn<[boolean, number]>;
     function CanScrapItem(this: void, itemLoc: ItemLocation): boolean;
     function CanViewItemPowers(this: void, itemLoc: ItemLocation): boolean;
     function ConfirmBindOnUse(this: void): void;
     function ConfirmNoRefundOnUse(this: void): void;
     function ConfirmOnUse(this: void): void;
-    function DoesItemContainSpec(this: void, itemInfo: ItemInfo, classID: number, specID?: number): boolean;
-    function DoesItemExist(this: void, emptiableItemLocation: EmptiableItemLocation): boolean;
+    function DoesItemContainSpec(
+      this: void,
+      itemInfo: ItemInfo,
+      classID: number,
+      specID?: number,
+    ): boolean;
+    function DoesItemExist(
+      this: void,
+      emptiableItemLocation: EmptiableItemLocation,
+    ): boolean;
     function DoesItemExistByID(this: void, itemInfo: ItemInfo): boolean;
-    function DoesItemMatchBonusTreeReplacement(this: void, itemLoc: ItemLocation): boolean;
-    function DoesItemMatchTargetEnchantingSpell(this: void, itemLoc: ItemLocation): boolean;
+    function DoesItemMatchBonusTreeReplacement(
+      this: void,
+      itemLoc: ItemLocation,
+    ): boolean;
+    function DoesItemMatchTargetEnchantingSpell(
+      this: void,
+      itemLoc: ItemLocation,
+    ): boolean;
     function DoesItemMatchTrackJump(this: void, itemLoc: ItemLocation): boolean;
     function DropItemOnUnit(this: void, unitGUID: UnitToken): void;
     function EndBoundTradeable(this: void, type: string): void;
     function EndRefund(this: void, type: number): void;
-    function EquipItemByName(this: void, itemInfo: ItemInfo, dstSlot?: number): void;
-    function GetAppliedItemTransmogInfo(this: void, itemLoc: ItemLocation): ItemTransmogInfo|undefined;
-    function GetBaseItemTransmogInfo(this: void, itemLoc: ItemLocation): ItemTransmogInfo|undefined;
-    function GetCurrentItemLevel(this: void, itemLocation: ItemLocation): number|undefined;
-    function GetCurrentItemTransmogInfo(this: void, itemLoc: ItemLocation): ItemTransmogInfo|undefined;
-    function GetDelvePreviewItemLink(this: void, itemID: number, context: ItemCreationContext): string|undefined;
-    function GetDetailedItemLevelInfo(this: void, itemInfo: ItemInfo): LuaMultiReturn<[number, boolean, number]>;
-    function GetFirstTriggeredSpellForItem(this: void, itemID: number, itemQuality: number): number|undefined;
-    function GetItemChildInfo(this: void, itemInfo: ItemInfo, slotID?: number): number[];
+    function EquipItemByName(
+      this: void,
+      itemInfo: ItemInfo,
+      dstSlot?: number,
+    ): void;
+    function GetAppliedItemTransmogInfo(
+      this: void,
+      itemLoc: ItemLocation,
+    ): ItemTransmogInfo | undefined;
+    function GetBaseItemTransmogInfo(
+      this: void,
+      itemLoc: ItemLocation,
+    ): ItemTransmogInfo | undefined;
+    function GetCurrentItemLevel(
+      this: void,
+      itemLocation: ItemLocation,
+    ): number | undefined;
+    function GetCurrentItemTransmogInfo(
+      this: void,
+      itemLoc: ItemLocation,
+    ): ItemTransmogInfo | undefined;
+    function GetDelvePreviewItemLink(
+      this: void,
+      itemID: number,
+      context: ItemCreationContext,
+    ): string | undefined;
+    function GetDetailedItemLevelInfo(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[number, boolean, number]>;
+    function GetFirstTriggeredSpellForItem(
+      this: void,
+      itemID: number,
+      itemQuality: number,
+    ): number | undefined;
+    function GetItemChildInfo(
+      this: void,
+      itemInfo: ItemInfo,
+      slotID?: number,
+    ): number[];
     function GetItemClassInfo(this: void, itemClassID: number): string;
-    function GetItemConversionOutputIcon(this: void, itemLoc: ItemLocation): fileID|undefined;
-    function GetItemCooldown(this: void, itemInfo: ItemInfo): LuaMultiReturn<[number, number, boolean]>;
-    function GetItemCount(this: void, itemInfo: ItemInfo, includeBank?: boolean, includeUses?: boolean, includeReagentBank?: boolean, includeAccountBank?: boolean): number;
-    function GetItemCreationContext(this: void, itemInfo: ItemInfo): LuaMultiReturn<[number, string]>;
-    function GetItemFamily(this: void, itemInfo: ItemInfo): number|undefined;
+    function GetItemConversionOutputIcon(
+      this: void,
+      itemLoc: ItemLocation,
+    ): fileID | undefined;
+    function GetItemCooldown(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[number, number, boolean]>;
+    function GetItemCount(
+      this: void,
+      itemInfo: ItemInfo,
+      includeBank?: boolean,
+      includeUses?: boolean,
+      includeReagentBank?: boolean,
+      includeAccountBank?: boolean,
+    ): number;
+    function GetItemCreationContext(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[number, string]>;
+    function GetItemFamily(this: void, itemInfo: ItemInfo): number | undefined;
     function GetItemGUID(this: void, itemLocation: ItemLocation): WOWGUID;
-    function GetItemGem(this: void, hyperlink: string, index: number): LuaMultiReturn<[string, string]>;
-    function GetItemGemID(this: void, itemInfo: ItemInfo, index: number): number;
+    function GetItemGem(
+      this: void,
+      hyperlink: string,
+      index: number,
+    ): LuaMultiReturn<[string, string]>;
+    function GetItemGemID(
+      this: void,
+      itemInfo: ItemInfo,
+      index: number,
+    ): number;
     function GetItemID(this: void, itemLocation: ItemLocation): number;
-    function GetItemIDByGUID(this: void, itemGUID: WOWGUID): number|undefined;
+    function GetItemIDByGUID(this: void, itemGUID: WOWGUID): number | undefined;
     function GetItemIDForItemInfo(this: void, itemInfo: ItemInfo): number;
-    function GetItemIcon(this: void, itemLocation: ItemLocation): fileID|undefined;
-    function GetItemIconByID(this: void, itemInfo: ItemInfo): fileID|undefined;
-    function GetItemInfo(this: void, itemInfo: ItemInfo): LuaMultiReturn<[string, string, Enum.ItemQuality, number, number, string, string, number, string, fileID, number, number, number, number, number, number|undefined, boolean]>;
-    function GetItemInfoInstant(this: void, itemInfo: ItemInfo): LuaMultiReturn<[number, string, string, string, fileID, number, number]>;
-    function GetItemInventorySlotInfo(this: void, inventorySlot: Enum.InventoryType): string;
-    function GetItemInventorySlotKey(this: void, inventorySlot: Enum.InventoryType): string;
-    function GetItemInventoryType(this: void, itemLocation: ItemLocation): Enum.InventoryType|undefined;
-    function GetItemInventoryTypeByID(this: void, itemInfo: ItemInfo): Enum.InventoryType|undefined;
-    function GetItemLearnTransmogSet(this: void, itemInfo: ItemInfo): number|undefined;
-    function GetItemLink(this: void, itemLocation: ItemLocation): string|undefined;
-    function GetItemLinkByGUID(this: void, itemGUID: WOWGUID): string|undefined;
-    function GetItemLocation(this: void, itemGUID: WOWGUID): ItemLocation|undefined;
-    function GetItemMaxStackSize(this: void, itemLocation: ItemLocation): number|undefined;
-    function GetItemMaxStackSizeByID(this: void, itemInfo: ItemInfo): number|undefined;
-    function GetItemName(this: void, itemLocation: ItemLocation): string|undefined;
-    function GetItemNameByID(this: void, itemInfo: ItemInfo): string|undefined;
+    function GetItemIcon(
+      this: void,
+      itemLocation: ItemLocation,
+    ): fileID | undefined;
+    function GetItemIconByID(
+      this: void,
+      itemInfo: ItemInfo,
+    ): fileID | undefined;
+    function GetItemInfo(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<
+      [
+        string,
+        string,
+        Enum.ItemQuality,
+        number,
+        number,
+        string,
+        string,
+        number,
+        string,
+        fileID,
+        number,
+        number,
+        number,
+        number,
+        number,
+        number | undefined,
+        boolean,
+      ]
+    >;
+    function GetItemInfoInstant(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[number, string, string, string, fileID, number, number]>;
+    function GetItemInventorySlotInfo(
+      this: void,
+      inventorySlot: Enum.InventoryType,
+    ): string;
+    function GetItemInventorySlotKey(
+      this: void,
+      inventorySlot: Enum.InventoryType,
+    ): string;
+    function GetItemInventoryType(
+      this: void,
+      itemLocation: ItemLocation,
+    ): Enum.InventoryType | undefined;
+    function GetItemInventoryTypeByID(
+      this: void,
+      itemInfo: ItemInfo,
+    ): Enum.InventoryType | undefined;
+    function GetItemLearnTransmogSet(
+      this: void,
+      itemInfo: ItemInfo,
+    ): number | undefined;
+    function GetItemLink(
+      this: void,
+      itemLocation: ItemLocation,
+    ): string | undefined;
+    function GetItemLinkByGUID(
+      this: void,
+      itemGUID: WOWGUID,
+    ): string | undefined;
+    function GetItemLocation(
+      this: void,
+      itemGUID: WOWGUID,
+    ): ItemLocation | undefined;
+    function GetItemMaxStackSize(
+      this: void,
+      itemLocation: ItemLocation,
+    ): number | undefined;
+    function GetItemMaxStackSizeByID(
+      this: void,
+      itemInfo: ItemInfo,
+    ): number | undefined;
+    function GetItemName(
+      this: void,
+      itemLocation: ItemLocation,
+    ): string | undefined;
+    function GetItemNameByID(
+      this: void,
+      itemInfo: ItemInfo,
+    ): string | undefined;
     function GetItemNumAddedSockets(this: void, itemInfo: ItemInfo): number;
     function GetItemNumSockets(this: void, itemInfo: ItemInfo): number;
-    function GetItemQuality(this: void, itemLocation: ItemLocation): Enum.ItemQuality|undefined;
-    function GetItemQualityByID(this: void, itemInfo: ItemInfo): Enum.ItemQuality|undefined;
-    function GetItemQualityColor(this: void, quality: number): LuaMultiReturn<[number, number, number, string]>;
+    function GetItemQuality(
+      this: void,
+      itemLocation: ItemLocation,
+    ): Enum.ItemQuality | undefined;
+    function GetItemQualityByID(
+      this: void,
+      itemInfo: ItemInfo,
+    ): Enum.ItemQuality | undefined;
+    function GetItemQualityColor(
+      this: void,
+      quality: number,
+    ): LuaMultiReturn<[number, number, number, string]>;
     function GetItemSetInfo(this: void, setID: number): string;
     function GetItemSpecInfo(this: void, itemInfo: ItemInfo): number[];
-    function GetItemSpell(this: void, itemInfo: ItemInfo): LuaMultiReturn<[string, number]>;
-    function GetItemStatDelta(this: void, itemLink1: string, itemLink2: string): LuaValueVariant;
+    function GetItemSpell(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[string, number]>;
+    function GetItemStatDelta(
+      this: void,
+      itemLink1: string,
+      itemLink2: string,
+    ): LuaValueVariant;
     function GetItemStats(this: void, itemLink: string): LuaValueVariant;
-    function GetItemSubClassInfo(this: void, itemClassID: number, itemSubClassID: number): LuaMultiReturn<[string, boolean]>;
-    function GetItemUniqueness(this: void, itemInfo: ItemInfo): LuaMultiReturn<[number, number]>;
-    function GetItemUniquenessByID(this: void, itemInfo: ItemInfo): LuaMultiReturn<[boolean, string|undefined, number|undefined, number|undefined]>;
-    function GetLimitedCurrencyItemInfo(this: void, itemInfo: ItemInfo): LuaMultiReturn<[string, fileID, number, number, number]>;
-    function GetSetBonusesForSpecializationByItemID(this: void, specID: number, itemID: number): number[];
+    function GetItemSubClassInfo(
+      this: void,
+      itemClassID: number,
+      itemSubClassID: number,
+    ): LuaMultiReturn<[string, boolean]>;
+    function GetItemUniqueness(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[number, number]>;
+    function GetItemUniquenessByID(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<
+      [boolean, string | undefined, number | undefined, number | undefined]
+    >;
+    function GetLimitedCurrencyItemInfo(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[string, fileID, number, number, number]>;
+    function GetSetBonusesForSpecializationByItemID(
+      this: void,
+      specID: number,
+      itemID: number,
+    ): number[];
     function GetStackCount(this: void, itemLocation: ItemLocation): number;
     function IsAnimaItemByID(this: void, itemInfo: ItemInfo): boolean;
     function IsArtifactPowerItem(this: void, itemInfo: ItemInfo): boolean;
     function IsBound(this: void, itemLocation: ItemLocation): boolean;
-    function IsBoundToAccountUntilEquip(this: void, itemLocation: ItemLocation): boolean;
+    function IsBoundToAccountUntilEquip(
+      this: void,
+      itemLocation: ItemLocation,
+    ): boolean;
     function IsConsumableItem(this: void, itemInfo: ItemInfo): boolean;
-    function IsCorruptedItem(this: void, itemInfo: ItemInfo): boolean|undefined;
-    function IsCosmeticItem(this: void, itemInfo: ItemInfo): boolean|undefined;
-    function IsCurioItem(this: void, itemInfo: ItemInfo): boolean|undefined;
+    function IsCorruptedItem(
+      this: void,
+      itemInfo: ItemInfo,
+    ): boolean | undefined;
+    function IsCosmeticItem(
+      this: void,
+      itemInfo: ItemInfo,
+    ): boolean | undefined;
+    function IsCurioItem(this: void, itemInfo: ItemInfo): boolean | undefined;
     function IsCurrentItem(this: void, itemInfo: ItemInfo): boolean;
     function IsDressableItemByID(this: void, itemInfo: ItemInfo): boolean;
     function IsEquippableItem(this: void, itemInfo: ItemInfo): boolean;
@@ -10080,18 +12719,37 @@ declare global {
     function IsHarmfulItem(this: void, itemInfo: ItemInfo): boolean;
     function IsHelpfulItem(this: void, itemInfo: ItemInfo): boolean;
     function IsItemConduit(this: void, itemLoc: ItemLocation): boolean;
-    function IsItemConvertibleAndValidForPlayer(this: void, itemLoc: ItemLocation): boolean;
+    function IsItemConvertibleAndValidForPlayer(
+      this: void,
+      itemLoc: ItemLocation,
+    ): boolean;
     function IsItemCorrupted(this: void, itemLoc: ItemLocation): boolean;
-    function IsItemCorruptionRelated(this: void, itemLoc: ItemLocation): boolean;
-    function IsItemCorruptionResistant(this: void, itemLoc: ItemLocation): boolean;
+    function IsItemCorruptionRelated(
+      this: void,
+      itemLoc: ItemLocation,
+    ): boolean;
+    function IsItemCorruptionResistant(
+      this: void,
+      itemLoc: ItemLocation,
+    ): boolean;
     function IsItemDataCached(this: void, itemLocation: ItemLocation): boolean;
     function IsItemDataCachedByID(this: void, itemInfo: ItemInfo): boolean;
     function IsItemGUIDInInventory(this: void, itemGUID: WOWGUID): boolean;
-    function IsItemInRange(this: void, itemInfo: ItemInfo, targetToken: string): boolean|undefined;
+    function IsItemInRange(
+      this: void,
+      itemInfo: ItemInfo,
+      targetToken: string,
+    ): boolean | undefined;
     function IsItemKeystoneByID(this: void, itemInfo: ItemInfo): boolean;
-    function IsItemSpecificToPlayerClass(this: void, itemInfo: ItemInfo): boolean;
+    function IsItemSpecificToPlayerClass(
+      this: void,
+      itemInfo: ItemInfo,
+    ): boolean;
     function IsLocked(this: void, itemLocation: ItemLocation): boolean;
-    function IsUsableItem(this: void, itemInfo: ItemInfo): LuaMultiReturn<[boolean, boolean]>;
+    function IsUsableItem(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function ItemHasRange(this: void, itemInfo: ItemInfo): boolean;
     function LockItem(this: void, itemLocation: ItemLocation): void;
     function LockItemByGUID(this: void, itemGUID: WOWGUID): void;
@@ -10103,7 +12761,11 @@ declare global {
     function RequestLoadItemDataByID(this: void, itemInfo: ItemInfo): void;
     function UnlockItem(this: void, itemLocation: ItemLocation): void;
     function UnlockItemByGUID(this: void, itemGUID: WOWGUID): void;
-    function UseItemByName(this: void, itemInfo: ItemInfo, target?: string): void;
+    function UseItemByName(
+      this: void,
+      itemInfo: ItemInfo,
+      target?: string,
+    ): void;
   }
 
   namespace C_ItemInteraction {
@@ -10139,8 +12801,13 @@ declare global {
     function ClearPendingItem(this: void): void;
     function CloseUI(this: void): void;
     function GetChargeInfo(this: void): ItemInteractionChargeInfo;
-    function GetItemConversionCurrencyCost(this: void, item: ItemLocation): ConversionCurrencyCost;
-    function GetItemInteractionInfo(this: void): ItemInteractionFrameInfo|undefined;
+    function GetItemConversionCurrencyCost(
+      this: void,
+      item: ItemLocation,
+    ): ConversionCurrencyCost;
+    function GetItemInteractionInfo(
+      this: void,
+    ): ItemInteractionFrameInfo | undefined;
     function GetItemInteractionSpellId(this: void): number;
     function InitializeFrame(this: void): void;
     function PerformItemInteraction(this: void): void;
@@ -10152,8 +12819,7 @@ declare global {
     function CompleteSocketing(this: void): void;
   }
 
-  namespace C_ItemText {
-  }
+  namespace C_ItemText {}
 
   namespace C_ItemUpgrade {
     interface ItemUpgradeCostDiscountInfo {
@@ -10217,50 +12883,132 @@ declare global {
     function CanUpgradeItem(this: void, baseItem: ItemLocation): boolean;
     function ClearItemUpgrade(this: void): void;
     function CloseItemUpgrade(this: void): void;
-    function GetHighWatermarkForItem(this: void, itemInfo: ItemInfo): LuaMultiReturn<[number, number]>;
-    function GetHighWatermarkForSlot(this: void, itemRedundancySlot: number): LuaMultiReturn<[number, number]>;
-    function GetHighWatermarkSlotForItem(this: void, itemInfo: ItemInfo): number;
+    function GetHighWatermarkForItem(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[number, number]>;
+    function GetHighWatermarkForSlot(
+      this: void,
+      itemRedundancySlot: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetHighWatermarkSlotForItem(
+      this: void,
+      itemInfo: ItemInfo,
+    ): number;
     function GetItemHyperlink(this: void): string;
-    function GetItemUpgradeCurrentLevel(this: void): LuaMultiReturn<[number, boolean]>;
-    function GetItemUpgradeEffect(this: void, effectIndex: number, numUpgradeLevels?: number): LuaMultiReturn<[string, string]>;
+    function GetItemUpgradeCurrentLevel(
+      this: void,
+    ): LuaMultiReturn<[number, boolean]>;
+    function GetItemUpgradeEffect(
+      this: void,
+      effectIndex: number,
+      numUpgradeLevels?: number,
+    ): LuaMultiReturn<[string, string]>;
     function GetItemUpgradeItemInfo(this: void): ItemUpgradeItemInfo;
-    function GetItemUpgradePvpItemLevelDeltaValues(this: void, numUpgradeLevels: number): LuaMultiReturn<[number, number]>;
+    function GetItemUpgradePvpItemLevelDeltaValues(
+      this: void,
+      numUpgradeLevels: number,
+    ): LuaMultiReturn<[number, number]>;
     function GetNumItemUpgradeEffects(this: void): number;
     function IsItemBound(this: void): boolean;
     function SetItemUpgradeFromCursorItem(this: void): void;
-    function SetItemUpgradeFromLocation(this: void, itemToSet: ItemLocation): void;
+    function SetItemUpgradeFromLocation(
+      this: void,
+      itemToSet: ItemLocation,
+    ): void;
     function UpgradeItem(this: void, numUpgrades?: number): void;
   }
 
   namespace C_KeyBindings {
-    function GetBindingIndex(this: void, action: string): number|undefined;
-    function GetCustomBindingType(this: void, bindingIndex: number): Enum.CustomBindingType|undefined;
+    function GetBindingIndex(this: void, action: string): number | undefined;
+    function GetCustomBindingType(
+      this: void,
+      bindingIndex: number,
+    ): Enum.CustomBindingType | undefined;
   }
 
-  namespace C_KnowledgeBase {
-  }
+  namespace C_KnowledgeBase {}
 
   namespace C_LegendaryCrafting {
     function CloseRuneforgeInteraction(this: void): void;
-    function CraftRuneforgeLegendary(this: void, description: RuneforgeLegendaryCraftDescription): void;
-    function GetRuneforgeItemPreviewInfo(this: void, baseItem: ItemLocation, runeforgePowerID?: number, modifiers?: number[]): RuneforgeItemPreviewInfo|undefined;
-    function GetRuneforgeLegendaryComponentInfo(this: void, runeforgeLegendary: ItemLocation): RuneforgeLegendaryComponentInfo;
-    function GetRuneforgeLegendaryCost(this: void, baseItem: ItemLocation): CurrencyCost[];
+    function CraftRuneforgeLegendary(
+      this: void,
+      description: RuneforgeLegendaryCraftDescription,
+    ): void;
+    function GetRuneforgeItemPreviewInfo(
+      this: void,
+      baseItem: ItemLocation,
+      runeforgePowerID?: number,
+      modifiers?: number[],
+    ): RuneforgeItemPreviewInfo | undefined;
+    function GetRuneforgeLegendaryComponentInfo(
+      this: void,
+      runeforgeLegendary: ItemLocation,
+    ): RuneforgeLegendaryComponentInfo;
+    function GetRuneforgeLegendaryCost(
+      this: void,
+      baseItem: ItemLocation,
+    ): CurrencyCost[];
     function GetRuneforgeLegendaryCraftSpellID(this: void): number;
     function GetRuneforgeLegendaryCurrencies(this: void): number[];
-    function GetRuneforgeLegendaryUpgradeCost(this: void, runeforgeLegendary: ItemLocation, upgradeItem: ItemLocation): CurrencyCost[];
-    function GetRuneforgeModifierInfo(this: void, baseItem: ItemLocation, powerID: number|undefined, addedModifierIndex: number, modifiers: number[]): LuaMultiReturn<[string, string[]]>;
+    function GetRuneforgeLegendaryUpgradeCost(
+      this: void,
+      runeforgeLegendary: ItemLocation,
+      upgradeItem: ItemLocation,
+    ): CurrencyCost[];
+    function GetRuneforgeModifierInfo(
+      this: void,
+      baseItem: ItemLocation,
+      powerID: number | undefined,
+      addedModifierIndex: number,
+      modifiers: number[],
+    ): LuaMultiReturn<[string, string[]]>;
     function GetRuneforgeModifiers(this: void): number[];
-    function GetRuneforgePowerInfo(this: void, runeforgePowerID: number): RuneforgePower;
-    function GetRuneforgePowerSlots(this: void, runeforgePowerID: number): string[];
-    function GetRuneforgePowers(this: void, baseItem?: ItemLocation, filter?: Enum.RuneforgePowerFilter): LuaMultiReturn<[number[], number[]]>;
-    function GetRuneforgePowersByClassSpecAndCovenant(this: void, classID?: number, specID?: number, covenantID?: number, filter?: Enum.RuneforgePowerFilter): number[];
+    function GetRuneforgePowerInfo(
+      this: void,
+      runeforgePowerID: number,
+    ): RuneforgePower;
+    function GetRuneforgePowerSlots(
+      this: void,
+      runeforgePowerID: number,
+    ): string[];
+    function GetRuneforgePowers(
+      this: void,
+      baseItem?: ItemLocation,
+      filter?: Enum.RuneforgePowerFilter,
+    ): LuaMultiReturn<[number[], number[]]>;
+    function GetRuneforgePowersByClassSpecAndCovenant(
+      this: void,
+      classID?: number,
+      specID?: number,
+      covenantID?: number,
+      filter?: Enum.RuneforgePowerFilter,
+    ): number[];
     function IsRuneforgeLegendary(this: void, item: ItemLocation): boolean;
-    function IsRuneforgeLegendaryMaxLevel(this: void, runeforgeLegendary: ItemLocation): boolean;
-    function IsUpgradeItemValidForRuneforgeLegendary(this: void, runeforgeLegendary: ItemLocation, upgradeItem: ItemLocation): boolean;
-    function IsValidRuneforgeBaseItem(this: void, baseItem: ItemLocation): boolean;
-    function MakeRuneforgeCraftDescription(this: void, baseItem: ItemLocation, runeforgePowerID: number, modifiers: number[]): RuneforgeLegendaryCraftDescription;
-    function UpgradeRuneforgeLegendary(this: void, runeforgeLegendary: ItemLocation, upgradeItem: ItemLocation): void;
+    function IsRuneforgeLegendaryMaxLevel(
+      this: void,
+      runeforgeLegendary: ItemLocation,
+    ): boolean;
+    function IsUpgradeItemValidForRuneforgeLegendary(
+      this: void,
+      runeforgeLegendary: ItemLocation,
+      upgradeItem: ItemLocation,
+    ): boolean;
+    function IsValidRuneforgeBaseItem(
+      this: void,
+      baseItem: ItemLocation,
+    ): boolean;
+    function MakeRuneforgeCraftDescription(
+      this: void,
+      baseItem: ItemLocation,
+      runeforgePowerID: number,
+      modifiers: number[],
+    ): RuneforgeLegendaryCraftDescription;
+    function UpgradeRuneforgeLegendary(
+      this: void,
+      runeforgeLegendary: ItemLocation,
+      upgradeItem: ItemLocation,
+    ): void;
   }
 
   interface CurrencyCost {
@@ -10306,7 +13054,11 @@ declare global {
   }
 
   namespace C_LevelSquish {
-    function ConvertFollowerLevel(this: void, level: number, maxFollowerLevel: number): number;
+    function ConvertFollowerLevel(
+      this: void,
+      level: number,
+      maxFollowerLevel: number,
+    ): number;
     function ConvertPlayerLevel(this: void, level: number): number;
   }
 
@@ -10323,17 +13075,25 @@ declare global {
       hideEntry: boolean;
     }
 
-    function CanPlayerUseGroupFinder(this: void): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUseGroupFinder(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
     function CanPlayerUseLFD(this: void): LuaMultiReturn<[boolean, string]>;
     function CanPlayerUseLFR(this: void): LuaMultiReturn<[boolean, string]>;
     function CanPlayerUsePVP(this: void): LuaMultiReturn<[boolean, string]>;
-    function CanPlayerUsePremadeGroup(this: void): LuaMultiReturn<[boolean, string]>;
-    function CanPlayerUseScenarioFinder(this: void): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUsePremadeGroup(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUseScenarioFinder(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
     function ConfirmLfgExpandSearch(this: void): void;
     function GetAllEntriesForCategory(this: void, category: number): number[];
     function GetDungeonInfo(this: void, lfgDungeonID: number): LFGDungeonInfo;
     function GetLFDLockStates(this: void): LFGLockInfo[];
-    function GetRoleCheckDifficultyDetails(this: void): LuaMultiReturn<[number|undefined, boolean]>;
+    function GetRoleCheckDifficultyDetails(
+      this: void,
+    ): LuaMultiReturn<[number | undefined, boolean]>;
     function HideNameFromUI(this: void, dungeonID: number): boolean;
     function IsGroupFinderEnabled(this: void): boolean;
     function IsInLFGFollowerDungeon(this: void): boolean;
@@ -10488,66 +13248,176 @@ declare global {
     function ClearCreationTextFields(this: void): void;
     function ClearSearchTextFields(this: void): void;
     function CopyActiveEntryInfoToCreationFields(this: void): void;
-    function CreateScenarioListing(this: void, activityID: number, itemLevel: number, autoAccept: boolean, privateGroup: boolean, scenarioID: number): boolean;
-    function DoesEntryTitleMatchPrebuiltTitle(this: void, activityID: number, groupID: number, playstyle?: Enum.LFGEntryPlaystyle): boolean;
+    function CreateScenarioListing(
+      this: void,
+      activityID: number,
+      itemLevel: number,
+      autoAccept: boolean,
+      privateGroup: boolean,
+      scenarioID: number,
+    ): boolean;
+    function DoesEntryTitleMatchPrebuiltTitle(
+      this: void,
+      activityID: number,
+      groupID: number,
+      playstyle?: Enum.LFGEntryPlaystyle,
+    ): boolean;
     function GetActiveEntryInfo(this: void): LfgEntryData;
-    function GetActivityFullName(this: void, activityID: number, questID?: number, showWarmode?: boolean): string;
-    function GetActivityGroupInfo(this: void, groupID: number): LuaMultiReturn<[string, number]>;
-    function GetActivityInfoTable(this: void, activityID: number, questID?: number, showWarmode?: boolean): GroupFinderActivityInfo;
+    function GetActivityFullName(
+      this: void,
+      activityID: number,
+      questID?: number,
+      showWarmode?: boolean,
+    ): string;
+    function GetActivityGroupInfo(
+      this: void,
+      groupID: number,
+    ): LuaMultiReturn<[string, number]>;
+    function GetActivityInfoTable(
+      this: void,
+      activityID: number,
+      questID?: number,
+      showWarmode?: boolean,
+    ): GroupFinderActivityInfo;
     function GetAdvancedFilter(this: void): AdvancedFilterOptions;
-    function GetApplicantBestDungeonScore(this: void, localID: number, applicantIndex: number): BestDungeonScoreMapInfo;
-    function GetApplicantDungeonScoreForListing(this: void, localID: number, applicantIndex: number, activityID: number): BestDungeonScoreMapInfo;
-    function GetApplicantInfo(this: void, applicantID: number): LfgApplicantData;
-    function GetApplicantPvpRatingInfoForListing(this: void, localID: number, applicantIndex: number, activityID: number): PvpRatingInfo;
-    function GetFilteredSearchResults(this: void): LuaMultiReturn<[number, number[]]>;
+    function GetApplicantBestDungeonScore(
+      this: void,
+      localID: number,
+      applicantIndex: number,
+    ): BestDungeonScoreMapInfo;
+    function GetApplicantDungeonScoreForListing(
+      this: void,
+      localID: number,
+      applicantIndex: number,
+      activityID: number,
+    ): BestDungeonScoreMapInfo;
+    function GetApplicantInfo(
+      this: void,
+      applicantID: number,
+    ): LfgApplicantData;
+    function GetApplicantPvpRatingInfoForListing(
+      this: void,
+      localID: number,
+      applicantIndex: number,
+      activityID: number,
+    ): PvpRatingInfo;
+    function GetFilteredSearchResults(
+      this: void,
+    ): LuaMultiReturn<[number, number[]]>;
     function GetKeystoneForActivity(this: void, activityID: number): number;
-    function GetLfgCategoryInfo(this: void, categoryID: number): LfgCategoryData;
-    function GetOwnedKeystoneActivityAndGroupAndLevel(this: void, getTimewalking?: boolean): LuaMultiReturn<[number, number, number]>;
-    function GetPlaystyleString(this: void, playstyle: Enum.LFGEntryPlaystyle, activityInfo: GroupFinderActivityInfo): string;
-    function GetSearchResultInfo(this: void, searchResultID: number): LfgSearchResultData;
+    function GetLfgCategoryInfo(
+      this: void,
+      categoryID: number,
+    ): LfgCategoryData;
+    function GetOwnedKeystoneActivityAndGroupAndLevel(
+      this: void,
+      getTimewalking?: boolean,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetPlaystyleString(
+      this: void,
+      playstyle: Enum.LFGEntryPlaystyle,
+      activityInfo: GroupFinderActivityInfo,
+    ): string;
+    function GetSearchResultInfo(
+      this: void,
+      searchResultID: number,
+    ): LfgSearchResultData;
     function GetSearchResults(this: void): LuaMultiReturn<[number, number[]]>;
     function HasActiveEntryInfo(this: void): boolean;
     function HasSearchResultInfo(this: void, searchResultID: number): boolean;
-    function IsPlayerAuthenticatedForLFG(this: void, activityID?: number): boolean;
-    function SaveAdvancedFilter(this: void, options: AdvancedFilterOptions): void;
-    function Search(this: void, categoryID: number, filter?: number, preferredFilters?: number, languageFilter?: WowLocale, searchCrossFactionListings?: boolean, advancedFilter?: AdvancedFilterOptions): void;
-    function SetEntryTitle(this: void, activityID: number, groupID: number, playstyle?: Enum.LFGEntryPlaystyle): void;
+    function IsPlayerAuthenticatedForLFG(
+      this: void,
+      activityID?: number,
+    ): boolean;
+    function SaveAdvancedFilter(
+      this: void,
+      options: AdvancedFilterOptions,
+    ): void;
+    function Search(
+      this: void,
+      categoryID: number,
+      filter?: number,
+      preferredFilters?: number,
+      languageFilter?: WowLocale,
+      searchCrossFactionListings?: boolean,
+      advancedFilter?: AdvancedFilterOptions,
+    ): void;
+    function SetEntryTitle(
+      this: void,
+      activityID: number,
+      groupID: number,
+      playstyle?: Enum.LFGEntryPlaystyle,
+    ): void;
     function SetSearchToActivity(this: void, activityID: number): void;
     function SetSearchToQuestID(this: void, questID: number): void;
     function SetSearchToScenarioID(this: void, scenarioID: number): void;
-    function ValidateRequiredDungeonScore(this: void, dungeonScore: number): boolean;
-    function ValidateRequiredPvpRatingForActivity(this: void, activityID: number, rating: number): boolean;
+    function ValidateRequiredDungeonScore(
+      this: void,
+      dungeonScore: number,
+    ): boolean;
+    function ValidateRequiredPvpRatingForActivity(
+      this: void,
+      activityID: number,
+      rating: number,
+    ): boolean;
   }
 
   namespace C_LiveEvent {
-    function OnLiveEventBannerClicked(this: void, timerunningSeasonID: number): void;
-    function OnLiveEventPopupClicked(this: void, timerunningSeasonID: number): void;
+    function OnLiveEventBannerClicked(
+      this: void,
+      timerunningSeasonID: number,
+    ): void;
+    function OnLiveEventPopupClicked(
+      this: void,
+      timerunningSeasonID: number,
+    ): void;
   }
 
-  namespace C_LoadingScreen {
-  }
+  namespace C_LoadingScreen {}
 
   interface LocaleInfo {
     localeId: number;
     localeName: string;
   }
 
-  function GetAvailableLocaleInfo(this: void, ignoreLocaleRestrictions?: boolean): LocaleInfo[];
-  function GetAvailableLocales(this: void, ignoreLocaleRestrictions?: boolean): string;
+  function GetAvailableLocaleInfo(
+    this: void,
+    ignoreLocaleRestrictions?: boolean,
+  ): LocaleInfo[];
+  function GetAvailableLocales(
+    this: void,
+    ignoreLocaleRestrictions?: boolean,
+  ): string;
   function GetCurrentRegion(this: void): number;
   function GetLocale(this: void): string;
   function GetOSLocale(this: void): string;
 
-  function BreakUpLargeNumbers(this: void, largeNumber: number, natural?: boolean): string;
+  function BreakUpLargeNumbers(
+    this: void,
+    largeNumber: number,
+    natural?: boolean,
+  ): string;
   function CaseAccentInsensitiveParse(this: void, name: string): string;
-  function DeclineName(this: void, name: string, gender: number|undefined, declensionSet: number): string;
-  function GetNumDeclensionSets(this: void, name: string, gender?: number): number;
+  function DeclineName(
+    this: void,
+    name: string,
+    gender: number | undefined,
+    declensionSet: number,
+  ): string;
+  function GetNumDeclensionSets(
+    this: void,
+    name: string,
+    gender?: number,
+  ): number;
   function IsEuropeanNumbers(this: void): boolean;
   function LocalizedClassList(this: void, isFemale?: boolean): LuaValueVariant;
   function SetEuropeanNumbers(this: void, enabled: boolean): void;
 
   namespace C_Loot {
-    function GetLootRollDuration(this: void, rollID: number): number|undefined;
+    function GetLootRollDuration(
+      this: void,
+      rollID: number,
+    ): number | undefined;
     function IsLegacyLootModeEnabled(this: void): boolean;
   }
 
@@ -10588,10 +13458,20 @@ declare global {
     }
 
     function GetAllEncounterInfos(this: void): EncounterLootInfo[];
-    function GetInfoForEncounter(this: void, encounterID: number): EncounterLootInfo|undefined;
+    function GetInfoForEncounter(
+      this: void,
+      encounterID: number,
+    ): EncounterLootInfo | undefined;
     function GetLootHistoryTime(this: void): number;
-    function GetSortedDropsForEncounter(this: void, encounterID: number): EncounterLootDropInfo[]|undefined;
-    function GetSortedInfoForDrop(this: void, encounterID: number, lootListID: number): EncounterLootDropInfo|undefined;
+    function GetSortedDropsForEncounter(
+      this: void,
+      encounterID: number,
+    ): EncounterLootDropInfo[] | undefined;
+    function GetSortedInfoForDrop(
+      this: void,
+      encounterID: number,
+      lootListID: number,
+    ): EncounterLootDropInfo | undefined;
   }
 
   namespace C_LootJournal {
@@ -10608,7 +13488,11 @@ declare global {
     }
 
     function GetItemSetItems(this: void, setID: number): LootJournalItemInfo[];
-    function GetItemSets(this: void, classID?: number, specID?: number): LootJournalItemSetInfo[];
+    function GetItemSets(
+      this: void,
+      classID?: number,
+      specID?: number,
+    ): LootJournalItemSetInfo[];
   }
 
   namespace C_LoreText {
@@ -10635,14 +13519,26 @@ declare global {
       auraInstanceID?: number;
     }
 
-    function GetActiveLossOfControlData(this: void, index: number): LossOfControlData|undefined;
-    function GetActiveLossOfControlDataByUnit(this: void, unitToken: UnitToken, index: number): LossOfControlData|undefined;
+    function GetActiveLossOfControlData(
+      this: void,
+      index: number,
+    ): LossOfControlData | undefined;
+    function GetActiveLossOfControlDataByUnit(
+      this: void,
+      unitToken: UnitToken,
+      index: number,
+    ): LossOfControlData | undefined;
     function GetActiveLossOfControlDataCount(this: void): number;
-    function GetActiveLossOfControlDataCountByUnit(this: void, unitToken: UnitToken): number;
+    function GetActiveLossOfControlDataCountByUnit(
+      this: void,
+      unitToken: UnitToken,
+    ): number;
   }
 
   namespace C_MacOptions {
-    function AreOSShortcutsDisabled(this: void): LuaMultiReturn<[boolean|undefined, boolean]>;
+    function AreOSShortcutsDisabled(
+      this: void,
+    ): LuaMultiReturn<[boolean | undefined, boolean]>;
     function GetGameBundleName(this: void): string;
     function HasNewStyleInputMonitoring(this: void): boolean;
     function IsInputMonitoringEnabled(this: void): boolean;
@@ -10656,7 +13552,10 @@ declare global {
 
   namespace C_Mail {
     function CanCheckInbox(this: void): LuaMultiReturn<[boolean, number]>;
-    function GetCraftingOrderMailInfo(this: void, inboxIndex: number): CraftingOrderMailInfo|undefined;
+    function GetCraftingOrderMailInfo(
+      this: void,
+      inboxIndex: number,
+    ): CraftingOrderMailInfo | undefined;
     function HasInboxMoney(this: void, inboxIndex: number): boolean;
     function IsCommandPending(this: void): boolean;
     function SetOpeningAll(this: void, openingAll: boolean): void;
@@ -10710,14 +13609,30 @@ declare global {
       toastDescription?: string;
     }
 
-    function GetCovenantIDForMajorFaction(this: void, majorFactionID: number): number;
+    function GetCovenantIDForMajorFaction(
+      this: void,
+      majorFactionID: number,
+    ): number;
     function GetCurrentRenownLevel(this: void, majorFactionID: number): number;
-    function GetMajorFactionData(this: void, majorFactionID: number): MajorFactionData|undefined;
+    function GetMajorFactionData(
+      this: void,
+      majorFactionID: number,
+    ): MajorFactionData | undefined;
     function GetMajorFactionIDs(this: void, expansionID?: number): number[];
-    function GetMajorFactionRenownInfo(this: void, majorFactionID: number): MajorFactionRenownInfo|undefined;
-    function GetRenownLevels(this: void, majorFactionID: number): MajorFactionRenownLevelInfo[];
+    function GetMajorFactionRenownInfo(
+      this: void,
+      majorFactionID: number,
+    ): MajorFactionRenownInfo | undefined;
+    function GetRenownLevels(
+      this: void,
+      majorFactionID: number,
+    ): MajorFactionRenownLevelInfo[];
     function GetRenownNPCFactionID(this: void): number;
-    function GetRenownRewardsForLevel(this: void, majorFactionID: number, renownLevel: number): MajorFactionRenownRewardInfo[];
+    function GetRenownRewardsForLevel(
+      this: void,
+      majorFactionID: number,
+      renownLevel: number,
+    ): MajorFactionRenownRewardInfo[];
     function HasMaximumRenown(this: void, majorFactionID: number): boolean;
     function IsWeeklyRenownCapped(this: void, majorFactionID: number): boolean;
   }
@@ -10777,35 +13692,106 @@ declare global {
     function ClearUserWaypoint(this: void): void;
     function CloseWorldMapInteraction(this: void): void;
     function GetAreaInfo(this: void, areaID: number): string;
-    function GetBestMapForUnit(this: void, unitToken: UnitToken): number|undefined;
+    function GetBestMapForUnit(
+      this: void,
+      unitToken: UnitToken,
+    ): number | undefined;
     function GetBountySetMaps(this: void, bountySetID: number): number[];
     function GetFallbackWorldMapID(this: void): number;
-    function GetMapArtBackgroundAtlas(this: void, uiMapID: number): textureAtlas;
-    function GetMapArtHelpTextPosition(this: void, uiMapID: number): Enum.MapCanvasPosition;
+    function GetMapArtBackgroundAtlas(
+      this: void,
+      uiMapID: number,
+    ): textureAtlas;
+    function GetMapArtHelpTextPosition(
+      this: void,
+      uiMapID: number,
+    ): Enum.MapCanvasPosition;
     function GetMapArtID(this: void, uiMapID: number): number;
-    function GetMapArtLayerTextures(this: void, uiMapID: number, layerIndex: number): fileID[];
+    function GetMapArtLayerTextures(
+      this: void,
+      uiMapID: number,
+      layerIndex: number,
+    ): fileID[];
     function GetMapArtLayers(this: void, uiMapID: number): UiMapLayerInfo[];
-    function GetMapArtZoneTextPosition(this: void, uiMapID: number): Enum.MapCanvasPosition;
+    function GetMapArtZoneTextPosition(
+      this: void,
+      uiMapID: number,
+    ): Enum.MapCanvasPosition;
     function GetMapBannersForMap(this: void, uiMapID: number): MapBannerInfo[];
-    function GetMapChildrenInfo(this: void, uiMapID: number, mapType?: Enum.UIMapType, allDescendants?: boolean): UiMapDetails[];
+    function GetMapChildrenInfo(
+      this: void,
+      uiMapID: number,
+      mapType?: Enum.UIMapType,
+      allDescendants?: boolean,
+    ): UiMapDetails[];
     function GetMapDisplayInfo(this: void, uiMapID: number): boolean;
     function GetMapGroupID(this: void, uiMapID: number): number;
-    function GetMapGroupMembersInfo(this: void, uiMapGroupID: number): UiMapGroupMemberInfo[];
-    function GetMapHighlightInfoAtPosition(this: void, uiMapID: number, x: number, y: number): LuaMultiReturn<[fileID, textureAtlas, number, number, number, number, number, number]>;
-    function GetMapHighlightPulseInfo(this: void, uiMapID: number): LuaMultiReturn<[fileID, textureAtlas, number, number, number, number, number, number]>;
+    function GetMapGroupMembersInfo(
+      this: void,
+      uiMapGroupID: number,
+    ): UiMapGroupMemberInfo[];
+    function GetMapHighlightInfoAtPosition(
+      this: void,
+      uiMapID: number,
+      x: number,
+      y: number,
+    ): LuaMultiReturn<
+      [fileID, textureAtlas, number, number, number, number, number, number]
+    >;
+    function GetMapHighlightPulseInfo(
+      this: void,
+      uiMapID: number,
+    ): LuaMultiReturn<
+      [fileID, textureAtlas, number, number, number, number, number, number]
+    >;
     function GetMapInfo(this: void, uiMapID: number): UiMapDetails;
-    function GetMapInfoAtPosition(this: void, uiMapID: number, x: number, y: number, ignoreZoneMapPositionData?: boolean): UiMapDetails;
-    function GetMapLevels(this: void, uiMapID: number): LuaMultiReturn<[number, number, number, number]>;
+    function GetMapInfoAtPosition(
+      this: void,
+      uiMapID: number,
+      x: number,
+      y: number,
+      ignoreZoneMapPositionData?: boolean,
+    ): UiMapDetails;
+    function GetMapLevels(
+      this: void,
+      uiMapID: number,
+    ): LuaMultiReturn<[number, number, number, number]>;
     function GetMapLinksForMap(this: void, uiMapID: number): MapLinkInfo[];
-    function GetMapPosFromWorldPos(this: void, continentID: number, worldPosition: vector2, overrideUiMapID?: number): LuaMultiReturn<[number, vector2]>;
-    function GetMapRectOnMap(this: void, uiMapID: number, topUiMapID: number): LuaMultiReturn<[number, number, number, number]>;
-    function GetMapWorldSize(this: void, uiMapID: number): LuaMultiReturn<[number, number]>;
-    function GetPlayerMapPosition(this: void, uiMapID: number, unitToken: UnitToken): vector2|undefined;
+    function GetMapPosFromWorldPos(
+      this: void,
+      continentID: number,
+      worldPosition: vector2,
+      overrideUiMapID?: number,
+    ): LuaMultiReturn<[number, vector2]>;
+    function GetMapRectOnMap(
+      this: void,
+      uiMapID: number,
+      topUiMapID: number,
+    ): LuaMultiReturn<[number, number, number, number]>;
+    function GetMapWorldSize(
+      this: void,
+      uiMapID: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetPlayerMapPosition(
+      this: void,
+      uiMapID: number,
+      unitToken: UnitToken,
+    ): vector2 | undefined;
     function GetUserWaypoint(this: void): UiMapPoint;
-    function GetUserWaypointFromHyperlink(this: void, hyperlink: string): UiMapPoint;
+    function GetUserWaypointFromHyperlink(
+      this: void,
+      hyperlink: string,
+    ): UiMapPoint;
     function GetUserWaypointHyperlink(this: void): string;
-    function GetUserWaypointPositionForMap(this: void, uiMapID: number): vector2;
-    function GetWorldPosFromMapPos(this: void, uiMapID: number, mapPosition: vector2): LuaMultiReturn<[number, vector2]>;
+    function GetUserWaypointPositionForMap(
+      this: void,
+      uiMapID: number,
+    ): vector2;
+    function GetWorldPosFromMapPos(
+      this: void,
+      uiMapID: number,
+      mapPosition: vector2,
+    ): LuaMultiReturn<[number, vector2]>;
     function HasUserWaypoint(this: void): boolean;
     function IsCityMap(this: void, uiMapID: number): boolean;
     function IsMapValidForNavBarDropdown(this: void, uiMapID: number): boolean;
@@ -10833,8 +13819,15 @@ declare global {
       hitRect: UiMapExplorationHitRect;
     }
 
-    function GetExploredAreaIDsAtPosition(this: void, uiMapID: number, normalizedPosition: vector2): number[]|undefined;
-    function GetExploredMapTextures(this: void, uiMapID: number): UiMapExplorationInfo[];
+    function GetExploredAreaIDsAtPosition(
+      this: void,
+      uiMapID: number,
+      normalizedPosition: vector2,
+    ): number[] | undefined;
+    function GetExploredMapTextures(
+      this: void,
+      uiMapID: number,
+    ): UiMapExplorationInfo[];
   }
 
   namespace C_MerchantFrame {
@@ -10862,17 +13855,35 @@ declare global {
 
     function CanTrackBattlePets(this: void): boolean;
     function ClearAllTracking(this: void): void;
-    function GetDefaultTrackingValue(this: void, filterType: Enum.MinimapTrackingFilter): boolean;
+    function GetDefaultTrackingValue(
+      this: void,
+      filterType: Enum.MinimapTrackingFilter,
+    ): boolean;
     function GetDrawGroundTextures(this: void): boolean;
     function GetNumQuestPOIWorldEffects(this: void): number;
     function GetNumTrackingTypes(this: void): number;
-    function GetObjectIconTextureCoords(this: void, index?: number): LuaMultiReturn<[number, number, number, number]>;
-    function GetPOITextureCoords(this: void, index?: number): LuaMultiReturn<[number, number, number, number]>;
-    function GetTrackingFilter(this: void, spellIndex: number): MinimapScriptTrackingFilter;
-    function GetTrackingInfo(this: void, spellIndex: number): MinimapScriptTrackingInfo|undefined;
-    function GetUiMapID(this: void): number|undefined;
+    function GetObjectIconTextureCoords(
+      this: void,
+      index?: number,
+    ): LuaMultiReturn<[number, number, number, number]>;
+    function GetPOITextureCoords(
+      this: void,
+      index?: number,
+    ): LuaMultiReturn<[number, number, number, number]>;
+    function GetTrackingFilter(
+      this: void,
+      spellIndex: number,
+    ): MinimapScriptTrackingFilter;
+    function GetTrackingInfo(
+      this: void,
+      spellIndex: number,
+    ): MinimapScriptTrackingInfo | undefined;
+    function GetUiMapID(this: void): number | undefined;
     function GetViewRadius(this: void): number;
-    function IsFilteredOut(this: void, filterType: Enum.MinimapTrackingFilter): boolean;
+    function IsFilteredOut(
+      this: void,
+      filterType: Enum.MinimapTrackingFilter,
+    ): boolean;
     function IsRotateMinimapIgnored(this: void): boolean;
     function IsTrackingAccountCompletedQuests(this: void): boolean;
     function IsTrackingBattlePets(this: void): boolean;
@@ -10930,8 +13941,14 @@ declare global {
     spellID: number;
   }
 
-  function GetMirrorTimerInfo(this: void, timerIndex: number): LuaMultiReturn<[string, number, number, number, number, string, number]>;
-  function GetMirrorTimerProgress(this: void, timerName: string): number|undefined;
+  function GetMirrorTimerInfo(
+    this: void,
+    timerIndex: number,
+  ): LuaMultiReturn<[string, number, number, number, number, string, number]>;
+  function GetMirrorTimerProgress(
+    this: void,
+    timerName: string,
+  ): number | undefined;
 
   namespace C_MountJournal {
     interface MountCreatureDisplayInfo {
@@ -10967,35 +13984,128 @@ declare global {
       disablePlayerMountPreview: boolean;
     }
 
-    function ApplyMountEquipment(this: void, itemLocation: ItemLocation): boolean;
+    function ApplyMountEquipment(
+      this: void,
+      itemLocation: ItemLocation,
+    ): boolean;
     function AreMountEquipmentEffectsSuppressed(this: void): boolean;
     function ClearFanfare(this: void, mountID: number): void;
     function ClearRecentFanfares(this: void): void;
     function Dismiss(this: void): void;
-    function GetAllCreatureDisplayIDsForMountID(this: void, mountID: number): number[];
-    function GetAppliedMountEquipmentID(this: void): number|undefined;
+    function GetAllCreatureDisplayIDsForMountID(
+      this: void,
+      mountID: number,
+    ): number[];
+    function GetAppliedMountEquipmentID(this: void): number | undefined;
     function GetCollectedDragonridingMounts(this: void): number[];
-    function GetCollectedFilterSetting(this: void, filterIndex: number): boolean;
-    function GetDisplayedMountAllCreatureDisplayInfo(this: void, mountIndex: number): MountCreatureDisplayInfo[];
+    function GetCollectedFilterSetting(
+      this: void,
+      filterIndex: number,
+    ): boolean;
+    function GetDisplayedMountAllCreatureDisplayInfo(
+      this: void,
+      mountIndex: number,
+    ): MountCreatureDisplayInfo[];
     function GetDisplayedMountID(this: void, displayIndex: number): number;
-    function GetDisplayedMountInfo(this: void, displayIndex: number): LuaMultiReturn<[string, number, fileID, boolean, boolean, number, boolean, boolean, number|undefined, boolean, boolean, number, boolean]>;
-    function GetDisplayedMountInfoExtra(this: void, mountIndex: number): LuaMultiReturn<[number|undefined, string, string, boolean, number, number, number, number, boolean]>;
+    function GetDisplayedMountInfo(
+      this: void,
+      displayIndex: number,
+    ): LuaMultiReturn<
+      [
+        string,
+        number,
+        fileID,
+        boolean,
+        boolean,
+        number,
+        boolean,
+        boolean,
+        number | undefined,
+        boolean,
+        boolean,
+        number,
+        boolean,
+      ]
+    >;
+    function GetDisplayedMountInfoExtra(
+      this: void,
+      mountIndex: number,
+    ): LuaMultiReturn<
+      [
+        number | undefined,
+        string,
+        string,
+        boolean,
+        number,
+        number,
+        number,
+        number,
+        boolean,
+      ]
+    >;
     function GetDynamicFlightModeSpellID(this: void): number;
-    function GetIsFavorite(this: void, mountIndex: number): LuaMultiReturn<[boolean, boolean]>;
-    function GetMountAllCreatureDisplayInfoByID(this: void, mountID: number): MountCreatureDisplayInfo[];
+    function GetIsFavorite(
+      this: void,
+      mountIndex: number,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function GetMountAllCreatureDisplayInfoByID(
+      this: void,
+      mountID: number,
+    ): MountCreatureDisplayInfo[];
     function GetMountEquipmentUnlockLevel(this: void): number;
-    function GetMountFromItem(this: void, itemID: number): number|undefined;
-    function GetMountFromSpell(this: void, spellID: number): number|undefined;
+    function GetMountFromItem(this: void, itemID: number): number | undefined;
+    function GetMountFromSpell(this: void, spellID: number): number | undefined;
     function GetMountIDs(this: void): number[];
-    function GetMountInfoByID(this: void, mountID: number): LuaMultiReturn<[string, number, fileID, boolean, boolean, number, boolean, boolean, number|undefined, boolean, boolean, number, boolean]>;
-    function GetMountInfoExtraByID(this: void, mountID: number): LuaMultiReturn<[number|undefined, string, string, boolean, number, number, number, number, boolean]>;
-    function GetMountLink(this: void, spellID: number): string|undefined;
-    function GetMountUsabilityByID(this: void, mountID: number, checkIndoors: boolean): LuaMultiReturn<[boolean, string|undefined]>;
+    function GetMountInfoByID(
+      this: void,
+      mountID: number,
+    ): LuaMultiReturn<
+      [
+        string,
+        number,
+        fileID,
+        boolean,
+        boolean,
+        number,
+        boolean,
+        boolean,
+        number | undefined,
+        boolean,
+        boolean,
+        number,
+        boolean,
+      ]
+    >;
+    function GetMountInfoExtraByID(
+      this: void,
+      mountID: number,
+    ): LuaMultiReturn<
+      [
+        number | undefined,
+        string,
+        string,
+        boolean,
+        number,
+        number,
+        number,
+        number,
+        boolean,
+      ]
+    >;
+    function GetMountLink(this: void, spellID: number): string | undefined;
+    function GetMountUsabilityByID(
+      this: void,
+      mountID: number,
+      checkIndoors: boolean,
+    ): LuaMultiReturn<[boolean, string | undefined]>;
     function GetNumDisplayedMounts(this: void): number;
     function GetNumMounts(this: void): number;
     function GetNumMountsNeedingFanfare(this: void): number;
     function IsDragonridingUnlocked(this: void): boolean;
-    function IsItemMountEquipment(this: void, itemLocation: ItemLocation): boolean;
+    function IsItemMountEquipment(
+      this: void,
+      itemLocation: ItemLocation,
+    ): boolean;
     function IsMountEquipmentApplied(this: void): boolean;
     function IsSourceChecked(this: void, filterIndex: number): boolean;
     function IsTypeChecked(this: void, filterIndex: number): boolean;
@@ -11007,18 +14117,37 @@ declare global {
     function PickupDynamicFlightMode(this: void): void;
     function SetAllSourceFilters(this: void, isChecked: boolean): void;
     function SetAllTypeFilters(this: void, isChecked: boolean): void;
-    function SetCollectedFilterSetting(this: void, filterIndex: number, isChecked: boolean): void;
+    function SetCollectedFilterSetting(
+      this: void,
+      filterIndex: number,
+      isChecked: boolean,
+    ): void;
     function SetDefaultFilters(this: void): void;
-    function SetIsFavorite(this: void, mountIndex: number, isFavorite: boolean): void;
+    function SetIsFavorite(
+      this: void,
+      mountIndex: number,
+      isFavorite: boolean,
+    ): void;
     function SetSearch(this: void, searchValue: string): void;
-    function SetSourceFilter(this: void, filterIndex: number, isChecked: boolean): void;
-    function SetTypeFilter(this: void, filterIndex: number, isChecked: boolean): void;
+    function SetSourceFilter(
+      this: void,
+      filterIndex: number,
+      isChecked: boolean,
+    ): void;
+    function SetTypeFilter(
+      this: void,
+      filterIndex: number,
+      isChecked: boolean,
+    ): void;
     function SummonByID(this: void, mountID: number): void;
     function SwapDynamicFlightMode(this: void): void;
   }
 
   function CancelPreloadingMovie(this: void, movieId: number): void;
-  function GetMovieDownloadProgress(this: void, movieId: number): LuaMultiReturn<[boolean, BigUInteger, BigUInteger]>;
+  function GetMovieDownloadProgress(
+    this: void,
+    movieId: number,
+  ): LuaMultiReturn<[boolean, BigUInteger, BigUInteger]>;
   function IsMovieLocal(this: void, movieId: number): boolean;
   function IsMoviePlayable(this: void, movieId: number): boolean;
   function IsMovieReadable(this: void, movieId: number): boolean;
@@ -11063,21 +14192,55 @@ declare global {
 
     function GetCurrentAffixes(this: void): MythicPlusKeystoneAffix[];
     function GetCurrentSeason(this: void): number;
-    function GetCurrentSeasonValues(this: void): LuaMultiReturn<[number, number, number]>;
-    function GetCurrentUIDisplaySeason(this: void): number|undefined;
-    function GetEndOfRunGearSequenceLevel(this: void, keystoneLevel: number): number|undefined;
-    function GetLastWeeklyBestInformation(this: void): LuaMultiReturn<[number, number]>;
+    function GetCurrentSeasonValues(
+      this: void,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetCurrentUIDisplaySeason(this: void): number | undefined;
+    function GetEndOfRunGearSequenceLevel(
+      this: void,
+      keystoneLevel: number,
+    ): number | undefined;
+    function GetLastWeeklyBestInformation(
+      this: void,
+    ): LuaMultiReturn<[number, number]>;
     function GetOwnedKeystoneChallengeMapID(this: void): number;
     function GetOwnedKeystoneLevel(this: void): number;
     function GetOwnedKeystoneMapID(this: void): number;
-    function GetRewardLevelForDifficultyLevel(this: void, difficultyLevel: number): LuaMultiReturn<[number, number]>;
-    function GetRewardLevelFromKeystoneLevel(this: void, keystoneLevel: number): number|undefined;
-    function GetRunHistory(this: void, includePreviousWeeks?: boolean, includeIncompleteRuns?: boolean): MythicPlusRunInfo[];
-    function GetSeasonBestAffixScoreInfoForMap(this: void, mapChallengeModeID: number): LuaMultiReturn<[MythicPlusAffixScoreInfo[], number]>;
-    function GetSeasonBestForMap(this: void, mapChallengeModeID: number): LuaMultiReturn<[MapSeasonBestInfo|undefined, MapSeasonBestInfo|undefined]>;
-    function GetSeasonBestMythicRatingFromThisExpansion(this: void): LuaMultiReturn<[number, number]>;
-    function GetWeeklyBestForMap(this: void, mapChallengeModeID: number): LuaMultiReturn<[number, number, MythicPlusDate, number[], MythicPlusMember[], number]>;
-    function GetWeeklyChestRewardLevel(this: void): LuaMultiReturn<[number, number, number, number]>;
+    function GetRewardLevelForDifficultyLevel(
+      this: void,
+      difficultyLevel: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetRewardLevelFromKeystoneLevel(
+      this: void,
+      keystoneLevel: number,
+    ): number | undefined;
+    function GetRunHistory(
+      this: void,
+      includePreviousWeeks?: boolean,
+      includeIncompleteRuns?: boolean,
+    ): MythicPlusRunInfo[];
+    function GetSeasonBestAffixScoreInfoForMap(
+      this: void,
+      mapChallengeModeID: number,
+    ): LuaMultiReturn<[MythicPlusAffixScoreInfo[], number]>;
+    function GetSeasonBestForMap(
+      this: void,
+      mapChallengeModeID: number,
+    ): LuaMultiReturn<
+      [MapSeasonBestInfo | undefined, MapSeasonBestInfo | undefined]
+    >;
+    function GetSeasonBestMythicRatingFromThisExpansion(
+      this: void,
+    ): LuaMultiReturn<[number, number]>;
+    function GetWeeklyBestForMap(
+      this: void,
+      mapChallengeModeID: number,
+    ): LuaMultiReturn<
+      [number, number, MythicPlusDate, number[], MythicPlusMember[], number]
+    >;
+    function GetWeeklyChestRewardLevel(
+      this: void,
+    ): LuaMultiReturn<[number, number, number, number]>;
     function IsMythicPlusActive(this: void): boolean;
     function IsWeeklyRewardAvailable(this: void): boolean;
     function RequestCurrentAffixes(this: void): void;
@@ -11101,16 +14264,27 @@ declare global {
     name: string;
   }
 
-  namespace C_NamePlateManager {
-  }
+  namespace C_NamePlateManager {}
 
   namespace C_NewItems {
     function ClearAll(this: void): void;
-    function IsNewItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number): boolean;
-    function RemoveNewItem(this: void, containerIndex: Enum.BagIndex, slotIndex: number): void;
+    function IsNewItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): boolean;
+    function RemoveNewItem(
+      this: void,
+      containerIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): void;
   }
 
-  function CopyToClipboard(this: void, text: string, removeMarkup?: boolean): number;
+  function CopyToClipboard(
+    this: void,
+    text: string,
+    removeMarkup?: boolean,
+  ): number;
   function GetTimePreciseSec(this: void): number;
 
   namespace C_PaperDollInfo {
@@ -11131,38 +14305,76 @@ declare global {
 
     function CanAutoEquipCursorItem(this: void): boolean;
     function CanCursorCanGoInSlot(this: void, slotIndex: number): boolean;
-    function GetArmorEffectiveness(this: void, armor: number, attackerLevel: number): number;
-    function GetArmorEffectivenessAgainstTarget(this: void, armor: number): number|undefined;
-    function GetInspectAzeriteItemEmpoweredChoices(this: void, unit: UnitToken, equipmentSlotIndex: number): number[];
-    function GetInspectGuildInfo(this: void, unitString: string): LuaMultiReturn<[number, number, string, string]>;
+    function GetArmorEffectiveness(
+      this: void,
+      armor: number,
+      attackerLevel: number,
+    ): number;
+    function GetArmorEffectivenessAgainstTarget(
+      this: void,
+      armor: number,
+    ): number | undefined;
+    function GetInspectAzeriteItemEmpoweredChoices(
+      this: void,
+      unit: UnitToken,
+      equipmentSlotIndex: number,
+    ): number[];
+    function GetInspectGuildInfo(
+      this: void,
+      unitString: string,
+    ): LuaMultiReturn<[number, number, string, string]>;
     function GetInspectItemLevel(this: void, unit: UnitToken): number;
     function GetInspectRatedBGBlitzData(this: void): InspectPVPData;
     function GetInspectRatedSoloShuffleData(this: void): InspectPVPData;
-    function GetMinItemLevel(this: void): number|undefined;
-    function GetStaggerPercentage(this: void, unit: UnitToken): LuaMultiReturn<[number, number|undefined]>;
+    function GetMinItemLevel(this: void): number | undefined;
+    function GetStaggerPercentage(
+      this: void,
+      unit: UnitToken,
+    ): LuaMultiReturn<[number, number | undefined]>;
     function OffhandHasShield(this: void): boolean;
     function OffhandHasWeapon(this: void): boolean;
   }
 
-  function GetSecondsUntilParentalControlsKick(this: void): number|undefined;
+  function GetSecondsUntilParentalControlsKick(this: void): number | undefined;
 
   namespace C_PartyInfo {
     function AllowedToDoPartyConversion(this: void, toRaid: boolean): boolean;
     function CanFormCrossFactionParties(this: void): boolean;
     function CanInvite(this: void): boolean;
     function ConfirmConvertToRaid(this: void): void;
-    function ConfirmInviteTravelPass(this: void, targetName: string, targetGUID: WOWGUID): void;
+    function ConfirmInviteTravelPass(
+      this: void,
+      targetName: string,
+      targetGUID: WOWGUID,
+    ): void;
     function ConfirmInviteUnit(this: void, targetName: string): void;
     function ConfirmLeaveParty(this: void, category?: number): void;
-    function ConfirmRequestInviteFromUnit(this: void, targetName: string, tank?: boolean, healer?: boolean, dps?: boolean): void;
+    function ConfirmRequestInviteFromUnit(
+      this: void,
+      targetName: string,
+      tank?: boolean,
+      healer?: boolean,
+      dps?: boolean,
+    ): void;
     function ConvertToParty(this: void): void;
     function ConvertToRaid(this: void): void;
     function DelveTeleportOut(this: void): void;
     function DoCountdown(this: void, seconds: number): boolean;
     function GetActiveCategories(this: void): number[];
-    function GetInviteConfirmationInvalidQueues(this: void, inviteGUID: WOWGUID): QueueSpecificInfo[];
-    function GetInviteReferralInfo(this: void, inviteGUID: WOWGUID): LuaMultiReturn<[WOWGUID, string, Enum.PartyRequestJoinRelation, boolean, ClubId]>;
-    function GetMinItemLevel(this: void, avgItemLevelCategory: Enum.AvgItemLevelCategories): LuaMultiReturn<[number, string]>;
+    function GetInviteConfirmationInvalidQueues(
+      this: void,
+      inviteGUID: WOWGUID,
+    ): QueueSpecificInfo[];
+    function GetInviteReferralInfo(
+      this: void,
+      inviteGUID: WOWGUID,
+    ): LuaMultiReturn<
+      [WOWGUID, string, Enum.PartyRequestJoinRelation, boolean, ClubId]
+    >;
+    function GetMinItemLevel(
+      this: void,
+      avgItemLevelCategory: Enum.AvgItemLevelCategories,
+    ): LuaMultiReturn<[number, string]>;
     function GetMinLevel(this: void, category?: number): number;
     function GetRestrictPings(this: void): Enum.RestrictPingsTo;
     function InviteUnit(this: void, targetName: string): void;
@@ -11173,8 +14385,17 @@ declare global {
     function IsPartyInJailersTower(this: void): boolean;
     function IsPartyWalkIn(this: void): boolean;
     function LeaveParty(this: void, category?: number): void;
-    function RequestInviteFromUnit(this: void, targetName: string, tank?: boolean, healer?: boolean, dps?: boolean): void;
-    function SetRestrictPings(this: void, restrictTo: Enum.RestrictPingsTo): void;
+    function RequestInviteFromUnit(
+      this: void,
+      targetName: string,
+      tank?: boolean,
+      healer?: boolean,
+      dps?: boolean,
+    ): void;
+    function SetRestrictPings(
+      this: void,
+      restrictTo: Enum.RestrictPingsTo,
+    ): void;
   }
 
   namespace C_PartyPose {
@@ -11200,7 +14421,11 @@ declare global {
 
   function GetAddOnCPUUsage(this: void, name: uiAddon): number;
   function GetAddOnMemoryUsage(this: void, name: uiAddon): number;
-  function GetFrameCPUUsage(this: void, frame: SimpleFrame, includeChildren?: boolean): LuaMultiReturn<[number, number]>;
+  function GetFrameCPUUsage(
+    this: void,
+    frame: SimpleFrame,
+    includeChildren?: boolean,
+  ): LuaMultiReturn<[number, number]>;
   function ResetCPUUsage(this: void): void;
   function UpdateAddOnCPUUsage(this: void): void;
   function UpdateAddOnMemoryUsage(this: void): void;
@@ -11274,12 +14499,23 @@ declare global {
     function ClearPerksActivitiesPendingCompletion(this: void): void;
     function GetAllPerksActivityTags(this: void): PerksActivityTags;
     function GetPerksActivitiesInfo(this: void): PerksActivitiesInfo;
-    function GetPerksActivitiesPendingCompletion(this: void): PerksActivitiesPending;
-    function GetPerksActivityChatLink(this: void, perksActivityID: number): string;
-    function GetPerksActivityInfo(this: void, perksActivityID: number): PerksActivityInfo|undefined;
+    function GetPerksActivitiesPendingCompletion(
+      this: void,
+    ): PerksActivitiesPending;
+    function GetPerksActivityChatLink(
+      this: void,
+      perksActivityID: number,
+    ): string;
+    function GetPerksActivityInfo(
+      this: void,
+      perksActivityID: number,
+    ): PerksActivityInfo | undefined;
     function GetPerksUIThemePrefix(this: void): string;
     function GetTrackedPerksActivities(this: void): PerksActivitiesTracked;
-    function RemoveTrackedPerksActivity(this: void, perksActivityID: number): void;
+    function RemoveTrackedPerksActivity(
+      this: void,
+      perksActivityID: number,
+    ): void;
   }
 
   namespace C_PerksProgram {
@@ -11372,17 +14608,34 @@ declare global {
     function CloseInteraction(this: void): void;
     function GetAvailableCategoryIDs(this: void): number[];
     function GetAvailableVendorItemIDs(this: void): number[];
-    function GetCategoryInfo(this: void, categoryID: number): PerksVendorCategoryInfo;
+    function GetCategoryInfo(
+      this: void,
+      categoryID: number,
+    ): PerksVendorCategoryInfo;
     function GetCurrencyAmount(this: void): number;
     function GetDraggedPerksVendorItem(this: void): number;
     function GetFrozenPerksVendorItemInfo(this: void): PerksVendorItemInfo;
-    function GetPendingChestRewards(this: void): PerksProgramPendingChestRewards[];
-    function GetPerksProgramItemDisplayInfo(this: void, id: number): PerksProgramItemDisplayInfo;
+    function GetPendingChestRewards(
+      this: void,
+    ): PerksProgramPendingChestRewards[];
+    function GetPerksProgramItemDisplayInfo(
+      this: void,
+      id: number,
+    ): PerksProgramItemDisplayInfo;
     function GetTimeRemaining(this: void, vendorItemID: number): time_t;
-    function GetVendorItemInfo(this: void, vendorItemID: number): PerksVendorItemInfo;
-    function GetVendorItemInfoRefundTimeLeft(this: void, vendorItemID: number): time_t;
+    function GetVendorItemInfo(
+      this: void,
+      vendorItemID: number,
+    ): PerksVendorItemInfo;
+    function GetVendorItemInfoRefundTimeLeft(
+      this: void,
+      vendorItemID: number,
+    ): time_t;
     function IsAttackAnimToggleEnabled(this: void): boolean;
-    function IsFrozenPerksVendorItem(this: void, perksVendorItemID: number): boolean;
+    function IsFrozenPerksVendorItem(
+      this: void,
+      perksVendorItemID: number,
+    ): boolean;
     function IsMountSpecialAnimToggleEnabled(this: void): boolean;
     function ItemSelectedTelemetry(this: void, perksVendorItemID: number): void;
     function PickupPerksVendorItem(this: void, perksVendorItemID: number): void;
@@ -11394,9 +14647,21 @@ declare global {
   }
 
   namespace C_PetBattles {
-    function GetBreedQuality(this: void, petOwner: Enum.BattlePetOwner, slot: number): Enum.BattlePetBreedQuality;
-    function GetIcon(this: void, petOwner: Enum.BattlePetOwner, slot: number): fileID;
-    function GetName(this: void, petOwner: Enum.BattlePetOwner, slot: number): LuaMultiReturn<[string, string]>;
+    function GetBreedQuality(
+      this: void,
+      petOwner: Enum.BattlePetOwner,
+      slot: number,
+    ): Enum.BattlePetBreedQuality;
+    function GetIcon(
+      this: void,
+      petOwner: Enum.BattlePetOwner,
+      slot: number,
+    ): fileID;
+    function GetName(
+      this: void,
+      petOwner: Enum.BattlePetOwner,
+      slot: number,
+    ): LuaMultiReturn<[string, string]>;
     function IsPlayerNPC(this: void): boolean;
     function IsWildBattle(this: void): boolean;
   }
@@ -11411,10 +14676,18 @@ declare global {
     }
 
     function GetPetTamersForMap(this: void, uiMapID: number): PetTamerMapInfo[];
-    function GetSpellForPetAction(this: void, actionID: number): number|undefined;
+    function GetSpellForPetAction(
+      this: void,
+      actionID: number,
+    ): number | undefined;
     function IsPetActionPassive(this: void, actionID: number): boolean;
     function PetAbandon(this: void, petNumber?: number): void;
-    function PetRename(this: void, name: string, petNumber?: number, declensions?: string[]): void;
+    function PetRename(
+      this: void,
+      name: string,
+      petNumber?: number,
+      declensions?: string[],
+    ): void;
   }
 
   namespace C_PetJournal {
@@ -11445,19 +14718,48 @@ declare global {
     }
 
     function ClearHoveredBattlePet(this: void): void;
-    function GetDisplayIDByIndex(this: void, speciesID: number, index: number): number|undefined;
-    function GetDisplayProbabilityByIndex(this: void, speciesID: number, index: number): number|undefined;
-    function GetNumDisplays(this: void, speciesID: number): number|undefined;
-    function GetNumPetsInJournal(this: void, creatureID: number): LuaMultiReturn<[number, number]>;
-    function GetPetAbilityInfo(this: void, abilityID: number): LuaMultiReturn<[string, fileID, number]>;
-    function GetPetAbilityListTable(this: void, speciesID: number): PetAbilityLevelInfo[];
-    function GetPetInfoTableByPetID(this: void, petID: WOWGUID): PetJournalPetInfo;
-    function GetPetLoadOutInfo(this: void, slot: number): LuaMultiReturn<[WOWGUID|undefined, number, number, number, boolean]>;
-    function GetPetSummonInfo(this: void, battlePetGUID: WOWGUID): LuaMultiReturn<[boolean, Enum.PetJournalError, string]>;
+    function GetDisplayIDByIndex(
+      this: void,
+      speciesID: number,
+      index: number,
+    ): number | undefined;
+    function GetDisplayProbabilityByIndex(
+      this: void,
+      speciesID: number,
+      index: number,
+    ): number | undefined;
+    function GetNumDisplays(this: void, speciesID: number): number | undefined;
+    function GetNumPetsInJournal(
+      this: void,
+      creatureID: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetPetAbilityInfo(
+      this: void,
+      abilityID: number,
+    ): LuaMultiReturn<[string, fileID, number]>;
+    function GetPetAbilityListTable(
+      this: void,
+      speciesID: number,
+    ): PetAbilityLevelInfo[];
+    function GetPetInfoTableByPetID(
+      this: void,
+      petID: WOWGUID,
+    ): PetJournalPetInfo;
+    function GetPetLoadOutInfo(
+      this: void,
+      slot: number,
+    ): LuaMultiReturn<[WOWGUID | undefined, number, number, number, boolean]>;
+    function GetPetSummonInfo(
+      this: void,
+      battlePetGUID: WOWGUID,
+    ): LuaMultiReturn<[boolean, Enum.PetJournalError, string]>;
     function HasFavoritePets(this: void): boolean;
     function IsUsingDefaultFilters(this: void): boolean;
     function PetIsSummonable(this: void, battlePetGUID: WOWGUID): boolean;
-    function PetUsesRandomDisplay(this: void, speciesID: number): boolean|undefined;
+    function PetUsesRandomDisplay(
+      this: void,
+      speciesID: number,
+    ): boolean | undefined;
     function SetDefaultFilters(this: void): void;
     function SetHoveredBattlePet(this: void, battlePetGUID: WOWGUID): void;
     function SpellTargetBattlePet(this: void, battlePetGUID: WOWGUID): void;
@@ -11480,46 +14782,112 @@ declare global {
   }
 
   namespace C_Ping {
-    function GetContextualPingTypeForUnit(this: void, targetUnit?: WOWGUID): Enum.PingSubjectType;
+    function GetContextualPingTypeForUnit(
+      this: void,
+      targetUnit?: WOWGUID,
+    ): Enum.PingSubjectType;
     function GetCooldownInfo(this: void): PingCooldownInfo;
     function GetDefaultPingOptions(this: void): PingTypeInfo[];
-    function GetTextureKitForType(this: void, type: Enum.PingSubjectType): textureKit;
-    function SendMacroPing(this: void, type?: Enum.PingSubjectType, targetToken?: string): void;
+    function GetTextureKitForType(
+      this: void,
+      type: Enum.PingSubjectType,
+    ): textureKit;
+    function SendMacroPing(
+      this: void,
+      type?: Enum.PingSubjectType,
+      targetToken?: string,
+    ): void;
     function TogglePingListener(this: void, down: boolean): void;
   }
 
   namespace C_PingSecure {
     type PendingPingOffScreenCallback = (this: void) => void;
-    type PingCooldownStartedCallback = (this: void, info: PingCooldownInfo) => void;
-    type PingPinFrameAddedCallback = (this: void, region: ScriptRegion, uiTextureKit: textureKit, isWorldPoint: boolean) => void;
-    type PingPinFrameRemovedCallback = (this: void, region: ScriptRegion) => void;
-    type PingPinFrameScreenClampStateUpdatedCallback = (this: void, region: ScriptRegion, state: boolean) => void;
-    type PingRadialWheelCreatedCallback = (this: void, region: ScriptRegion) => void;
-    type SendMacroPingCallback = (this: void, type?: Enum.PingSubjectType, targetToken?: string) => void;
+    type PingCooldownStartedCallback = (
+      this: void,
+      info: PingCooldownInfo,
+    ) => void;
+    type PingPinFrameAddedCallback = (
+      this: void,
+      region: ScriptRegion,
+      uiTextureKit: textureKit,
+      isWorldPoint: boolean,
+    ) => void;
+    type PingPinFrameRemovedCallback = (
+      this: void,
+      region: ScriptRegion,
+    ) => void;
+    type PingPinFrameScreenClampStateUpdatedCallback = (
+      this: void,
+      region: ScriptRegion,
+      state: boolean,
+    ) => void;
+    type PingRadialWheelCreatedCallback = (
+      this: void,
+      region: ScriptRegion,
+    ) => void;
+    type SendMacroPingCallback = (
+      this: void,
+      type?: Enum.PingSubjectType,
+      targetToken?: string,
+    ) => void;
     type TogglePingListenerCallback = (this: void, down: boolean) => void;
 
     function ClearPendingPingInfo(this: void): void;
     function CreateFrame(this: void): void;
     function DisplayError(this: void, error: string): void;
-    function GetTargetPingReceiver(this: void, mousePosX: number, mousePosY: number): ScriptRegion;
-    function GetTargetWorldPing(this: void, mousePosX: number, mousePosY: number): boolean;
+    function GetTargetPingReceiver(
+      this: void,
+      mousePosX: number,
+      mousePosY: number,
+    ): ScriptRegion;
+    function GetTargetWorldPing(
+      this: void,
+      mousePosX: number,
+      mousePosY: number,
+    ): boolean;
     function GetTargetWorldPingAndSend(this: void): ContextualWorldPingResult;
-    function SendPing(this: void, type: Enum.PingSubjectType, target?: WOWGUID): Enum.PingResult;
-    function SetPendingPingOffScreenCallback(this: void, cb: PendingPingOffScreenCallback): void;
-    function SetPingCooldownStartedCallback(this: void, cb: PingCooldownStartedCallback): void;
-    function SetPingPinFrameAddedCallback(this: void, cb: PingPinFrameAddedCallback): void;
-    function SetPingPinFrameRemovedCallback(this: void, cb: PingPinFrameRemovedCallback): void;
-    function SetPingPinFrameScreenClampStateUpdatedCallback(this: void, cb: PingPinFrameScreenClampStateUpdatedCallback): void;
-    function SetPingRadialWheelCreatedCallback(this: void, cb: PingRadialWheelCreatedCallback): void;
-    function SetSendMacroPingCallback(this: void, cb: SendMacroPingCallback): void;
-    function SetTogglePingListenerCallback(this: void, cb: TogglePingListenerCallback): void;
+    function SendPing(
+      this: void,
+      type: Enum.PingSubjectType,
+      target?: WOWGUID,
+    ): Enum.PingResult;
+    function SetPendingPingOffScreenCallback(
+      this: void,
+      cb: PendingPingOffScreenCallback,
+    ): void;
+    function SetPingCooldownStartedCallback(
+      this: void,
+      cb: PingCooldownStartedCallback,
+    ): void;
+    function SetPingPinFrameAddedCallback(
+      this: void,
+      cb: PingPinFrameAddedCallback,
+    ): void;
+    function SetPingPinFrameRemovedCallback(
+      this: void,
+      cb: PingPinFrameRemovedCallback,
+    ): void;
+    function SetPingPinFrameScreenClampStateUpdatedCallback(
+      this: void,
+      cb: PingPinFrameScreenClampStateUpdatedCallback,
+    ): void;
+    function SetPingRadialWheelCreatedCallback(
+      this: void,
+      cb: PingRadialWheelCreatedCallback,
+    ): void;
+    function SetSendMacroPingCallback(
+      this: void,
+      cb: SendMacroPingCallback,
+    ): void;
+    function SetTogglePingListenerCallback(
+      this: void,
+      cb: TogglePingListenerCallback,
+    ): void;
   }
 
-  interface PingPinFrame {
-  }
+  interface PingPinFrame {}
 
-  namespace C_Platform {
-  }
+  namespace C_Platform {}
 
   namespace C_PlayerChoice {
     interface PlayerChoiceInfo {
@@ -11594,7 +14962,7 @@ declare global {
 
     function GetCurrentPlayerChoiceInfo(this: void): PlayerChoiceInfo;
     function GetNumRerolls(this: void): number;
-    function GetRemainingTime(this: void): number|undefined;
+    function GetRemainingTime(this: void): number | undefined;
     function IsWaitingForPlayerChoiceResponse(this: void): boolean;
     function OnUIClosed(this: void): void;
     function RequestRerollPlayerChoice(this: void): void;
@@ -11617,25 +14985,54 @@ declare global {
 
     function CanPlayerEnterChromieTime(this: void): boolean;
     function CanPlayerUseAreaLoot(this: void): boolean;
-    function CanPlayerUseMountEquipment(this: void): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUseMountEquipment(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
     function CanUseItem(this: void, itemID: number): boolean;
-    function GetAlternateFormInfo(this: void): LuaMultiReturn<[boolean, boolean]>;
-    function GetContentDifficultyCreatureForPlayer(this: void, unitToken: UnitToken): Enum.RelativeContentDifficulty;
-    function GetContentDifficultyQuestForPlayer(this: void, questID: number): Enum.RelativeContentDifficulty;
+    function GetAlternateFormInfo(
+      this: void,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function GetContentDifficultyCreatureForPlayer(
+      this: void,
+      unitToken: UnitToken,
+    ): Enum.RelativeContentDifficulty;
+    function GetContentDifficultyQuestForPlayer(
+      this: void,
+      questID: number,
+    ): Enum.RelativeContentDifficulty;
     function GetDisplayID(this: void): number;
-    function GetGlidingInfo(this: void): LuaMultiReturn<[boolean, boolean, number]>;
-    function GetInstancesUnlockedAtLevel(this: void, level: number, isRaid: boolean): number[];
+    function GetGlidingInfo(
+      this: void,
+    ): LuaMultiReturn<[boolean, boolean, number]>;
+    function GetInstancesUnlockedAtLevel(
+      this: void,
+      level: number,
+      isRaid: boolean,
+    ): number[];
     function GetNativeDisplayID(this: void): number;
-    function GetPetStableCreatureDisplayInfoID(this: void, index: number): number;
+    function GetPetStableCreatureDisplayInfoID(
+      this: void,
+      index: number,
+    ): number;
     function GetPlayerCharacterData(this: void): PlayerInfoCharacterData;
-    function GetPlayerMythicPlusRatingSummary(this: void, playerToken: UnitToken): MythicPlusRatingSummary;
+    function GetPlayerMythicPlusRatingSummary(
+      this: void,
+      playerToken: UnitToken,
+    ): MythicPlusRatingSummary;
     function HasAccountInventoryLock(this: void): boolean;
     function HasVisibleInvSlot(this: void, slot: number): boolean;
     function IsDisplayRaceNative(this: void): boolean;
-    function IsExpansionLandingPageUnlockedForPlayer(this: void, expansionID: number): boolean;
+    function IsExpansionLandingPageUnlockedForPlayer(
+      this: void,
+      expansionID: number,
+    ): boolean;
     function IsMirrorImage(this: void): boolean;
-    function IsPlayerEligibleForNPE(this: void): LuaMultiReturn<[boolean, string]>;
-    function IsPlayerEligibleForNPEv2(this: void): LuaMultiReturn<[boolean, string]>;
+    function IsPlayerEligibleForNPE(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
+    function IsPlayerEligibleForNPEv2(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
     function IsPlayerInChromieTime(this: void): boolean;
     function IsPlayerNPERestricted(this: void): boolean;
     function IsSelfFoundActive(this: void): boolean;
@@ -11659,29 +15056,71 @@ declare global {
   }
 
   namespace C_PlayerInteractionManager {
-    function ClearInteraction(this: void, type?: Enum.PlayerInteractionType): void;
-    function ConfirmationInteraction(this: void, type?: Enum.PlayerInteractionType): void;
-    function InteractUnit(this: void, unit: string, exactMatch?: boolean, looseTargeting?: boolean): boolean;
-    function IsInteractingWithNpcOfType(this: void, type: Enum.PlayerInteractionType): boolean;
+    function ClearInteraction(
+      this: void,
+      type?: Enum.PlayerInteractionType,
+    ): void;
+    function ConfirmationInteraction(
+      this: void,
+      type?: Enum.PlayerInteractionType,
+    ): void;
+    function InteractUnit(
+      this: void,
+      unit: string,
+      exactMatch?: boolean,
+      looseTargeting?: boolean,
+    ): boolean;
+    function IsInteractingWithNpcOfType(
+      this: void,
+      type: Enum.PlayerInteractionType,
+    ): boolean;
     function IsReplacingUnit(this: void): boolean;
-    function IsValidNPCInteraction(this: void, type: Enum.PlayerInteractionType): boolean;
+    function IsValidNPCInteraction(
+      this: void,
+      type: Enum.PlayerInteractionType,
+    ): boolean;
     function ReopenInteraction(this: void): void;
   }
 
   namespace C_PlayerInfo {
     function GUIDIsPlayer(this: void, guid: WOWGUID): boolean;
-    function GetClass(this: void, playerLocation: PlayerLocation): LuaMultiReturn<[string|undefined, string|undefined, number|undefined]>;
-    function GetName(this: void, playerLocation: PlayerLocation): string|undefined;
-    function GetRace(this: void, playerLocation: PlayerLocation): number|undefined;
-    function GetSex(this: void, playerLocation: PlayerLocation): number|undefined;
-    function IsConnected(this: void, playerLocation?: PlayerLocation): boolean|undefined;
-    function UnitIsSameServer(this: void, playerLocation: PlayerLocation): boolean;
+    function GetClass(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): LuaMultiReturn<
+      [string | undefined, string | undefined, number | undefined]
+    >;
+    function GetName(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): string | undefined;
+    function GetRace(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): number | undefined;
+    function GetSex(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): number | undefined;
+    function IsConnected(
+      this: void,
+      playerLocation?: PlayerLocation,
+    ): boolean | undefined;
+    function UnitIsSameServer(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): boolean;
   }
 
   namespace C_PlayerMentorship {
-    function GetMentorLevelRequirement(this: void): number|undefined;
-    function GetMentorRequirements(this: void): LuaMultiReturn<[number[], number[], number]>;
-    function GetMentorshipStatus(this: void, playerLocation: PlayerLocation): Enum.PlayerMentorshipStatus;
+    function GetMentorLevelRequirement(this: void): number | undefined;
+    function GetMentorRequirements(
+      this: void,
+    ): LuaMultiReturn<[number[], number[], number]>;
+    function GetMentorshipStatus(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): Enum.PlayerMentorshipStatus;
     function IsActivePlayerConsideredNewcomer(this: void): boolean;
     function IsMentorRestricted(this: void): boolean;
   }
@@ -11695,11 +15134,18 @@ declare global {
   function BeginTrade(this: void): void;
   function CanDualWield(this: void): boolean;
   function CanInspect(this: void, targetGUID: UnitToken): boolean;
-  function CanLootUnit(this: void, targetUnit: WOWGUID): LuaMultiReturn<[boolean, boolean]>;
+  function CanLootUnit(
+    this: void,
+    targetUnit: WOWGUID,
+  ): LuaMultiReturn<[boolean, boolean]>;
   function CancelAreaSpiritHeal(this: void): void;
   function CancelPendingEquip(this: void, index: number): void;
   function CancelTrade(this: void): void;
-  function CheckInteractDistance(this: void, unitGUID: UnitToken, distIndex: number): boolean;
+  function CheckInteractDistance(
+    this: void,
+    unitGUID: UnitToken,
+    distIndex: number,
+  ): boolean;
   function CheckTalentMasterDist(this: void): boolean;
   function ClearPendingBindConversionItem(this: void): void;
   function ConfirmTalentWipe(this: void): void;
@@ -11711,15 +15157,26 @@ declare global {
   function FollowUnit(this: void, name?: string, exactMatch?: boolean): void;
   function GetAllowLowLevelRaid(this: void): boolean;
   function GetAreaSpiritHealerTime(this: void): number;
-  function GetAttackPowerForStat(this: void, stat: number, value: number): number;
+  function GetAttackPowerForStat(
+    this: void,
+    stat: number,
+    value: number,
+  ): number;
   function GetAutoDeclineGuildInvites(this: void): boolean;
   function GetAvoidance(this: void): number;
   function GetBindLocation(this: void): string;
   function GetBlockChance(this: void): number;
   function GetCemeteryPreference(this: void): number;
-  function GetCombatRating(this: void, ratingIndex: number): number|undefined;
-  function GetCombatRatingBonus(this: void, ratingIndex: number): number|undefined;
-  function GetCombatRatingBonusForCombatRatingValue(this: void, ratingIndex: number, value: number): number|undefined;
+  function GetCombatRating(this: void, ratingIndex: number): number | undefined;
+  function GetCombatRatingBonus(
+    this: void,
+    ratingIndex: number,
+  ): number | undefined;
+  function GetCombatRatingBonusForCombatRatingValue(
+    this: void,
+    ratingIndex: number,
+    value: number,
+  ): number | undefined;
   function GetCorpseRecoveryDelay(this: void): number;
   function GetCorruption(this: void): number;
   function GetCorruptionResistance(this: void): number;
@@ -11736,7 +15193,10 @@ declare global {
   function GetManaRegen(this: void): LuaMultiReturn<[number, number]>;
   function GetMastery(this: void): number;
   function GetMasteryEffect(this: void): LuaMultiReturn<[number, number]>;
-  function GetMaxCombatRatingBonus(this: void, ratingIndex: number): number|undefined;
+  function GetMaxCombatRatingBonus(
+    this: void,
+    ratingIndex: number,
+  ): number | undefined;
   function GetMaxPlayerLevel(this: void): number;
   function GetMeleeHaste(this: void): number;
   function GetModResilienceDamageReduction(this: void): number;
@@ -11754,24 +15214,35 @@ declare global {
   function GetParryChanceFromAttribute(this: void): number;
   function GetPetMeleeHaste(this: void): number;
   function GetPetSpellBonusDamage(this: void): number;
-  function GetPlayerFacing(this: void): number|undefined;
-  function GetPlayerInfoByGUID(this: void, guid: WOWGUID): LuaMultiReturn<[string, string, string, string, number, string, string]>;
+  function GetPlayerFacing(this: void): number | undefined;
+  function GetPlayerInfoByGUID(
+    this: void,
+    guid: WOWGUID,
+  ): LuaMultiReturn<[string, string, string, string, number, string, string]>;
   function GetPowerRegen(this: void): LuaMultiReturn<[number, number]>;
-  function GetPowerRegenForPowerType(this: void, powerType: number): LuaMultiReturn<[number, number]>;
+  function GetPowerRegenForPowerType(
+    this: void,
+    powerType: number,
+  ): LuaMultiReturn<[number, number]>;
   function GetPvpPowerDamage(this: void): number;
   function GetPvpPowerHealing(this: void): number;
   function GetRangedCritChance(this: void): number;
   function GetRangedHaste(this: void): number;
   function GetReleaseTimeRemaining(this: void): number;
-  function GetResSicknessDuration(this: void): string|undefined;
+  function GetResSicknessDuration(this: void): string | undefined;
   function GetRestState(this: void): LuaMultiReturn<[number, string, number]>;
-  function GetRestrictedAccountData(this: void): LuaMultiReturn<[number, WOWMONEY, number]>;
-  function GetRuneCooldown(this: void, runeIndex: number): LuaMultiReturn<[number, number, boolean]>;
+  function GetRestrictedAccountData(
+    this: void,
+  ): LuaMultiReturn<[number, WOWMONEY, number]>;
+  function GetRuneCooldown(
+    this: void,
+    runeIndex: number,
+  ): LuaMultiReturn<[number, number, boolean]>;
   function GetRuneCount(this: void, runeIndex: number): number;
-  function GetSheathState(this: void): number|undefined;
+  function GetSheathState(this: void): number | undefined;
   function GetShieldBlock(this: void): number;
   function GetSpeed(this: void): number;
-  function GetSpellBonusDamage(this: void, school: number): number|undefined;
+  function GetSpellBonusDamage(this: void, school: number): number | undefined;
   function GetSpellBonusHealing(this: void): number;
   function GetSpellCritChance(this: void): number;
   function GetSpellHitModifier(this: void): number;
@@ -11779,13 +15250,15 @@ declare global {
   function GetSturdiness(this: void): number;
   function GetTaxiBenchmarkMode(this: void): boolean;
   function GetVersatilityBonus(this: void, combatRating: number): number;
-  function GetXPExhaustion(this: void): number|undefined;
+  function GetXPExhaustion(this: void): number | undefined;
   function HasAPEffectsSpellPower(this: void): boolean;
   function HasDualWieldPenalty(this: void): boolean;
   function HasFullControl(this: void): boolean;
   function HasIgnoreDualWieldWeapon(this: void): boolean;
   function HasKey(this: void): boolean;
-  function HasNoReleaseAura(this: void): LuaMultiReturn<[boolean, number, boolean]>;
+  function HasNoReleaseAura(
+    this: void,
+  ): LuaMultiReturn<[boolean, number, boolean]>;
   function HasSPEffectsAttackPower(this: void): boolean;
   function InitiateTrade(this: void, guid: UnitToken): void;
   function IsAccountSecured(this: void): boolean;
@@ -11799,8 +15272,14 @@ declare global {
   function IsInJailersTower(this: void): boolean;
   function IsIndoors(this: void): boolean;
   function IsInsane(this: void): boolean;
-  function IsItemPreferredArmorType(this: void, itemLocation: ItemLocation): boolean;
-  function IsJailersTowerLayerTimeLocked(this: void, layerLevel: number): string;
+  function IsItemPreferredArmorType(
+    this: void,
+    itemLocation: ItemLocation,
+  ): boolean;
+  function IsJailersTowerLayerTimeLocked(
+    this: void,
+    layerLevel: number,
+  ): string;
   function IsLoggedIn(this: void): boolean;
   function IsMounted(this: void): boolean;
   function IsOnGroundFloorInJailersTower(this: void): boolean;
@@ -11814,12 +15293,14 @@ declare global {
   function IsRestrictedAccount(this: void): boolean;
   function IsStealthed(this: void): boolean;
   function IsXPUserDisabled(this: void): boolean;
-  function NoPlayTime(this: void): boolean|undefined;
+  function NoPlayTime(this: void): boolean | undefined;
   function NotifyInspect(this: void, targetGUID: UnitToken): void;
-  function PartialPlayTime(this: void): boolean|undefined;
+  function PartialPlayTime(this: void): boolean | undefined;
   function PlayerCanTeleport(this: void): boolean;
-  function PlayerEffectiveAttackPower(this: void): LuaMultiReturn<[number, number, number]>;
-  function PlayerGetTimerunningSeasonID(this: void): number|undefined;
+  function PlayerEffectiveAttackPower(
+    this: void,
+  ): LuaMultiReturn<[number, number, number]>;
+  function PlayerGetTimerunningSeasonID(this: void): number | undefined;
   function PortGraveyard(this: void): void;
   function RandomRoll(this: void, min: number, max: number): void;
   function RepopMe(this: void): void;
@@ -11850,10 +15331,13 @@ declare global {
   function ToggleSelfHighlight(this: void): boolean;
   function ToggleSheath(this: void): void;
 
-  namespace C_Pony {
-  }
+  namespace C_Pony {}
 
-  function SetPortraitToTexture(this: void, texture: SimpleTexture, asset: TextureAssetDisk): void;
+  function SetPortraitToTexture(
+    this: void,
+    texture: SimpleTexture,
+    asset: TextureAssetDisk,
+  ): void;
 
   interface ProfTabHighlight {
     description: string;
@@ -11883,33 +15367,78 @@ declare global {
   }
 
   namespace C_ProfSpecs {
-    function CanRefundPath(this: void, pathID: number, configID: number): boolean;
-    function CanUnlockTab(this: void, tabTreeID: number, configID: number): boolean;
+    function CanRefundPath(
+      this: void,
+      pathID: number,
+      configID: number,
+    ): boolean;
+    function CanUnlockTab(
+      this: void,
+      tabTreeID: number,
+      configID: number,
+    ): boolean;
     function GetChildrenForPath(this: void, pathID: number): number[];
     function GetConfigIDForSkillLine(this: void, skillLineID: number): number;
-    function GetCurrencyInfoForSkillLine(this: void, skillLineID: number): SpecializationCurrencyInfo;
-    function GetDefaultSpecSkillLine(this: void): number|undefined;
+    function GetCurrencyInfoForSkillLine(
+      this: void,
+      skillLineID: number,
+    ): SpecializationCurrencyInfo;
+    function GetDefaultSpecSkillLine(this: void): number | undefined;
     function GetDescriptionForPath(this: void, pathID: number): string;
     function GetDescriptionForPerk(this: void, perkID: number): string;
     function GetEntryIDForPerk(this: void, perkID: number): number;
-    function GetNewSpecReminderProfName(this: void): string|undefined;
+    function GetNewSpecReminderProfName(this: void): string | undefined;
     function GetPerksForPath(this: void, pathID: number): SpecPerkInfo[];
-    function GetRootPathForTab(this: void, tabTreeID: number): number|undefined;
-    function GetSourceTextForPath(this: void, pathID: number, configID: number): string;
-    function GetSpecTabIDsForSkillLine(this: void, skillLineID: number): number[];
+    function GetRootPathForTab(
+      this: void,
+      tabTreeID: number,
+    ): number | undefined;
+    function GetSourceTextForPath(
+      this: void,
+      pathID: number,
+      configID: number,
+    ): string;
+    function GetSpecTabIDsForSkillLine(
+      this: void,
+      skillLineID: number,
+    ): number[];
     function GetSpecTabInfo(this: void): SpecializationTabInfo;
-    function GetSpendCurrencyForPath(this: void, pathID: number): number|undefined;
+    function GetSpendCurrencyForPath(
+      this: void,
+      pathID: number,
+    ): number | undefined;
     function GetSpendEntryForPath(this: void, pathID: number): number;
-    function GetStateForPath(this: void, pathID: number, configID: number): Enum.ProfessionsSpecPathState;
-    function GetStateForPerk(this: void, perkID: number, configID: number): Enum.ProfessionsSpecPerkState;
-    function GetStateForTab(this: void, tabTreeID: number, configID: number): Enum.ProfessionsSpecTabState;
-    function GetTabInfo(this: void, tabTreeID: number): ProfTabInfo|undefined;
+    function GetStateForPath(
+      this: void,
+      pathID: number,
+      configID: number,
+    ): Enum.ProfessionsSpecPathState;
+    function GetStateForPerk(
+      this: void,
+      perkID: number,
+      configID: number,
+    ): Enum.ProfessionsSpecPerkState;
+    function GetStateForTab(
+      this: void,
+      tabTreeID: number,
+      configID: number,
+    ): Enum.ProfessionsSpecTabState;
+    function GetTabInfo(this: void, tabTreeID: number): ProfTabInfo | undefined;
     function GetUnlockEntryForPath(this: void, pathID: number): number;
-    function GetUnlockRankForPerk(this: void, perkID: number): number|undefined;
+    function GetUnlockRankForPerk(
+      this: void,
+      perkID: number,
+    ): number | undefined;
     function ShouldShowPointsReminder(this: void): boolean;
-    function ShouldShowPointsReminderForSkillLine(this: void, skillLineID: number): boolean;
+    function ShouldShowPointsReminderForSkillLine(
+      this: void,
+      skillLineID: number,
+    ): boolean;
     function ShouldShowSpecTab(this: void): boolean;
-    function SkillLineHasSpecialization(this: void, skillLineID: number): boolean;
+    function SkillLineHasSpecialization(
+      this: void,
+      skillLineID: number,
+    ): boolean;
   }
 
   namespace C_PvP {
@@ -12139,70 +15668,227 @@ declare global {
     function CanDisplayHealing(this: void): boolean;
     function CanDisplayHonorableKills(this: void): boolean;
     function CanDisplayKillingBlows(this: void): boolean;
-    function CanPlayerUseRatedPVPUI(this: void): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUseRatedPVPUI(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
     function CanToggleWarMode(this: void, toggle: boolean): boolean;
     function CanToggleWarModeInArea(this: void): boolean;
     function DoesMatchOutcomeAffectRating(this: void): boolean;
-    function GetActiveBrawlInfo(this: void): PvpBrawlInfo|undefined;
+    function GetActiveBrawlInfo(this: void): PvpBrawlInfo | undefined;
     function GetActiveMatchBracket(this: void): number;
     function GetActiveMatchDuration(this: void): time_t;
     function GetActiveMatchState(this: void): Enum.PvPMatchState;
     function GetActiveMatchWinner(this: void): number;
-    function GetArenaCrowdControlInfo(this: void, playerToken: UnitToken): LuaMultiReturn<[number, number, number]>;
-    function GetArenaRewards(this: void, teamSize: number): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined]>;
-    function GetArenaSkirmishRewards(this: void): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined]>;
-function GetAssignedSpecForBattlefieldQueue(this: void, queueID: number): number|undefined;
-function GetAvailableBrawlInfo(this: void): PvpBrawlInfo|undefined;
-function GetBattlefieldFlagPosition(this: void, flagIndex: number, uiMapId: number): LuaMultiReturn<[number|undefined, number|undefined, number]>;
-function GetBattlefieldVehicleInfo(this: void, vehicleIndex: number, uiMapID: number): BattlefieldVehicleInfo;
-function GetBattlefieldVehicles(this: void, uiMapID: number): BattlefieldVehicleInfo[];
-function GetBrawlRewards(this: void, brawlType: Enum.BrawlType): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined, boolean]>;
-function GetBrawlSoloRBGMinItemLevel(this: void): number;
-function GetCustomVictoryStatID(this: void): number;
-function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number): PvpScalingData[];
-    function GetHonorRewardInfo(this: void, honorLevel: number): HonorRewardInfo|undefined;
-    function GetLevelUpBattlegrounds(this: void, level: number): LevelUpBattlegroundInfo[];
-    function GetMatchPVPStatColumn(this: void, pvpStatID: number): MatchPVPStatColumn|undefined;
+    function GetArenaCrowdControlInfo(
+      this: void,
+      playerToken: UnitToken,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetArenaRewards(
+      this: void,
+      teamSize: number,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+      ]
+    >;
+    function GetArenaSkirmishRewards(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+      ]
+    >;
+    function GetAssignedSpecForBattlefieldQueue(
+      this: void,
+      queueID: number,
+    ): number | undefined;
+    function GetAvailableBrawlInfo(this: void): PvpBrawlInfo | undefined;
+    function GetBattlefieldFlagPosition(
+      this: void,
+      flagIndex: number,
+      uiMapId: number,
+    ): LuaMultiReturn<[number | undefined, number | undefined, number]>;
+    function GetBattlefieldVehicleInfo(
+      this: void,
+      vehicleIndex: number,
+      uiMapID: number,
+    ): BattlefieldVehicleInfo;
+    function GetBattlefieldVehicles(
+      this: void,
+      uiMapID: number,
+    ): BattlefieldVehicleInfo[];
+    function GetBrawlRewards(
+      this: void,
+      brawlType: Enum.BrawlType,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+        boolean,
+      ]
+    >;
+    function GetBrawlSoloRBGMinItemLevel(this: void): number;
+    function GetCustomVictoryStatID(this: void): number;
+    function GetGlobalPvpScalingInfoForSpecID(
+      this: void,
+      specializationID: number,
+    ): PvpScalingData[];
+    function GetHonorRewardInfo(
+      this: void,
+      honorLevel: number,
+    ): HonorRewardInfo | undefined;
+    function GetLevelUpBattlegrounds(
+      this: void,
+      level: number,
+    ): LevelUpBattlegroundInfo[];
+    function GetMatchPVPStatColumn(
+      this: void,
+      pvpStatID: number,
+    ): MatchPVPStatColumn | undefined;
     function GetMatchPVPStatColumns(this: void): MatchPVPStatColumn[];
-    function GetNextHonorLevelForReward(this: void, honorLevel: number): number|undefined;
+    function GetNextHonorLevelForReward(
+      this: void,
+      honorLevel: number,
+    ): number | undefined;
     function GetOutdoorPvPWaitTime(this: void, uiMapID: number): time_t;
-    function GetPVPActiveMatchPersonalRatedInfo(this: void): PVPPersonalRatedInfo|undefined;
-    function GetPVPActiveRatedMatchDeserterPenalty(this: void): RatedMatchDeserterPenalty|undefined;
+    function GetPVPActiveMatchPersonalRatedInfo(
+      this: void,
+    ): PVPPersonalRatedInfo | undefined;
+    function GetPVPActiveRatedMatchDeserterPenalty(
+      this: void,
+    ): RatedMatchDeserterPenalty | undefined;
     function GetPVPSeasonRewardAchievementID(this: void): number;
-    function GetPersonalRatedBGBlitzSpecStats(this: void): RatedBGBlitzSpecStats|undefined;
-    function GetPersonalRatedSoloShuffleSpecStats(this: void): RatedSoloShuffleSpecStats|undefined;
-    function GetPostMatchCurrencyRewards(this: void): PVPPostMatchCurrencyReward[];
+    function GetPersonalRatedBGBlitzSpecStats(
+      this: void,
+    ): RatedBGBlitzSpecStats | undefined;
+    function GetPersonalRatedSoloShuffleSpecStats(
+      this: void,
+    ): RatedSoloShuffleSpecStats | undefined;
+    function GetPostMatchCurrencyRewards(
+      this: void,
+    ): PVPPostMatchCurrencyReward[];
     function GetPostMatchItemRewards(this: void): PVPPostMatchItemReward[];
     function GetPvpTalentsUnlockedLevel(this: void): number;
-    function GetPvpTierID(this: void, tierEnum: number, bracketEnum: number): number|undefined;
-    function GetPvpTierInfo(this: void, tierID: number): PvpTierInfo|undefined;
+    function GetPvpTierID(
+      this: void,
+      tierEnum: number,
+      bracketEnum: number,
+    ): number | undefined;
+    function GetPvpTierInfo(
+      this: void,
+      tierID: number,
+    ): PvpTierInfo | undefined;
     function GetRandomBGInfo(this: void): RandomBGInfo;
-    function GetRandomBGRewards(this: void): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined]>;
+    function GetRandomBGRewards(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+      ]
+    >;
     function GetRandomEpicBGInfo(this: void): RandomBGInfo;
-    function GetRandomEpicBGRewards(this: void): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined]>;
-    function GetRatedBGRewards(this: void): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined]>;
+    function GetRandomEpicBGRewards(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+      ]
+    >;
+    function GetRatedBGRewards(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+      ]
+    >;
     function GetRatedSoloRBGMinItemLevel(this: void): number;
-    function GetRatedSoloRBGRewards(this: void): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined]>;
+    function GetRatedSoloRBGRewards(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+      ]
+    >;
     function GetRatedSoloShuffleMinItemLevel(this: void): number;
-    function GetRatedSoloShuffleRewards(this: void): LuaMultiReturn<[number, number, BattlefieldItemReward[]|undefined, BattlefieldCurrencyReward[]|undefined, RoleShortageReward|undefined]>;
-    function GetRewardItemLevelsByTierEnum(this: void, pvpTierEnum: number): LuaMultiReturn<[number, number]>;
-    function GetScoreInfo(this: void, offsetIndex: number): PVPScoreInfo|undefined;
-    function GetScoreInfoByPlayerGuid(this: void, guid: WOWGUID): PVPScoreInfo|undefined;
-    function GetSeasonBestInfo(this: void): LuaMultiReturn<[number, number|undefined]>;
-    function GetSkirmishInfo(this: void, pvpBracket: number): BattlemasterListInfo;
-    function GetSpecialEventBrawlInfo(this: void): PvpBrawlInfo|undefined;
-    function GetTeamInfo(this: void, factionIndex: number): PVPTeamInfo|undefined;
+    function GetRatedSoloShuffleRewards(
+      this: void,
+    ): LuaMultiReturn<
+      [
+        number,
+        number,
+        BattlefieldItemReward[] | undefined,
+        BattlefieldCurrencyReward[] | undefined,
+        RoleShortageReward | undefined,
+      ]
+    >;
+    function GetRewardItemLevelsByTierEnum(
+      this: void,
+      pvpTierEnum: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetScoreInfo(
+      this: void,
+      offsetIndex: number,
+    ): PVPScoreInfo | undefined;
+    function GetScoreInfoByPlayerGuid(
+      this: void,
+      guid: WOWGUID,
+    ): PVPScoreInfo | undefined;
+    function GetSeasonBestInfo(
+      this: void,
+    ): LuaMultiReturn<[number, number | undefined]>;
+    function GetSkirmishInfo(
+      this: void,
+      pvpBracket: number,
+    ): BattlemasterListInfo;
+    function GetSpecialEventBrawlInfo(this: void): PvpBrawlInfo | undefined;
+    function GetTeamInfo(
+      this: void,
+      factionIndex: number,
+    ): PVPTeamInfo | undefined;
     function GetUIDisplaySeason(this: void): number;
     function GetWarModeRewardBonus(this: void): number;
     function GetWarModeRewardBonusDefault(this: void): number;
-    function GetWeeklyChestInfo(this: void): LuaMultiReturn<[boolean, boolean, boolean, number]>;
-    function GetZonePVPInfo(this: void): LuaMultiReturn<[string, boolean, string|undefined]>;
+    function GetWeeklyChestInfo(
+      this: void,
+    ): LuaMultiReturn<[boolean, boolean, boolean, number]>;
+    function GetZonePVPInfo(
+      this: void,
+    ): LuaMultiReturn<[string, boolean, string | undefined]>;
     function HasArenaSkirmishWinToday(this: void): boolean;
     function IsActiveBattlefield(this: void): boolean;
     function IsActiveMatchRegistered(this: void): boolean;
     function IsArena(this: void): boolean;
     function IsBattleground(this: void): boolean;
-    function IsBattlegroundEnlistmentBonusActive(this: void): LuaMultiReturn<[boolean, boolean]>;
+    function IsBattlegroundEnlistmentBonusActive(
+      this: void,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function IsBrawlSoloRBG(this: void): boolean;
     function IsBrawlSoloShuffle(this: void): boolean;
     function IsInBrawl(this: void): boolean;
@@ -12229,27 +15915,55 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function SetPVP(this: void, enablePVP?: boolean): void;
     function SetWarModeDesired(this: void, warModeDesired: boolean): void;
     function StartSoloRBGWarGameByName(this: void, args: string): number;
-    function StartSpectatorSoloRBGWarGame(this: void, opaqueID1: number, opaqueID2: number, specifiedMap: string, tournamentRules: boolean): number;
+    function StartSpectatorSoloRBGWarGame(
+      this: void,
+      opaqueID1: number,
+      opaqueID2: number,
+      specifiedMap: string,
+      tournamentRules: boolean,
+    ): number;
     function TogglePVP(this: void): void;
     function ToggleWarMode(this: void): void;
   }
 
   namespace C_QuestHub {
-    function IsQuestCurrentlyRelatedToHub(this: void, questID: number, areaPoiID: number): boolean;
+    function IsQuestCurrentlyRelatedToHub(
+      this: void,
+      questID: number,
+      areaPoiID: number,
+    ): boolean;
   }
 
   namespace C_QuestInfoSystem {
-    function GetQuestClassification(this: void, questID?: number): Enum.QuestClassification|undefined;
-    function GetQuestRewardCurrencies(this: void, questID?: number): QuestRewardCurrencyInfo[];
-    function GetQuestRewardSpellInfo(this: void, questID: number|undefined, spellID: number): QuestRewardSpellInfo|undefined;
+    function GetQuestClassification(
+      this: void,
+      questID?: number,
+    ): Enum.QuestClassification | undefined;
+    function GetQuestRewardCurrencies(
+      this: void,
+      questID?: number,
+    ): QuestRewardCurrencyInfo[];
+    function GetQuestRewardSpellInfo(
+      this: void,
+      questID: number | undefined,
+      spellID: number,
+    ): QuestRewardSpellInfo | undefined;
     function GetQuestRewardSpells(this: void, questID?: number): number[];
-    function GetQuestShouldToastCompletion(this: void, questID?: number): boolean;
+    function GetQuestShouldToastCompletion(
+      this: void,
+      questID?: number,
+    ): boolean;
     function HasQuestRewardCurrencies(this: void, questID?: number): boolean;
     function HasQuestRewardSpells(this: void, questID?: number): boolean;
   }
 
   namespace C_QuestItemUse {
-    function CanUseQuestItemOnObject(this: void, item: ItemLocation, unit: UnitToken, checkRange?: boolean): boolean;
+    function CanUseQuestItemOnObject(
+      this: void,
+      item: ItemLocation,
+      unit: UnitToken,
+      checkRange?: boolean,
+    ): boolean;
   }
 
   namespace C_QuestLine {
@@ -12274,12 +15988,24 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       floorLocation: Enum.QuestLineFloorLocation;
     }
 
-    function GetAvailableQuestLines(this: void, uiMapID: number): QuestLineInfo[];
+    function GetAvailableQuestLines(
+      this: void,
+      uiMapID: number,
+    ): QuestLineInfo[];
     function GetForceVisibleQuests(this: void, uiMapID: number): number[];
-    function GetQuestLineInfo(this: void, questID: number, uiMapID?: number, displayableOnly?: boolean): QuestLineInfo|undefined;
+    function GetQuestLineInfo(
+      this: void,
+      questID: number,
+      uiMapID?: number,
+      displayableOnly?: boolean,
+    ): QuestLineInfo | undefined;
     function GetQuestLineQuests(this: void, questLineID: number): number[];
     function IsComplete(this: void, questLineID: number): boolean;
-    function QuestLineIgnoresAccountCompletedFiltering(this: void, uiMapID: number, questLineID: number): boolean;
+    function QuestLineIgnoresAccountCompletedFiltering(
+      this: void,
+      uiMapID: number,
+      questLineID: number,
+    ): boolean;
     function RequestQuestLinesForMap(this: void, uiMapID: number): void;
   }
 
@@ -12349,51 +16075,135 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
 
     function AbandonQuest(this: void): void;
     function AddQuestWatch(this: void, questID: number): boolean;
-    function AddWorldQuestWatch(this: void, questID: number, watchType?: Enum.QuestWatchType): boolean;
+    function AddWorldQuestWatch(
+      this: void,
+      questID: number,
+      watchType?: Enum.QuestWatchType,
+    ): boolean;
     function CanAbandonQuest(this: void, questID: number): boolean;
-    function DoesQuestAwardReputationWithFaction(this: void, questID: number, factionID: number): boolean;
+    function DoesQuestAwardReputationWithFaction(
+      this: void,
+      questID: number,
+      factionID: number,
+    ): boolean;
     function GetAbandonQuest(this: void): number;
     function GetAbandonQuestItems(this: void): number[];
     function GetActiveThreatMaps(this: void): number[];
     function GetAllCompletedQuestIDs(this: void): number[];
-    function GetBountiesForMapID(this: void, uiMapID: number): BountyInfo[]|undefined;
-    function GetBountySetInfoForMapID(this: void, uiMapID: number): LuaMultiReturn<[Enum.MapOverlayDisplayLocation, number, number, boolean]>;
-    function GetDistanceSqToQuest(this: void, questID: number): LuaMultiReturn<[number, boolean]>;
-    function GetHeaderIndexForQuest(this: void, questID: number): number|undefined;
-    function GetInfo(this: void, questLogIndex: number): QuestInfo|undefined;
-    function GetLogIndexForQuestID(this: void, questID: number): number|undefined;
+    function GetBountiesForMapID(
+      this: void,
+      uiMapID: number,
+    ): BountyInfo[] | undefined;
+    function GetBountySetInfoForMapID(
+      this: void,
+      uiMapID: number,
+    ): LuaMultiReturn<
+      [Enum.MapOverlayDisplayLocation, number, number, boolean]
+    >;
+    function GetDistanceSqToQuest(
+      this: void,
+      questID: number,
+    ): LuaMultiReturn<[number, boolean]>;
+    function GetHeaderIndexForQuest(
+      this: void,
+      questID: number,
+    ): number | undefined;
+    function GetInfo(this: void, questLogIndex: number): QuestInfo | undefined;
+    function GetLogIndexForQuestID(
+      this: void,
+      questID: number,
+    ): number | undefined;
     function GetMapForQuestPOIs(this: void): number;
     function GetMaxNumQuests(this: void): number;
     function GetMaxNumQuestsCanAccept(this: void): number;
-    function GetNextWaypoint(this: void, questID: number): LuaMultiReturn<[number, number, number]>;
-    function GetNextWaypointForMap(this: void, questID: number, uiMapID: number): LuaMultiReturn<[number, number]>;
+    function GetNextWaypoint(
+      this: void,
+      questID: number,
+    ): LuaMultiReturn<[number, number, number]>;
+    function GetNextWaypointForMap(
+      this: void,
+      questID: number,
+      uiMapID: number,
+    ): LuaMultiReturn<[number, number]>;
     function GetNextWaypointText(this: void, questID: number): string;
-    function GetNumQuestLogEntries(this: void): LuaMultiReturn<[number, number]>;
+    function GetNumQuestLogEntries(
+      this: void,
+    ): LuaMultiReturn<[number, number]>;
     function GetNumQuestObjectives(this: void, questID: number): number;
     function GetNumQuestWatches(this: void): number;
     function GetNumWorldQuestWatches(this: void): number;
-    function GetQuestAdditionalHighlights(this: void, questID: number): LuaMultiReturn<[number, boolean, boolean, boolean, boolean]>;
-    function GetQuestDetailsTheme(this: void, questID: number): QuestTheme|undefined;
+    function GetQuestAdditionalHighlights(
+      this: void,
+      questID: number,
+    ): LuaMultiReturn<[number, boolean, boolean, boolean, boolean]>;
+    function GetQuestDetailsTheme(
+      this: void,
+      questID: number,
+    ): QuestTheme | undefined;
     function GetQuestDifficultyLevel(this: void, questID: number): number;
-    function GetQuestIDForLogIndex(this: void, questLogIndex: number): number|undefined;
-    function GetQuestIDForQuestWatchIndex(this: void, questWatchIndex: number): number|undefined;
-    function GetQuestIDForWorldQuestWatchIndex(this: void, questWatchIndex: number): number|undefined;
-    function GetQuestLogMajorFactionReputationRewards(this: void, questID: number): QuestRewardReputationInfo[];
-    function GetQuestLogPortraitGiver(this: void, questLogIndex?: number): LuaMultiReturn<[number, string, string, number, number|undefined]>;
-    function GetQuestObjectives(this: void, questID: number): QuestObjectiveInfo[];
-    function GetQuestRewardCurrencies(this: void, questID: number): QuestRewardCurrencyInfo[];
-    function GetQuestRewardCurrencyInfo(this: void, questID: number, currencyIndex: number, isChoice: boolean): QuestRewardCurrencyInfo|undefined;
-    function GetQuestTagInfo(this: void, questID: number): QuestTagInfo|undefined;
-    function GetQuestType(this: void, questID: number): number|undefined;
-    function GetQuestWatchType(this: void, questID: number): Enum.QuestWatchType|undefined;
+    function GetQuestIDForLogIndex(
+      this: void,
+      questLogIndex: number,
+    ): number | undefined;
+    function GetQuestIDForQuestWatchIndex(
+      this: void,
+      questWatchIndex: number,
+    ): number | undefined;
+    function GetQuestIDForWorldQuestWatchIndex(
+      this: void,
+      questWatchIndex: number,
+    ): number | undefined;
+    function GetQuestLogMajorFactionReputationRewards(
+      this: void,
+      questID: number,
+    ): QuestRewardReputationInfo[];
+    function GetQuestLogPortraitGiver(
+      this: void,
+      questLogIndex?: number,
+    ): LuaMultiReturn<[number, string, string, number, number | undefined]>;
+    function GetQuestObjectives(
+      this: void,
+      questID: number,
+    ): QuestObjectiveInfo[];
+    function GetQuestRewardCurrencies(
+      this: void,
+      questID: number,
+    ): QuestRewardCurrencyInfo[];
+    function GetQuestRewardCurrencyInfo(
+      this: void,
+      questID: number,
+      currencyIndex: number,
+      isChoice: boolean,
+    ): QuestRewardCurrencyInfo | undefined;
+    function GetQuestTagInfo(
+      this: void,
+      questID: number,
+    ): QuestTagInfo | undefined;
+    function GetQuestType(this: void, questID: number): number | undefined;
+    function GetQuestWatchType(
+      this: void,
+      questID: number,
+    ): Enum.QuestWatchType | undefined;
     function GetQuestsOnMap(this: void, uiMapID: number): QuestOnMapInfo[];
     function GetRequiredMoney(this: void, questID?: number): number;
     function GetSelectedQuest(this: void): number;
     function GetSuggestedGroupSize(this: void, questID: number): number;
-    function GetTimeAllowed(this: void, questID: number): LuaMultiReturn<[number, number]>;
-    function GetTitleForLogIndex(this: void, questLogIndex: number): string|undefined;
-    function GetTitleForQuestID(this: void, questID: number): string|undefined;
-    function GetZoneStoryInfo(this: void, uiMapID: number): LuaMultiReturn<[number, number]>;
+    function GetTimeAllowed(
+      this: void,
+      questID: number,
+    ): LuaMultiReturn<[number, number]>;
+    function GetTitleForLogIndex(
+      this: void,
+      questLogIndex: number,
+    ): string | undefined;
+    function GetTitleForQuestID(
+      this: void,
+      questID: number,
+    ): string | undefined;
+    function GetZoneStoryInfo(
+      this: void,
+      uiMapID: number,
+    ): LuaMultiReturn<[number, number]>;
     function HasActiveThreats(this: void): boolean;
     function IsAccountQuest(this: void, questID: number): boolean;
     function IsComplete(this: void, questID: number): boolean;
@@ -12401,15 +16211,25 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function IsImportantQuest(this: void, questID: number): boolean;
     function IsLegendaryQuest(this: void, questID: number): boolean;
     function IsMetaQuest(this: void, questID: number): boolean;
-    function IsOnMap(this: void, questID: number): LuaMultiReturn<[boolean, boolean]>;
+    function IsOnMap(
+      this: void,
+      questID: number,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function IsOnQuest(this: void, questID: number): boolean;
     function IsPushableQuest(this: void, questID: number): boolean;
     function IsQuestBounty(this: void, questID: number): boolean;
     function IsQuestCalling(this: void, questID: number): boolean;
-    function IsQuestCriteriaForBounty(this: void, questID: number, bountyQuestID: number): boolean;
+    function IsQuestCriteriaForBounty(
+      this: void,
+      questID: number,
+      bountyQuestID: number,
+    ): boolean;
     function IsQuestDisabledForSession(this: void, questID: number): boolean;
     function IsQuestFlaggedCompleted(this: void, questID: number): boolean;
-    function IsQuestFlaggedCompletedOnAccount(this: void, questID: number): boolean;
+    function IsQuestFlaggedCompletedOnAccount(
+      this: void,
+      questID: number,
+    ): boolean;
     function IsQuestFromContentPush(this: void, questID: number): boolean;
     function IsQuestInvasion(this: void, questID: number): boolean;
     function IsQuestRepeatableType(this: void, questID: number): boolean;
@@ -12419,14 +16239,24 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function IsQuestTrivial(this: void, questID: number): boolean;
     function IsRepeatableQuest(this: void, questID: number): boolean;
     function IsThreatQuest(this: void, questID: number): boolean;
-    function IsUnitOnQuest(this: void, unit: UnitToken, questID: number): boolean;
+    function IsUnitOnQuest(
+      this: void,
+      unit: UnitToken,
+      questID: number,
+    ): boolean;
     function IsWorldQuest(this: void, questID: number): boolean;
     function QuestCanHaveWarModeBonus(this: void, questID: number): boolean;
-    function QuestContainsFirstTimeRepBonusForPlayer(this: void, questID: number): boolean;
+    function QuestContainsFirstTimeRepBonusForPlayer(
+      this: void,
+      questID: number,
+    ): boolean;
     function QuestHasQuestSessionBonus(this: void, questID: number): boolean;
     function QuestHasWarModeBonus(this: void, questID: number): boolean;
-    function QuestIgnoresAccountCompletedFiltering(this: void, questID: number): boolean;
-    function ReadyForTurnIn(this: void, questID: number): boolean|undefined;
+    function QuestIgnoresAccountCompletedFiltering(
+      this: void,
+      questID: number,
+    ): boolean;
+    function ReadyForTurnIn(this: void, questID: number): boolean | undefined;
     function RemoveQuestWatch(this: void, questID: number): boolean;
     function RemoveWorldQuestWatch(this: void, questID: number): boolean;
     function RequestLoadQuestByID(this: void, questID: number): void;
@@ -12450,9 +16280,18 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     }
 
     function GetHideRequiredItems(this: void): boolean;
-    function GetQuestOfferMajorFactionReputationRewards(this: void): QuestRewardReputationInfo[];
-    function GetQuestRequiredCurrencyInfo(this: void, questRewardIndex: number): QuestRequiredCurrencyInfo|undefined;
-    function GetQuestRewardCurrencyInfo(this: void, questInfoType: string, questRewardIndex: number): QuestRewardCurrencyInfo|undefined;
+    function GetQuestOfferMajorFactionReputationRewards(
+      this: void,
+    ): QuestRewardReputationInfo[];
+    function GetQuestRequiredCurrencyInfo(
+      this: void,
+      questRewardIndex: number,
+    ): QuestRequiredCurrencyInfo | undefined;
+    function GetQuestRewardCurrencyInfo(
+      this: void,
+      questInfoType: string,
+      questRewardIndex: number,
+    ): QuestRewardCurrencyInfo | undefined;
   }
 
   interface QuestRewardCurrencyInfo {
@@ -12495,14 +16334,20 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function GetAvailableSessionCommand(this: void): Enum.QuestSessionCommand;
     function GetPendingCommand(this: void): Enum.QuestSessionCommand;
     function GetProposedMaxLevelForSession(this: void): number;
-    function GetSessionBeginDetails(this: void): QuestSessionPlayerDetails|undefined;
-    function GetSuperTrackedQuest(this: void): number|undefined;
+    function GetSessionBeginDetails(
+      this: void,
+    ): QuestSessionPlayerDetails | undefined;
+    function GetSuperTrackedQuest(this: void): number | undefined;
     function HasJoined(this: void): boolean;
     function HasPendingCommand(this: void): boolean;
     function RequestSessionStart(this: void): void;
     function RequestSessionStop(this: void): void;
     function SendSessionBeginResponse(this: void, beginSession: boolean): void;
-    function SetQuestIsSuperTracked(this: void, questID: number, superTrack: boolean): void;
+    function SetQuestIsSuperTracked(
+      this: void,
+      questID: number,
+      superTrack: boolean,
+    ): void;
   }
 
   namespace C_TaskQuest {
@@ -12520,16 +16365,31 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       childDepth?: number;
     }
 
-    function DoesMapShowTaskQuestObjectives(this: void, uiMapID: number): boolean;
+    function DoesMapShowTaskQuestObjectives(
+      this: void,
+      uiMapID: number,
+    ): boolean;
     function GetQuestIconUIWidgetSet(this: void, questID: number): number;
-    function GetQuestInfoByQuestID(this: void, questID: number): LuaMultiReturn<[string, number|undefined, boolean|undefined, boolean|undefined]>;
-    function GetQuestLocation(this: void, questID: number, uiMapID: number): LuaMultiReturn<[number, number]>;
+    function GetQuestInfoByQuestID(
+      this: void,
+      questID: number,
+    ): LuaMultiReturn<
+      [string, number | undefined, boolean | undefined, boolean | undefined]
+    >;
+    function GetQuestLocation(
+      this: void,
+      questID: number,
+      uiMapID: number,
+    ): LuaMultiReturn<[number, number]>;
     function GetQuestProgressBarInfo(this: void, questID: number): number;
     function GetQuestTimeLeftMinutes(this: void, questID: number): number;
     function GetQuestTimeLeftSeconds(this: void, questID: number): number;
     function GetQuestTooltipUIWidgetSet(this: void, questID: number): number;
     function GetQuestZoneID(this: void, questID: number): number;
-    function GetQuestsForPlayerByMapID(this: void, uiMapID: number): TaskPOIData[];
+    function GetQuestsForPlayerByMapID(
+      this: void,
+      uiMapID: number,
+    ): TaskPOIData[];
     function GetThreatQuests(this: void): number[];
     function IsActive(this: void, questID: number): boolean;
     function RequestPreloadRewardData(this: void, questID: number): void;
@@ -12549,7 +16409,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   }
 
   namespace C_RaidLocks {
-    function IsEncounterComplete(this: void, mapID: number, encounterID: number, difficultyID?: number): boolean;
+    function IsEncounterComplete(
+      this: void,
+      mapID: number,
+      encounterID: number,
+      difficultyID?: number,
+    ): boolean;
   }
 
   namespace C_RecruitAFriend {
@@ -12664,14 +16529,27 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     }
 
     function CanSummonFriend(this: void, guid: WOWGUID): boolean;
-    function ClaimActivityReward(this: void, activityID: number, acceptanceID: RecruitAcceptanceID): boolean;
-    function ClaimNextReward(this: void, rafVersion?: Enum.RecruitAFriendRewardsVersion): boolean;
+    function ClaimActivityReward(
+      this: void,
+      activityID: number,
+      acceptanceID: RecruitAcceptanceID,
+    ): boolean;
+    function ClaimNextReward(
+      this: void,
+      rafVersion?: Enum.RecruitAFriendRewardsVersion,
+    ): boolean;
     function GenerateRecruitmentLink(this: void): boolean;
     function GetRAFInfo(this: void): RafInfo;
     function GetRAFSystemInfo(this: void): RafSystemInfo;
-    function GetRecruitActivityRequirementsText(this: void, activityID: number, acceptanceID: RecruitAcceptanceID): string[];
+    function GetRecruitActivityRequirementsText(
+      this: void,
+      activityID: number,
+      acceptanceID: RecruitAcceptanceID,
+    ): string[];
     function GetRecruitInfo(this: void): LuaMultiReturn<[boolean, number]>;
-    function GetSummonFriendCooldown(this: void): LuaMultiReturn<[number, number, boolean]>;
+    function GetSummonFriendCooldown(
+      this: void,
+    ): LuaMultiReturn<[number, number, boolean]>;
     function IsEnabled(this: void): boolean;
     function IsRecruitAFriendLinked(this: void, guid: WOWGUID): boolean;
     function IsRecruitingEnabled(this: void): boolean;
@@ -12681,15 +16559,38 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   }
 
   namespace C_ReportSystem {
-    function CanReportPlayer(this: void, playerLocation: PlayerLocation): boolean;
-    function CanReportPlayerForLanguage(this: void, playerLocation: PlayerLocation): boolean;
-    function GetMajorCategoriesForReportType(this: void, reportType: Enum.ReportType): Enum.ReportMajorCategory[];
-    function GetMajorCategoryString(this: void, majorCategory: Enum.ReportMajorCategory): string;
-    function GetMinorCategoriesForReportTypeAndMajorCategory(this: void, reportType: Enum.ReportType, majorCategory: Enum.ReportMajorCategory): Enum.ReportMinorCategory[];
-    function GetMinorCategoryString(this: void, minorCategory: Enum.ReportMinorCategory): string;
+    function CanReportPlayer(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): boolean;
+    function CanReportPlayerForLanguage(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): boolean;
+    function GetMajorCategoriesForReportType(
+      this: void,
+      reportType: Enum.ReportType,
+    ): Enum.ReportMajorCategory[];
+    function GetMajorCategoryString(
+      this: void,
+      majorCategory: Enum.ReportMajorCategory,
+    ): string;
+    function GetMinorCategoriesForReportTypeAndMajorCategory(
+      this: void,
+      reportType: Enum.ReportType,
+      majorCategory: Enum.ReportMajorCategory,
+    ): Enum.ReportMinorCategory[];
+    function GetMinorCategoryString(
+      this: void,
+      minorCategory: Enum.ReportMinorCategory,
+    ): string;
     function ReportServerLag(this: void): void;
     function ReportStuckInCombat(this: void): void;
-    function SendReport(this: void, reportInfo: ReportInfo, playerLocation?: PlayerLocation): void;
+    function SendReport(
+      this: void,
+      reportInfo: ReportInfo,
+      playerLocation?: PlayerLocation,
+    ): void;
   }
 
   namespace C_Reputation {
@@ -12718,26 +16619,51 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function CollapseFactionHeader(this: void, factionSortIndex: number): void;
     function ExpandAllFactionHeaders(this: void): void;
     function ExpandFactionHeader(this: void, factionSortIndex: number): void;
-    function GetFactionDataByID(this: void, factionID: number): FactionData|undefined;
-    function GetFactionDataByIndex(this: void, factionSortIndex: number): FactionData|undefined;
-    function GetFactionParagonInfo(this: void, factionID: number): LuaMultiReturn<[number, number, number, boolean, boolean]>;
-    function GetGuildFactionData(this: void): FactionData|undefined;
-    function GetGuildRepExpirationTime(this: void): number|undefined;
+    function GetFactionDataByID(
+      this: void,
+      factionID: number,
+    ): FactionData | undefined;
+    function GetFactionDataByIndex(
+      this: void,
+      factionSortIndex: number,
+    ): FactionData | undefined;
+    function GetFactionParagonInfo(
+      this: void,
+      factionID: number,
+    ): LuaMultiReturn<[number, number, number, boolean, boolean]>;
+    function GetGuildFactionData(this: void): FactionData | undefined;
+    function GetGuildRepExpirationTime(this: void): number | undefined;
     function GetNumFactions(this: void): number;
     function GetReputationSortType(this: void): Enum.ReputationSortType;
     function GetSelectedFaction(this: void): number;
-    function GetWatchedFactionData(this: void): FactionData|undefined;
+    function GetWatchedFactionData(this: void): FactionData | undefined;
     function IsAccountWideReputation(this: void, factionID: number): boolean;
     function IsFactionActive(this: void, factionSortIndex: number): boolean;
     function IsFactionParagon(this: void, factionID: number): boolean;
     function IsMajorFaction(this: void, factionID: number): boolean;
-    function RequestFactionParagonPreloadRewardData(this: void, factionID: number): void;
-    function SetFactionActive(this: void, factionSortIndex: number, setActive: boolean): void;
-    function SetLegacyReputationsShown(this: void, showLegacyReputations: boolean): void;
-    function SetReputationSortType(this: void, sortType: Enum.ReputationSortType): void;
+    function RequestFactionParagonPreloadRewardData(
+      this: void,
+      factionID: number,
+    ): void;
+    function SetFactionActive(
+      this: void,
+      factionSortIndex: number,
+      setActive: boolean,
+    ): void;
+    function SetLegacyReputationsShown(
+      this: void,
+      showLegacyReputations: boolean,
+    ): void;
+    function SetReputationSortType(
+      this: void,
+      sortType: Enum.ReputationSortType,
+    ): void;
     function SetSelectedFaction(this: void, factionSortIndex: number): void;
     function SetWatchedFactionByID(this: void, factionID: number): void;
-    function SetWatchedFactionByIndex(this: void, factionSortIndex: number): void;
+    function SetWatchedFactionByIndex(
+      this: void,
+      factionSortIndex: number,
+    ): void;
     function ToggleFactionAtWar(this: void, factionSortIndex: number): void;
   }
 
@@ -12812,17 +16738,33 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       icon: number;
     }
 
-    function GetCriteriaInfo(this: void, criteriaIndex: number): ScenarioCriteriaInfo;
-    function GetCriteriaInfoByStep(this: void, stepID: number, criteriaIndex: number): ScenarioCriteriaInfo;
-    function GetJailersTowerTypeString(this: void, runType: Enum.JailersTowerType): string|undefined;
+    function GetCriteriaInfo(
+      this: void,
+      criteriaIndex: number,
+    ): ScenarioCriteriaInfo;
+    function GetCriteriaInfoByStep(
+      this: void,
+      stepID: number,
+      criteriaIndex: number,
+    ): ScenarioCriteriaInfo;
+    function GetJailersTowerTypeString(
+      this: void,
+      runType: Enum.JailersTowerType,
+    ): string | undefined;
     function GetScenarioInfo(this: void): ScenarioInformation;
-    function GetScenarioStepInfo(this: void, scenarioStepID?: number): ScenarioStepInfo;
+    function GetScenarioStepInfo(
+      this: void,
+      scenarioStepID?: number,
+    ): ScenarioStepInfo;
   }
 
   namespace C_ScrappingMachineUI {
     function CloseScrappingMachine(this: void): void;
     function DropPendingScrapItemFromCursor(this: void, index: number): void;
-    function GetCurrentPendingScrapItemLocationByIndex(this: void, index: number): ItemLocation;
+    function GetCurrentPendingScrapItemLocationByIndex(
+      this: void,
+      index: number,
+    ): ItemLocation;
     function GetScrapSpellID(this: void): number;
     function GetScrappingMachineName(this: void): string;
     function HasScrappableItems(this: void): boolean;
@@ -12870,19 +16812,19 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       particleOverrideScale?: number;
     }
 
-    function GetAllScriptedAnimationEffects(this: void): ScriptedAnimationEffect[];
+    function GetAllScriptedAnimationEffects(
+      this: void,
+    ): ScriptedAnimationEffect[];
   }
 
-  namespace C_ScriptWarnings {
-  }
+  namespace C_ScriptWarnings {}
 
   namespace C_SeasonInfo {
-    function GetCurrentDisplaySeasonExpansion(this: void): number|undefined;
+    function GetCurrentDisplaySeasonExpansion(this: void): number | undefined;
     function GetCurrentDisplaySeasonID(this: void): number;
   }
 
-  namespace C_SecureTransfer {
-  }
+  namespace C_SecureTransfer {}
 
   interface ModelLight {
     omnidirectional?: boolean;
@@ -13029,46 +16971,132 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       spent: number;
     }
 
-    function CanPurchaseRank(this: void, configID: number, nodeID: number, nodeEntryID: number): boolean;
-    function CanRefundRank(this: void, configID: number, nodeID: number): boolean;
-    function CascadeRepurchaseRanks(this: void, configID: number, nodeID: number, entryID?: number): boolean;
+    function CanPurchaseRank(
+      this: void,
+      configID: number,
+      nodeID: number,
+      nodeEntryID: number,
+    ): boolean;
+    function CanRefundRank(
+      this: void,
+      configID: number,
+      nodeID: number,
+    ): boolean;
+    function CascadeRepurchaseRanks(
+      this: void,
+      configID: number,
+      nodeID: number,
+      entryID?: number,
+    ): boolean;
     function ClearCascadeRepurchaseHistory(this: void, configID: number): void;
     function CloseTraitSystemInteraction(this: void): void;
     function CommitConfig(this: void, configID: number): boolean;
     function ConfigHasStagedChanges(this: void, configID: number): boolean;
     function GenerateImportString(this: void, configID: number): string;
     function GenerateInspectImportString(this: void, target: string): string;
-    function GetConditionInfo(this: void, configID: number, condID: number): TraitCondInfo;
+    function GetConditionInfo(
+      this: void,
+      configID: number,
+      condID: number,
+    ): TraitCondInfo;
     function GetConfigIDBySystemID(this: void, systemID: number): number;
     function GetConfigIDByTreeID(this: void, treeID: number): number;
     function GetConfigInfo(this: void, configID: number): TraitConfigInfo;
-    function GetConfigsByType(this: void, configType: Enum.TraitConfigType): number[];
-    function GetDefinitionInfo(this: void, definitionID: number): TraitDefinitionInfo;
-    function GetEntryInfo(this: void, configID: number, entryID: number): TraitEntryInfo;
+    function GetConfigsByType(
+      this: void,
+      configType: Enum.TraitConfigType,
+    ): number[];
+    function GetDefinitionInfo(
+      this: void,
+      definitionID: number,
+    ): TraitDefinitionInfo;
+    function GetEntryInfo(
+      this: void,
+      configID: number,
+      entryID: number,
+    ): TraitEntryInfo;
     function GetLoadoutSerializationVersion(this: void): number;
-    function GetNodeCost(this: void, configID: number, nodeID: number): TraitCurrencyCost[];
-    function GetNodeInfo(this: void, configID: number, nodeID: number): TraitNodeInfo;
-    function GetStagedChanges(this: void, configID: number): LuaMultiReturn<[number[], number[], number[]]>;
-    function GetStagedChangesCost(this: void, configID: number): TraitCurrencyCost[];
-    function GetSubTreeInfo(this: void, configID: number, subTreeID: number): TraitSubTreeInfo;
+    function GetNodeCost(
+      this: void,
+      configID: number,
+      nodeID: number,
+    ): TraitCurrencyCost[];
+    function GetNodeInfo(
+      this: void,
+      configID: number,
+      nodeID: number,
+    ): TraitNodeInfo;
+    function GetStagedChanges(
+      this: void,
+      configID: number,
+    ): LuaMultiReturn<[number[], number[], number[]]>;
+    function GetStagedChangesCost(
+      this: void,
+      configID: number,
+    ): TraitCurrencyCost[];
+    function GetSubTreeInfo(
+      this: void,
+      configID: number,
+      subTreeID: number,
+    ): TraitSubTreeInfo;
     function GetSystemIDByTreeID(this: void, treeID: number): number;
-    function GetTraitCurrencyInfo(this: void, traitCurrencyID: number): LuaMultiReturn<[number, number, number|undefined, number|undefined]>;
-    function GetTraitDescription(this: void, entryID: number, rank: number): string;
+    function GetTraitCurrencyInfo(
+      this: void,
+      traitCurrencyID: number,
+    ): LuaMultiReturn<[number, number, number | undefined, number | undefined]>;
+    function GetTraitDescription(
+      this: void,
+      entryID: number,
+      rank: number,
+    ): string;
     function GetTraitSystemFlags(this: void, configID: number): number;
     function GetTraitSystemWidgetSetID(this: void, configID: number): number;
-    function GetTreeCurrencyInfo(this: void, configID: number, treeID: number, excludeStagedChanges: boolean): TreeCurrencyInfo[];
+    function GetTreeCurrencyInfo(
+      this: void,
+      configID: number,
+      treeID: number,
+      excludeStagedChanges: boolean,
+    ): TreeCurrencyInfo[];
     function GetTreeHash(this: void, treeID: number): number[];
-    function GetTreeInfo(this: void, configID: number, treeID: number): TraitTreeInfo;
+    function GetTreeInfo(
+      this: void,
+      configID: number,
+      treeID: number,
+    ): TraitTreeInfo;
     function GetTreeNodes(this: void, treeID: number): number[];
     function HasValidInspectData(this: void): boolean;
     function IsReadyForCommit(this: void): boolean;
-    function PurchaseRank(this: void, configID: number, nodeID: number): boolean;
-    function RefundAllRanks(this: void, configID: number, nodeID: number): boolean;
-    function RefundRank(this: void, configID: number, nodeID: number, clearEdges?: boolean): boolean;
+    function PurchaseRank(
+      this: void,
+      configID: number,
+      nodeID: number,
+    ): boolean;
+    function RefundAllRanks(
+      this: void,
+      configID: number,
+      nodeID: number,
+    ): boolean;
+    function RefundRank(
+      this: void,
+      configID: number,
+      nodeID: number,
+      clearEdges?: boolean,
+    ): boolean;
     function ResetTree(this: void, configID: number, treeID: number): boolean;
-    function ResetTreeByCurrency(this: void, configID: number, treeID: number, traitCurrencyID: number): boolean;
+    function ResetTreeByCurrency(
+      this: void,
+      configID: number,
+      treeID: number,
+      traitCurrencyID: number,
+    ): boolean;
     function RollbackConfig(this: void, configID: number): boolean;
-    function SetSelection(this: void, configID: number, nodeID: number, nodeEntryID?: number, clearEdges?: boolean): boolean;
+    function SetSelection(
+      this: void,
+      configID: number,
+      nodeID: number,
+      nodeEntryID?: number,
+      clearEdges?: boolean,
+    ): boolean;
     function StageConfig(this: void, configID: number): boolean;
     function TalentTestUnlearnSpells(this: void): void;
   }
@@ -13093,7 +17121,11 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetStartDelay(): number;
     GetTarget(): CScriptObject;
     HasScript(scriptName: string): boolean;
-    HookScript(scriptTypeName: string, script: luaFunction, bindingType?: number): void;
+    HookScript(
+      scriptTypeName: string,
+      script: luaFunction,
+      bindingType?: number,
+    ): void;
     IsDelaying(): boolean;
     IsDone(): boolean;
     IsPaused(): boolean;
@@ -13139,7 +17171,11 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   }
 
   interface SimpleAnimGroup {
-    CreateAnimation(animationType?: string, name?: string, templateName?: string): SimpleAnim;
+    CreateAnimation(
+      animationType?: string,
+      name?: string,
+      templateName?: string,
+    ): SimpleAnim;
     Finish(): void;
     GetAnimationSpeedMultiplier(): number;
     GetAnimations(): ScriptObject;
@@ -13150,7 +17186,11 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetProgress(): number;
     GetScript(scriptTypeName: string, bindingType?: number): luaFunction;
     HasScript(scriptName: string): boolean;
-    HookScript(scriptTypeName: string, script: luaFunction, bindingType?: number): void;
+    HookScript(
+      scriptTypeName: string,
+      script: luaFunction,
+      bindingType?: number,
+    ): void;
     IsDone(): boolean;
     IsPaused(): boolean;
     IsPendingFinish(): boolean;
@@ -13170,7 +17210,11 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   }
 
   interface SimpleAnimPath {
-    CreateControlPoint(name?: string, templateName?: string, order?: number): SimpleControlPoint;
+    CreateControlPoint(
+      name?: string,
+      templateName?: string,
+      order?: number,
+    ): SimpleControlPoint;
     GetControlPoints(): ScriptObject;
     GetCurveType(): CurveType;
     GetMaxControlPointOrder(): number;
@@ -13197,8 +17241,7 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetScaleTo(scaleX: number, scaleY: number): void;
   }
 
-  interface SimpleAnimScaleLine {
-  }
+  interface SimpleAnimScaleLine {}
 
   interface SimpleAnimTextureCoordTranslation {
     GetOffset(): LuaMultiReturn<[number, number]>;
@@ -13210,8 +17253,7 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetOffset(offsetX: uiUnit, offsetY: uiUnit): void;
   }
 
-  interface SimpleAnimTranslationLine {
-  }
+  interface SimpleAnimTranslationLine {}
 
   interface SimpleAnimVertexColor {
     GetEndColor(): colorRGBA;
@@ -13342,7 +17384,7 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetMaxBytes(): number;
     GetMaxLetters(): number;
     GetNumLetters(): number;
-    GetNumber(): number|undefined;
+    GetNumber(): number | undefined;
     GetShadowColor(): LuaMultiReturn<[number, number, number, number]>;
     GetShadowOffset(): LuaMultiReturn<[number, number]>;
     GetSpacing(): uiUnit;
@@ -13376,7 +17418,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetFocus(): void;
     SetFont(fontFile: string, height: uiFontHeight, flags: TBFFlags): boolean;
     SetFontObject(font: SimpleFont): void;
-    SetHighlightColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetHighlightColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetHistoryLines(numHistoryLines: number): void;
     SetIndentedWordWrap(isIndented?: boolean): void;
     SetJustifyH(justifyH: JustifyHorizontal): void;
@@ -13391,12 +17438,27 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetSecureText(isSecure?: boolean): void;
     SetSecurityDisablePaste(): void;
     SetSecurityDisableSetText(): void;
-    SetShadowColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetShadowColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetShadowOffset(offsetX: number, offsetY: number): void;
     SetSpacing(fontHeight: uiUnit): void;
     SetText(text: string): void;
-    SetTextColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
-    SetTextInsets(left: uiUnit, right: uiUnit, top: uiUnit, bottom: uiUnit): void;
+    SetTextColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
+    SetTextInsets(
+      left: uiUnit,
+      right: uiUnit,
+      top: uiUnit,
+      bottom: uiUnit,
+    ): void;
     SetVisibleTextByteLimit(maxVisibleBytes: number): void;
     ToggleInputLanguage(): void;
   }
@@ -13419,19 +17481,35 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetIndentedWordWrap(wordWrap: boolean): void;
     SetJustifyH(justifyH: JustifyHorizontal): void;
     SetJustifyV(justifyV: JustifyVertical): void;
-    SetShadowColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetShadowColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetShadowOffset(offsetX: number, offsetY: number): void;
     SetSpacing(spacing: uiUnit): void;
-    SetTextColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetTextColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
   }
 
   interface SimpleFontString extends SimpleRegion {
-    CalculateScreenAreaFromCharacterSpan(leftIndex: number, rightIndex: number): uiBoundsRect[]|undefined;
+    CalculateScreenAreaFromCharacterSpan(
+      leftIndex: number,
+      rightIndex: number,
+    ): uiBoundsRect[] | undefined;
     CanNonSpaceWrap(): boolean;
     CanWordWrap(): boolean;
-    FindCharacterIndexAtCoordinate(x: uiUnit, y: uiUnit): LuaMultiReturn<[number, boolean]>;
+    FindCharacterIndexAtCoordinate(
+      x: uiUnit,
+      y: uiUnit,
+    ): LuaMultiReturn<[number, boolean]>;
     GetFieldSize(): number;
-    GetFont(): LuaMultiReturn<[string|undefined, uiUnit, TBFFlags]>;
+    GetFont(): LuaMultiReturn<[string | undefined, uiUnit, TBFFlags]>;
     GetFontObject(): SimpleFont;
     GetIndentedWordWrap(): boolean;
     GetJustifyH(): JustifyHorizontal;
@@ -13462,11 +17540,21 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetMaxLines(maxLines: number): void;
     SetNonSpaceWrap(wrap: boolean): void;
     SetRotation(radians: number): void;
-    SetShadowColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetShadowColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetShadowOffset(offsetX: number, offsetY: number): void;
     SetSpacing(spacing: uiUnit): void;
     SetText(text?: string): void;
-    SetTextColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetTextColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetTextHeight(height: uiUnit): void;
     SetTextScale(textScale: number): void;
     SetTextToFit(text?: string): void;
@@ -13476,10 +17564,29 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   interface SimpleFrame extends SimpleScriptRegionResizing {
     AbortDrag(): void;
     CanChangeAttribute(): boolean;
-    CreateFontString(name?: string, drawLayer?: DrawLayer, templateName?: string): SimpleFontString;
-    CreateLine(name?: string, drawLayer?: DrawLayer, templateName?: string, subLevel?: number): SimpleLine;
-    CreateMaskTexture(name?: string, drawLayer?: DrawLayer, templateName?: string, subLevel?: number): SimpleMaskTexture;
-    CreateTexture(name?: string, drawLayer?: DrawLayer, templateName?: string, subLevel?: number): SimpleTexture;
+    CreateFontString(
+      name?: string,
+      drawLayer?: DrawLayer,
+      templateName?: string,
+    ): SimpleFontString;
+    CreateLine(
+      name?: string,
+      drawLayer?: DrawLayer,
+      templateName?: string,
+      subLevel?: number,
+    ): SimpleLine;
+    CreateMaskTexture(
+      name?: string,
+      drawLayer?: DrawLayer,
+      templateName?: string,
+      subLevel?: number,
+    ): SimpleMaskTexture;
+    CreateTexture(
+      name?: string,
+      drawLayer?: DrawLayer,
+      templateName?: string,
+      subLevel?: number,
+    ): SimpleTexture;
     DesaturateHierarchy(desaturation: number, excludeRoot?: boolean): void;
     DisableDrawLayer(layer: DrawLayer): void;
     DoesClipChildren(): boolean;
@@ -13487,7 +17594,10 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     EnableGamePadButton(enable?: boolean): void;
     EnableGamePadStick(enable?: boolean): void;
     EnableKeyboard(enable?: boolean): void;
-    ExecuteAttribute(attributeName: string, unpackedPrimitiveType: string): LuaMultiReturn<[boolean, string]>;
+    ExecuteAttribute(
+      attributeName: string,
+      unpackedPrimitiveType: string,
+    ): LuaMultiReturn<[boolean, string]>;
     GetAlpha(): SingleColorValue;
     GetAttribute(attributeName: string): string;
     GetBoundsRect(): LuaMultiReturn<[uiUnit, uiUnit, uiUnit, uiUnit]>;
@@ -13516,7 +17626,9 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     Hide(): void;
     InterceptStartDrag(delegate: SimpleFrame): boolean;
     IsClampedToScreen(): boolean;
-    IsEventRegistered(eventName: string): LuaMultiReturn<[boolean, string|undefined]>;
+    IsEventRegistered(
+      eventName: string,
+    ): LuaMultiReturn<[boolean, string | undefined]>;
     IsGamePadButtonEnabled(): boolean;
     IsGamePadStickEnabled(): boolean;
     IsIgnoringParentAlpha(): boolean;
@@ -13541,7 +17653,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetAlpha(alpha: SingleColorValue): void;
     SetAttribute(attributeName: string, value: string): void;
     SetAttributeNoHandler(attributeName: string, value: string): void;
-    SetClampRectInsets(left: uiUnit, right: uiUnit, top: uiUnit, bottom: uiUnit): void;
+    SetClampRectInsets(
+      left: uiUnit,
+      right: uiUnit,
+      top: uiUnit,
+      bottom: uiUnit,
+    ): void;
     SetClampedToScreen(clampedToScreen: boolean): void;
     SetClipsChildren(clipsChildren: boolean): void;
     SetDontSavePosition(dontSave: boolean): void;
@@ -13552,7 +17669,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetFrameLevel(frameLevel: number): void;
     SetFrameStrata(strata: FrameStrata): void;
     SetHighlightLocked(locked: boolean): void;
-    SetHitRectInsets(left: uiUnit, right: uiUnit, top: uiUnit, bottom: uiUnit): void;
+    SetHitRectInsets(
+      left: uiUnit,
+      right: uiUnit,
+      top: uiUnit,
+      bottom: uiUnit,
+    ): void;
     SetHyperlinksEnabled(enabled?: boolean): void;
     SetID(id: number): void;
     SetIgnoreParentAlpha(ignore: boolean): void;
@@ -13561,7 +17683,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetMovable(movable: boolean): void;
     SetPropagateKeyboardInput(propagate: boolean): void;
     SetResizable(resizable: boolean): void;
-    SetResizeBounds(minWidth: uiUnit, minHeight: uiUnit, maxWidth?: uiUnit, maxHeight?: uiUnit): void;
+    SetResizeBounds(
+      minWidth: uiUnit,
+      minHeight: uiUnit,
+      maxWidth?: uiUnit,
+      maxHeight?: uiUnit,
+    ): void;
     SetScale(scale: number): void;
     SetShown(shown?: boolean): void;
     SetToplevel(topLevel: boolean): void;
@@ -13587,28 +17714,55 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
 
   interface SimpleHTML {
     GetContentHeight(): uiUnit;
-    GetFont(textType: HTMLTextType): LuaMultiReturn<[string, uiFontHeight, TBFFlags]>;
+    GetFont(
+      textType: HTMLTextType,
+    ): LuaMultiReturn<[string, uiFontHeight, TBFFlags]>;
     GetFontObject(textType: HTMLTextType): SimpleFont;
     GetHyperlinkFormat(): string;
     GetIndentedWordWrap(textType: HTMLTextType): boolean;
     GetJustifyH(textType: HTMLTextType): JustifyHorizontal;
     GetJustifyV(textType: HTMLTextType): JustifyVertical;
-    GetShadowColor(textType: HTMLTextType): LuaMultiReturn<[number, number, number, number]>;
+    GetShadowColor(
+      textType: HTMLTextType,
+    ): LuaMultiReturn<[number, number, number, number]>;
     GetShadowOffset(textType: HTMLTextType): LuaMultiReturn<[number, number]>;
     GetSpacing(textType: HTMLTextType): uiUnit;
-    GetTextColor(textType: HTMLTextType): LuaMultiReturn<[number, number, number, number]>;
+    GetTextColor(
+      textType: HTMLTextType,
+    ): LuaMultiReturn<[number, number, number, number]>;
     GetTextData(): HTMLContentNode[];
-    SetFont(textType: HTMLTextType, fontFile: string, height: uiFontHeight, flags: TBFFlags): void;
+    SetFont(
+      textType: HTMLTextType,
+      fontFile: string,
+      height: uiFontHeight,
+      flags: TBFFlags,
+    ): void;
     SetFontObject(textType: HTMLTextType, font: SimpleFont): void;
     SetHyperlinkFormat(format: string): void;
     SetIndentedWordWrap(textType: HTMLTextType, wordWrap: boolean): void;
     SetJustifyH(textType: HTMLTextType, justifyH: JustifyHorizontal): void;
     SetJustifyV(textType: HTMLTextType, justifyV: JustifyVertical): void;
-    SetShadowColor(textType: HTMLTextType, colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
-    SetShadowOffset(textType: HTMLTextType, offsetX: number, offsetY: number): void;
+    SetShadowColor(
+      textType: HTMLTextType,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
+    SetShadowOffset(
+      textType: HTMLTextType,
+      offsetX: number,
+      offsetY: number,
+    ): void;
     SetSpacing(textType: HTMLTextType, spacing: uiUnit): void;
     SetText(text: string, ignoreMarkup?: boolean): void;
-    SetTextColor(textType: HTMLTextType, colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetTextColor(
+      textType: HTMLTextType,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
   }
 
   interface HTMLContentNode {
@@ -13623,9 +17777,19 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetHitRectThickness(): uiUnit;
     GetStartPoint(): LuaMultiReturn<[FramePoint, ScriptRegion, uiUnit, uiUnit]>;
     GetThickness(): uiUnit;
-    SetEndPoint(relativePoint: FramePoint, relativeTo: ScriptRegion, offsetX?: uiUnit, offsetY?: uiUnit): void;
+    SetEndPoint(
+      relativePoint: FramePoint,
+      relativeTo: ScriptRegion,
+      offsetX?: uiUnit,
+      offsetY?: uiUnit,
+    ): void;
     SetHitRectThickness(thickness: uiUnit): void;
-    SetStartPoint(relativePoint: FramePoint, relativeTo: ScriptRegion, offsetX?: uiUnit, offsetY?: uiUnit): void;
+    SetStartPoint(
+      relativePoint: FramePoint,
+      relativeTo: ScriptRegion,
+      offsetX?: uiUnit,
+      offsetY?: uiUnit,
+    ): void;
     SetThickness(thickness: uiUnit): void;
   }
 
@@ -13634,14 +17798,25 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetModelDrawLayer(): LuaMultiReturn<[DrawLayer, number]>;
     GetViewInsets(): LuaMultiReturn<[uiUnit, uiUnit, uiUnit, uiUnit]>;
     SetModelDrawLayer(layer: DrawLayer): void;
-    SetViewInsets(left: uiUnit, right: uiUnit, top: uiUnit, bottom: uiUnit): void;
+    SetViewInsets(
+      left: uiUnit,
+      right: uiUnit,
+      top: uiUnit,
+      bottom: uiUnit,
+    ): void;
   }
 
-  interface SimpleMaskTexture {
-  }
+  interface SimpleMaskTexture {}
 
   interface SimpleMessageFrame {
-    AddMessage(text: string, colorR: number, colorG: number, colorB: number, a?: SingleColorValue, messageID?: number): void;
+    AddMessage(
+      text: string,
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+      messageID?: number,
+    ): void;
     Clear(): void;
     GetFadeDuration(): number;
     GetFadePower(): number;
@@ -13669,10 +17844,20 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetInsertMode(mode: InsertMode): void;
     SetJustifyH(justifyH: JustifyHorizontal): void;
     SetJustifyV(justifyV: JustifyVertical): void;
-    SetShadowColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetShadowColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetShadowOffset(offsetX: number, offsetY: number): void;
     SetSpacing(spacing: uiUnit): void;
-    SetTextColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetTextColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetTimeVisible(timeVisibleSeconds: number): void;
   }
 
@@ -13712,13 +17897,22 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetCamera(cameraIndex: number): void;
     SetCameraDistance(distance: number): void;
     SetCameraFacing(radians: number): void;
-    SetCameraPosition(positionX: number, positionY: number, positionZ: number): void;
+    SetCameraPosition(
+      positionX: number,
+      positionY: number,
+      positionZ: number,
+    ): void;
     SetCameraRoll(radians: number): void;
     SetCameraTarget(targetX: number, targetY: number, targetZ: number): void;
     SetCustomCamera(cameraIndex: number): void;
     SetDesaturation(strength: number): void;
     SetFacing(facing: number): void;
-    SetFogColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetFogColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetFogFar(fogFar: number): void;
     SetFogNear(fogNear: number): void;
     SetGlow(glow: number): void;
@@ -13735,24 +17929,40 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetSequence(sequence: number): void;
     SetSequenceTime(sequence: number, timeOffset: number): void;
     SetShadowEffect(strength: number): void;
-    SetTransform(translation?: vector3, rotation?: vector3, scale?: number): void;
-    SetViewInsets(left: uiUnit, right: uiUnit, top: uiUnit, bottom: uiUnit): void;
+    SetTransform(
+      translation?: vector3,
+      rotation?: vector3,
+      scale?: number,
+    ): void;
+    SetViewInsets(
+      left: uiUnit,
+      right: uiUnit,
+      top: uiUnit,
+      bottom: uiUnit,
+    ): void;
     SetViewTranslation(x: uiUnit, y: uiUnit): void;
     TransformCameraSpaceToModelSpace(cameraPosition: vector3): vector3;
     UseModelCenterToTransform(useCenter: boolean): void;
   }
 
   interface SimpleModelFFX {
-    AddCharacterLight(index: number|undefined, light: ModelLight): void;
-    AddLight(index: number|undefined, light: ModelLight): void;
-    AddPetLight(index: number|undefined, light: ModelLight): void;
+    AddCharacterLight(index: number | undefined, light: ModelLight): void;
+    AddLight(index: number | undefined, light: ModelLight): void;
+    AddPetLight(index: number | undefined, light: ModelLight): void;
     ResetLights(): void;
   }
 
   interface SimpleMovie {
     EnableSubtitles(enable: boolean): void;
-    StartMovie(movieID: number, looping?: boolean): LuaMultiReturn<[boolean, number]>;
-    StartMovieByName(movieName: string, looping?: boolean, resolution?: number): LuaMultiReturn<[boolean, number]>;
+    StartMovie(
+      movieID: number,
+      looping?: boolean,
+    ): LuaMultiReturn<[boolean, number]>;
+    StartMovieByName(
+      movieName: string,
+      looping?: boolean,
+      resolution?: number,
+    ): LuaMultiReturn<[boolean, number]>;
     StopMovie(): void;
   }
 
@@ -13770,9 +17980,9 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetMaxSnapshots(): number;
     IsSnapshotValid(snapshotID: number): boolean;
     SetMaxSnapshots(maxSnapshots: number): void;
-    TakeSnapshot(): number|undefined;
+    TakeSnapshot(): number | undefined;
     TestPrintToFile(snapshotID: number, filename: string): boolean;
-    UsesNPOT(): boolean|undefined;
+    UsesNPOT(): boolean | undefined;
   }
 
   interface SimpleRegion extends SimpleScriptRegionResizing {
@@ -13789,7 +17999,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     SetIgnoreParentAlpha(ignore: boolean): void;
     SetIgnoreParentScale(ignore: boolean): void;
     SetScale(scale: number): void;
-    SetVertexColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetVertexColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
   }
 
   interface SimpleScriptRegion extends SimpleObject {
@@ -13812,7 +18027,11 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetWidth(ignoreRect?: boolean): uiUnit;
     HasScript(scriptName: string): boolean;
     Hide(): void;
-    HookScript(scriptTypeName: string, script: luaFunction, bindingType?: number): void;
+    HookScript(
+      scriptTypeName: string,
+      script: luaFunction,
+      bindingType?: number,
+    ): void;
     IsAnchoringRestricted(): boolean;
     IsCollapsed(): boolean;
     IsDragging(): boolean;
@@ -13820,7 +18039,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     IsMouseEnabled(): boolean;
     IsMouseMotionEnabled(): boolean;
     IsMouseMotionFocus(): boolean;
-    IsMouseOver(offsetTop?: uiUnit, offsetBottom?: uiUnit, offsetLeft?: uiUnit, offsetRight?: uiUnit): boolean;
+    IsMouseOver(
+      offsetTop?: uiUnit,
+      offsetBottom?: uiUnit,
+      offsetLeft?: uiUnit,
+      offsetRight?: uiUnit,
+    ): boolean;
     IsMouseWheelEnabled(): boolean;
     IsProtected(): LuaMultiReturn<[boolean, boolean]>;
     IsRectValid(): boolean;
@@ -13844,11 +18068,23 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     ClearPoint(point: FramePoint): void;
     ClearPointsOffset(): void;
     GetNumPoints(): number;
-    GetPoint(anchorIndex?: number, resolveCollapsed?: boolean): LuaMultiReturn<[FramePoint, ScriptRegion, FramePoint, uiUnit, uiUnit]>;
-    GetPointByName(point: FramePoint, resolveCollapsed?: boolean): LuaMultiReturn<[FramePoint, ScriptRegion, FramePoint, uiUnit, uiUnit]>;
+    GetPoint(
+      anchorIndex?: number,
+      resolveCollapsed?: boolean,
+    ): LuaMultiReturn<[FramePoint, ScriptRegion, FramePoint, uiUnit, uiUnit]>;
+    GetPointByName(
+      point: FramePoint,
+      resolveCollapsed?: boolean,
+    ): LuaMultiReturn<[FramePoint, ScriptRegion, FramePoint, uiUnit, uiUnit]>;
     SetAllPoints(relativeTo: ScriptRegion, doResize?: boolean): void;
     SetHeight(height: uiUnit): void;
-    SetPoint(point: FramePoint, relativeTo: ScriptRegion, relativePoint: FramePoint, offsetX: uiUnit, offsetY: uiUnit): void;
+    SetPoint(
+      point: FramePoint,
+      relativeTo: ScriptRegion,
+      relativePoint: FramePoint,
+      offsetX: uiUnit,
+      offsetY: uiUnit,
+    ): void;
     SetSize(x: uiUnit, y: uiUnit): void;
     SetWidth(width: uiUnit): void;
   }
@@ -13898,13 +18134,23 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetStatusBarTexture(): SimpleTexture;
     GetValue(): number;
     IsStatusBarDesaturated(): boolean;
-    SetColorFill(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetColorFill(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetFillStyle(fillStyle: StatusBarFillStyle): void;
     SetMinMaxValues(minValue: number, maxValue: number): void;
     SetOrientation(orientation: Orientation): void;
     SetReverseFill(isReverseFill: boolean): void;
     SetRotatesTexture(rotatesTexture: boolean): void;
-    SetStatusBarColor(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetStatusBarColor(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetStatusBarDesaturated(desaturated?: boolean): void;
     SetStatusBarDesaturation(desaturation: normalizedValue): void;
     SetStatusBarTexture(asset: TextureAsset): void;
@@ -13927,9 +18173,9 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     GetRotation(): LuaMultiReturn<[number, vector2]>;
     GetTexCoord(): LuaMultiReturn<[number, number]>;
     GetTexelSnappingBias(): normalizedValue;
-    GetTexture(): string|undefined;
+    GetTexture(): string | undefined;
     GetTextureFileID(): fileID;
-    GetTextureFilePath(): string|undefined;
+    GetTextureFilePath(): string | undefined;
     GetTextureSliceMargins(): LuaMultiReturn<[number, number, number, number]>;
     GetTextureSliceMode(): Enum.UITextureSliceMode;
     GetVertTile(): boolean;
@@ -13937,38 +18183,72 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     IsBlockingLoadRequested(): boolean;
     IsDesaturated(): boolean;
     IsSnappingToPixelGrid(): boolean;
-    SetAtlas(atlas: textureAtlas, useAtlasSize?: boolean, filterMode?: FilterMode, resetTexCoords?: boolean): void;
+    SetAtlas(
+      atlas: textureAtlas,
+      useAtlasSize?: boolean,
+      filterMode?: FilterMode,
+      resetTexCoords?: boolean,
+    ): void;
     SetBlendMode(blendMode: BlendMode): void;
     SetBlockingLoadsRequested(blocking?: boolean): void;
-    SetColorTexture(colorR: number, colorG: number, colorB: number, a?: SingleColorValue): void;
+    SetColorTexture(
+      colorR: number,
+      colorG: number,
+      colorB: number,
+      a?: SingleColorValue,
+    ): void;
     SetDesaturated(desaturated?: boolean): void;
     SetDesaturation(desaturation: normalizedValue): void;
-    SetGradient(orientation: Orientation, minColor: colorRGBA, maxColor: colorRGBA): void;
+    SetGradient(
+      orientation: Orientation,
+      minColor: colorRGBA,
+      maxColor: colorRGBA,
+    ): void;
     SetHorizTile(tiling?: boolean): void;
     SetMask(file: string): void;
     SetRotation(radians: number, normalizedRotationPoint?: vector2): void;
     SetSnapToPixelGrid(snap?: boolean): void;
     SetTexCoord(left: number, right: number, bottom: number, top: number): void;
     SetTexelSnappingBias(bias: normalizedValue): void;
-    SetTexture(textureAsset?: string, wrapModeHorizontal?: string, wrapModeVertical?: string, filterMode?: string): boolean;
-    SetTextureSliceMargins(left: number, top: number, right: number, bottom: number): void;
+    SetTexture(
+      textureAsset?: string,
+      wrapModeHorizontal?: string,
+      wrapModeVertical?: string,
+      filterMode?: string,
+    ): boolean;
+    SetTextureSliceMargins(
+      left: number,
+      top: number,
+      right: number,
+      bottom: number,
+    ): void;
     SetTextureSliceMode(sliceMode: Enum.UITextureSliceMode): void;
     SetVertTile(tiling?: boolean): void;
-    SetVertexOffset(vertexIndex: number, offsetX: uiUnit, offsetY: uiUnit): void;
+    SetVertexOffset(
+      vertexIndex: number,
+      offsetX: uiUnit,
+      offsetY: uiUnit,
+    ): void;
   }
 
-  namespace C_SkillInfo {
-  }
+  namespace C_SkillInfo {}
 
   function AreDangerousScriptsAllowed(this: void): boolean;
   function SetAllowDangerousScripts(this: void, allowed?: boolean): void;
 
   namespace C_Social {
-    function GetLastAchievement(this: void): LuaMultiReturn<[number, string, string, fileID]>;
-    function GetLastItem(this: void): LuaMultiReturn<[number, string, fileID, number, number, string]>;
+    function GetLastAchievement(
+      this: void,
+    ): LuaMultiReturn<[number, string, string, fileID]>;
+    function GetLastItem(
+      this: void,
+    ): LuaMultiReturn<[number, string, fileID, number, number, string]>;
     function GetLastScreenshotIndex(this: void): number;
     function GetMaxTweetLength(this: void): number;
-    function GetScreenshotInfoByIndex(this: void, index: number): LuaMultiReturn<[number, number]>;
+    function GetScreenshotInfoByIndex(
+      this: void,
+      index: number,
+    ): LuaMultiReturn<[number, number]>;
     function GetTweetLength(this: void, tweetText: string): number;
     function IsSocialEnabled(this: void): boolean;
     function TwitterCheckStatus(this: void): void;
@@ -14031,14 +18311,42 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       clubId?: ClubId;
     }
 
-    function GetAllGroups(this: void, allowNonJoinable?: boolean, allowNonQueuedGroups?: boolean): WOWGUID[];
+    function GetAllGroups(
+      this: void,
+      allowNonJoinable?: boolean,
+      allowNonQueuedGroups?: boolean,
+    ): WOWGUID[];
     function GetConfig(this: void): SocialQueueConfig;
-    function GetGroupForPlayer(this: void, playerGUID: WOWGUID): LuaMultiReturn<[WOWGUID, boolean]>;
-    function GetGroupInfo(this: void, groupGUID: WOWGUID): LuaMultiReturn<[boolean, number, boolean, boolean, boolean, boolean, boolean, WOWGUID]>;
-    function GetGroupMembers(this: void, groupGUID: WOWGUID): SocialQueuePlayerInfo[];
-    function GetGroupQueues(this: void, groupGUID: WOWGUID): SocialQueueGroupQueueInfo[];
-    function RequestToJoin(this: void, groupGUID: WOWGUID, applyAsTank?: boolean, applyAsHealer?: boolean, applyAsDamage?: boolean): boolean;
-    function SignalToastDisplayed(this: void, groupGUID: WOWGUID, priority: number): void;
+    function GetGroupForPlayer(
+      this: void,
+      playerGUID: WOWGUID,
+    ): LuaMultiReturn<[WOWGUID, boolean]>;
+    function GetGroupInfo(
+      this: void,
+      groupGUID: WOWGUID,
+    ): LuaMultiReturn<
+      [boolean, number, boolean, boolean, boolean, boolean, boolean, WOWGUID]
+    >;
+    function GetGroupMembers(
+      this: void,
+      groupGUID: WOWGUID,
+    ): SocialQueuePlayerInfo[];
+    function GetGroupQueues(
+      this: void,
+      groupGUID: WOWGUID,
+    ): SocialQueueGroupQueueInfo[];
+    function RequestToJoin(
+      this: void,
+      groupGUID: WOWGUID,
+      applyAsTank?: boolean,
+      applyAsHealer?: boolean,
+      applyAsDamage?: boolean,
+    ): boolean;
+    function SignalToastDisplayed(
+      this: void,
+      groupGUID: WOWGUID,
+      priority: number,
+    ): void;
   }
 
   namespace C_SocialRestrictions {
@@ -14109,42 +18417,111 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     }
 
     function ActivateSoulbind(this: void, soulbindID: number): void;
-    function CanActivateSoulbind(this: void, soulbindID: number): LuaMultiReturn<[boolean, string|undefined]>;
+    function CanActivateSoulbind(
+      this: void,
+      soulbindID: number,
+    ): LuaMultiReturn<[boolean, string | undefined]>;
     function CanModifySoulbind(this: void): boolean;
-    function CanResetConduitsInSoulbind(this: void, soulbindID: number): LuaMultiReturn<[boolean, string|undefined]>;
+    function CanResetConduitsInSoulbind(
+      this: void,
+      soulbindID: number,
+    ): LuaMultiReturn<[boolean, string | undefined]>;
     function CanSwitchActiveSoulbindTreeBranch(this: void): boolean;
     function CloseUI(this: void): void;
-    function CommitPendingConduitsInSoulbind(this: void, soulbindID: number): void;
-    function FindNodeIDActuallyInstalled(this: void, soulbindID: number, conduitID: number): number;
-    function FindNodeIDAppearingInstalled(this: void, soulbindID: number, conduitID: number): number;
-    function FindNodeIDPendingInstall(this: void, soulbindID: number, conduitID: number): number;
-    function FindNodeIDPendingUninstall(this: void, soulbindID: number, conduitID: number): number;
+    function CommitPendingConduitsInSoulbind(
+      this: void,
+      soulbindID: number,
+    ): void;
+    function FindNodeIDActuallyInstalled(
+      this: void,
+      soulbindID: number,
+      conduitID: number,
+    ): number;
+    function FindNodeIDAppearingInstalled(
+      this: void,
+      soulbindID: number,
+      conduitID: number,
+    ): number;
+    function FindNodeIDPendingInstall(
+      this: void,
+      soulbindID: number,
+      conduitID: number,
+    ): number;
+    function FindNodeIDPendingUninstall(
+      this: void,
+      soulbindID: number,
+      conduitID: number,
+    ): number;
     function GetActiveSoulbindID(this: void): number;
-    function GetConduitCollection(this: void, conduitType: Enum.SoulbindConduitType): ConduitCollectionData[];
+    function GetConduitCollection(
+      this: void,
+      conduitType: Enum.SoulbindConduitType,
+    ): ConduitCollectionData[];
     function GetConduitCollectionCount(this: void): number;
-    function GetConduitCollectionData(this: void, conduitID: number): ConduitCollectionData|undefined;
-    function GetConduitCollectionDataAtCursor(this: void): ConduitCollectionData|undefined;
-    function GetConduitCollectionDataByVirtualID(this: void, virtualID: number): ConduitCollectionData|undefined;
+    function GetConduitCollectionData(
+      this: void,
+      conduitID: number,
+    ): ConduitCollectionData | undefined;
+    function GetConduitCollectionDataAtCursor(
+      this: void,
+    ): ConduitCollectionData | undefined;
+    function GetConduitCollectionDataByVirtualID(
+      this: void,
+      virtualID: number,
+    ): ConduitCollectionData | undefined;
     function GetConduitDisplayed(this: void, nodeID: number): number;
-    function GetConduitHyperlink(this: void, conduitID: number, rank: number): string;
+    function GetConduitHyperlink(
+      this: void,
+      conduitID: number,
+      rank: number,
+    ): string;
     function GetConduitIDPendingInstall(this: void, nodeID: number): number;
-    function GetConduitQuality(this: void, conduitID: number, rank: number): number;
+    function GetConduitQuality(
+      this: void,
+      conduitID: number,
+      rank: number,
+    ): number;
     function GetConduitRank(this: void, conduitID: number): number;
-    function GetConduitSpellID(this: void, conduitID: number, conduitRank: number): number;
+    function GetConduitSpellID(
+      this: void,
+      conduitID: number,
+      conduitRank: number,
+    ): number;
     function GetInstalledConduitID(this: void, nodeID: number): number;
     function GetNode(this: void, nodeID: number): SoulbindNode;
     function GetSoulbindData(this: void, soulbindID: number): SoulbindData;
-    function GetSpecsAssignedToSoulbind(this: void, soulbindID: number): number[];
+    function GetSpecsAssignedToSoulbind(
+      this: void,
+      soulbindID: number,
+    ): number[];
     function GetTree(this: void, treeID: number): SoulbindTree;
-    function HasAnyInstalledConduitInSoulbind(this: void, soulbindID: number): boolean;
+    function HasAnyInstalledConduitInSoulbind(
+      this: void,
+      soulbindID: number,
+    ): boolean;
     function HasAnyPendingConduits(this: void): boolean;
-    function HasPendingConduitsInSoulbind(this: void, soulbindID: number): boolean;
+    function HasPendingConduitsInSoulbind(
+      this: void,
+      soulbindID: number,
+    ): boolean;
     function IsConduitInstalled(this: void, nodeID: number): boolean;
-    function IsConduitInstalledInSoulbind(this: void, soulbindID: number, conduitID: number): boolean;
+    function IsConduitInstalledInSoulbind(
+      this: void,
+      soulbindID: number,
+      conduitID: number,
+    ): boolean;
     function IsItemConduitByItemInfo(this: void, itemInfo: ItemInfo): boolean;
     function IsNodePendingModify(this: void, nodeID: number): boolean;
-    function IsUnselectedConduitPendingInSoulbind(this: void, soulbindID: number): boolean;
-    function ModifyNode(this: void, nodeID: number, conduitID: number, type: Enum.SoulbindConduitTransactionType): void;
+    function IsUnselectedConduitPendingInSoulbind(
+      this: void,
+      soulbindID: number,
+    ): boolean;
+    function ModifyNode(
+      this: void,
+      nodeID: number,
+      conduitID: number,
+      type: Enum.SoulbindConduitTransactionType,
+    ): void;
     function SelectNode(this: void, nodeID: number): void;
     function UnmodifyNode(this: void, nodeID: number): void;
   }
@@ -14152,8 +18529,15 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   namespace C_Sound {
     function GetSoundScaledVolume(this: void, soundHandle: number): number;
     function IsPlaying(this: void, soundHandle: number): boolean;
-    function PlayItemSound(this: void, soundType: ItemSoundType, itemLocation: ItemLocation): void;
-    function PlayVocalErrorSound(this: void, vocalErrorSoundID: Vocalerrorsounds): void;
+    function PlayItemSound(
+      this: void,
+      soundType: ItemSoundType,
+      itemLocation: ItemLocation,
+    ): void;
+    function PlayVocalErrorSound(
+      this: void,
+      vocalErrorSoundID: Vocalerrorsounds,
+    ): void;
   }
 
   namespace C_SpecializationInfo {
@@ -14178,23 +18562,54 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       availableTalentIDs: number[];
     }
 
-    function CanPlayerUsePVPTalentUI(this: void): LuaMultiReturn<[boolean, string]>;
-    function CanPlayerUseTalentSpecUI(this: void): LuaMultiReturn<[boolean, string]>;
-    function CanPlayerUseTalentUI(this: void): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUsePVPTalentUI(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUseTalentSpecUI(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
+    function CanPlayerUseTalentUI(
+      this: void,
+    ): LuaMultiReturn<[boolean, string]>;
     function GetAllSelectedPvpTalentIDs(this: void): number[];
-    function GetClassIDFromSpecID(this: void, specID: number): number|undefined;
-    function GetInspectSelectedPvpTalent(this: void, inspectedUnit: UnitToken, talentIndex: number): number|undefined;
-    function GetPvpTalentAlertStatus(this: void): LuaMultiReturn<[boolean, boolean]>;
-    function GetPvpTalentInfo(this: void, talentID: number): PvpTalentInfo|undefined;
-    function GetPvpTalentSlotInfo(this: void, talentIndex: number): PvpTalentSlotInfo|undefined;
-    function GetPvpTalentSlotUnlockLevel(this: void, talentIndex: number): number|undefined;
-    function GetPvpTalentUnlockLevel(this: void, talentID: number): number|undefined;
+    function GetClassIDFromSpecID(
+      this: void,
+      specID: number,
+    ): number | undefined;
+    function GetInspectSelectedPvpTalent(
+      this: void,
+      inspectedUnit: UnitToken,
+      talentIndex: number,
+    ): number | undefined;
+    function GetPvpTalentAlertStatus(
+      this: void,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function GetPvpTalentInfo(
+      this: void,
+      talentID: number,
+    ): PvpTalentInfo | undefined;
+    function GetPvpTalentSlotInfo(
+      this: void,
+      talentIndex: number,
+    ): PvpTalentSlotInfo | undefined;
+    function GetPvpTalentSlotUnlockLevel(
+      this: void,
+      talentIndex: number,
+    ): number | undefined;
+    function GetPvpTalentUnlockLevel(
+      this: void,
+      talentID: number,
+    ): number | undefined;
     function GetSpecIDs(this: void, specSetID: number): number[];
     function GetSpellsDisplay(this: void, specializationID: number): number[];
     function IsInitialized(this: void): boolean;
     function IsPvpTalentLocked(this: void, talentID: number): boolean;
     function MatchesCurrentSpecSet(this: void, specSetID: number): boolean;
-    function SetPvpTalentLocked(this: void, talentID: number, locked: boolean): void;
+    function SetPvpTalentLocked(
+      this: void,
+      talentID: number,
+      locked: boolean,
+    ): void;
   }
 
   interface SpecializationInfoResult {
@@ -14210,12 +18625,48 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   }
 
   function GetNumSpecializationsForClassID(this: void, specID: number): number;
-  function GetSpecializationInfoForClassID(this: void, classID: number, index: number, gender?: number): LuaMultiReturn<[number, string, string, fileID, string, boolean, boolean, number|undefined, number|undefined]>;
-  function GetSpecializationInfoForSpecID(this: void, specID: number, gender?: number): LuaMultiReturn<[number, string, string, fileID, string, boolean, boolean, number|undefined, number|undefined]>;
-  function GetSpecializationNameForSpecID(this: void, specID: number, gender?: number): string|undefined;
+  function GetSpecializationInfoForClassID(
+    this: void,
+    classID: number,
+    index: number,
+    gender?: number,
+  ): LuaMultiReturn<
+    [
+      number,
+      string,
+      string,
+      fileID,
+      string,
+      boolean,
+      boolean,
+      number | undefined,
+      number | undefined,
+    ]
+  >;
+  function GetSpecializationInfoForSpecID(
+    this: void,
+    specID: number,
+    gender?: number,
+  ): LuaMultiReturn<
+    [
+      number,
+      string,
+      string,
+      fileID,
+      string,
+      boolean,
+      boolean,
+      number | undefined,
+      number | undefined,
+    ]
+  >;
+  function GetSpecializationNameForSpecID(
+    this: void,
+    specID: number,
+    gender?: number,
+  ): string | undefined;
 
-  namespace C_SpellActivationOverlay {
-  }
+  namespace C_SpellActivationOverlay {}
 
   namespace C_SpellBook {
     interface SpellBookItemInfo {
@@ -14241,44 +18692,181 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       offSpecID?: number;
     }
 
-    function CastSpellBookItem(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank, targetSelf?: boolean): void;
+    function CastSpellBookItem(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+      targetSelf?: boolean,
+    ): void;
     function ContainsAnyDisenchantSpell(this: void): boolean;
-    function FindSpellBookSlotForSpell(this: void, spellIdentifier: SpellIdentifier, includeHidden?: boolean, includeFlyouts?: boolean, includeFutureSpells?: boolean, includeOffSpec?: boolean): LuaMultiReturn<[number, Enum.SpellBookSpellBank]>;
+    function FindSpellBookSlotForSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+      includeHidden?: boolean,
+      includeFlyouts?: boolean,
+      includeFutureSpells?: boolean,
+      includeOffSpec?: boolean,
+    ): LuaMultiReturn<[number, Enum.SpellBookSpellBank]>;
     function GetCurrentLevelSpells(this: void, level: number): number[];
     function GetNumSpellBookSkillLines(this: void): number;
-    function GetSkillLineIndexByID(this: void, skillLineID: number): number|undefined;
-    function GetSpellBookItemAutoCast(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): LuaMultiReturn<[boolean, boolean]>;
-    function GetSpellBookItemCastCount(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): number;
-    function GetSpellBookItemCharges(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): SpellChargeInfo;
-    function GetSpellBookItemCooldown(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): SpellCooldownInfo;
-    function GetSpellBookItemDescription(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): string;
-    function GetSpellBookItemInfo(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): SpellBookItemInfo;
-    function GetSpellBookItemLevelLearned(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): number;
-    function GetSpellBookItemLink(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank, glyphID?: number): string;
-    function GetSpellBookItemLossOfControlCooldown(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): LuaMultiReturn<[number, number]>;
-    function GetSpellBookItemName(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): LuaMultiReturn<[string, string]>;
-    function GetSpellBookItemPowerCost(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): SpellPowerCostInfo[];
-    function GetSpellBookItemSkillLineIndex(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): number|undefined;
-    function GetSpellBookItemTexture(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): fileID;
-    function GetSpellBookItemTradeSkillLink(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): string;
-    function GetSpellBookItemType(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): LuaMultiReturn<[Enum.SpellBookItemType, number, number|undefined]>;
-    function GetSpellBookSkillLineInfo(this: void, skillLineIndex: number): SpellBookSkillLineInfo;
+    function GetSkillLineIndexByID(
+      this: void,
+      skillLineID: number,
+    ): number | undefined;
+    function GetSpellBookItemAutoCast(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function GetSpellBookItemCastCount(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): number;
+    function GetSpellBookItemCharges(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): SpellChargeInfo;
+    function GetSpellBookItemCooldown(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): SpellCooldownInfo;
+    function GetSpellBookItemDescription(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): string;
+    function GetSpellBookItemInfo(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): SpellBookItemInfo;
+    function GetSpellBookItemLevelLearned(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): number;
+    function GetSpellBookItemLink(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+      glyphID?: number,
+    ): string;
+    function GetSpellBookItemLossOfControlCooldown(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): LuaMultiReturn<[number, number]>;
+    function GetSpellBookItemName(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): LuaMultiReturn<[string, string]>;
+    function GetSpellBookItemPowerCost(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): SpellPowerCostInfo[];
+    function GetSpellBookItemSkillLineIndex(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): number | undefined;
+    function GetSpellBookItemTexture(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): fileID;
+    function GetSpellBookItemTradeSkillLink(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): string;
+    function GetSpellBookItemType(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): LuaMultiReturn<[Enum.SpellBookItemType, number, number | undefined]>;
+    function GetSpellBookSkillLineInfo(
+      this: void,
+      skillLineIndex: number,
+    ): SpellBookSkillLineInfo;
     function GetTrackedNameplateCooldownSpells(this: void): number[];
     function HasPetSpells(this: void): LuaMultiReturn<[number, string]>;
-    function IsAutoAttackSpellBookItem(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsClassTalentSpellBookItem(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsPvPTalentSpellBookItem(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsRangedAutoAttackSpellBookItem(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsSpellBookItemHarmful(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsSpellBookItemHelpful(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsSpellBookItemInRange(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank, targetUnit?: UnitToken): boolean|undefined;
-    function IsSpellBookItemOffSpec(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsSpellBookItemPassive(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function IsSpellBookItemUsable(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): LuaMultiReturn<[boolean, boolean]>;
-    function PickupSpellBookItem(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): void;
-    function SetSpellBookItemAutoCastEnabled(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank, enabled: boolean): void;
-    function SpellBookItemHasRange(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): boolean;
-    function ToggleSpellBookItemAutoCast(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): void;
+    function IsAutoAttackSpellBookItem(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsClassTalentSpellBookItem(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsPvPTalentSpellBookItem(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsRangedAutoAttackSpellBookItem(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsSpellBookItemHarmful(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsSpellBookItemHelpful(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsSpellBookItemInRange(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+      targetUnit?: UnitToken,
+    ): boolean | undefined;
+    function IsSpellBookItemOffSpec(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsSpellBookItemPassive(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function IsSpellBookItemUsable(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function PickupSpellBookItem(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): void;
+    function SetSpellBookItemAutoCastEnabled(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+      enabled: boolean,
+    ): void;
+    function SpellBookItemHasRange(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): boolean;
+    function ToggleSpellBookItemAutoCast(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): void;
   }
 
   namespace C_Spell {
@@ -14300,51 +18888,168 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       spellID: number;
     }
 
-    function DoesSpellExist(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function GetDeadlyDebuffInfo(this: void, spellIdentifier: SpellIdentifier): DeadlyDebuffInfo;
-    function GetMawPowerBorderAtlasBySpellID(this: void, spellID: number): textureAtlas;
+    function DoesSpellExist(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function GetDeadlyDebuffInfo(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): DeadlyDebuffInfo;
+    function GetMawPowerBorderAtlasBySpellID(
+      this: void,
+      spellID: number,
+    ): textureAtlas;
     function GetMawPowerLinkBySpellID(this: void, spellID: number): string;
-    function GetOverrideSpell(this: void, spellIdentifier: SpellIdentifier, spec?: number, onlyKnown?: boolean, ignoreOverrideSpellID?: number): number;
+    function GetOverrideSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+      spec?: number,
+      onlyKnown?: boolean,
+      ignoreOverrideSpellID?: number,
+    ): number;
     function GetSchoolString(this: void, schoolMask: number): string;
-    function GetSpellAutoCast(this: void, spellIdentifier: SpellIdentifier): LuaMultiReturn<[boolean, boolean]>;
-    function GetSpellCastCount(this: void, spellIdentifier: SpellIdentifier): number;
-    function GetSpellCharges(this: void, spellIdentifier: SpellIdentifier): SpellChargeInfo;
-    function GetSpellCooldown(this: void, spellIdentifier: SpellIdentifier): SpellCooldownInfo;
-    function GetSpellDescription(this: void, spellIdentifier: SpellIdentifier): string;
-    function GetSpellIDForSpellIdentifier(this: void, spellIdentifier: SpellIdentifier): number;
-    function GetSpellInfo(this: void, spellIdentifier: SpellIdentifier): SpellInfo;
-    function GetSpellLevelLearned(this: void, spellIdentifier: SpellIdentifier): number;
-    function GetSpellLink(this: void, spellIdentifier: SpellIdentifier, glyphID?: number): string;
-    function GetSpellLossOfControlCooldown(this: void, spellIdentifier: SpellIdentifier): LuaMultiReturn<[number, number]>;
+    function GetSpellAutoCast(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function GetSpellCastCount(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): number;
+    function GetSpellCharges(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): SpellChargeInfo;
+    function GetSpellCooldown(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): SpellCooldownInfo;
+    function GetSpellDescription(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): string;
+    function GetSpellIDForSpellIdentifier(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): number;
+    function GetSpellInfo(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): SpellInfo;
+    function GetSpellLevelLearned(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): number;
+    function GetSpellLink(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+      glyphID?: number,
+    ): string;
+    function GetSpellLossOfControlCooldown(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): LuaMultiReturn<[number, number]>;
     function GetSpellName(this: void, spellIdentifier: SpellIdentifier): string;
-    function GetSpellPowerCost(this: void, spellIdentifier: SpellIdentifier): SpellPowerCostInfo[];
+    function GetSpellPowerCost(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): SpellPowerCostInfo[];
     function GetSpellQueueWindow(this: void): number;
-    function GetSpellSkillLineAbilityRank(this: void, spellIdentifier: SpellIdentifier): number;
-    function GetSpellSubtext(this: void, spellIdentifier: SpellIdentifier): string;
-    function GetSpellTexture(this: void, spellIdentifier: SpellIdentifier): LuaMultiReturn<[fileID, fileID]>;
-    function GetSpellTradeSkillLink(this: void, spellIdentifier: SpellIdentifier): string;
-    function IsAutoAttackSpell(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsAutoRepeatSpell(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsClassTalentSpell(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsCurrentSpell(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsPressHoldReleaseSpell(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsPvPTalentSpell(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsRangedAutoAttackSpell(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsSpellDataCached(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsSpellDisabled(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsSpellHarmful(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsSpellHelpful(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsSpellInRange(this: void, spellIdentifier: SpellIdentifier, targetUnit?: UnitToken): boolean|undefined;
-    function IsSpellPassive(this: void, spellIdentifier: SpellIdentifier): boolean;
-    function IsSpellUsable(this: void, spellIdentifier: SpellIdentifier): LuaMultiReturn<[boolean, boolean]>;
+    function GetSpellSkillLineAbilityRank(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): number;
+    function GetSpellSubtext(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): string;
+    function GetSpellTexture(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): LuaMultiReturn<[fileID, fileID]>;
+    function GetSpellTradeSkillLink(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): string;
+    function IsAutoAttackSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsAutoRepeatSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsClassTalentSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsCurrentSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsPressHoldReleaseSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsPvPTalentSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsRangedAutoAttackSpell(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsSpellDataCached(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsSpellDisabled(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsSpellHarmful(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsSpellHelpful(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsSpellInRange(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+      targetUnit?: UnitToken,
+    ): boolean | undefined;
+    function IsSpellPassive(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
+    function IsSpellUsable(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function PickupSpell(this: void, spellIdentifier: SpellIdentifier): void;
-    function RequestLoadSpellData(this: void, spellIdentifier: SpellIdentifier): void;
-    function SetSpellAutoCastEnabled(this: void, spellIdentifier: SpellIdentifier, enabled: boolean): void;
-    function SpellHasRange(this: void, spellIdentifier: SpellIdentifier): boolean;
+    function RequestLoadSpellData(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): void;
+    function SetSpellAutoCastEnabled(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+      enabled: boolean,
+    ): void;
+    function SpellHasRange(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): boolean;
     function TargetSpellIsEnchanting(this: void): boolean;
     function TargetSpellJumpsUpgradeTrack(this: void): boolean;
     function TargetSpellReplacesBonusTree(this: void): boolean;
-    function ToggleSpellAutoCast(this: void, spellIdentifier: SpellIdentifier): void;
+    function ToggleSpellAutoCast(
+      this: void,
+      spellIdentifier: SpellIdentifier,
+    ): void;
   }
 
   interface SpellChargeInfo {
@@ -14421,17 +19126,24 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function GetNumActivePets(this: void): number;
     function GetNumStablePets(this: void): number;
     function GetStablePetFoodTypes(this: void, index: number): string[];
-    function GetStablePetInfo(this: void, index: number): PetInfo|undefined;
+    function GetStablePetInfo(this: void, index: number): PetInfo | undefined;
     function GetStabledPetList(this: void): PetInfo[];
     function IsAtStableMaster(this: void): boolean;
     function IsPetFavorite(this: void, slot: number): boolean;
     function PickupStablePet(this: void, index: number): void;
-    function SetPetFavorite(this: void, slot: number, isFavorite: boolean): void;
+    function SetPetFavorite(
+      this: void,
+      slot: number,
+      isFavorite: boolean,
+    ): void;
     function SetPetSlot(this: void, index: number, slot: number): void;
   }
 
   namespace C_StorePublic {
-    function DoesGroupHavePurchaseableProducts(this: void, groupID: number): boolean;
+    function DoesGroupHavePurchaseableProducts(
+      this: void,
+      groupID: number,
+    ): boolean;
     function IsDisabledByParentalControls(this: void): boolean;
     function IsEnabled(this: void): boolean;
   }
@@ -14441,13 +19153,20 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function GetDownloadedPercentage(this: void): number;
   function GetFileStreamingStatus(this: void): number;
 
-  function StripHyperlinks(this: void, text: string, maintainColor?: boolean, maintainBrackets?: boolean, stripNewlines?: boolean, maintainAtlases?: boolean): string;
+  function StripHyperlinks(
+    this: void,
+    text: string,
+    maintainColor?: boolean,
+    maintainBrackets?: boolean,
+    stripNewlines?: boolean,
+    maintainAtlases?: boolean,
+  ): string;
 
   namespace C_SummonInfo {
     function CancelSummon(this: void): void;
     function ConfirmSummon(this: void): void;
     function GetSummonConfirmAreaName(this: void): string;
-    function GetSummonConfirmSummoner(this: void): string|undefined;
+    function GetSummonConfirmSummoner(this: void): string | undefined;
     function GetSummonConfirmTimeLeft(this: void): number;
     function GetSummonReason(this: void): number;
     function IsSummonSkippingStartExperience(this: void): boolean;
@@ -14457,21 +19176,38 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function ClearAllSuperTracked(this: void): void;
     function ClearSuperTrackedContent(this: void): void;
     function ClearSuperTrackedMapPin(this: void): void;
-    function GetHighestPrioritySuperTrackingType(this: void): Enum.SuperTrackingType|undefined;
-    function GetSuperTrackedContent(this: void): LuaMultiReturn<[Enum.ContentTrackingType, number]>;
-    function GetSuperTrackedMapPin(this: void): LuaMultiReturn<[Enum.SuperTrackingMapPinType, number]>;
-    function GetSuperTrackedQuestID(this: void): number|undefined;
-    function GetSuperTrackedVignette(this: void): WOWGUID|undefined;
+    function GetHighestPrioritySuperTrackingType(
+      this: void,
+    ): Enum.SuperTrackingType | undefined;
+    function GetSuperTrackedContent(
+      this: void,
+    ): LuaMultiReturn<[Enum.ContentTrackingType, number]>;
+    function GetSuperTrackedMapPin(
+      this: void,
+    ): LuaMultiReturn<[Enum.SuperTrackingMapPinType, number]>;
+    function GetSuperTrackedQuestID(this: void): number | undefined;
+    function GetSuperTrackedVignette(this: void): WOWGUID | undefined;
     function IsSuperTrackingAnything(this: void): boolean;
     function IsSuperTrackingContent(this: void): boolean;
     function IsSuperTrackingCorpse(this: void): boolean;
     function IsSuperTrackingMapPin(this: void): boolean;
     function IsSuperTrackingQuest(this: void): boolean;
     function IsSuperTrackingUserWaypoint(this: void): boolean;
-    function SetSuperTrackedContent(this: void, trackableType: Enum.ContentTrackingType, trackableID: number): void;
-    function SetSuperTrackedMapPin(this: void, type: Enum.SuperTrackingMapPinType, typeID: number): void;
+    function SetSuperTrackedContent(
+      this: void,
+      trackableType: Enum.ContentTrackingType,
+      trackableID: number,
+    ): void;
+    function SetSuperTrackedMapPin(
+      this: void,
+      type: Enum.SuperTrackingMapPinType,
+      typeID: number,
+    ): void;
     function SetSuperTrackedQuestID(this: void, questID: number): void;
-    function SetSuperTrackedUserWaypoint(this: void, superTracked: boolean): void;
+    function SetSuperTrackedUserWaypoint(
+      this: void,
+      superTracked: boolean,
+    ): void;
     function SetSuperTrackedVignette(this: void, vignetteGUID: WOWGUID): void;
   }
 
@@ -14487,8 +19223,7 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function GetTime(this: void): number;
   function IsUsingFixedTimeStep(this: void): boolean;
 
-  namespace C_TalkingHead {
-  }
+  namespace C_TalkingHead {}
 
   function AssistUnit(this: void, name?: string, exactMatch?: boolean): void;
   function AttackTarget(this: void): void;
@@ -14496,9 +19231,17 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function ClearTarget(this: void): boolean;
   function FocusUnit(this: void, name?: string): void;
   function IsTargetLoose(this: void): boolean;
-  function TargetDirectionEnemy(this: void, facing: number, coneAngle?: number): void;
+  function TargetDirectionEnemy(
+    this: void,
+    facing: number,
+    coneAngle?: number,
+  ): void;
   function TargetDirectionFinished(this: void): void;
-  function TargetDirectionFriend(this: void, facing: number, coneAngle?: number): void;
+  function TargetDirectionFriend(
+    this: void,
+    facing: number,
+    coneAngle?: number,
+  ): void;
   function TargetLastEnemy(this: void): void;
   function TargetLastFriend(this: void): void;
   function TargetLastTarget(this: void): void;
@@ -14510,7 +19253,10 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function TargetNearestPartyMember(this: void, reverse?: boolean): void;
   function TargetNearestRaidMember(this: void, reverse?: boolean): void;
   function TargetPriorityHighlightEnd(this: void): void;
-  function TargetPriorityHighlightStart(this: void, useStartDelay?: boolean): void;
+  function TargetPriorityHighlightStart(
+    this: void,
+    useStartDelay?: boolean,
+  ): void;
   function TargetToggle(this: void): void;
   function TargetUnit(this: void, name?: string, exactMatch?: boolean): void;
 
@@ -14557,20 +19303,44 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       filename?: string;
       sliceData?: UITextureSliceData;
     }
-    type GetTitleIconTextureCallback = (this: void, success: boolean, texture: fileID) => void;
+    type GetTitleIconTextureCallback = (
+      this: void,
+      success: boolean,
+      texture: fileID,
+    ) => void;
 
     function ClearTitleIconTexture(this: void, texture: SimpleTexture): void;
     function GetAtlasElementID(this: void, atlas: textureAtlas): number;
     function GetAtlasID(this: void, atlas: textureAtlas): number;
     function GetAtlasInfo(this: void, atlas: textureAtlas): AtlasInfo;
-    function GetCraftingReagentQualityChatIcon(this: void, quality: number): string;
+    function GetCraftingReagentQualityChatIcon(
+      this: void,
+      quality: number,
+    ): string;
     function GetFilenameFromFileDataID(this: void, fileDataID: number): string;
-    function GetTitleIconTexture(this: void, titleID: string, version: Enum.TitleIconVersion, callback: GetTitleIconTextureCallback): void;
-    function IsTitleIconTextureReady(this: void, titleID: string, version: Enum.TitleIconVersion): boolean;
-    function SetTitleIconTexture(this: void, texture: SimpleTexture, titleID: string, version: Enum.TitleIconVersion): void;
+    function GetTitleIconTexture(
+      this: void,
+      titleID: string,
+      version: Enum.TitleIconVersion,
+      callback: GetTitleIconTextureCallback,
+    ): void;
+    function IsTitleIconTextureReady(
+      this: void,
+      titleID: string,
+      version: Enum.TitleIconVersion,
+    ): boolean;
+    function SetTitleIconTexture(
+      this: void,
+      texture: SimpleTexture,
+      titleID: string,
+      version: Enum.TitleIconVersion,
+    ): void;
   }
 
-  function GetThreatStatusColor(this: void, gameErrorIndex: number): LuaMultiReturn<[number, number, number]>;
+  function GetThreatStatusColor(
+    this: void,
+    gameErrorIndex: number,
+  ): LuaMultiReturn<[number, number, number]>;
   function IsThreatWarningEnabled(this: void): boolean;
 
   interface CalendarTime {
@@ -14582,12 +19352,14 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     minute: number;
   }
 
-  namespace C_TimerunningUI {
-  }
+  namespace C_TimerunningUI {}
 
   function GetCurrentTitle(this: void): number;
   function GetNumTitles(this: void): number;
-  function GetTitleName(this: void, titleMaskID: number): LuaMultiReturn<[string, boolean]>;
+  function GetTitleName(
+    this: void,
+    titleMaskID: number,
+  ): LuaMultiReturn<[string, boolean]>;
   function IsTitleKnown(this: void, titleMaskID: number): boolean;
   function SetCurrentTitle(this: void, titleMaskID: number): void;
 
@@ -14598,8 +19370,17 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       additionalItems: TooltipComparisonItem[];
     }
 
-    function GetItemComparisonDelta(this: void, comparisonItem: TooltipComparisonItem, equippedItem: TooltipComparisonItem, pairedItem?: TooltipComparisonItem, addPairedStats?: boolean): string[];
-    function GetItemComparisonInfo(this: void, comparisonItem: TooltipComparisonItem): TooltipItemComparisonInfo;
+    function GetItemComparisonDelta(
+      this: void,
+      comparisonItem: TooltipComparisonItem,
+      equippedItem: TooltipComparisonItem,
+      pairedItem?: TooltipComparisonItem,
+      addPairedStats?: boolean,
+    ): string[];
+    function GetItemComparisonInfo(
+      this: void,
+      comparisonItem: TooltipComparisonItem,
+    ): TooltipItemComparisonInfo;
   }
 
   namespace C_TooltipInfo {
@@ -14607,86 +19388,297 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function GetAction(this: void, actionID: number): TooltipData;
     function GetArtifactItem(this: void): TooltipData;
     function GetArtifactPowerByID(this: void, powerID: number): TooltipData;
-    function GetAzeriteEssence(this: void, essenceID: number, rank?: number): TooltipData;
-    function GetAzeriteEssenceSlot(this: void, slot: Enum.AzeriteEssenceSlot): TooltipData;
-    function GetAzeritePower(this: void, itemID: number, itemLevel: number, powerID: number, owningItemLink?: string): TooltipData;
+    function GetAzeriteEssence(
+      this: void,
+      essenceID: number,
+      rank?: number,
+    ): TooltipData;
+    function GetAzeriteEssenceSlot(
+      this: void,
+      slot: Enum.AzeriteEssenceSlot,
+    ): TooltipData;
+    function GetAzeritePower(
+      this: void,
+      itemID: number,
+      itemLevel: number,
+      powerID: number,
+      owningItemLink?: string,
+    ): TooltipData;
     function GetBackpackToken(this: void, index: number): TooltipData;
-    function GetBagItem(this: void, bagIndex: Enum.BagIndex, slotIndex: number): TooltipData;
-    function GetBagItemChild(this: void, bagIndex: Enum.BagIndex, slotIndex: number, equipSlotIndex: number): TooltipData;
+    function GetBagItem(
+      this: void,
+      bagIndex: Enum.BagIndex,
+      slotIndex: number,
+    ): TooltipData;
+    function GetBagItemChild(
+      this: void,
+      bagIndex: Enum.BagIndex,
+      slotIndex: number,
+      equipSlotIndex: number,
+    ): TooltipData;
     function GetBuybackItem(this: void, index: number): TooltipData;
     function GetCompanionPet(this: void, petGUID: WOWGUID): TooltipData;
-    function GetConduit(this: void, conduitID: number, conduitRank: number): TooltipData;
-    function GetCurrencyByID(this: void, currencyID: number, amount?: number): TooltipData;
+    function GetConduit(
+      this: void,
+      conduitID: number,
+      conduitRank: number,
+    ): TooltipData;
+    function GetCurrencyByID(
+      this: void,
+      currencyID: number,
+      amount?: number,
+    ): TooltipData;
     function GetCurrencyToken(this: void, tokenIndex: number): TooltipData;
-    function GetEnhancedConduit(this: void, conduitID: number, rank: number): TooltipData;
+    function GetEnhancedConduit(
+      this: void,
+      conduitID: number,
+      rank: number,
+    ): TooltipData;
     function GetEquipmentSet(this: void, setID: number): TooltipData;
-    function GetExistingSocketGem(this: void, index: number, toDestroy?: boolean): TooltipData;
-    function GetGuildBankItem(this: void, tab: number, slot: number): TooltipData;
+    function GetExistingSocketGem(
+      this: void,
+      index: number,
+      toDestroy?: boolean,
+    ): TooltipData;
+    function GetGuildBankItem(
+      this: void,
+      tab: number,
+      slot: number,
+    ): TooltipData;
     function GetHeirloomByItemID(this: void, itemID: number): TooltipData;
-    function GetHyperlink(this: void, hyperlink: string, optionalArg1?: number, optionalArg2?: number, hideVendorPrice?: boolean): TooltipData;
-    function GetInboxItem(this: void, messageIndex: number, attachmentIndex?: number): TooltipData;
-    function GetInstanceLockEncountersComplete(this: void, index: number): TooltipData;
-    function GetInventoryItem(this: void, unit: UnitToken, slot: number, hideUselessStats?: boolean): TooltipData;
+    function GetHyperlink(
+      this: void,
+      hyperlink: string,
+      optionalArg1?: number,
+      optionalArg2?: number,
+      hideVendorPrice?: boolean,
+    ): TooltipData;
+    function GetInboxItem(
+      this: void,
+      messageIndex: number,
+      attachmentIndex?: number,
+    ): TooltipData;
+    function GetInstanceLockEncountersComplete(
+      this: void,
+      index: number,
+    ): TooltipData;
+    function GetInventoryItem(
+      this: void,
+      unit: UnitToken,
+      slot: number,
+      hideUselessStats?: boolean,
+    ): TooltipData;
     function GetInventoryItemByID(this: void, itemID: number): TooltipData;
     function GetItemByGUID(this: void, guid: WOWGUID): TooltipData;
-    function GetItemByID(this: void, itemID: number, quality?: number): TooltipData;
-    function GetItemByItemModifiedAppearanceID(this: void, itemModifiedAppearanceID: number): TooltipData;
+    function GetItemByID(
+      this: void,
+      itemID: number,
+      quality?: number,
+    ): TooltipData;
+    function GetItemByItemModifiedAppearanceID(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): TooltipData;
     function GetItemInteractionItem(this: void): TooltipData;
-    function GetItemKey(this: void, itemID: number, itemLevel: number, itemSuffix: number, requiredLevel?: number): TooltipData;
-    function GetLFGDungeonReward(this: void, dungeonID: number, lootIndex: number): TooltipData;
-    function GetLFGDungeonShortageReward(this: void, dungeonID: number, shortageSeverity: number, lootIndex: number): TooltipData;
+    function GetItemKey(
+      this: void,
+      itemID: number,
+      itemLevel: number,
+      itemSuffix: number,
+      requiredLevel?: number,
+    ): TooltipData;
+    function GetLFGDungeonReward(
+      this: void,
+      dungeonID: number,
+      lootIndex: number,
+    ): TooltipData;
+    function GetLFGDungeonShortageReward(
+      this: void,
+      dungeonID: number,
+      shortageSeverity: number,
+      lootIndex: number,
+    ): TooltipData;
     function GetLootCurrency(this: void, slot: number): TooltipData;
     function GetLootItem(this: void, slot: number): TooltipData;
     function GetLootRollItem(this: void, id: number): TooltipData;
-    function GetMerchantCostItem(this: void, slot: number, costIndex: number): TooltipData;
+    function GetMerchantCostItem(
+      this: void,
+      slot: number,
+      costIndex: number,
+    ): TooltipData;
     function GetMerchantItem(this: void, slot: number): TooltipData;
     function GetMinimapMouseover(this: void): TooltipData;
-    function GetMountBySpellID(this: void, spellID: number, checkIndoors?: boolean): TooltipData;
+    function GetMountBySpellID(
+      this: void,
+      spellID: number,
+      checkIndoors?: boolean,
+    ): TooltipData;
     function GetOwnedItemByID(this: void, itemID: number): TooltipData;
     function GetPetAction(this: void, slot: number): TooltipData;
     function GetPossession(this: void, slot: number): TooltipData;
     function GetPvpBrawl(this: void, isSpecial?: boolean): TooltipData;
-    function GetPvpTalent(this: void, talentID: number, isInspect?: boolean, groupIndex?: number, talentIndex?: number): TooltipData;
-    function GetQuestCurrency(this: void, type: string, currencyIndex: number): TooltipData;
-    function GetQuestItem(this: void, type: string, itemIndex: number, allowCollectionText?: boolean): TooltipData;
-    function GetQuestLogCurrency(this: void, type: string, currencyIndex: number, questID?: number): TooltipData;
-    function GetQuestLogItem(this: void, type: string, itemIndex: number, questID?: number, allowCollectionText?: boolean): TooltipData;
-    function GetQuestLogSpecialItem(this: void, questIndex: number): TooltipData;
-    function GetQuestPartyProgress(this: void, questID: number, omitTitle?: boolean, ignoreActivePlayer?: boolean): TooltipData;
-    function GetRecipeRankInfo(this: void, recipeID: number, rank: number): TooltipData;
-    function GetRecipeReagentItem(this: void, recipeSpellID: number, dataSlotIndex: number): TooltipData;
-    function GetRecipeResultItem(this: void, recipeID: number, craftingReagents?: CraftingReagentInfo[], recraftItemGUID?: WOWGUID, recipeLevel?: number, overrideQualityID?: number): TooltipData;
-    function GetRecipeResultItemForOrder(this: void, recipeID: number, craftingReagents?: CraftingReagentInfo[], orderID?: BigUInteger, recipeLevel?: number, overrideQualityID?: number): TooltipData;
-    function GetRuneforgeResultItem(this: void, itemGUID: WOWGUID, itemLevel: number, powerID?: number, modifiers?: number[]): TooltipData;
+    function GetPvpTalent(
+      this: void,
+      talentID: number,
+      isInspect?: boolean,
+      groupIndex?: number,
+      talentIndex?: number,
+    ): TooltipData;
+    function GetQuestCurrency(
+      this: void,
+      type: string,
+      currencyIndex: number,
+    ): TooltipData;
+    function GetQuestItem(
+      this: void,
+      type: string,
+      itemIndex: number,
+      allowCollectionText?: boolean,
+    ): TooltipData;
+    function GetQuestLogCurrency(
+      this: void,
+      type: string,
+      currencyIndex: number,
+      questID?: number,
+    ): TooltipData;
+    function GetQuestLogItem(
+      this: void,
+      type: string,
+      itemIndex: number,
+      questID?: number,
+      allowCollectionText?: boolean,
+    ): TooltipData;
+    function GetQuestLogSpecialItem(
+      this: void,
+      questIndex: number,
+    ): TooltipData;
+    function GetQuestPartyProgress(
+      this: void,
+      questID: number,
+      omitTitle?: boolean,
+      ignoreActivePlayer?: boolean,
+    ): TooltipData;
+    function GetRecipeRankInfo(
+      this: void,
+      recipeID: number,
+      rank: number,
+    ): TooltipData;
+    function GetRecipeReagentItem(
+      this: void,
+      recipeSpellID: number,
+      dataSlotIndex: number,
+    ): TooltipData;
+    function GetRecipeResultItem(
+      this: void,
+      recipeID: number,
+      craftingReagents?: CraftingReagentInfo[],
+      recraftItemGUID?: WOWGUID,
+      recipeLevel?: number,
+      overrideQualityID?: number,
+    ): TooltipData;
+    function GetRecipeResultItemForOrder(
+      this: void,
+      recipeID: number,
+      craftingReagents?: CraftingReagentInfo[],
+      orderID?: BigUInteger,
+      recipeLevel?: number,
+      overrideQualityID?: number,
+    ): TooltipData;
+    function GetRuneforgeResultItem(
+      this: void,
+      itemGUID: WOWGUID,
+      itemLevel: number,
+      powerID?: number,
+      modifiers?: number[],
+    ): TooltipData;
     function GetSendMailItem(this: void, attachmentIndex?: number): TooltipData;
     function GetShapeshift(this: void, slot: number): TooltipData;
     function GetSlottedKeystone(this: void): TooltipData;
     function GetSocketGem(this: void, index: number): TooltipData;
     function GetSocketedItem(this: void): TooltipData;
     function GetSocketedRelic(this: void, slotIndex: number): TooltipData;
-    function GetSpellBookItem(this: void, spellBookItemSlotIndex: number, spellBookItemSpellBank: Enum.SpellBookSpellBank): TooltipData;
-    function GetSpellByID(this: void, spellID: number, isPet?: boolean, showSubtext?: boolean, dontOverride?: boolean, difficultyID?: number, isLink?: boolean): TooltipData;
-    function GetTalent(this: void, talentID: number, isInspect?: boolean, groupIndex?: number): TooltipData;
+    function GetSpellBookItem(
+      this: void,
+      spellBookItemSlotIndex: number,
+      spellBookItemSpellBank: Enum.SpellBookSpellBank,
+    ): TooltipData;
+    function GetSpellByID(
+      this: void,
+      spellID: number,
+      isPet?: boolean,
+      showSubtext?: boolean,
+      dontOverride?: boolean,
+      difficultyID?: number,
+      isLink?: boolean,
+    ): TooltipData;
+    function GetTalent(
+      this: void,
+      talentID: number,
+      isInspect?: boolean,
+      groupIndex?: number,
+    ): TooltipData;
     function GetTotem(this: void, slot: number): TooltipData;
     function GetToyByItemID(this: void, itemID: number): TooltipData;
     function GetTradePlayerItem(this: void, slot: number): TooltipData;
     function GetTradeTargetItem(this: void, slot: number): TooltipData;
     function GetTrainerService(this: void, serviceIndex: number): TooltipData;
-    function GetTraitEntry(this: void, entryID: number, rank?: number): TooltipData;
-    function GetTransmogrifyItem(this: void, transmogLocation: TransmogLocation): TooltipData;
-    function GetUnit(this: void, unit: UnitToken, hideStatus?: boolean): TooltipData;
-    function GetUnitAura(this: void, unitToken: UnitToken, index: number, filter?: string): TooltipData;
-    function GetUnitBuff(this: void, unitToken: UnitToken, index: number, filter?: string): TooltipData;
-    function GetUnitBuffByAuraInstanceID(this: void, unitTokenString: string, auraInstanceID: number, filter?: string): TooltipData;
-    function GetUnitDebuff(this: void, unitToken: UnitToken, index: number, filter?: string): TooltipData;
-    function GetUnitDebuffByAuraInstanceID(this: void, unitTokenString: string, auraInstanceID: number, filter?: string): TooltipData;
+    function GetTraitEntry(
+      this: void,
+      entryID: number,
+      rank?: number,
+    ): TooltipData;
+    function GetTransmogrifyItem(
+      this: void,
+      transmogLocation: TransmogLocation,
+    ): TooltipData;
+    function GetUnit(
+      this: void,
+      unit: UnitToken,
+      hideStatus?: boolean,
+    ): TooltipData;
+    function GetUnitAura(
+      this: void,
+      unitToken: UnitToken,
+      index: number,
+      filter?: string,
+    ): TooltipData;
+    function GetUnitBuff(
+      this: void,
+      unitToken: UnitToken,
+      index: number,
+      filter?: string,
+    ): TooltipData;
+    function GetUnitBuffByAuraInstanceID(
+      this: void,
+      unitTokenString: string,
+      auraInstanceID: number,
+      filter?: string,
+    ): TooltipData;
+    function GetUnitDebuff(
+      this: void,
+      unitToken: UnitToken,
+      index: number,
+      filter?: string,
+    ): TooltipData;
+    function GetUnitDebuffByAuraInstanceID(
+      this: void,
+      unitTokenString: string,
+      auraInstanceID: number,
+      filter?: string,
+    ): TooltipData;
     function GetUpgradeItem(this: void): TooltipData;
     function GetVoidDepositItem(this: void, slot: number): TooltipData;
     function GetVoidItem(this: void, tab: number, slot: number): TooltipData;
     function GetVoidWithdrawalItem(this: void, slot: number): TooltipData;
-    function GetWeeklyReward(this: void, itemDBID: WeeklyRewardItemDBID): TooltipData;
+    function GetWeeklyReward(
+      this: void,
+      itemDBID: WeeklyRewardItemDBID,
+    ): TooltipData;
     function GetWorldCursor(this: void): TooltipData;
-    function GetWorldLootObject(this: void, unitTokenString: string): TooltipData;
+    function GetWorldLootObject(
+      this: void,
+      unitTokenString: string,
+    ): TooltipData;
   }
 
   interface TooltipComparisonLine {
@@ -14713,9 +19705,12 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   }
 
   function DestroyTotem(this: void, slot: number): void;
-  function GetTotemCannotDismiss(this: void, slot: number): boolean|undefined;
-  function GetTotemInfo(this: void, slot: number): LuaMultiReturn<[boolean, string, number, number, fileID]>;
-  function GetTotemTimeLeft(this: void, slot: number): number|undefined;
+  function GetTotemCannotDismiss(this: void, slot: number): boolean | undefined;
+  function GetTotemInfo(
+    this: void,
+    slot: number,
+  ): LuaMultiReturn<[boolean, string, number, number, fileID]>;
+  function GetTotemTimeLeft(this: void, slot: number): number | undefined;
   function TargetTotem(this: void, slot: number): void;
 
   namespace C_ToyBoxInfo {
@@ -14726,90 +19721,300 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function SetDefaultFilters(this: void): void;
   }
 
-  namespace C_TradeInfo {
-  }
+  namespace C_TradeInfo {}
 
   namespace C_TradeSkillUI {
     function CanStoreEnchantInItem(this: void, itemGUID: WOWGUID): boolean;
     function CloseTradeSkill(this: void): void;
-    function CraftEnchant(this: void, recipeSpellID: number, numCasts?: number, craftingReagents?: CraftingReagentInfo[], itemTarget?: ItemLocation, applyConcentration?: boolean): void;
-    function CraftRecipe(this: void, recipeSpellID: number, numCasts?: number, craftingReagents?: CraftingReagentInfo[], recipeLevel?: number, orderID?: BigUInteger, applyConcentration?: boolean): void;
-    function CraftSalvage(this: void, recipeSpellID: number, numCasts: number|undefined, itemTarget: ItemLocation, craftingReagents?: CraftingReagentInfo[], applyConcentration?: boolean): void;
-    function DoesRecraftingRecipeAcceptItem(this: void, itemLocation: ItemLocation, recipeID: number): boolean;
+    function CraftEnchant(
+      this: void,
+      recipeSpellID: number,
+      numCasts?: number,
+      craftingReagents?: CraftingReagentInfo[],
+      itemTarget?: ItemLocation,
+      applyConcentration?: boolean,
+    ): void;
+    function CraftRecipe(
+      this: void,
+      recipeSpellID: number,
+      numCasts?: number,
+      craftingReagents?: CraftingReagentInfo[],
+      recipeLevel?: number,
+      orderID?: BigUInteger,
+      applyConcentration?: boolean,
+    ): void;
+    function CraftSalvage(
+      this: void,
+      recipeSpellID: number,
+      numCasts: number | undefined,
+      itemTarget: ItemLocation,
+      craftingReagents?: CraftingReagentInfo[],
+      applyConcentration?: boolean,
+    ): void;
+    function DoesRecraftingRecipeAcceptItem(
+      this: void,
+      itemLocation: ItemLocation,
+      recipeID: number,
+    ): boolean;
     function GetAllProfessionTradeSkillLines(this: void): number[];
     function GetBaseProfessionInfo(this: void): ProfessionInfo;
     function GetChildProfessionInfo(this: void): ProfessionInfo;
     function GetChildProfessionInfos(this: void): ProfessionInfo[];
-    function GetConcentrationCurrencyID(this: void, skillLineID: number): number;
-    function GetCraftableCount(this: void, recipeSpellID: number, recipeLevel?: number): number;
-    function GetCraftingOperationInfo(this: void, recipeID: number, craftingReagents: CraftingReagentInfo[], allocationItemGUID: WOWGUID|undefined, applyConcentration: boolean): CraftingOperationInfo|undefined;
-    function GetCraftingOperationInfoForOrder(this: void, recipeID: number, craftingReagents: CraftingReagentInfo[], orderID: BigUInteger, applyConcentration: boolean): CraftingOperationInfo|undefined;
-    function GetCraftingReagentBonusText(this: void, recipeSpellID: number, craftingReagentIndex: number, craftingReagents: CraftingReagentInfo[], allocationItemGUID?: WOWGUID): string[];
-    function GetCraftingTargetItems(this: void, itemIDs: number[]): CraftingTargetItem[];
+    function GetConcentrationCurrencyID(
+      this: void,
+      skillLineID: number,
+    ): number;
+    function GetCraftableCount(
+      this: void,
+      recipeSpellID: number,
+      recipeLevel?: number,
+    ): number;
+    function GetCraftingOperationInfo(
+      this: void,
+      recipeID: number,
+      craftingReagents: CraftingReagentInfo[],
+      allocationItemGUID: WOWGUID | undefined,
+      applyConcentration: boolean,
+    ): CraftingOperationInfo | undefined;
+    function GetCraftingOperationInfoForOrder(
+      this: void,
+      recipeID: number,
+      craftingReagents: CraftingReagentInfo[],
+      orderID: BigUInteger,
+      applyConcentration: boolean,
+    ): CraftingOperationInfo | undefined;
+    function GetCraftingReagentBonusText(
+      this: void,
+      recipeSpellID: number,
+      craftingReagentIndex: number,
+      craftingReagents: CraftingReagentInfo[],
+      allocationItemGUID?: WOWGUID,
+    ): string[];
+    function GetCraftingTargetItems(
+      this: void,
+      itemIDs: number[],
+    ): CraftingTargetItem[];
     function GetEnchantItems(this: void, recipeID: number): WOWGUID[];
-    function GetFactionSpecificOutputItem(this: void, recipeSpellID: number): number|undefined;
-    function GetGatheringOperationInfo(this: void, recipeID: number): GatheringOperationInfo|undefined;
-    function GetHideUnownedFlags(this: void, recipeID: number): LuaMultiReturn<[boolean, boolean]>;
-    function GetItemCraftedQualityByItemInfo(this: void, itemInfo: ItemInfo): number|undefined;
-    function GetItemReagentQualityByItemInfo(this: void, itemInfo: ItemInfo): number|undefined;
-    function GetItemSlotModifications(this: void, itemGUID: WOWGUID): CraftingItemSlotModification[];
-    function GetItemSlotModificationsForOrder(this: void, orderID: BigUInteger): CraftingItemSlotModification[];
-    function GetOriginalCraftRecipeID(this: void, itemGUID: WOWGUID): LuaMultiReturn<[number|undefined, number|undefined]>;
-    function GetProfessionByInventorySlot(this: void, slot: number): Enum.Profession|undefined;
+    function GetFactionSpecificOutputItem(
+      this: void,
+      recipeSpellID: number,
+    ): number | undefined;
+    function GetGatheringOperationInfo(
+      this: void,
+      recipeID: number,
+    ): GatheringOperationInfo | undefined;
+    function GetHideUnownedFlags(
+      this: void,
+      recipeID: number,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function GetItemCraftedQualityByItemInfo(
+      this: void,
+      itemInfo: ItemInfo,
+    ): number | undefined;
+    function GetItemReagentQualityByItemInfo(
+      this: void,
+      itemInfo: ItemInfo,
+    ): number | undefined;
+    function GetItemSlotModifications(
+      this: void,
+      itemGUID: WOWGUID,
+    ): CraftingItemSlotModification[];
+    function GetItemSlotModificationsForOrder(
+      this: void,
+      orderID: BigUInteger,
+    ): CraftingItemSlotModification[];
+    function GetOriginalCraftRecipeID(
+      this: void,
+      itemGUID: WOWGUID,
+    ): LuaMultiReturn<[number | undefined, number | undefined]>;
+    function GetProfessionByInventorySlot(
+      this: void,
+      slot: number,
+    ): Enum.Profession | undefined;
     function GetProfessionChildSkillLineID(this: void): number;
-    function GetProfessionForCursorItem(this: void): Enum.Profession|undefined;
-    function GetProfessionInfoByRecipeID(this: void, recipeID: number): ProfessionInfo;
-    function GetProfessionInfoBySkillLineID(this: void, skillLineID: number): ProfessionInfo;
+    function GetProfessionForCursorItem(
+      this: void,
+    ): Enum.Profession | undefined;
+    function GetProfessionInfoByRecipeID(
+      this: void,
+      recipeID: number,
+    ): ProfessionInfo;
+    function GetProfessionInfoBySkillLineID(
+      this: void,
+      skillLineID: number,
+    ): ProfessionInfo;
     function GetProfessionInventorySlots(this: void): InventorySlots[];
-    function GetProfessionNameForSkillLineAbility(this: void, skillLineAbilityID: number): string;
-    function GetProfessionSkillLineID(this: void, profession: Enum.Profession): number;
-    function GetProfessionSlots(this: void, profession: Enum.Profession): number[];
-    function GetProfessionSpells(this: void, professionID: number, skillLineID?: number): number[];
-    function GetQualitiesForRecipe(this: void, recipeID: number): number[]|undefined;
-    function GetReagentDifficultyText(this: void, craftingReagentIndex: number, craftingReagents: CraftingReagentInfo[]): string;
+    function GetProfessionNameForSkillLineAbility(
+      this: void,
+      skillLineAbilityID: number,
+    ): string;
+    function GetProfessionSkillLineID(
+      this: void,
+      profession: Enum.Profession,
+    ): number;
+    function GetProfessionSlots(
+      this: void,
+      profession: Enum.Profession,
+    ): number[];
+    function GetProfessionSpells(
+      this: void,
+      professionID: number,
+      skillLineID?: number,
+    ): number[];
+    function GetQualitiesForRecipe(
+      this: void,
+      recipeID: number,
+    ): number[] | undefined;
+    function GetReagentDifficultyText(
+      this: void,
+      craftingReagentIndex: number,
+      craftingReagents: CraftingReagentInfo[],
+    ): string;
     function GetReagentRequirementItemIDs(this: void, itemID: number): number[];
-    function GetReagentSlotStatus(this: void, mcrSlotID: number, recipeSpellID: number, skillLineAbilityID: number): LuaMultiReturn<[boolean, string]>;
-    function GetRecipeDescription(this: void, recipeID: number, craftingReagents: CraftingReagentInfo[], allocationItemGUID?: WOWGUID): string;
-    function GetRecipeFixedReagentItemLink(this: void, recipeID: number, dataSlotIndex: number): string;
-    function GetRecipeInfo(this: void, recipeSpellID: number, recipeLevel?: number): TradeSkillRecipeInfo|undefined;
-    function GetRecipeInfoForSkillLineAbility(this: void, skillLineAbilityID: number, recipeLevel?: number): TradeSkillRecipeInfo|undefined;
-    function GetRecipeOutputItemData(this: void, recipeSpellID: number, reagents?: CraftingReagentInfo[], allocationItemGUID?: WOWGUID, overrideQualityID?: number, recraftOrderID?: BigUInteger): CraftingRecipeOutputInfo;
-    function GetRecipeQualityItemIDs(this: void, recipeSpellID: number): number[]|undefined;
-    function GetRecipeQualityReagentItemLink(this: void, recipeID: number, dataSlotIndex: number, qualityIndex: number): string;
-    function GetRecipeRequirements(this: void, recipeID: number): CraftingRecipeRequirement[];
-    function GetRecipeSchematic(this: void, recipeSpellID: number, isRecraft: boolean, recipeLevel?: number): CraftingRecipeSchematic;
+    function GetReagentSlotStatus(
+      this: void,
+      mcrSlotID: number,
+      recipeSpellID: number,
+      skillLineAbilityID: number,
+    ): LuaMultiReturn<[boolean, string]>;
+    function GetRecipeDescription(
+      this: void,
+      recipeID: number,
+      craftingReagents: CraftingReagentInfo[],
+      allocationItemGUID?: WOWGUID,
+    ): string;
+    function GetRecipeFixedReagentItemLink(
+      this: void,
+      recipeID: number,
+      dataSlotIndex: number,
+    ): string;
+    function GetRecipeInfo(
+      this: void,
+      recipeSpellID: number,
+      recipeLevel?: number,
+    ): TradeSkillRecipeInfo | undefined;
+    function GetRecipeInfoForSkillLineAbility(
+      this: void,
+      skillLineAbilityID: number,
+      recipeLevel?: number,
+    ): TradeSkillRecipeInfo | undefined;
+    function GetRecipeOutputItemData(
+      this: void,
+      recipeSpellID: number,
+      reagents?: CraftingReagentInfo[],
+      allocationItemGUID?: WOWGUID,
+      overrideQualityID?: number,
+      recraftOrderID?: BigUInteger,
+    ): CraftingRecipeOutputInfo;
+    function GetRecipeQualityItemIDs(
+      this: void,
+      recipeSpellID: number,
+    ): number[] | undefined;
+    function GetRecipeQualityReagentItemLink(
+      this: void,
+      recipeID: number,
+      dataSlotIndex: number,
+      qualityIndex: number,
+    ): string;
+    function GetRecipeRequirements(
+      this: void,
+      recipeID: number,
+    ): CraftingRecipeRequirement[];
+    function GetRecipeSchematic(
+      this: void,
+      recipeSpellID: number,
+      isRecraft: boolean,
+      recipeLevel?: number,
+    ): CraftingRecipeSchematic;
     function GetRecipesTracked(this: void, isRecraft: boolean): number[];
     function GetRecraftItems(this: void, recipeID?: number): WOWGUID[];
-    function GetRecraftRemovalWarnings(this: void, itemGUID: WOWGUID, replacedItemIDs: number[]): string[];
+    function GetRecraftRemovalWarnings(
+      this: void,
+      itemGUID: WOWGUID,
+      replacedItemIDs: number[],
+    ): string[];
     function GetRemainingRecasts(this: void): number;
     function GetSalvagableItemIDs(this: void, recipeID: number): number[];
     function GetShowLearned(this: void): boolean;
     function GetShowUnlearned(this: void): boolean;
-    function GetSkillLineForGear(this: void, itemInfo: ItemInfo): number|undefined;
+    function GetSkillLineForGear(
+      this: void,
+      itemInfo: ItemInfo,
+    ): number | undefined;
     function GetSourceTypeFilter(this: void): number;
     function GetTradeSkillDisplayName(this: void, skillLineID: number): string;
     function HasFavoriteOrderRecipes(this: void): boolean;
-    function IsEnchantTargetValid(this: void, recipeID: number, itemGUID: WOWGUID, craftingReagents?: CraftingReagentInfo[]): boolean;
+    function IsEnchantTargetValid(
+      this: void,
+      recipeID: number,
+      itemGUID: WOWGUID,
+      craftingReagents?: CraftingReagentInfo[],
+    ): boolean;
     function IsGuildTradeSkillsEnabled(this: void): boolean;
     function IsNPCCrafting(this: void): boolean;
-    function IsNearProfessionSpellFocus(this: void, profession: Enum.Profession): boolean;
-    function IsOriginalCraftRecipeLearned(this: void, itemGUID: WOWGUID): boolean;
+    function IsNearProfessionSpellFocus(
+      this: void,
+      profession: Enum.Profession,
+    ): boolean;
+    function IsOriginalCraftRecipeLearned(
+      this: void,
+      itemGUID: WOWGUID,
+    ): boolean;
     function IsRecipeFirstCraft(this: void, recipeID: number): boolean;
     function IsRecipeInBaseSkillLine(this: void, recipeID: number): boolean;
-    function IsRecipeInSkillLine(this: void, recipeID: number, skillLineID: number): boolean;
+    function IsRecipeInSkillLine(
+      this: void,
+      recipeID: number,
+      skillLineID: number,
+    ): boolean;
     function IsRecipeProfessionLearned(this: void, recipeID: number): boolean;
-    function IsRecipeTracked(this: void, recipeID: number, isRecraft: boolean): boolean;
-    function IsRecraftItemEquipped(this: void, recraftItemGUID: WOWGUID): boolean;
-    function IsRecraftReagentValid(this: void, itemGUID: WOWGUID, itemID: number): boolean;
+    function IsRecipeTracked(
+      this: void,
+      recipeID: number,
+      isRecraft: boolean,
+    ): boolean;
+    function IsRecraftItemEquipped(
+      this: void,
+      recraftItemGUID: WOWGUID,
+    ): boolean;
+    function IsRecraftReagentValid(
+      this: void,
+      itemGUID: WOWGUID,
+      itemID: number,
+    ): boolean;
     function IsRuneforging(this: void): boolean;
     function OpenRecipe(this: void, recipeID: number): void;
     function OpenTradeSkill(this: void, skillLineID: number): boolean;
-    function RecraftLimitCategoryValid(this: void, reagentItemID: number): boolean;
-    function RecraftRecipe(this: void, itemGUID: WOWGUID, craftingReagents?: CraftingReagentInfo[], removedModifications?: CraftingItemSlotModification[], applyConcentration?: boolean): boolean;
-    function RecraftRecipeForOrder(this: void, orderID: BigUInteger, itemGUID: WOWGUID, craftingReagents?: CraftingReagentInfo[], removedModifications?: CraftingItemSlotModification[], applyConcentration?: boolean): boolean;
+    function RecraftLimitCategoryValid(
+      this: void,
+      reagentItemID: number,
+    ): boolean;
+    function RecraftRecipe(
+      this: void,
+      itemGUID: WOWGUID,
+      craftingReagents?: CraftingReagentInfo[],
+      removedModifications?: CraftingItemSlotModification[],
+      applyConcentration?: boolean,
+    ): boolean;
+    function RecraftRecipeForOrder(
+      this: void,
+      orderID: BigUInteger,
+      itemGUID: WOWGUID,
+      craftingReagents?: CraftingReagentInfo[],
+      removedModifications?: CraftingItemSlotModification[],
+      applyConcentration?: boolean,
+    ): boolean;
     function SetOnlyShowAvailableForOrders(this: void, flag: boolean): void;
-    function SetProfessionChildSkillLineID(this: void, skillLineID: number): void;
-    function SetRecipeTracked(this: void, recipeID: number, tracked: boolean, isRecraft: boolean): void;
+    function SetProfessionChildSkillLineID(
+      this: void,
+      skillLineID: number,
+    ): void;
+    function SetRecipeTracked(
+      this: void,
+      recipeID: number,
+      tracked: boolean,
+      isRecraft: boolean,
+    ): void;
     function SetShowLearned(this: void, flag: boolean): void;
     function SetShowUnlearned(this: void, flag: boolean): void;
     function SetSourceTypeFilter(this: void, sourceTypeFilter: number): void;
@@ -15029,11 +20234,9 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     isSalvageRecipe?: boolean;
   }
 
-  namespace C_Trainer {
-  }
+  namespace C_Trainer {}
 
-  namespace C_TraitConfig {
-  }
+  namespace C_TraitConfig {}
 
   namespace C_Transmog {
     interface TransmogApplyWarningInfo {
@@ -15072,29 +20275,88 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     }
 
     function ApplyAllPending(this: void, currentSpecOnly?: boolean): boolean;
-    function CanHaveSecondaryAppearanceForSlotID(this: void, slotID: number): boolean;
-    function CanTransmogItem(this: void, itemInfo: ItemInfo): LuaMultiReturn<[boolean, string|undefined, boolean, string|undefined]>;
-    function CanTransmogItemWithItem(this: void, targetItemInfo: ItemInfo, sourceItemInfo: ItemInfo): LuaMultiReturn<[boolean, string|undefined]>;
+    function CanHaveSecondaryAppearanceForSlotID(
+      this: void,
+      slotID: number,
+    ): boolean;
+    function CanTransmogItem(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<
+      [boolean, string | undefined, boolean, string | undefined]
+    >;
+    function CanTransmogItemWithItem(
+      this: void,
+      targetItemInfo: ItemInfo,
+      sourceItemInfo: ItemInfo,
+    ): LuaMultiReturn<[boolean, string | undefined]>;
     function ClearAllPending(this: void): void;
     function ClearPending(this: void, transmogLocation: TransmogLocation): void;
     function Close(this: void): void;
     function ExtractTransmogIDList(this: void, input: string): number[];
-    function GetAllSetAppearancesByID(this: void, setID: number): TransmogSetItemInfo[]|undefined;
-    function GetApplyCost(this: void): number|undefined;
+    function GetAllSetAppearancesByID(
+      this: void,
+      setID: number,
+    ): TransmogSetItemInfo[] | undefined;
+    function GetApplyCost(this: void): number | undefined;
     function GetApplyWarnings(this: void): TransmogApplyWarningInfo[];
-    function GetBaseCategory(this: void, transmogID: number): Enum.TransmogCollectionType;
-    function GetCreatureDisplayIDForSource(this: void, itemModifiedAppearanceID: number): number|undefined;
-    function GetItemIDForSource(this: void, itemModifiedAppearanceID: number): number|undefined;
-    function GetPending(this: void, transmogLocation: TransmogLocation): TransmogPendingInfo;
-    function GetSlotEffectiveCategory(this: void, transmogLocation: TransmogLocation): Enum.TransmogCollectionType;
+    function GetBaseCategory(
+      this: void,
+      transmogID: number,
+    ): Enum.TransmogCollectionType;
+    function GetCreatureDisplayIDForSource(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): number | undefined;
+    function GetItemIDForSource(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): number | undefined;
+    function GetPending(
+      this: void,
+      transmogLocation: TransmogLocation,
+    ): TransmogPendingInfo;
+    function GetSlotEffectiveCategory(
+      this: void,
+      transmogLocation: TransmogLocation,
+    ): Enum.TransmogCollectionType;
     function GetSlotForInventoryType(this: void, inventoryType: number): number;
-    function GetSlotInfo(this: void, transmogLocation: TransmogLocation): LuaMultiReturn<[boolean, boolean, boolean, boolean, number, boolean, boolean, fileID|undefined]>;
-    function GetSlotUseError(this: void, transmogLocation: TransmogLocation): LuaMultiReturn<[number, string]>;
-    function GetSlotVisualInfo(this: void, transmogLocation: TransmogLocation): LuaMultiReturn<[number, number, number, number, number, number, boolean, boolean, number]>;
+    function GetSlotInfo(
+      this: void,
+      transmogLocation: TransmogLocation,
+    ): LuaMultiReturn<
+      [
+        boolean,
+        boolean,
+        boolean,
+        boolean,
+        number,
+        boolean,
+        boolean,
+        fileID | undefined,
+      ]
+    >;
+    function GetSlotUseError(
+      this: void,
+      transmogLocation: TransmogLocation,
+    ): LuaMultiReturn<[number, string]>;
+    function GetSlotVisualInfo(
+      this: void,
+      transmogLocation: TransmogLocation,
+    ): LuaMultiReturn<
+      [number, number, number, number, number, number, boolean, boolean, number]
+    >;
     function IsAtTransmogNPC(this: void): boolean;
-    function IsSlotBeingCollapsed(this: void, transmogLocation: TransmogLocation): boolean;
+    function IsSlotBeingCollapsed(
+      this: void,
+      transmogLocation: TransmogLocation,
+    ): boolean;
     function LoadOutfit(this: void, outfitID: number): void;
-    function SetPending(this: void, transmogLocation: TransmogLocation, pendingInfo: TransmogPendingInfo): void;
+    function SetPending(
+      this: void,
+      transmogLocation: TransmogLocation,
+      pendingInfo: TransmogPendingInfo,
+    ): void;
   }
 
   namespace C_TransmogCollection {
@@ -15171,74 +20433,230 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       icon: fileID;
     }
 
-    function AccountCanCollectSource(this: void, sourceID: number): LuaMultiReturn<[boolean, boolean]>;
+    function AccountCanCollectSource(
+      this: void,
+      sourceID: number,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function AreAllCollectionTypeFiltersChecked(this: void): boolean;
     function AreAllSourceTypeFiltersChecked(this: void): boolean;
-    function CanAppearanceBeDisplayedOnPlayer(this: void, itemAppearanceID: number): boolean;
-    function CanAppearanceHaveIllusion(this: void, appearanceID: number): boolean;
+    function CanAppearanceBeDisplayedOnPlayer(
+      this: void,
+      itemAppearanceID: number,
+    ): boolean;
+    function CanAppearanceHaveIllusion(
+      this: void,
+      appearanceID: number,
+    ): boolean;
     function ClearNewAppearance(this: void, visualID: number): void;
-    function ClearSearch(this: void, searchType: Enum.TransmogSearchType): boolean;
+    function ClearSearch(
+      this: void,
+      searchType: Enum.TransmogSearchType,
+    ): boolean;
     function DeleteOutfit(this: void, outfitID: number): void;
     function EndSearch(this: void): void;
-    function GetAllAppearanceSources(this: void, itemAppearanceID: number): number[];
+    function GetAllAppearanceSources(
+      this: void,
+      itemAppearanceID: number,
+    ): number[];
     function GetAllFactionsShown(this: void): boolean;
     function GetAllRacesShown(this: void): boolean;
-    function GetAppearanceCameraID(this: void, itemAppearanceID: number, variation?: Enum.TransmogCameraVariation): number;
-    function GetAppearanceCameraIDBySource(this: void, itemModifiedAppearanceID: number, variation?: Enum.TransmogCameraVariation): number;
-    function GetAppearanceInfoBySource(this: void, itemModifiedAppearanceID: number): TransmogAppearanceInfoBySourceData;
-    function GetAppearanceSourceDrops(this: void, itemModifiedAppearanceID: number): TransmogAppearanceJournalEncounterInfo[];
-    function GetAppearanceSourceInfo(this: void, itemModifiedAppearanceID: number): LuaMultiReturn<[Enum.TransmogCollectionType, number, boolean, fileID, boolean, string, string, number|undefined, number]>;
-    function GetAppearanceSources(this: void, appearanceID: number, categoryType?: Enum.TransmogCollectionType, transmogLocation?: TransmogLocation): AppearanceSourceInfo[];
-    function GetArtifactAppearanceStrings(this: void, appearanceID: number): LuaMultiReturn<[string, string]>;
-    function GetCategoryAppearances(this: void, category: Enum.TransmogCollectionType, transmogLocation?: TransmogLocation): TransmogCategoryAppearanceInfo[];
-    function GetCategoryCollectedCount(this: void, category: Enum.TransmogCollectionType): number;
-    function GetCategoryForItem(this: void, itemModifiedAppearanceID: number): Enum.TransmogCollectionType;
-    function GetCategoryInfo(this: void, category: Enum.TransmogCollectionType): LuaMultiReturn<[string, boolean, boolean, boolean, boolean]>;
-    function GetCategoryTotal(this: void, category: Enum.TransmogCollectionType): number;
+    function GetAppearanceCameraID(
+      this: void,
+      itemAppearanceID: number,
+      variation?: Enum.TransmogCameraVariation,
+    ): number;
+    function GetAppearanceCameraIDBySource(
+      this: void,
+      itemModifiedAppearanceID: number,
+      variation?: Enum.TransmogCameraVariation,
+    ): number;
+    function GetAppearanceInfoBySource(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): TransmogAppearanceInfoBySourceData;
+    function GetAppearanceSourceDrops(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): TransmogAppearanceJournalEncounterInfo[];
+    function GetAppearanceSourceInfo(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): LuaMultiReturn<
+      [
+        Enum.TransmogCollectionType,
+        number,
+        boolean,
+        fileID,
+        boolean,
+        string,
+        string,
+        number | undefined,
+        number,
+      ]
+    >;
+    function GetAppearanceSources(
+      this: void,
+      appearanceID: number,
+      categoryType?: Enum.TransmogCollectionType,
+      transmogLocation?: TransmogLocation,
+    ): AppearanceSourceInfo[];
+    function GetArtifactAppearanceStrings(
+      this: void,
+      appearanceID: number,
+    ): LuaMultiReturn<[string, string]>;
+    function GetCategoryAppearances(
+      this: void,
+      category: Enum.TransmogCollectionType,
+      transmogLocation?: TransmogLocation,
+    ): TransmogCategoryAppearanceInfo[];
+    function GetCategoryCollectedCount(
+      this: void,
+      category: Enum.TransmogCollectionType,
+    ): number;
+    function GetCategoryForItem(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): Enum.TransmogCollectionType;
+    function GetCategoryInfo(
+      this: void,
+      category: Enum.TransmogCollectionType,
+    ): LuaMultiReturn<[string, boolean, boolean, boolean, boolean]>;
+    function GetCategoryTotal(
+      this: void,
+      category: Enum.TransmogCollectionType,
+    ): number;
     function GetClassFilter(this: void): number;
     function GetCollectedShown(this: void): boolean;
-    function GetFallbackWeaponAppearance(this: void): number|undefined;
-    function GetFilteredCategoryCollectedCount(this: void, category: Enum.TransmogCollectionType): number;
-    function GetFilteredCategoryTotal(this: void, category: Enum.TransmogCollectionType): number;
-    function GetIllusionInfo(this: void, illusionID: number): TransmogIllusionInfo;
-    function GetIllusionStrings(this: void, illusionID: number): LuaMultiReturn<[string, string, string|undefined]>;
+    function GetFallbackWeaponAppearance(this: void): number | undefined;
+    function GetFilteredCategoryCollectedCount(
+      this: void,
+      category: Enum.TransmogCollectionType,
+    ): number;
+    function GetFilteredCategoryTotal(
+      this: void,
+      category: Enum.TransmogCollectionType,
+    ): number;
+    function GetIllusionInfo(
+      this: void,
+      illusionID: number,
+    ): TransmogIllusionInfo;
+    function GetIllusionStrings(
+      this: void,
+      illusionID: number,
+    ): LuaMultiReturn<[string, string, string | undefined]>;
     function GetIllusions(this: void): TransmogIllusionInfo[];
     function GetInspectItemTransmogInfoList(this: void): ItemTransmogInfo[];
-    function GetIsAppearanceFavorite(this: void, itemAppearanceID: number): boolean;
-    function GetItemInfo(this: void, itemInfo: ItemInfo): LuaMultiReturn<[number, number]>;
-    function GetItemTransmogInfoListFromOutfitHyperlink(this: void, hyperlink: string): ItemTransmogInfo[];
-    function GetLatestAppearance(this: void): LuaMultiReturn<[number, Enum.TransmogCollectionType]>;
+    function GetIsAppearanceFavorite(
+      this: void,
+      itemAppearanceID: number,
+    ): boolean;
+    function GetItemInfo(
+      this: void,
+      itemInfo: ItemInfo,
+    ): LuaMultiReturn<[number, number]>;
+    function GetItemTransmogInfoListFromOutfitHyperlink(
+      this: void,
+      hyperlink: string,
+    ): ItemTransmogInfo[];
+    function GetLatestAppearance(
+      this: void,
+    ): LuaMultiReturn<[number, Enum.TransmogCollectionType]>;
     function GetNumMaxOutfits(this: void): number;
     function GetNumTransmogSources(this: void): number;
-    function GetOutfitHyperlinkFromItemTransmogInfoList(this: void, itemTransmogInfoList: ItemTransmogInfo[]): string;
-    function GetOutfitInfo(this: void, outfitID: number): LuaMultiReturn<[string, fileID]>;
-    function GetOutfitItemTransmogInfoList(this: void, outfitID: number): ItemTransmogInfo[];
+    function GetOutfitHyperlinkFromItemTransmogInfoList(
+      this: void,
+      itemTransmogInfoList: ItemTransmogInfo[],
+    ): string;
+    function GetOutfitInfo(
+      this: void,
+      outfitID: number,
+    ): LuaMultiReturn<[string, fileID]>;
+    function GetOutfitItemTransmogInfoList(
+      this: void,
+      outfitID: number,
+    ): ItemTransmogInfo[];
     function GetOutfits(this: void): number[];
-    function GetPairedArtifactAppearance(this: void, itemModifiedAppearanceID: number): number;
-    function GetSourceIcon(this: void, itemModifiedAppearanceID: number): fileID;
+    function GetPairedArtifactAppearance(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): number;
+    function GetSourceIcon(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): fileID;
     function GetSourceInfo(this: void, sourceID: number): AppearanceSourceInfo;
-    function GetSourceItemID(this: void, itemModifiedAppearanceID: number): number;
-    function GetSourceRequiredHoliday(this: void, itemModifiedAppearanceID: number): string;
+    function GetSourceItemID(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): number;
+    function GetSourceRequiredHoliday(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): string;
     function GetUncollectedShown(this: void): boolean;
-    function GetValidAppearanceSourcesForClass(this: void, appearanceID: number, classID: number, categoryType?: Enum.TransmogCollectionType, transmogLocation?: TransmogLocation): AppearanceSourceInfo[];
+    function GetValidAppearanceSourcesForClass(
+      this: void,
+      appearanceID: number,
+      classID: number,
+      categoryType?: Enum.TransmogCollectionType,
+      transmogLocation?: TransmogLocation,
+    ): AppearanceSourceInfo[];
     function HasFavorites(this: void): boolean;
-    function IsAppearanceHiddenVisual(this: void, appearanceID: number): boolean;
-    function IsCategoryValidForItem(this: void, category: Enum.TransmogCollectionType, itemInfo: ItemInfo): boolean;
+    function IsAppearanceHiddenVisual(
+      this: void,
+      appearanceID: number,
+    ): boolean;
+    function IsCategoryValidForItem(
+      this: void,
+      category: Enum.TransmogCollectionType,
+      itemInfo: ItemInfo,
+    ): boolean;
     function IsNewAppearance(this: void, visualID: number): boolean;
     function IsSearchDBLoading(this: void): boolean;
-    function IsSearchInProgress(this: void, searchType: Enum.TransmogSearchType): boolean;
+    function IsSearchInProgress(
+      this: void,
+      searchType: Enum.TransmogSearchType,
+    ): boolean;
     function IsSourceTypeFilterChecked(this: void, index: number): boolean;
     function IsUsingDefaultFilters(this: void): boolean;
-    function ModifyOutfit(this: void, outfitID: number, itemTransmogInfoList: ItemTransmogInfo[]): void;
-    function NewOutfit(this: void, name: string, icon: fileID, itemTransmogInfoList: ItemTransmogInfo[]): number|undefined;
-    function PlayerCanCollectSource(this: void, sourceID: number): LuaMultiReturn<[boolean, boolean]>;
-    function PlayerHasTransmog(this: void, itemID: number, itemAppearanceModID?: number): boolean;
-    function PlayerHasTransmogByItemInfo(this: void, itemInfo: ItemInfo): boolean;
-    function PlayerHasTransmogItemModifiedAppearance(this: void, itemModifiedAppearanceID: number): boolean;
+    function ModifyOutfit(
+      this: void,
+      outfitID: number,
+      itemTransmogInfoList: ItemTransmogInfo[],
+    ): void;
+    function NewOutfit(
+      this: void,
+      name: string,
+      icon: fileID,
+      itemTransmogInfoList: ItemTransmogInfo[],
+    ): number | undefined;
+    function PlayerCanCollectSource(
+      this: void,
+      sourceID: number,
+    ): LuaMultiReturn<[boolean, boolean]>;
+    function PlayerHasTransmog(
+      this: void,
+      itemID: number,
+      itemAppearanceModID?: number,
+    ): boolean;
+    function PlayerHasTransmogByItemInfo(
+      this: void,
+      itemInfo: ItemInfo,
+    ): boolean;
+    function PlayerHasTransmogItemModifiedAppearance(
+      this: void,
+      itemModifiedAppearanceID: number,
+    ): boolean;
     function PlayerKnowsSource(this: void, sourceID: number): boolean;
     function RenameOutfit(this: void, outfitID: number, name: string): void;
-    function SearchProgress(this: void, searchType: Enum.TransmogSearchType): number;
-    function SearchSize(this: void, searchType: Enum.TransmogSearchType): number;
+    function SearchProgress(
+      this: void,
+      searchType: Enum.TransmogSearchType,
+    ): number;
+    function SearchSize(
+      this: void,
+      searchType: Enum.TransmogSearchType,
+    ): number;
     function SetAllCollectionTypeFilters(this: void, checked: boolean): void;
     function SetAllFactionsShown(this: void, shown: boolean): void;
     function SetAllRacesShown(this: void, shown: boolean): void;
@@ -15246,10 +20664,25 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function SetClassFilter(this: void, classID: number): void;
     function SetCollectedShown(this: void, shown: boolean): void;
     function SetDefaultFilters(this: void): void;
-    function SetIsAppearanceFavorite(this: void, itemAppearanceID: number, isFavorite: boolean): void;
-    function SetSearch(this: void, searchType: Enum.TransmogSearchType, searchText: string): boolean;
-    function SetSearchAndFilterCategory(this: void, category: Enum.TransmogCollectionType): void;
-    function SetSourceTypeFilter(this: void, index: number, checked: boolean): void;
+    function SetIsAppearanceFavorite(
+      this: void,
+      itemAppearanceID: number,
+      isFavorite: boolean,
+    ): void;
+    function SetSearch(
+      this: void,
+      searchType: Enum.TransmogSearchType,
+      searchText: string,
+    ): boolean;
+    function SetSearchAndFilterCategory(
+      this: void,
+      category: Enum.TransmogCollectionType,
+    ): void;
+    function SetSourceTypeFilter(
+      this: void,
+      index: number,
+      checked: boolean,
+    ): void;
     function SetUncollectedShown(this: void, shown: boolean): void;
     function UpdateUsableAppearances(this: void): void;
   }
@@ -15280,60 +20713,135 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
 
     function ClearLatestSource(this: void): void;
     function ClearNewSource(this: void, sourceID: number): void;
-    function ClearSetNewSourcesForSlot(this: void, transmogSetID: number, slot: number): void;
+    function ClearSetNewSourcesForSlot(
+      this: void,
+      transmogSetID: number,
+      slot: number,
+    ): void;
     function GetAllSets(this: void): TransmogSetInfo[];
     function GetAllSourceIDs(this: void, transmogSetID: number): number[];
     function GetBaseSetID(this: void, transmogSetID: number): number;
     function GetBaseSets(this: void): TransmogSetInfo[];
     function GetBaseSetsFilter(this: void, index: number): boolean;
-    function GetCameraIDs(this: void): LuaMultiReturn<[number|undefined, number|undefined]>;
-    function GetFilteredBaseSetsCounts(this: void): LuaMultiReturn<[number, number]>;
-    function GetFullBaseSetsCounts(this: void): LuaMultiReturn<[number, number]>;
-    function GetIsFavorite(this: void, transmogSetID: number): LuaMultiReturn<[boolean, boolean]>;
+    function GetCameraIDs(
+      this: void,
+    ): LuaMultiReturn<[number | undefined, number | undefined]>;
+    function GetFilteredBaseSetsCounts(
+      this: void,
+    ): LuaMultiReturn<[number, number]>;
+    function GetFullBaseSetsCounts(
+      this: void,
+    ): LuaMultiReturn<[number, number]>;
+    function GetIsFavorite(
+      this: void,
+      transmogSetID: number,
+    ): LuaMultiReturn<[boolean, boolean]>;
     function GetLatestSource(this: void): number;
     function GetSetInfo(this: void, transmogSetID: number): TransmogSetInfo;
     function GetSetNewSources(this: void, transmogSetID: number): number[];
-    function GetSetPrimaryAppearances(this: void, transmogSetID: number): TransmogSetPrimaryAppearanceInfo[];
+    function GetSetPrimaryAppearances(
+      this: void,
+      transmogSetID: number,
+    ): TransmogSetPrimaryAppearanceInfo[];
     function GetSetsContainingSourceID(this: void, sourceID: number): number[];
-    function GetSourceIDsForSlot(this: void, transmogSetID: number, slot: number): number[];
-    function GetSourcesForSlot(this: void, transmogSetID: number, slot: number): AppearanceSourceInfo[];
+    function GetSourceIDsForSlot(
+      this: void,
+      transmogSetID: number,
+      slot: number,
+    ): number[];
+    function GetSourcesForSlot(
+      this: void,
+      transmogSetID: number,
+      slot: number,
+    ): AppearanceSourceInfo[];
     function GetTransmogSetsClassFilter(this: void): number;
     function GetUsableSets(this: void): TransmogSetInfo[];
-    function GetValidBaseSetsCountsForCharacter(this: void): LuaMultiReturn<[number, number]>;
-    function GetVariantSets(this: void, transmogSetID: number): TransmogSetInfo[];
+    function GetValidBaseSetsCountsForCharacter(
+      this: void,
+    ): LuaMultiReturn<[number, number]>;
+    function GetVariantSets(
+      this: void,
+      transmogSetID: number,
+    ): TransmogSetInfo[];
     function HasUsableSets(this: void): boolean;
     function IsBaseSetCollected(this: void, transmogSetID: number): boolean;
     function IsNewSource(this: void, sourceID: number): boolean;
     function IsSetVisible(this: void, transmogSetID: number): boolean;
     function IsUsingDefaultBaseSetsFilters(this: void): boolean;
-    function SetBaseSetsFilter(this: void, index: number, isChecked: boolean): void;
+    function SetBaseSetsFilter(
+      this: void,
+      index: number,
+      isChecked: boolean,
+    ): void;
     function SetDefaultBaseSetsFilters(this: void): void;
     function SetHasNewSources(this: void, transmogSetID: number): boolean;
-    function SetHasNewSourcesForSlot(this: void, transmogSetID: number, slot: number): boolean;
-    function SetIsFavorite(this: void, transmogSetID: number, isFavorite: boolean): void;
+    function SetHasNewSourcesForSlot(
+      this: void,
+      transmogSetID: number,
+      slot: number,
+    ): boolean;
+    function SetIsFavorite(
+      this: void,
+      transmogSetID: number,
+      isFavorite: boolean,
+    ): void;
     function SetTransmogSetsClassFilter(this: void, classID: number): void;
   }
 
   namespace C_TTSSettings {
-    function GetChannelEnabled(this: void, channelInfo: ChatChannelInfo): boolean;
+    function GetChannelEnabled(
+      this: void,
+      channelInfo: ChatChannelInfo,
+    ): boolean;
     function GetCharacterSettingsSaved(this: void): boolean;
     function GetChatTypeEnabled(this: void, chatName: string): boolean;
     function GetSetting(this: void, setting: Enum.TtsBoolSetting): boolean;
     function GetSpeechRate(this: void): number;
     function GetSpeechVolume(this: void): number;
     function GetVoiceOptionID(this: void, voiceType: Enum.TtsVoiceType): number;
-    function GetVoiceOptionName(this: void, voiceType: Enum.TtsVoiceType): string;
+    function GetVoiceOptionName(
+      this: void,
+      voiceType: Enum.TtsVoiceType,
+    ): string;
     function MarkCharacterSettingsSaved(this: void): void;
-    function SetChannelEnabled(this: void, channelInfo: ChatChannelInfo, newVal?: boolean): void;
-    function SetChannelKeyEnabled(this: void, channelKey: string, newVal?: boolean): void;
-    function SetChatTypeEnabled(this: void, chatName: string, newVal?: boolean): void;
+    function SetChannelEnabled(
+      this: void,
+      channelInfo: ChatChannelInfo,
+      newVal?: boolean,
+    ): void;
+    function SetChannelKeyEnabled(
+      this: void,
+      channelKey: string,
+      newVal?: boolean,
+    ): void;
+    function SetChatTypeEnabled(
+      this: void,
+      chatName: string,
+      newVal?: boolean,
+    ): void;
     function SetDefaultSettings(this: void): void;
-    function SetSetting(this: void, setting: Enum.TtsBoolSetting, newVal?: boolean): void;
+    function SetSetting(
+      this: void,
+      setting: Enum.TtsBoolSetting,
+      newVal?: boolean,
+    ): void;
     function SetSpeechRate(this: void, newVal: number): void;
     function SetSpeechVolume(this: void, newVal: number): void;
-    function SetVoiceOption(this: void, voiceType: Enum.TtsVoiceType, voiceID: number): void;
-    function SetVoiceOptionName(this: void, voiceType: Enum.TtsVoiceType, voiceName: string): void;
-    function ShouldOverrideMessage(this: void, language: number, messageText: string): boolean;
+    function SetVoiceOption(
+      this: void,
+      voiceType: Enum.TtsVoiceType,
+      voiceID: number,
+    ): void;
+    function SetVoiceOptionName(
+      this: void,
+      voiceType: Enum.TtsVoiceType,
+      voiceName: string,
+    ): void;
+    function ShouldOverrideMessage(
+      this: void,
+      language: number,
+      messageText: string,
+    ): boolean;
   }
 
   namespace C_Tutorial {
@@ -15379,13 +20887,19 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       flags: number;
     }
 
-    function GetLevelUpDisplayToastsFromLevel(this: void, level: number): EventToastInfo[];
+    function GetLevelUpDisplayToastsFromLevel(
+      this: void,
+      level: number,
+    ): EventToastInfo[];
     function GetNextToastToDisplay(this: void): EventToastInfo;
     function RemoveCurrentToast(this: void): void;
   }
 
   namespace C_FrameManager {
-    function GetFrameVisibilityState(this: void, frameType: Enum.UIFrameType): boolean;
+    function GetFrameVisibilityState(
+      this: void,
+      frameType: Enum.UIFrameType,
+    ): boolean;
   }
 
   namespace C_GenericWidgetDisplay {
@@ -15407,13 +20921,20 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     type MacroExecuteLineCallback = (this: void, macroLine: string) => void;
 
     function RunMacroText(this: void, text: string, button: string): void;
-    function SetMacroExecuteLineCallback(this: void, cb: MacroExecuteLineCallback): void;
+    function SetMacroExecuteLineCallback(
+      this: void,
+      cb: MacroExecuteLineCallback,
+    ): void;
   }
 
   namespace C_UI {
     function DoesAnyDisplayHaveNotch(this: void): boolean;
-    function GetTopLeftNotchSafeRegion(this: void): LuaMultiReturn<[number, number, number, number]>;
-    function GetTopRightNotchSafeRegion(this: void): LuaMultiReturn<[number, number, number, number]>;
+    function GetTopLeftNotchSafeRegion(
+      this: void,
+    ): LuaMultiReturn<[number, number, number, number]>;
+    function GetTopRightNotchSafeRegion(
+      this: void,
+    ): LuaMultiReturn<[number, number, number, number]>;
     function GetUIParent(this: void): SimpleFrame;
     function GetWorldFrame(this: void): SimpleFrame;
     function Reload(this: void): void;
@@ -15463,14 +20984,40 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       flags: Enum.ModelSceneSetting;
     }
 
-    function AddActiveModelScene(this: void, modelSceneFrame: ModelSceneFrame, modelSceneID: number): void;
-    function AddActiveModelSceneActor(this: void, modelSceneFrameActor: ModelSceneFrameActor, modelSceneActorID: number): void;
-    function ClearActiveModelScene(this: void, modelSceneFrame: ModelSceneFrame): void;
-    function ClearActiveModelSceneActor(this: void, modelSceneFrameActor: ModelSceneFrameActor): void;
-    function GetModelSceneActorDisplayInfoByID(this: void, modelActorDisplayID: number): UIModelSceneActorDisplayInfo;
-    function GetModelSceneActorInfoByID(this: void, modelActorID: number): UIModelSceneActorInfo;
-    function GetModelSceneCameraInfoByID(this: void, modelSceneCameraID: number): UIModelSceneCameraInfo;
-    function GetModelSceneInfoByID(this: void, modelSceneID: number): LuaMultiReturn<[Enum.ModelSceneType, number[], number[], number]>;
+    function AddActiveModelScene(
+      this: void,
+      modelSceneFrame: ModelSceneFrame,
+      modelSceneID: number,
+    ): void;
+    function AddActiveModelSceneActor(
+      this: void,
+      modelSceneFrameActor: ModelSceneFrameActor,
+      modelSceneActorID: number,
+    ): void;
+    function ClearActiveModelScene(
+      this: void,
+      modelSceneFrame: ModelSceneFrame,
+    ): void;
+    function ClearActiveModelSceneActor(
+      this: void,
+      modelSceneFrameActor: ModelSceneFrameActor,
+    ): void;
+    function GetModelSceneActorDisplayInfoByID(
+      this: void,
+      modelActorDisplayID: number,
+    ): UIModelSceneActorDisplayInfo;
+    function GetModelSceneActorInfoByID(
+      this: void,
+      modelActorID: number,
+    ): UIModelSceneActorInfo;
+    function GetModelSceneCameraInfoByID(
+      this: void,
+      modelSceneCameraID: number,
+    ): UIModelSceneCameraInfo;
+    function GetModelSceneInfoByID(
+      this: void,
+      modelSceneID: number,
+    ): LuaMultiReturn<[Enum.ModelSceneType, number[], number[], number]>;
   }
 
   namespace C_ModifiedInstance {
@@ -15483,7 +21030,10 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       description: string;
     }
 
-    function GetModifiedInstanceInfoFromMapID(this: void, mapID: number): ModifiedInstanceInfo;
+    function GetModifiedInstanceInfoFromMapID(
+      this: void,
+      mapID: number,
+    ): ModifiedInstanceInfo;
   }
 
   interface AnchorBinding {
@@ -15518,8 +21068,17 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     type TimerCallback = (this: void) => void;
 
     function After(this: void, seconds: number, callback: TimerCallback): void;
-    function NewTicker(this: void, seconds: number, callback: TickerCallback, iterations?: number): TickerCallback;
-    function NewTimer(this: void, seconds: number, callback: TickerCallback): TickerCallback;
+    function NewTicker(
+      this: void,
+      seconds: number,
+      callback: TickerCallback,
+      iterations?: number,
+    ): TickerCallback;
+    function NewTimer(
+      this: void,
+      seconds: number,
+      callback: TickerCallback,
+    ): TickerCallback;
   }
 
   namespace C_UIWidgetManager {
@@ -16294,63 +21853,219 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
 
     function GetAllWidgetsBySetID(this: void, setID: number): UIWidgetInfo[];
     function GetBelowMinimapWidgetSetID(this: void): number;
-    function GetBulletTextListWidgetVisualizationInfo(this: void, widgetID: number): BulletTextListWidgetVisualizationInfo|undefined;
-    function GetCaptureBarWidgetVisualizationInfo(this: void, widgetID: number): CaptureBarWidgetVisualizationInfo|undefined;
-    function GetCaptureZoneVisualizationInfo(this: void, widgetID: number): CaptureZoneVisualizationInfo|undefined;
-    function GetDiscreteProgressStepsVisualizationInfo(this: void, widgetID: number): DiscreteProgressStepsVisualizationInfo|undefined;
-    function GetDoubleIconAndTextWidgetVisualizationInfo(this: void, widgetID: number): DoubleIconAndTextWidgetVisualizationInfo|undefined;
-    function GetDoubleStateIconRowVisualizationInfo(this: void, widgetID: number): DoubleStateIconRowVisualizationInfo|undefined;
-    function GetDoubleStatusBarWidgetVisualizationInfo(this: void, widgetID: number): DoubleStatusBarWidgetVisualizationInfo|undefined;
-    function GetFillUpFramesWidgetVisualizationInfo(this: void, widgetID: number): FillUpFramesWidgetVisualizationInfo|undefined;
-    function GetHorizontalCurrenciesWidgetVisualizationInfo(this: void, widgetID: number): HorizontalCurrenciesWidgetVisualizationInfo|undefined;
-    function GetIconAndTextWidgetVisualizationInfo(this: void, widgetID: number): IconAndTextWidgetVisualizationInfo|undefined;
-    function GetIconTextAndBackgroundWidgetVisualizationInfo(this: void, widgetID: number): IconTextAndBackgroundWidgetVisualizationInfo|undefined;
-    function GetIconTextAndCurrenciesWidgetVisualizationInfo(this: void, widgetID: number): IconTextAndCurrenciesWidgetVisualizationInfo|undefined;
-    function GetItemDisplayVisualizationInfo(this: void, widgetID: number): ItemDisplayVisualizationInfo|undefined;
-    function GetMapPinAnimationWidgetVisualizationInfo(this: void, widgetID: number): MapPinAnimationWidgetVisualizationInfo|undefined;
+    function GetBulletTextListWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): BulletTextListWidgetVisualizationInfo | undefined;
+    function GetCaptureBarWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): CaptureBarWidgetVisualizationInfo | undefined;
+    function GetCaptureZoneVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): CaptureZoneVisualizationInfo | undefined;
+    function GetDiscreteProgressStepsVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): DiscreteProgressStepsVisualizationInfo | undefined;
+    function GetDoubleIconAndTextWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): DoubleIconAndTextWidgetVisualizationInfo | undefined;
+    function GetDoubleStateIconRowVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): DoubleStateIconRowVisualizationInfo | undefined;
+    function GetDoubleStatusBarWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): DoubleStatusBarWidgetVisualizationInfo | undefined;
+    function GetFillUpFramesWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): FillUpFramesWidgetVisualizationInfo | undefined;
+    function GetHorizontalCurrenciesWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): HorizontalCurrenciesWidgetVisualizationInfo | undefined;
+    function GetIconAndTextWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): IconAndTextWidgetVisualizationInfo | undefined;
+    function GetIconTextAndBackgroundWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): IconTextAndBackgroundWidgetVisualizationInfo | undefined;
+    function GetIconTextAndCurrenciesWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): IconTextAndCurrenciesWidgetVisualizationInfo | undefined;
+    function GetItemDisplayVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): ItemDisplayVisualizationInfo | undefined;
+    function GetMapPinAnimationWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): MapPinAnimationWidgetVisualizationInfo | undefined;
     function GetObjectiveTrackerWidgetSetID(this: void): number;
     function GetPowerBarWidgetSetID(this: void): number;
-    function GetScenarioHeaderCurrenciesAndBackgroundWidgetVisualizationInfo(this: void, widgetID: number): ScenarioHeaderCurrenciesAndBackgroundWidgetVisualizationInfo|undefined;
-    function GetScenarioHeaderDelvesWidgetVisualizationInfo(this: void, widgetID: number): ScenarioHeaderDelvesWidgetVisualizationInfo|undefined;
-    function GetScenarioHeaderTimerWidgetVisualizationInfo(this: void, widgetID: number): ScenarioHeaderTimerWidgetVisualizationInfo|undefined;
-    function GetSpacerVisualizationInfo(this: void, widgetID: number): SpacerVisualizationInfo|undefined;
-    function GetSpellDisplayVisualizationInfo(this: void, widgetID: number): SpellDisplayVisualizationInfo|undefined;
-    function GetStackedResourceTrackerWidgetVisualizationInfo(this: void, widgetID: number): StackedResourceTrackerWidgetVisualizationInfo|undefined;
-    function GetStatusBarWidgetVisualizationInfo(this: void, widgetID: number): StatusBarWidgetVisualizationInfo|undefined;
-    function GetTextColumnRowVisualizationInfo(this: void, widgetID: number): TextColumnRowVisualizationInfo|undefined;
-    function GetTextWithStateWidgetVisualizationInfo(this: void, widgetID: number): TextWithStateWidgetVisualizationInfo|undefined;
-    function GetTextWithSubtextWidgetVisualizationInfo(this: void, widgetID: number): TextWithSubtextWidgetVisualizationInfo|undefined;
-    function GetTextureAndTextRowVisualizationInfo(this: void, widgetID: number): TextureAndTextRowVisualizationInfo|undefined;
-    function GetTextureAndTextVisualizationInfo(this: void, widgetID: number): TextureAndTextVisualizationInfo|undefined;
-    function GetTextureWithAnimationVisualizationInfo(this: void, widgetID: number): TextureWithAnimationVisualizationInfo|undefined;
+    function GetScenarioHeaderCurrenciesAndBackgroundWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): ScenarioHeaderCurrenciesAndBackgroundWidgetVisualizationInfo | undefined;
+    function GetScenarioHeaderDelvesWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): ScenarioHeaderDelvesWidgetVisualizationInfo | undefined;
+    function GetScenarioHeaderTimerWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): ScenarioHeaderTimerWidgetVisualizationInfo | undefined;
+    function GetSpacerVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): SpacerVisualizationInfo | undefined;
+    function GetSpellDisplayVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): SpellDisplayVisualizationInfo | undefined;
+    function GetStackedResourceTrackerWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): StackedResourceTrackerWidgetVisualizationInfo | undefined;
+    function GetStatusBarWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): StatusBarWidgetVisualizationInfo | undefined;
+    function GetTextColumnRowVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): TextColumnRowVisualizationInfo | undefined;
+    function GetTextWithStateWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): TextWithStateWidgetVisualizationInfo | undefined;
+    function GetTextWithSubtextWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): TextWithSubtextWidgetVisualizationInfo | undefined;
+    function GetTextureAndTextRowVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): TextureAndTextRowVisualizationInfo | undefined;
+    function GetTextureAndTextVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): TextureAndTextVisualizationInfo | undefined;
+    function GetTextureWithAnimationVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): TextureWithAnimationVisualizationInfo | undefined;
     function GetTopCenterWidgetSetID(this: void): number;
-    function GetTugOfWarWidgetVisualizationInfo(this: void, widgetID: number): TugOfWarWidgetVisualizationInfo|undefined;
-    function GetUnitPowerBarWidgetVisualizationInfo(this: void, widgetID: number): UnitPowerBarWidgetVisualizationInfo|undefined;
+    function GetTugOfWarWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): TugOfWarWidgetVisualizationInfo | undefined;
+    function GetUnitPowerBarWidgetVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): UnitPowerBarWidgetVisualizationInfo | undefined;
     function GetWidgetSetInfo(this: void, widgetSetID: number): UIWidgetSetInfo;
-    function GetZoneControlVisualizationInfo(this: void, widgetID: number): ZoneControlVisualizationInfo|undefined;
-    function RegisterUnitForWidgetUpdates(this: void, unitToken: string, isGuid?: boolean): void;
+    function GetZoneControlVisualizationInfo(
+      this: void,
+      widgetID: number,
+    ): ZoneControlVisualizationInfo | undefined;
+    function RegisterUnitForWidgetUpdates(
+      this: void,
+      unitToken: string,
+      isGuid?: boolean,
+    ): void;
     function SetProcessingUnit(this: void, unit?: UnitToken): void;
     function SetProcessingUnitGuid(this: void, unit?: WOWGUID): void;
-    function UnregisterUnitForWidgetUpdates(this: void, unitToken: string, isGuid?: boolean): void;
+    function UnregisterUnitForWidgetUpdates(
+      this: void,
+      unitToken: string,
+      isGuid?: boolean,
+    ): void;
   }
 
   namespace C_UnitAuras {
-    function AddPrivateAuraAnchor(this: void, args: AddPrivateAuraAnchorArgs): number|undefined;
-    function AddPrivateAuraAppliedSound(this: void, sound: UnitPrivateAuraAppliedSoundInfo): number|undefined;
+    function AddPrivateAuraAnchor(
+      this: void,
+      args: AddPrivateAuraAnchorArgs,
+    ): number | undefined;
+    function AddPrivateAuraAppliedSound(
+      this: void,
+      sound: UnitPrivateAuraAppliedSoundInfo,
+    ): number | undefined;
     function AuraIsPrivate(this: void, spellID: number): boolean;
-    function GetAuraDataByAuraInstanceID(this: void, unitToken: string, auraInstanceID: number): AuraData|undefined;
-    function GetAuraDataByIndex(this: void, unitToken: string, index: number, filter?: string): AuraData|undefined;
-    function GetAuraDataBySlot(this: void, unitToken: string, slot: number): AuraData|undefined;
-    function GetAuraDataBySpellName(this: void, unitToken: string, spellName: string, filter?: string): AuraData|undefined;
-    function GetAuraSlots(this: void, unitToken: UnitToken, filter?: string, maxSlots?: number, continuationToken?: number): LuaMultiReturn<[number|undefined, number]>;
-    function GetBuffDataByIndex(this: void, unitToken: string, index: number, filter?: string): AuraData|undefined;
-    function GetCooldownAuraBySpellID(this: void, spellID: number): number|undefined;
-    function GetDebuffDataByIndex(this: void, unitToken: string, index: number, filter?: string): AuraData|undefined;
-    function GetPlayerAuraBySpellID(this: void, spellID: number): AuraData|undefined;
-    function IsAuraFilteredOutByInstanceID(this: void, unitToken: string, auraInstanceID: number, filterFlags: string): boolean;
+    function GetAuraDataByAuraInstanceID(
+      this: void,
+      unitToken: string,
+      auraInstanceID: number,
+    ): AuraData | undefined;
+    function GetAuraDataByIndex(
+      this: void,
+      unitToken: string,
+      index: number,
+      filter?: string,
+    ): AuraData | undefined;
+    function GetAuraDataBySlot(
+      this: void,
+      unitToken: string,
+      slot: number,
+    ): AuraData | undefined;
+    function GetAuraDataBySpellName(
+      this: void,
+      unitToken: string,
+      spellName: string,
+      filter?: string,
+    ): AuraData | undefined;
+    function GetAuraSlots(
+      this: void,
+      unitToken: UnitToken,
+      filter?: string,
+      maxSlots?: number,
+      continuationToken?: number,
+    ): LuaMultiReturn<[number | undefined, number]>;
+    function GetBuffDataByIndex(
+      this: void,
+      unitToken: string,
+      index: number,
+      filter?: string,
+    ): AuraData | undefined;
+    function GetCooldownAuraBySpellID(
+      this: void,
+      spellID: number,
+    ): number | undefined;
+    function GetDebuffDataByIndex(
+      this: void,
+      unitToken: string,
+      index: number,
+      filter?: string,
+    ): AuraData | undefined;
+    function GetPlayerAuraBySpellID(
+      this: void,
+      spellID: number,
+    ): AuraData | undefined;
+    function IsAuraFilteredOutByInstanceID(
+      this: void,
+      unitToken: string,
+      auraInstanceID: number,
+      filterFlags: string,
+    ): boolean;
     function RemovePrivateAuraAnchor(this: void, anchorID: number): void;
-    function RemovePrivateAuraAppliedSound(this: void, privateAuraSoundID: number): void;
-    function SetPrivateWarningTextAnchor(this: void, parent: SimpleFrame, anchor?: AnchorBinding): void;
+    function RemovePrivateAuraAppliedSound(
+      this: void,
+      privateAuraSoundID: number,
+    ): void;
+    function SetPrivateWarningTextAnchor(
+      this: void,
+      parent: SimpleFrame,
+      anchor?: AnchorBinding,
+    ): void;
     function WantsAlteredForm(this: void, unitToken: string): boolean;
   }
 
@@ -16445,31 +22160,83 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     animateNumbers: boolean;
   }
 
-  function CanEjectPassengerFromSeat(this: void, virtualSeatIndex: number): boolean;
+  function CanEjectPassengerFromSeat(
+    this: void,
+    virtualSeatIndex: number,
+  ): boolean;
   function CanShowSetRoleButton(this: void): boolean;
   function CanSwitchVehicleSeat(this: void): boolean;
-  function ClosestGameObjectPosition(this: void, gameObjectID: number): LuaMultiReturn<[number, number, number]>;
-  function ClosestUnitPosition(this: void, creatureID: number): LuaMultiReturn<[number, number, number]>;
+  function ClosestGameObjectPosition(
+    this: void,
+    gameObjectID: number,
+  ): LuaMultiReturn<[number, number, number]>;
+  function ClosestUnitPosition(
+    this: void,
+    creatureID: number,
+  ): LuaMultiReturn<[number, number, number]>;
   function EjectPassengerFromSeat(this: void, virtualSeatIndex: number): void;
-  function GetComboPoints(this: void, unit: UnitToken, target: UnitToken): number;
+  function GetComboPoints(
+    this: void,
+    unit: UnitToken,
+    target: UnitToken,
+  ): number;
   function GetNegativeCorruptionEffectInfo(this: void): CorruptionEffectInfo[];
   function GetUnitChargedPowerPoints(this: void, unit: UnitToken): number[];
   function GetUnitEmpowerHoldAtMaxTime(this: void, unit: UnitToken): number;
   function GetUnitEmpowerMinHoldTime(this: void, unit: UnitToken): number;
-  function GetUnitEmpowerStageDuration(this: void, unit: UnitToken, index: number): number;
+  function GetUnitEmpowerStageDuration(
+    this: void,
+    unit: UnitToken,
+    index: number,
+  ): number;
   function GetUnitHealthModifier(this: void, unit: UnitToken): number;
   function GetUnitMaxHealthModifier(this: void, unit: UnitToken): number;
-  function GetUnitPowerBarInfo(this: void, unitToken: UnitToken): UnitPowerBarInfo;
+  function GetUnitPowerBarInfo(
+    this: void,
+    unitToken: UnitToken,
+  ): UnitPowerBarInfo;
   function GetUnitPowerBarInfoByID(this: void, barID: number): UnitPowerBarInfo;
-  function GetUnitPowerBarStrings(this: void, unitToken: UnitToken): LuaMultiReturn<[string|undefined, string|undefined, string|undefined]>;
-  function GetUnitPowerBarStringsByID(this: void, barID: number): LuaMultiReturn<[string|undefined, string|undefined, string|undefined]>;
-  function GetUnitPowerBarTextureInfo(this: void, unitToken: UnitToken, textureIndex: number, timerIndex?: number): LuaMultiReturn<[fileID, number, number, number, number]>;
-  function GetUnitPowerBarTextureInfoByID(this: void, barID: number, textureIndex: number): LuaMultiReturn<[fileID, number, number, number, number]>;
+  function GetUnitPowerBarStrings(
+    this: void,
+    unitToken: UnitToken,
+  ): LuaMultiReturn<
+    [string | undefined, string | undefined, string | undefined]
+  >;
+  function GetUnitPowerBarStringsByID(
+    this: void,
+    barID: number,
+  ): LuaMultiReturn<
+    [string | undefined, string | undefined, string | undefined]
+  >;
+  function GetUnitPowerBarTextureInfo(
+    this: void,
+    unitToken: UnitToken,
+    textureIndex: number,
+    timerIndex?: number,
+  ): LuaMultiReturn<[fileID, number, number, number, number]>;
+  function GetUnitPowerBarTextureInfoByID(
+    this: void,
+    barID: number,
+    textureIndex: number,
+  ): LuaMultiReturn<[fileID, number, number, number, number]>;
   function GetUnitPowerModifier(this: void, unit: UnitToken): number;
-  function GetUnitSpeed(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number, number]>;
-  function GetUnitTotalModifiedMaxHealthPercent(this: void, unit: UnitToken): number;
-  function GetVehicleUIIndicator(this: void, vehicleIndicatorID: number): LuaMultiReturn<[fileID, number]>;
-  function GetVehicleUIIndicatorSeat(this: void, vehicleIndicatorID: number, indicatorSeatIndex: number): LuaMultiReturn<[number, number, number]>;
+  function GetUnitSpeed(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number, number]>;
+  function GetUnitTotalModifiedMaxHealthPercent(
+    this: void,
+    unit: UnitToken,
+  ): number;
+  function GetVehicleUIIndicator(
+    this: void,
+    vehicleIndicatorID: number,
+  ): LuaMultiReturn<[fileID, number]>;
+  function GetVehicleUIIndicatorSeat(
+    this: void,
+    vehicleIndicatorID: number,
+    indicatorSeatIndex: number,
+  ): LuaMultiReturn<[number, number, number]>;
   function InitiateRolePoll(this: void): boolean;
   function IsFalling(this: void, unit?: UnitToken): boolean;
   function IsFlying(this: void, unit?: UnitToken): boolean;
@@ -16480,41 +22247,142 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function PlayerIsPVPInactive(this: void, unit: UnitToken): boolean;
   function PlayerVehicleHasComboPoints(this: void): boolean;
   function ReportPlayerIsPVPAFK(this: void, unit: UnitToken): void;
-  function ResistancePercent(this: void, resistance: number, casterLevel: number): number;
-  function SetPortraitTexture(this: void, textureObject: SimpleTexture, unitToken: UnitToken, disableMasking?: boolean): void;
-  function SetPortraitTextureFromCreatureDisplayID(this: void, textureObject: SimpleTexture, creatureDisplayID: number): void;
-  function SetUnitCursorTexture(this: void, textureObject: SimpleTexture, unit: UnitToken, style?: Enum.CursorStyle, includeLowPriority?: boolean): boolean;
-  function ShowBossFrameWhenUninteractable(this: void, unit: UnitToken): boolean;
+  function ResistancePercent(
+    this: void,
+    resistance: number,
+    casterLevel: number,
+  ): number;
+  function SetPortraitTexture(
+    this: void,
+    textureObject: SimpleTexture,
+    unitToken: UnitToken,
+    disableMasking?: boolean,
+  ): void;
+  function SetPortraitTextureFromCreatureDisplayID(
+    this: void,
+    textureObject: SimpleTexture,
+    creatureDisplayID: number,
+  ): void;
+  function SetUnitCursorTexture(
+    this: void,
+    textureObject: SimpleTexture,
+    unit: UnitToken,
+    style?: Enum.CursorStyle,
+    includeLowPriority?: boolean,
+  ): boolean;
+  function ShowBossFrameWhenUninteractable(
+    this: void,
+    unit: UnitToken,
+  ): boolean;
   function UnitAffectingCombat(this: void, unit: UnitToken): boolean;
-  function UnitAlliedRaceInfo(this: void, unit: UnitToken): LuaMultiReturn<[boolean, boolean]>;
-  function UnitArmor(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number, number]>;
-  function UnitAttackPower(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number]>;
-  function UnitAttackSpeed(this: void, unit: UnitToken): LuaMultiReturn<[number, number|undefined]>;
-  function UnitBattlePetLevel(this: void, unit: UnitToken): number|undefined;
-  function UnitBattlePetSpeciesID(this: void, unit: UnitToken): number|undefined;
-  function UnitBattlePetType(this: void, unit: UnitToken): number|undefined;
-  function UnitCanAssist(this: void, unit: UnitToken, target: UnitToken): boolean;
-  function UnitCanAttack(this: void, unit: UnitToken, target: UnitToken): boolean;
-  function UnitCanCooperate(this: void, unit: UnitToken, target: UnitToken): boolean;
-  function UnitCanPetBattle(this: void, unit: UnitToken, target: UnitToken): boolean;
-  function UnitCastingInfo(this: void, unit: UnitToken): LuaMultiReturn<[string, string, fileID, number, number, boolean, WOWGUID, boolean, number]>;
-  function UnitChannelInfo(this: void, unitToken: string): LuaMultiReturn<[string, string, fileID, number, number, boolean, boolean, number, boolean, number]>;
+  function UnitAlliedRaceInfo(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[boolean, boolean]>;
+  function UnitArmor(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number, number]>;
+  function UnitAttackPower(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number]>;
+  function UnitAttackSpeed(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number | undefined]>;
+  function UnitBattlePetLevel(this: void, unit: UnitToken): number | undefined;
+  function UnitBattlePetSpeciesID(
+    this: void,
+    unit: UnitToken,
+  ): number | undefined;
+  function UnitBattlePetType(this: void, unit: UnitToken): number | undefined;
+  function UnitCanAssist(
+    this: void,
+    unit: UnitToken,
+    target: UnitToken,
+  ): boolean;
+  function UnitCanAttack(
+    this: void,
+    unit: UnitToken,
+    target: UnitToken,
+  ): boolean;
+  function UnitCanCooperate(
+    this: void,
+    unit: UnitToken,
+    target: UnitToken,
+  ): boolean;
+  function UnitCanPetBattle(
+    this: void,
+    unit: UnitToken,
+    target: UnitToken,
+  ): boolean;
+  function UnitCastingInfo(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<
+    [string, string, fileID, number, number, boolean, WOWGUID, boolean, number]
+  >;
+  function UnitChannelInfo(
+    this: void,
+    unitToken: string,
+  ): LuaMultiReturn<
+    [
+      string,
+      string,
+      fileID,
+      number,
+      number,
+      boolean,
+      boolean,
+      number,
+      boolean,
+      number,
+    ]
+  >;
   function UnitChromieTimeID(this: void, unit: UnitToken): number;
-  function UnitClass(this: void, unit: UnitToken): LuaMultiReturn<[string, string, number]>;
-  function UnitClassBase(this: void, unit: UnitToken): LuaMultiReturn<[string, number]>;
+  function UnitClass(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[string, string, number]>;
+  function UnitClassBase(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[string, number]>;
   function UnitClassification(this: void, unit: UnitToken): string;
   function UnitControllingVehicle(this: void, unit: UnitToken): boolean;
   function UnitCreatureFamily(this: void, unit: UnitToken): string;
   function UnitCreatureType(this: void, unit: UnitToken): string;
-  function UnitDamage(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number, number, number, number, number]>;
-  function UnitDetailedThreatSituation(this: void, unit: UnitToken, mobGUID: UnitToken): LuaMultiReturn<[boolean, number, number, number, number]>;
-  function UnitDistanceSquared(this: void, unit: UnitToken): LuaMultiReturn<[number, boolean]>;
+  function UnitDamage(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number, number, number, number, number]>;
+  function UnitDetailedThreatSituation(
+    this: void,
+    unit: UnitToken,
+    mobGUID: UnitToken,
+  ): LuaMultiReturn<[boolean, number, number, number, number]>;
+  function UnitDistanceSquared(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, boolean]>;
   function UnitEffectiveLevel(this: void, name: string): number;
   function UnitExists(this: void, unit?: UnitToken): boolean;
-  function UnitFactionGroup(this: void, unitName: string, checkDisplayRace?: boolean): LuaMultiReturn<[string, string]>;
-  function UnitFullName(this: void, unit: string): LuaMultiReturn<[string, string]>;
-  function UnitGUID(this: void, unit: UnitToken): WOWGUID|undefined;
-  function UnitGetIncomingHeals(this: void, unit: UnitToken, healerGUID?: UnitToken): number|undefined;
+  function UnitFactionGroup(
+    this: void,
+    unitName: string,
+    checkDisplayRace?: boolean,
+  ): LuaMultiReturn<[string, string]>;
+  function UnitFullName(
+    this: void,
+    unit: string,
+  ): LuaMultiReturn<[string, string]>;
+  function UnitGUID(this: void, unit: UnitToken): WOWGUID | undefined;
+  function UnitGetIncomingHeals(
+    this: void,
+    unit: UnitToken,
+    healerGUID?: UnitToken,
+  ): number | undefined;
   function UnitGetTotalAbsorbs(this: void, unit: UnitToken): number;
   function UnitGetTotalHealAbsorbs(this: void, unit: UnitToken): number;
   function UnitGroupRolesAssigned(this: void, unit?: UnitToken): string;
@@ -16524,23 +22392,50 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function UnitHasVehiclePlayerFrameUI(this: void, unit?: UnitToken): boolean;
   function UnitHasVehicleUI(this: void, unit?: UnitToken): boolean;
   function UnitHealthMax(this: void, unit: UnitToken): number;
-  function UnitHealth(this: void, unit: UnitToken, usePredicted?: boolean): number;
+  function UnitHealth(
+    this: void,
+    unit: UnitToken,
+    usePredicted?: boolean,
+  ): number;
   function UnitHonor(this: void, unit: UnitToken): number;
   function UnitHonorLevel(this: void, unit: UnitToken): number;
   function UnitHonorMax(this: void, unit: UnitToken): number;
-  function UnitInAnyGroup(this: void, unit?: UnitToken, partyIndex?: number): boolean;
-  function UnitInBattleground(this: void, unit?: UnitToken, partyIndex?: number): number|undefined;
-  function UnitInParty(this: void, unit?: UnitToken, partyIndex?: number): boolean;
+  function UnitInAnyGroup(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): boolean;
+  function UnitInBattleground(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): number | undefined;
+  function UnitInParty(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): boolean;
   function UnitInPartyIsAI(this: void, unit?: UnitToken): boolean;
   function UnitInPartyShard(this: void, unit: UnitToken): boolean;
-  function UnitInRaid(this: void, unit?: UnitToken, partyIndex?: number): number|undefined;
-  function UnitInRange(this: void, unit: UnitToken): LuaMultiReturn<[boolean, boolean]>;
-  function UnitInSubgroup(this: void, unit?: UnitToken, partyIndex?: number): boolean;
+  function UnitInRaid(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): number | undefined;
+  function UnitInRange(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[boolean, boolean]>;
+  function UnitInSubgroup(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): boolean;
   function UnitInVehicle(this: void, unit: UnitToken): boolean;
   function UnitInVehicleControlSeat(this: void, unit?: UnitToken): boolean;
   function UnitInVehicleHidesPetFrame(this: void, unit?: UnitToken): boolean;
   function UnitIsAFK(this: void, unit: UnitToken): boolean;
-  function UnitIsBattlePet(this: void, unit: UnitToken): boolean|undefined;
+  function UnitIsBattlePet(this: void, unit: UnitToken): boolean | undefined;
   function UnitIsBattlePetCompanion(this: void, unit: UnitToken): boolean;
   function UnitIsBossMob(this: void, unit: UnitToken): boolean;
   function UnitIsCharmed(this: void, unit?: UnitToken): boolean;
@@ -16552,7 +22447,11 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function UnitIsDeadOrGhost(this: void, unit: UnitToken): boolean;
   function UnitIsEnemy(this: void, unit: UnitToken, target: UnitToken): boolean;
   function UnitIsFeignDeath(this: void, unit: UnitToken): boolean;
-  function UnitIsFriend(this: void, unit: UnitToken, target: UnitToken): boolean;
+  function UnitIsFriend(
+    this: void,
+    unit: UnitToken,
+    target: UnitToken,
+  ): boolean;
   function UnitIsGameObject(this: void, unit?: UnitToken): boolean;
   function UnitIsGhost(this: void, unit: UnitToken): boolean;
   function UnitIsInMyGuild(this: void, unit: string): boolean;
@@ -16560,11 +22459,19 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function UnitIsMercenary(this: void, name: string): boolean;
   function UnitIsOtherPlayersBattlePet(this: void, unit?: UnitToken): boolean;
   function UnitIsOtherPlayersPet(this: void, unit?: UnitToken): boolean;
-  function UnitIsOwnerOrControllerOfUnit(this: void, controllingUnit: UnitToken, controlledUnit: UnitToken): boolean;
+  function UnitIsOwnerOrControllerOfUnit(
+    this: void,
+    controllingUnit: UnitToken,
+    controlledUnit: UnitToken,
+  ): boolean;
   function UnitIsPVP(this: void, unit: UnitToken): boolean;
   function UnitIsPVPFreeForAll(this: void, unit: UnitToken): boolean;
   function UnitIsPVPSanctuary(this: void, unit?: UnitToken): boolean;
-  function UnitIsPlayer(this: void, unit?: UnitToken, partyIndex?: number): boolean;
+  function UnitIsPlayer(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): boolean;
   function UnitIsPossessed(this: void, unit?: UnitToken): boolean;
   function UnitIsQuestBoss(this: void, unit: UnitToken): boolean;
   function UnitIsRaidOfficer(this: void, unit?: UnitToken): boolean;
@@ -16572,59 +22479,166 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function UnitIsTapDenied(this: void, unit: UnitToken): boolean;
   function UnitIsTrivial(this: void, unit: UnitToken): boolean;
   function UnitIsUnconscious(this: void, unit: UnitToken): boolean;
-  function UnitIsUnit(this: void, unitName1: string, unitName2: string): boolean;
+  function UnitIsUnit(
+    this: void,
+    unitName1: string,
+    unitName2: string,
+  ): boolean;
   function UnitIsVisible(this: void, unit?: UnitToken): boolean;
   function UnitIsWildBattlePet(this: void, unit: UnitToken): boolean;
   function UnitLevel(this: void, name: string): number;
   function UnitName(this: void, unit: string): LuaMultiReturn<[string, string]>;
-  function UnitNameUnmodified(this: void, unit: string): LuaMultiReturn<[string, string]>;
+  function UnitNameUnmodified(
+    this: void,
+    unit: string,
+  ): LuaMultiReturn<[string, string]>;
   function UnitNameplateShowsWidgetsOnly(this: void, unit: UnitToken): boolean;
   function UnitNumPowerBarTimers(this: void, unit: UnitToken): number;
   function UnitOnTaxi(this: void, unit: UnitToken): boolean;
   function UnitPVPName(this: void, unit: UnitToken): string;
-  function UnitPartialPower(this: void, unitToken: UnitToken, powerType?: Enum.PowerType, unmodified?: boolean): number;
-  function UnitPercentHealthFromGUID(this: void, unitGUID: WOWGUID): number|undefined;
-  function UnitPhaseReason(this: void, unit: UnitToken): Enum.PhaseReason|undefined;
+  function UnitPartialPower(
+    this: void,
+    unitToken: UnitToken,
+    powerType?: Enum.PowerType,
+    unmodified?: boolean,
+  ): number;
+  function UnitPercentHealthFromGUID(
+    this: void,
+    unitGUID: WOWGUID,
+  ): number | undefined;
+  function UnitPhaseReason(
+    this: void,
+    unit: UnitToken,
+  ): Enum.PhaseReason | undefined;
   function UnitPlayerControlled(this: void, unit?: UnitToken): boolean;
-  function UnitPlayerOrPetInParty(this: void, unit?: UnitToken, partyIndex?: number): boolean;
-  function UnitPlayerOrPetInRaid(this: void, unit?: UnitToken, partyIndex?: number): boolean;
-  function UnitPosition(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number, number]>;
-  function UnitPower(this: void, unitToken: UnitToken, powerType?: Enum.PowerType, unmodified?: boolean): number;
+  function UnitPlayerOrPetInParty(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): boolean;
+  function UnitPlayerOrPetInRaid(
+    this: void,
+    unit?: UnitToken,
+    partyIndex?: number,
+  ): boolean;
+  function UnitPosition(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number, number]>;
+  function UnitPower(
+    this: void,
+    unitToken: UnitToken,
+    powerType?: Enum.PowerType,
+    unmodified?: boolean,
+  ): number;
   function UnitPowerBarID(this: void, unitToken: UnitToken): number;
-  function UnitPowerBarTimerInfo(this: void, unit: UnitToken, index?: number): LuaMultiReturn<[number, number, number, number]>;
+  function UnitPowerBarTimerInfo(
+    this: void,
+    unit: UnitToken,
+    index?: number,
+  ): LuaMultiReturn<[number, number, number, number]>;
   function UnitPowerDisplayMod(this: void, powerType: Enum.PowerType): number;
-  function UnitPowerMax(this: void, unitToken: UnitToken, powerType?: Enum.PowerType, unmodified?: boolean): number;
-  function UnitPowerType(this: void, unit: UnitToken, index?: number): LuaMultiReturn<[Enum.PowerType, string, number, number, number]>;
-  function UnitPvpClassification(this: void, unit: UnitToken): Enum.PvPUnitClassification|undefined;
+  function UnitPowerMax(
+    this: void,
+    unitToken: UnitToken,
+    powerType?: Enum.PowerType,
+    unmodified?: boolean,
+  ): number;
+  function UnitPowerType(
+    this: void,
+    unit: UnitToken,
+    index?: number,
+  ): LuaMultiReturn<[Enum.PowerType, string, number, number, number]>;
+  function UnitPvpClassification(
+    this: void,
+    unit: UnitToken,
+  ): Enum.PvPUnitClassification | undefined;
   function UnitQuestTrivialLevelRange(this: void, unit: UnitToken): number;
-  function UnitQuestTrivialLevelRangeScaling(this: void, unit: UnitToken): number;
-  function UnitRace(this: void, name: string): LuaMultiReturn<[string, string, number]>;
-  function UnitRangedAttackPower(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number]>;
-  function UnitRangedDamage(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number, number, number, number]>;
-  function UnitReaction(this: void, unit: UnitToken, target: UnitToken): number|undefined;
-  function UnitRealmRelationship(this: void, unit: UnitToken): number|undefined;
-  function UnitSelectionColor(this: void, unit: UnitToken, useExtendedColors?: boolean): LuaMultiReturn<[number, number, number, number]>;
-  function UnitSelectionType(this: void, unit: UnitToken, useExtendedColors?: boolean): number;
+  function UnitQuestTrivialLevelRangeScaling(
+    this: void,
+    unit: UnitToken,
+  ): number;
+  function UnitRace(
+    this: void,
+    name: string,
+  ): LuaMultiReturn<[string, string, number]>;
+  function UnitRangedAttackPower(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number]>;
+  function UnitRangedDamage(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number, number, number, number]>;
+  function UnitReaction(
+    this: void,
+    unit: UnitToken,
+    target: UnitToken,
+  ): number | undefined;
+  function UnitRealmRelationship(
+    this: void,
+    unit: UnitToken,
+  ): number | undefined;
+  function UnitSelectionColor(
+    this: void,
+    unit: UnitToken,
+    useExtendedColors?: boolean,
+  ): LuaMultiReturn<[number, number, number, number]>;
+  function UnitSelectionType(
+    this: void,
+    unit: UnitToken,
+    useExtendedColors?: boolean,
+  ): number;
   function UnitSetRole(this: void, unit: UnitToken, roleStr?: string): boolean;
-  function UnitSetRoleEnum(this: void, unit: UnitToken, role?: Enum.LFGRole): boolean;
-  function UnitSex(this: void, unit: UnitToken): number|undefined;
+  function UnitSetRoleEnum(
+    this: void,
+    unit: UnitToken,
+    role?: Enum.LFGRole,
+  ): boolean;
+  function UnitSex(this: void, unit: UnitToken): number | undefined;
   function UnitShouldDisplayName(this: void, unit: UnitToken): boolean;
   function UnitSpellHaste(this: void, unit: UnitToken): number;
   function UnitStagger(this: void, unit: UnitToken): number;
-  function UnitStat(this: void, unit: UnitToken, index: number): LuaMultiReturn<[number, number, number, number]>;
-  function UnitSwitchToVehicleSeat(this: void, unit: UnitToken, virtualSeatIndex: number): void;
+  function UnitStat(
+    this: void,
+    unit: UnitToken,
+    index: number,
+  ): LuaMultiReturn<[number, number, number, number]>;
+  function UnitSwitchToVehicleSeat(
+    this: void,
+    unit: UnitToken,
+    virtualSeatIndex: number,
+  ): void;
   function UnitTargetsVehicleInRaidUI(this: void, unit?: UnitToken): boolean;
-  function UnitThreatPercentageOfLead(this: void, unit: UnitToken, mobGUID: UnitToken): number|undefined;
-  function UnitThreatSituation(this: void, unit: UnitToken, mobGUID?: UnitToken): number|undefined;
-  function UnitTokenFromGUID(this: void, unitGUID: WOWGUID): string|undefined;
+  function UnitThreatPercentageOfLead(
+    this: void,
+    unit: UnitToken,
+    mobGUID: UnitToken,
+  ): number | undefined;
+  function UnitThreatSituation(
+    this: void,
+    unit: UnitToken,
+    mobGUID?: UnitToken,
+  ): number | undefined;
+  function UnitTokenFromGUID(this: void, unitGUID: WOWGUID): string | undefined;
   function UnitTreatAsPlayerForDisplay(this: void, unit: UnitToken): boolean;
-  function UnitTrialBankedLevels(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number]>;
+  function UnitTrialBankedLevels(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number]>;
   function UnitTrialXP(this: void, unit: UnitToken): number;
   function UnitUsingVehicle(this: void, unit: UnitToken): boolean;
   function UnitVehicleSeatCount(this: void, unit: UnitToken): number;
-  function UnitVehicleSeatInfo(this: void, unit: UnitToken, virtualSeatIndex: number): LuaMultiReturn<[string, string, string, boolean, boolean]>;
+  function UnitVehicleSeatInfo(
+    this: void,
+    unit: UnitToken,
+    virtualSeatIndex: number,
+  ): LuaMultiReturn<[string, string, string, boolean, boolean]>;
   function UnitVehicleSkin(this: void, unit?: UnitToken): fileID;
-  function UnitWeaponAttackPower(this: void, unit: UnitToken): LuaMultiReturn<[number, number, number]>;
+  function UnitWeaponAttackPower(
+    this: void,
+    unit: UnitToken,
+  ): LuaMultiReturn<[number, number, number]>;
   function UnitWidgetSet(this: void, unit: UnitToken): number;
   function UnitXP(this: void, unit: UnitToken): number;
   function UnitXPMax(this: void, unit: UnitToken): number;
@@ -16634,12 +22648,15 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
   function LoadURLIndex(this: void, index: number, param?: number): void;
 
   namespace C_UserFeedback {
-    function SubmitBug(this: void, bugInfo: string, suppressNotification?: boolean): boolean;
+    function SubmitBug(
+      this: void,
+      bugInfo: string,
+      suppressNotification?: boolean,
+    ): boolean;
     function SubmitSuggestion(this: void, suggestion: string): boolean;
   }
 
-  namespace C_Vehicle {
-  }
+  namespace C_Vehicle {}
 
   namespace C_VideoOptions {
     interface GxAdapterInfoDetails {
@@ -16650,7 +22667,11 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
 
     function GetCurrentGameWindowSize(this: void): vector2;
     function GetDefaultGameWindowSize(this: void, monitor: number): vector2;
-    function GetGameWindowSizes(this: void, monitor: number, fullscreen: boolean): vector2[];
+    function GetGameWindowSizes(
+      this: void,
+      monitor: number,
+      fullscreen: boolean,
+    ): vector2[];
     function GetGxAdapterInfo(this: void): GxAdapterInfoDetails[];
     function SetGameWindowSize(this: void, x: number, y: number): void;
   }
@@ -16676,9 +22697,19 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       addPaddingAboveTooltipWidgets?: boolean;
     }
 
-    function FindBestUniqueVignette(this: void, vignetteGUIDs: WOWGUID[]): number|undefined;
-    function GetVignetteInfo(this: void, vignetteGUID: WOWGUID): VignetteInfo|undefined;
-    function GetVignettePosition(this: void, vignetteGUID: WOWGUID, uiMapID: number): LuaMultiReturn<[vector2, number|undefined]>;
+    function FindBestUniqueVignette(
+      this: void,
+      vignetteGUIDs: WOWGUID[],
+    ): number | undefined;
+    function GetVignetteInfo(
+      this: void,
+      vignetteGUID: WOWGUID,
+    ): VignetteInfo | undefined;
+    function GetVignettePosition(
+      this: void,
+      vignetteGUID: WOWGUID,
+      uiMapID: number,
+    ): LuaMultiReturn<[vector2, number | undefined]>;
     function GetVignettes(this: void): WOWGUID[];
   }
 
@@ -16728,50 +22759,124 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function ActivateChannelTranscription(this: void, channelID: number): void;
     function BeginLocalCapture(this: void, listenToLocalUser: boolean): void;
     function CanPlayerUseVoiceChat(this: void): boolean;
-    function CreateChannel(this: void, channelDisplayName: string): Enum.VoiceChatStatusCode;
+    function CreateChannel(
+      this: void,
+      channelDisplayName: string,
+    ): Enum.VoiceChatStatusCode;
     function DeactivateChannel(this: void, channelID: number): void;
-    function DeactivateChannelTranscription(this: void, channelID: number): void;
+    function DeactivateChannelTranscription(
+      this: void,
+      channelID: number,
+    ): void;
     function EndLocalCapture(this: void): void;
-    function GetActiveChannelID(this: void): number|undefined;
-    function GetActiveChannelType(this: void): Enum.ChatChannelType|undefined;
-    function GetAvailableInputDevices(this: void): VoiceAudioDevice[]|undefined;
-    function GetAvailableOutputDevices(this: void): VoiceAudioDevice[]|undefined;
-    function GetChannel(this: void, channelID: number): VoiceChatChannel|undefined;
-    function GetChannelForChannelType(this: void, channelType: Enum.ChatChannelType): VoiceChatChannel|undefined;
-    function GetChannelForCommunityStream(this: void, clubId: ClubId, streamId: ClubStreamId): VoiceChatChannel|undefined;
-    function GetCommunicationMode(this: void): Enum.CommunicationMode|undefined;
-    function GetCurrentVoiceChatConnectionStatusCode(this: void): Enum.VoiceChatStatusCode|undefined;
-    function GetInputVolume(this: void): number|undefined;
-    function GetJoinClubVoiceChannelError(this: void, clubId: ClubId): Enum.VoiceChannelErrorReason|undefined;
-    function GetLocalPlayerActiveChannelMemberInfo(this: void): VoiceChatMember|undefined;
-    function GetLocalPlayerMemberID(this: void, channelID: number): number|undefined;
+    function GetActiveChannelID(this: void): number | undefined;
+    function GetActiveChannelType(this: void): Enum.ChatChannelType | undefined;
+    function GetAvailableInputDevices(
+      this: void,
+    ): VoiceAudioDevice[] | undefined;
+    function GetAvailableOutputDevices(
+      this: void,
+    ): VoiceAudioDevice[] | undefined;
+    function GetChannel(
+      this: void,
+      channelID: number,
+    ): VoiceChatChannel | undefined;
+    function GetChannelForChannelType(
+      this: void,
+      channelType: Enum.ChatChannelType,
+    ): VoiceChatChannel | undefined;
+    function GetChannelForCommunityStream(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): VoiceChatChannel | undefined;
+    function GetCommunicationMode(
+      this: void,
+    ): Enum.CommunicationMode | undefined;
+    function GetCurrentVoiceChatConnectionStatusCode(
+      this: void,
+    ): Enum.VoiceChatStatusCode | undefined;
+    function GetInputVolume(this: void): number | undefined;
+    function GetJoinClubVoiceChannelError(
+      this: void,
+      clubId: ClubId,
+    ): Enum.VoiceChannelErrorReason | undefined;
+    function GetLocalPlayerActiveChannelMemberInfo(
+      this: void,
+    ): VoiceChatMember | undefined;
+    function GetLocalPlayerMemberID(
+      this: void,
+      channelID: number,
+    ): number | undefined;
     function GetMasterVolumeScale(this: void): number;
-    function GetMemberGUID(this: void, memberID: number, channelID: number): WOWGUID;
-    function GetMemberID(this: void, channelID: number, memberGUID: WOWGUID): number|undefined;
-    function GetMemberInfo(this: void, memberID: number, channelID: number): VoiceChatMember|undefined;
-    function GetMemberName(this: void, memberID: number, channelID: number): string|undefined;
-    function GetMemberVolume(this: void, playerLocation: PlayerLocation): number|undefined;
-    function GetOutputVolume(this: void): number|undefined;
-    function GetPTTButtonPressedState(this: void): boolean|undefined;
+    function GetMemberGUID(
+      this: void,
+      memberID: number,
+      channelID: number,
+    ): WOWGUID;
+    function GetMemberID(
+      this: void,
+      channelID: number,
+      memberGUID: WOWGUID,
+    ): number | undefined;
+    function GetMemberInfo(
+      this: void,
+      memberID: number,
+      channelID: number,
+    ): VoiceChatMember | undefined;
+    function GetMemberName(
+      this: void,
+      memberID: number,
+      channelID: number,
+    ): string | undefined;
+    function GetMemberVolume(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): number | undefined;
+    function GetOutputVolume(this: void): number | undefined;
+    function GetPTTButtonPressedState(this: void): boolean | undefined;
     function GetProcesses(this: void): VoiceChatProcess[];
-    function GetPushToTalkBinding(this: void): string[]|undefined;
+    function GetPushToTalkBinding(this: void): string[] | undefined;
     function GetRemoteTtsVoices(this: void): VoiceTtsVoiceType[];
     function GetTtsVoices(this: void): VoiceTtsVoiceType[];
-    function GetVADSensitivity(this: void): number|undefined;
-    function IsChannelJoinPending(this: void, channelType: Enum.ChatChannelType, clubId?: ClubId, streamId?: ClubStreamId): boolean;
-    function IsDeafened(this: void): boolean|undefined;
+    function GetVADSensitivity(this: void): number | undefined;
+    function IsChannelJoinPending(
+      this: void,
+      channelType: Enum.ChatChannelType,
+      clubId?: ClubId,
+      streamId?: ClubStreamId,
+    ): boolean;
+    function IsDeafened(this: void): boolean | undefined;
     function IsEnabled(this: void): boolean;
     function IsInitialized(this: void): boolean;
     function IsLoggedIn(this: void): boolean;
-    function IsMemberLocalPlayer(this: void, memberID: number, channelID: number): boolean;
-    function IsMemberMuted(this: void, playerLocation: PlayerLocation): boolean|undefined;
-    function IsMemberMutedForAll(this: void, memberID: number, channelID: number): boolean|undefined;
-    function IsMemberSilenced(this: void, memberID: number, channelID: number): boolean|undefined;
-    function IsMuted(this: void): boolean|undefined;
+    function IsMemberLocalPlayer(
+      this: void,
+      memberID: number,
+      channelID: number,
+    ): boolean;
+    function IsMemberMuted(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): boolean | undefined;
+    function IsMemberMutedForAll(
+      this: void,
+      memberID: number,
+      channelID: number,
+    ): boolean | undefined;
+    function IsMemberSilenced(
+      this: void,
+      memberID: number,
+      channelID: number,
+    ): boolean | undefined;
+    function IsMuted(this: void): boolean | undefined;
     function IsParentalDisabled(this: void): boolean;
     function IsParentalMuted(this: void): boolean;
-    function IsPlayerUsingVoice(this: void, playerLocation: PlayerLocation): boolean;
-    function IsSilenced(this: void): boolean|undefined;
+    function IsPlayerUsingVoice(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): boolean;
+    function IsSilenced(this: void): boolean | undefined;
     function IsSpeakForMeActive(this: void): boolean;
     function IsSpeakForMeAllowed(this: void): boolean;
     function IsTranscribing(this: void): boolean;
@@ -16781,32 +22886,65 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function Login(this: void): Enum.VoiceChatStatusCode;
     function Logout(this: void): Enum.VoiceChatStatusCode;
     function MarkChannelsDiscovered(this: void): void;
-    function RequestJoinAndActivateCommunityStreamChannel(this: void, clubId: ClubId, streamId: ClubStreamId): void;
-    function RequestJoinChannelByChannelType(this: void, channelType: Enum.ChatChannelType, autoActivate?: boolean): void;
-    function SetCommunicationMode(this: void, communicationMode: Enum.CommunicationMode): void;
+    function RequestJoinAndActivateCommunityStreamChannel(
+      this: void,
+      clubId: ClubId,
+      streamId: ClubStreamId,
+    ): void;
+    function RequestJoinChannelByChannelType(
+      this: void,
+      channelType: Enum.ChatChannelType,
+      autoActivate?: boolean,
+    ): void;
+    function SetCommunicationMode(
+      this: void,
+      communicationMode: Enum.CommunicationMode,
+    ): void;
     function SetDeafened(this: void, isDeafened: boolean): void;
     function SetInputDevice(this: void, deviceID: string): void;
     function SetInputVolume(this: void, volume: number): void;
     function SetMasterVolumeScale(this: void, scale: number): void;
-    function SetMemberMuted(this: void, playerLocation: PlayerLocation, muted: boolean): void;
-    function SetMemberVolume(this: void, playerLocation: PlayerLocation, volume: number): void;
+    function SetMemberMuted(
+      this: void,
+      playerLocation: PlayerLocation,
+      muted: boolean,
+    ): void;
+    function SetMemberVolume(
+      this: void,
+      playerLocation: PlayerLocation,
+      volume: number,
+    ): void;
     function SetMuted(this: void, isMuted: boolean): void;
     function SetOutputDevice(this: void, deviceID: string): void;
     function SetOutputVolume(this: void, volume: number): void;
-    function SetPortraitTexture(this: void, textureObject: SimpleTexture, memberID: number, channelID: number): void;
+    function SetPortraitTexture(
+      this: void,
+      textureObject: SimpleTexture,
+      memberID: number,
+      channelID: number,
+    ): void;
     function SetPushToTalkBinding(this: void, keys: string[]): void;
     function SetVADSensitivity(this: void, sensitivity: number): void;
     function ShouldDiscoverChannels(this: void): boolean;
     function SpeakRemoteTextSample(this: void, text: string): void;
-    function SpeakText(this: void, voiceID: number, text: string, destination: Enum.VoiceTtsDestination, rate: number, volume: number): void;
+    function SpeakText(
+      this: void,
+      voiceID: number,
+      text: string,
+      destination: Enum.VoiceTtsDestination,
+      rate: number,
+      volume: number,
+    ): void;
     function StopSpeakingText(this: void): void;
     function ToggleDeafened(this: void): void;
-    function ToggleMemberMuted(this: void, playerLocation: PlayerLocation): void;
+    function ToggleMemberMuted(
+      this: void,
+      playerLocation: PlayerLocation,
+    ): void;
     function ToggleMuted(this: void): void;
   }
 
-  namespace C_VoidStorageInfo {
-  }
+  namespace C_VoidStorageInfo {}
 
   namespace C_CampaignInfo {
     interface CampaignChapterInfo {
@@ -16832,12 +22970,27 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     }
 
     function GetAvailableCampaigns(this: void): number[];
-    function GetCampaignChapterInfo(this: void, campaignChapterID: number): CampaignChapterInfo|undefined;
+    function GetCampaignChapterInfo(
+      this: void,
+      campaignChapterID: number,
+    ): CampaignChapterInfo | undefined;
     function GetCampaignID(this: void, questID: number): number;
-    function GetCampaignInfo(this: void, campaignID: number): CampaignInfo|undefined;
-    function GetChapterIDs(this: void, campaignID: number): number[]|undefined;
-    function GetCurrentChapterID(this: void, campaignID: number): number|undefined;
-    function GetFailureReason(this: void, campaignID: number): CampaignFailureReason|undefined;
+    function GetCampaignInfo(
+      this: void,
+      campaignID: number,
+    ): CampaignInfo | undefined;
+    function GetChapterIDs(
+      this: void,
+      campaignID: number,
+    ): number[] | undefined;
+    function GetCurrentChapterID(
+      this: void,
+      campaignID: number,
+    ): number | undefined;
+    function GetFailureReason(
+      this: void,
+      campaignID: number,
+    ): CampaignFailureReason | undefined;
     function GetState(this: void, campaignID: number): Enum.CampaignState;
     function IsCampaignQuest(this: void, questID: number): boolean;
     function SortAsNormalQuest(this: void, campaignID: number): boolean;
@@ -16884,15 +23037,42 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     function CanClaimRewards(this: void): boolean;
     function ClaimReward(this: void, id: number): void;
     function CloseInteraction(this: void): void;
-    function GetActivities(this: void, type?: WeeklyRewardChestThresholdType): WeeklyRewardActivityInfo[];
-    function GetActivityEncounterInfo(this: void, type: WeeklyRewardChestThresholdType, index: number): WeeklyRewardActivityEncounterInfo[];
+    function GetActivities(
+      this: void,
+      type?: WeeklyRewardChestThresholdType,
+    ): WeeklyRewardActivityInfo[];
+    function GetActivityEncounterInfo(
+      this: void,
+      type: WeeklyRewardChestThresholdType,
+      index: number,
+    ): WeeklyRewardActivityEncounterInfo[];
     function GetConquestWeeklyProgress(this: void): ConquestWeeklyProgress;
-    function GetDifficultyIDForActivityTier(this: void, activityTierID: number): number;
-    function GetExampleRewardItemHyperlinks(this: void, id: number): LuaMultiReturn<[string, string]>;
-    function GetItemHyperlink(this: void, itemDBID: WeeklyRewardItemDBID): string;
-    function GetNextActivitiesIncrease(this: void, activityTierID: number, level: number): LuaMultiReturn<[boolean, number|undefined, number|undefined, number|undefined]>;
-    function GetNextMythicPlusIncrease(this: void, mythicPlusLevel: number): LuaMultiReturn<[boolean, number|undefined, number|undefined]>;
-    function GetNumCompletedDungeonRuns(this: void): LuaMultiReturn<[number, number, number]>;
+    function GetDifficultyIDForActivityTier(
+      this: void,
+      activityTierID: number,
+    ): number;
+    function GetExampleRewardItemHyperlinks(
+      this: void,
+      id: number,
+    ): LuaMultiReturn<[string, string]>;
+    function GetItemHyperlink(
+      this: void,
+      itemDBID: WeeklyRewardItemDBID,
+    ): string;
+    function GetNextActivitiesIncrease(
+      this: void,
+      activityTierID: number,
+      level: number,
+    ): LuaMultiReturn<
+      [boolean, number | undefined, number | undefined, number | undefined]
+    >;
+    function GetNextMythicPlusIncrease(
+      this: void,
+      mythicPlusLevel: number,
+    ): LuaMultiReturn<[boolean, number | undefined, number | undefined]>;
+    function GetNumCompletedDungeonRuns(
+      this: void,
+    ): LuaMultiReturn<[number, number, number]>;
     function HasAvailableRewards(this: void): boolean;
     function HasGeneratedRewards(this: void): boolean;
     function HasInteraction(this: void): boolean;
@@ -16909,18 +23089,24 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
       isUpgrade: boolean;
     }
 
-    function GetCurrentWorldLootObjectSwapInventoryType(this: void): Enum.InventoryType;
-    function GetWorldLootObjectInfo(this: void, unitToken: UnitToken): WorldLootObjectInfo;
+    function GetCurrentWorldLootObjectSwapInventoryType(
+      this: void,
+    ): Enum.InventoryType;
+    function GetWorldLootObjectInfo(
+      this: void,
+      unitToken: UnitToken,
+    ): WorldLootObjectInfo;
     function IsWorldLootObject(this: void, unitToken: UnitToken): boolean;
-    function IsWorldLootObjectInRange(this: void, unitToken: UnitToken): boolean;
+    function IsWorldLootObjectInRange(
+      this: void,
+      unitToken: UnitToken,
+    ): boolean;
     function OnWorldLootObjectClick(this: void, unitToken: UnitToken): void;
   }
 
-  namespace C_WorldStateInfo {
-  }
+  namespace C_WorldStateInfo {}
 
-  namespace C_WowEntitlementInfo {
-  }
+  namespace C_WowEntitlementInfo {}
 
   namespace C_WowTokenUI {
     function StartTokenSell(this: void, tokenGUID: WOWGUID): void;
@@ -16962,7 +23148,10 @@ function GetGlobalPvpScalingInfoForSpecID(this: void, specializationID: number):
     }
 
     function GetActiveAbilities(this: void): ZoneAbilityInfo[];
-    function GetZoneAbilityIcon(this: void, zoneAbilitySpellID: number): number|undefined;
+    function GetZoneAbilityIcon(
+      this: void,
+      zoneAbilitySpellID: number,
+    ): number | undefined;
   }
 
   function GetAreaText(this: void): string;

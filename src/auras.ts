@@ -28,7 +28,7 @@ const defensiveCdsWeTrack = [
   "Unending Resolve",
 ].map((s) => s.toLowerCase());
 
-const offensiveSpellsWeTrack = [
+export const offensiveSpellsWeTrack = [
   "Apocalypse",
   "Feral Frenzy",
   "Final Reckoning",
@@ -76,7 +76,7 @@ const offensiveCdsWeTrack = [
 
 export function getBuffIndex(
   playerClass: { name: className },
-  source: string,
+  source: string | null | undefined,
   name: string,
   spellId: spellID,
 ): null | "defcd" | "externaldefbuff" | "offcd" | 0 | 1 | 2 | 3 | 4 | 5 | 6 {

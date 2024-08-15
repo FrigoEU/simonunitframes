@@ -220,18 +220,8 @@ declare global {
     function ForEachAura(
       unit: UnitId,
       filter: "HELPFUL" | "HARMFUL",
-      cb: (
-        this: void,
-        name: string /* name */,
-        icon: fileID /* icon */,
-        stacks: number /* stacks */,
-        dispelType: dispelType | null,
-        auraFullDuration: auraFullDuration,
-        auraExpirationTime: auraExpirationTime, // remaining duration: expirationtime - GetTime(),
-        source: UnitId, // Source
-        stealable: boolean, // stealable
-        spellId: spellID,
-      ) => void,
+      cb: (this: void, aura: AuraData) => void,
+      usePackedAura: true,
     ): void;
   }
 }

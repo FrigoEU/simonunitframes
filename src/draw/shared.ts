@@ -1,6 +1,5 @@
 /** @noSelfInFile */
 
-import { auraInfo } from "../sources";
 import { isNil } from "../utils";
 
 export type myAuraFrame = SimpleFrame & {
@@ -41,7 +40,10 @@ export function createAuraFrame(
 }
 
 export function applyAuraToAuraframe(
-  aura: null | auraInfo,
+  aura: null | Pick<
+    AuraData,
+    "icon" | "duration" | "expirationTime" | "applications"
+  >,
   auraF: myAuraFrame,
 ) {
   if (isNil(aura)) {
@@ -54,7 +56,7 @@ export function applyAuraToAuraframe(
     if (aura.duration > 0) {
       CooldownFrame_Set(
         auraF.cooldown,
-        aura.expiration - aura.duration,
+        aura.expirationTime - aura.duration,
         aura.duration,
         1,
       );
@@ -66,7 +68,7 @@ export function applyAuraToAuraframe(
 
     // Stacks
     auraF.count.SetText(
-      aura.stacks > 1 ? aura.stacks.toString() : (null as any),
+      aura.applications > 1 ? aura.applications.toString() : (null as any),
     );
 
     auraF.Show();

@@ -17,6 +17,7 @@ Enum = {
 MAX_STABLE_SLOTS = 25
 NUM_PET_SLOTS_THAT_NEED_LEARNED_SPELL = 5
 EXTRA_PET_STABLE_SLOT = 5
+MAX_SUMMONABLE_HUNTER_PETS = 5
 
 Constants = {
     CharCustomizationConstants = {
@@ -25,6 +26,7 @@ Constants = {
     },
     PetConsts = {
         MAX_STABLE_SLOTS = 25,
+        MAX_SUMMONABLE_HUNTER_PETS = 5,
         NUM_PET_SLOTS_THAT_NEED_LEARNED_SPELL = 5,
         EXTRA_PET_STABLE_SLOT = 5
     }

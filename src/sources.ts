@@ -35,28 +35,18 @@ function makeFocusInfo(): focusInfo {
   return { focus: new Source(null as null | WOWGUID) };
 }
 
-export type auraInfo = {
-  name: string;
-  icon: fileID;
-  duration: number;
-  expiration: number;
-  stacks: number;
-  source: UnitId;
-  spellId: spellID;
-};
-
 export type defensiveCdInfo = {
-  defensiveCooldownActive: Source<null | auraInfo>;
+  defensiveCooldownActive: Source<null | AuraData>;
 };
 function makeDefensiveCdInfo(): defensiveCdInfo {
-  return { defensiveCooldownActive: new Source(null as null | auraInfo) };
+  return { defensiveCooldownActive: new Source(null as null | AuraData) };
 }
 
 export type offensiveCdInfo = {
-  offensiveCooldownActive: Source<null | auraInfo>;
+  offensiveCooldownActive: Source<null | AuraData>;
 };
 function makeOffensiveCdInfo(): offensiveCdInfo {
-  return { offensiveCooldownActive: new Source(null as null | auraInfo) };
+  return { offensiveCooldownActive: new Source(null as null | AuraData) };
 }
 
 export type arenaInfo = {
@@ -67,38 +57,38 @@ function makeArenaInfo(): arenaInfo {
 }
 
 export type externalDefFromPlayerInfo = {
-  externalDefFromPlayerActive: Source<null | auraInfo>;
+  externalDefFromPlayerActive: Source<null | AuraData>;
 };
 function makeExternalDefFromPlayerInfo(): externalDefFromPlayerInfo {
-  return { externalDefFromPlayerActive: new Source(null as null | auraInfo) };
+  return { externalDefFromPlayerActive: new Source(null as null | AuraData) };
 }
 
 export type hotInfo = {
-  hot0: Source<null | auraInfo>;
-  hot1: Source<null | auraInfo>;
-  hot2: Source<null | auraInfo>;
-  hot3: Source<null | auraInfo>;
-  hot4: Source<null | auraInfo>;
-  hot5: Source<null | auraInfo>;
-  hot6: Source<null | auraInfo>;
+  hot0: Source<null | AuraData>;
+  hot1: Source<null | AuraData>;
+  hot2: Source<null | AuraData>;
+  hot3: Source<null | AuraData>;
+  hot4: Source<null | AuraData>;
+  hot5: Source<null | AuraData>;
+  hot6: Source<null | AuraData>;
 };
 function makeHotInfo(): hotInfo {
   return {
-    hot0: new Source(null as null | auraInfo),
-    hot1: new Source(null as null | auraInfo),
-    hot2: new Source(null as null | auraInfo),
-    hot3: new Source(null as null | auraInfo),
-    hot4: new Source(null as null | auraInfo),
-    hot5: new Source(null as null | auraInfo),
-    hot6: new Source(null as null | auraInfo),
+    hot0: new Source(null as null | AuraData),
+    hot1: new Source(null as null | AuraData),
+    hot2: new Source(null as null | AuraData),
+    hot3: new Source(null as null | AuraData),
+    hot4: new Source(null as null | AuraData),
+    hot5: new Source(null as null | AuraData),
+    hot6: new Source(null as null | AuraData),
   };
 }
 
 export type dotInfo = {
-  dots: Source<auraInfo[]>;
+  dots: Source<AuraData[]>;
 };
 function makeDotInfo(): dotInfo {
-  return { dots: new Source([] as auraInfo[]) };
+  return { dots: new Source([] as AuraData[]) };
 }
 
 export type sources = {

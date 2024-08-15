@@ -11,7 +11,7 @@ modules = json.loads(subprocess.check_output(["lua", "doc2json.lua", "./Blizzard
 
 UNKOWN_TYPES = {
     "AnimationDataEnum": "any",
-    "AuraData": "any",
+    "AuraData": "{applications: number; auraInstanceID: number; canApplyAura: boolean; charges: number; dispelName?: string; duration: number; expirationTime: number; icon: number; isBossAura: boolean; isFromPlayerOrPlayerPet: boolean; isHarmful: boolean; isHelpful: boolean; isNameplateOnly: boolean; isRaid: boolean; isStealable: boolean; maxCharges: number; name: string; nameplateShowAll: boolean; nameplateShowPersonal: boolean; points: any[]; sourceUnit?: string; spellId: number; timeMod: number;}",
     "AzeriteEmpoweredItemLocation": "any",
     "AzeriteItemLocation": "any",
     "BlendMode": "string",

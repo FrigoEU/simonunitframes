@@ -2,7 +2,8 @@
   "dependencies": {},
   "scripts": {
     "build": "tstl",
-    "updatetypes": "./updatetypes.sh"
+    "updatetypes": "./updatetypes.sh",
+    "regendefs": "python gendefs > src/wow.d.ts"
   },
   "devDependencies": {
     "esbuild": "0.19.12",
