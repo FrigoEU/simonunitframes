@@ -92,7 +92,6 @@ function makeDotInfo(): dotInfo {
 }
 
 export type sources = {
-  numberOfPlayersInGroupOrRaid: Source<number>;
   playerGroupIndexZeroBased: Source<number>;
 
   player: healthinfo &
@@ -133,7 +132,6 @@ export type sources = {
 
 export function makeSources(): sources {
   return {
-    numberOfPlayersInGroupOrRaid: new Source(1),
     playerGroupIndexZeroBased: new Source(0),
     player: {
       ...makeHealthInfo(),

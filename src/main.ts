@@ -11,6 +11,7 @@ import { drawHighlightFrames } from "./draw/highlight";
 import { drawHotFrames, hotIndexToHotName } from "./draw/hots";
 import { setPosition } from "./draw/position";
 import { makeSources, Source, sources } from "./sources";
+import { startTest } from "./testmode";
 import {
   allSupportedTranslatedUnits,
   allSupportedUnits,
@@ -47,7 +48,19 @@ const eventsWeListenTo = [
   // "UNIT_PORTRAIT_UPDATE" as const,
 ];
 
-start();
+const sources = start();
+
+SLASH_TEST1 = "/simontest";
+let testing = false;
+SlashCmdList["TEST"] = function () {
+  testing ? startTest(sources) : stopTest();
+  testing = !testing;
+};
+
+export function stopTest() {
+  // Just resetting everything
+  handleWowEvent(sources, "PLAYER_ENTERING_WORLD", null, null);
+}
 
 function start() {
   // Making all sources immediately
@@ -105,6 +118,7 @@ function start() {
   eventFrame.SetScript("OnEvent", (ev, arg1, arg2) =>
     handleWowEvent(sources, ev, arg1, arg2),
   );
+  return sources;
 }
 
 // Adding type safety to events

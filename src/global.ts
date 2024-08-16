@@ -224,4 +224,7 @@ declare global {
       usePackedAura: true,
     ): void;
   }
+
+  let SLASH_TEST1: string;
+  const SlashCmdList: { [key: string]: () => any };
 }
