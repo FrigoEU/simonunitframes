@@ -28,13 +28,13 @@ const defensiveCdsWeTrack = [
   "Unending Resolve",
 ].map((s) => s.toLowerCase());
 
-export const offensiveSpellsWeTrack = [
-  "Apocalypse",
+export const dangerousDebuffs = [
   "Feral Frenzy",
   "Final Reckoning",
   "Vendetta",
   "Deathmark",
   "Summon Demonic Tyrant",
+  "Unstable Affliction",
 ];
 
 const offensiveCdsWeTrack = [

@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { getBuffIndex, offensiveSpellsWeTrack } from "./auras";
+import { dangerousDebuffs, getBuffIndex } from "./auras";
 import { makeConfig } from "./config";
 import { playerCanDispelFromParty } from "./dispellable";
 import { drawArenaTargetFrames } from "./draw/arenatargets";
@@ -38,7 +38,7 @@ const eventsWeListenTo = [
   "PLAYER_TARGET_CHANGED" as const,
   "UNIT_TARGET" as const,
 
-  "UNIT_SPELLCAST_SUCCEEDED" as const,
+  // "UNIT_SPELLCAST_SUCCEEDED" as const,
 
   "ARENA_OPPONENT_UPDATE" as const,
   "ARENA_PREP_OPPONENT_SPECIALIZATIONS" as const,
@@ -67,6 +67,8 @@ function start() {
   );
 
   const nameP_ = "SimonUnitFrames";
+
+  // Initial rendering and wiring up of sources
   for (let unit of allSupportedTranslatedUnits) {
     const nameP = nameP_ + unit;
     const parent = unitIsArena(unit) ? arenaFramesParent : friendlyFramesParent;
@@ -100,8 +102,8 @@ function start() {
   for (let eventName of eventsWeListenTo) {
     eventFrame.RegisterEvent(eventName);
   }
-  eventFrame.SetScript("OnEvent", (ev, arg1, arg2, arg3, arg4, arg5) =>
-    handleWowEvent(sources, ev, arg1, arg2, arg3, arg4, arg5),
+  eventFrame.SetScript("OnEvent", (ev, arg1, arg2) =>
+    handleWowEvent(sources, ev, arg1, arg2),
   );
 }
 
@@ -113,9 +115,6 @@ function handleWowEvent(
   eventName: (typeof eventsWeListenTo)[number],
   arg1: any,
   arg2: any,
-  _arg3: any,
-  _arg4: any,
-  arg5: any,
 ) {
   switch (eventName) {
     case "PLAYER_ENTERING_WORLD": {
@@ -185,17 +184,17 @@ function handleWowEvent(
         });
       }
     }
-    case "UNIT_SPELLCAST_SUCCEEDED": {
-      const unitId = arg1 as UnitId;
-      const spellName = arg2 as string;
-      const spellId = arg5 as spellID;
+    // case "UNIT_SPELLCAST_SUCCEEDED": {
+    //   const unitId = arg1 as UnitId;
+    //   const spellName = arg2 as string;
+    //   const spellId = arg5 as spellID;
 
-      return updateInfo(sources, unitId, {
-        tag: "spellcast",
-        spellName: spellName,
-        spellId,
-      });
-    }
+    //   return updateInfo(sources, unitId, {
+    //     tag: "spellcast",
+    //     spellName: spellName,
+    //     spellId,
+    //   });
+    // }
     default: {
       return checkAllCasesHandled(eventName);
     }
@@ -210,15 +209,16 @@ const allFrameparts = [
   { tag: "character" } as const,
   { tag: "target" } as const,
   { tag: "focus" } as const,
-  {
-    tag: "spellcast",
-    spellName: "" as string,
-    spellId: -1 as spellID,
-  } as const,
+  // {
+  //   tag: "spellcast",
+  //   spellName: "" as string,
+  //   spellId: -1 as spellID,
+  // } as const,
   { tag: "aura", auraUpdateInfo: null as null | UnitAuraUpdateInfo } as const,
 ];
 type framepart = (typeof allFrameparts)[number];
 
+// Updating internal datamodel from WoW Events
 function updateInfo(
   sources: sources,
   target: "all" | UnitId,
@@ -268,23 +268,23 @@ function updateInfo(
         if (unit === "player") {
           sources.player.focus.set(UnitGUID("focus") || null);
         }
-      } else if (info.tag === "spellcast") {
-        if ("offensiveCooldownActive" in unitSource) {
-          if (offensiveSpellsWeTrack.includes(info.spellName)) {
-            const spellInfo = GetSpellInfo(info.spellName);
-            if (spellInfo) {
-              // Testing
-              unitSource.offensiveCooldownActive.set({
-                name: info.spellName,
-                icon: spellInfo[2] as unknown as number,
-                duration: 6,
-                expirationTime: 6,
-                applications: 0,
-                auraInstanceID: -1,
-              } as AuraData);
-            }
-          }
-        }
+        // } else if (info.tag === "spellcast") {
+        //   if ("offensiveCooldownActive" in unitSource) {
+        //     if (offensiveSpellsWeTrack.includes(info.spellName)) {
+        //       const spellInfo = GetSpellInfo(info.spellName);
+        //       if (spellInfo) {
+        //         // Testing
+        //         unitSource.offensiveCooldownActive.set({
+        //           name: info.spellName,
+        //           icon: spellInfo[2] as unknown as number,
+        //           duration: 6,
+        //           expirationTime: 6,
+        //           applications: 0,
+        //           auraInstanceID: -1,
+        //         } as AuraData);
+        //       }
+        //     }
+        //   }
       } else if (info.tag === "aura") {
         if (
           isNil(info.auraUpdateInfo) ||
@@ -312,7 +312,7 @@ function updateInfo(
             unit,
             "HELPFUL",
             (aura) =>
-              handleNewHelpfulAura(
+              processNewHelpfulAura(
                 sources.player.class.get(),
                 unitSource,
                 aura,
@@ -335,129 +335,17 @@ function updateInfo(
                   playerCanDispelFromParty(aura.dispelName)
                 ) {
                   newDots.push(aura);
+                } else if (dangerousDebuffs.includes(aura.name)) {
+                  newDots.push(aura);
                 }
               },
               true,
             );
-            newDots.sort((a, b) => (a.spellId > b.spellId ? -1 : 1));
+            newDots.sort(sortDots);
             unitSource.dots.set(newDots);
           }
         } else {
-          const auraUpdateInfo = info.auraUpdateInfo;
-          if (!isNil(auraUpdateInfo.updatedAuraInstanceIDs)) {
-            for (let auraInstanceID of auraUpdateInfo.updatedAuraInstanceIDs) {
-              updateAuraIf(
-                unit,
-                auraInstanceID,
-                unitSource.defensiveCooldownActive,
-              );
-
-              if ("externalDefFromPlayerActive" in unitSource) {
-                updateAuraIf(
-                  unit,
-                  auraInstanceID,
-                  unitSource.externalDefFromPlayerActive,
-                );
-              }
-              if ("offensiveCooldownActive" in unitSource) {
-                updateAuraIf(
-                  unit,
-                  auraInstanceID,
-                  unitSource.offensiveCooldownActive,
-                );
-              }
-              if ("hot0" in unitSource) {
-                updateAuraIf(unit, auraInstanceID, unitSource.hot0);
-                updateAuraIf(unit, auraInstanceID, unitSource.hot1);
-                updateAuraIf(unit, auraInstanceID, unitSource.hot2);
-                updateAuraIf(unit, auraInstanceID, unitSource.hot3);
-                updateAuraIf(unit, auraInstanceID, unitSource.hot4);
-                updateAuraIf(unit, auraInstanceID, unitSource.hot5);
-                updateAuraIf(unit, auraInstanceID, unitSource.hot6);
-              }
-              if ("dots" in unitSource) {
-                const curr = unitSource.dots.get();
-                const found = curr.find(
-                  (old) => old.auraInstanceID !== auraInstanceID,
-                );
-                if (found) {
-                  const newaura = C_UnitAuras.GetAuraDataByAuraInstanceID(
-                    unit,
-                    auraInstanceID,
-                  );
-                  if (newaura) {
-                    const afterFilter = curr.filter(
-                      (old) => old.auraInstanceID !== auraInstanceID,
-                    );
-                    afterFilter.push(newaura);
-                    afterFilter.sort((a, b) =>
-                      a.spellId > b.spellId ? -1 : 1,
-                    );
-                    unitSource.dots.set(afterFilter);
-                  }
-                }
-              }
-            }
-          }
-          if (!isNil(auraUpdateInfo.removedAuraInstanceIDs)) {
-            for (let auraInstanceID of auraUpdateInfo.removedAuraInstanceIDs) {
-              clearAuraIf(auraInstanceID, unitSource.defensiveCooldownActive);
-
-              if ("externalDefFromPlayerActive" in unitSource) {
-                clearAuraIf(
-                  auraInstanceID,
-                  unitSource.externalDefFromPlayerActive,
-                );
-              }
-              if ("offensiveCooldownActive" in unitSource) {
-                clearAuraIf(auraInstanceID, unitSource.offensiveCooldownActive);
-              }
-              if ("hot0" in unitSource) {
-                clearAuraIf(auraInstanceID, unitSource.hot0);
-                clearAuraIf(auraInstanceID, unitSource.hot1);
-                clearAuraIf(auraInstanceID, unitSource.hot2);
-                clearAuraIf(auraInstanceID, unitSource.hot3);
-                clearAuraIf(auraInstanceID, unitSource.hot4);
-                clearAuraIf(auraInstanceID, unitSource.hot5);
-                clearAuraIf(auraInstanceID, unitSource.hot6);
-              }
-              if ("dots" in unitSource) {
-                const curr = unitSource.dots.get();
-                const afterFilter = curr.filter(
-                  (old) => old.auraInstanceID !== auraInstanceID,
-                );
-                if (curr.length !== afterFilter.length) {
-                  unitSource.dots.set(afterFilter);
-                }
-              }
-            }
-          }
-          if (!isNil(auraUpdateInfo.addedAuras)) {
-            for (let aura of auraUpdateInfo.addedAuras) {
-              if (aura.isHelpful) {
-                handleNewHelpfulAura(
-                  sources.player.class.get(),
-                  unitSource,
-                  aura,
-                );
-              }
-              if (
-                "dots" in unitSource &&
-                aura.isHarmful &&
-                !isNil(aura.dispelName) &&
-                (aura.dispelName === "Curse" ||
-                  aura.dispelName === "Magic" ||
-                  aura.dispelName === "Disease" ||
-                  aura.dispelName === "Poison") &&
-                playerCanDispelFromParty(aura.dispelName)
-              ) {
-                const curr = unitSource.dots.get();
-                curr.push(aura);
-                curr.sort((a, b) => (a.spellId > b.spellId ? -1 : 1));
-                unitSource.dots.set(curr);
-              }
-            }
-          }
+          processAuraUpdateInfo(info, unit, unitSource, sources);
         }
       } else {
         checkAllCasesHandled(info);
@@ -466,6 +354,140 @@ function updateInfo(
   }
 }
 
+function processAuraUpdateInfo(
+  info: {
+    readonly tag: "aura";
+    readonly auraUpdateInfo: null | UnitAuraUpdateInfo;
+  },
+  unit: (typeof allSupportedUnits)[number],
+  unitSource: sources[keyof sources],
+  sources: sources,
+) {
+  const auraUpdateInfo = info.auraUpdateInfo;
+  if (isNil(auraUpdateInfo)) {
+    return;
+  }
+  if (!isNil(auraUpdateInfo.updatedAuraInstanceIDs)) {
+    for (let auraInstanceID of auraUpdateInfo.updatedAuraInstanceIDs) {
+      if ("defensiveCooldownActive" in unitSource) {
+        updateAuraIfCorrectId(
+          unit,
+          auraInstanceID,
+          unitSource.defensiveCooldownActive,
+        );
+      }
+
+      if ("externalDefFromPlayerActive" in unitSource) {
+        updateAuraIfCorrectId(
+          unit,
+          auraInstanceID,
+          unitSource.externalDefFromPlayerActive,
+        );
+      }
+      if ("offensiveCooldownActive" in unitSource) {
+        updateAuraIfCorrectId(
+          unit,
+          auraInstanceID,
+          unitSource.offensiveCooldownActive,
+        );
+      }
+      if ("hot0" in unitSource) {
+        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot0);
+        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot1);
+        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot2);
+        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot3);
+        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot4);
+        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot5);
+        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot6);
+      }
+      if ("dots" in unitSource) {
+        const curr = unitSource.dots.get();
+        const found = curr.find((old) => old.auraInstanceID !== auraInstanceID);
+        if (found) {
+          const newaura = C_UnitAuras.GetAuraDataByAuraInstanceID(
+            unit,
+            auraInstanceID,
+          );
+          if (newaura) {
+            const afterFilter = curr.filter(
+              (old) => old.auraInstanceID !== auraInstanceID,
+            );
+            afterFilter.push(newaura);
+            afterFilter.sort(sortDots);
+            unitSource.dots.set(afterFilter);
+          }
+        }
+      }
+    }
+  }
+  if (!isNil(auraUpdateInfo.removedAuraInstanceIDs)) {
+    for (let auraInstanceID of auraUpdateInfo.removedAuraInstanceIDs) {
+      if ("defensiveCooldownActive" in unitSource) {
+        clearAuraIfCorrectId(
+          auraInstanceID,
+          unitSource.defensiveCooldownActive,
+        );
+      }
+
+      if ("externalDefFromPlayerActive" in unitSource) {
+        clearAuraIfCorrectId(
+          auraInstanceID,
+          unitSource.externalDefFromPlayerActive,
+        );
+      }
+      if ("offensiveCooldownActive" in unitSource) {
+        clearAuraIfCorrectId(
+          auraInstanceID,
+          unitSource.offensiveCooldownActive,
+        );
+      }
+      if ("hot0" in unitSource) {
+        clearAuraIfCorrectId(auraInstanceID, unitSource.hot0);
+        clearAuraIfCorrectId(auraInstanceID, unitSource.hot1);
+        clearAuraIfCorrectId(auraInstanceID, unitSource.hot2);
+        clearAuraIfCorrectId(auraInstanceID, unitSource.hot3);
+        clearAuraIfCorrectId(auraInstanceID, unitSource.hot4);
+        clearAuraIfCorrectId(auraInstanceID, unitSource.hot5);
+        clearAuraIfCorrectId(auraInstanceID, unitSource.hot6);
+      }
+      if ("dots" in unitSource) {
+        const curr = unitSource.dots.get();
+        const afterFilter = curr.filter(
+          (old) => old.auraInstanceID !== auraInstanceID,
+        );
+        if (curr.length !== afterFilter.length) {
+          unitSource.dots.set(afterFilter);
+        }
+      }
+    }
+  }
+  if (!isNil(auraUpdateInfo.addedAuras)) {
+    for (let aura of auraUpdateInfo.addedAuras) {
+      if (aura.isHelpful) {
+        processNewHelpfulAura(sources.player.class.get(), unitSource, aura);
+      }
+      if (
+        "dots" in unitSource &&
+        aura.isHarmful &&
+        !isNil(aura.dispelName) &&
+        (aura.dispelName === "Curse" ||
+          aura.dispelName === "Magic" ||
+          aura.dispelName === "Disease" ||
+          aura.dispelName === "Poison") &&
+        playerCanDispelFromParty(aura.dispelName)
+      ) {
+        const curr = unitSource.dots.get();
+        curr.push(aura);
+        curr.sort(sortDots);
+        unitSource.dots.set(curr);
+      }
+    }
+  }
+}
+
+// We want to show always the first/second raid group, and call it raid1 - 5.
+// We do that translation here
+// It's kinda weird and tricky, but should do what we want in RBG's
 function translateUnit(
   sources: sources,
   target_: "all" | UnitId,
@@ -534,7 +556,7 @@ function translateUnit(
   return null;
 }
 
-function handleNewHelpfulAura(
+function processNewHelpfulAura(
   playerClass: className,
   unitSource: sources[keyof sources],
   aura: AuraData,
@@ -568,7 +590,7 @@ function handleNewHelpfulAura(
   }
 }
 
-function clearAuraIf(
+function clearAuraIfCorrectId(
   auraInstanceID: number | undefined,
   s: Source<AuraData | null>,
 ) {
@@ -577,7 +599,7 @@ function clearAuraIf(
     s.set(null);
   }
 }
-function updateAuraIf(
+function updateAuraIfCorrectId(
   unit: UnitId,
   auraInstanceID: number,
   s: Source<AuraData | null>,
@@ -592,4 +614,11 @@ function updateAuraIf(
       s.set(newaura);
     }
   }
+}
+
+function sortDots(a: AuraData, b: AuraData): -1 | 1 {
+  const prioA = dangerousDebuffs.includes(a.name) ? 99999999 : a.spellId;
+  const prioB = dangerousDebuffs.includes(b.name) ? 99999999 : b.spellId;
+
+  return prioA > prioB ? 1 : -1;
 }

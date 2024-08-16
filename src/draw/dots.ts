@@ -1,5 +1,6 @@
 /** @noSelfInFile */
 
+import { dangerousDebuffs } from "../auras";
 import { config } from "../config";
 import { dotInfo } from "../sources";
 import { applyAuraToAuraframe, createAuraFrame, myAuraFrame } from "./shared";
@@ -36,6 +37,11 @@ export function drawDotFrames(
       const dotAuraFrame = dotAuraFrames[i];
       if (dotAuraFrame) {
         applyAuraToAuraframe(dotinfo, dotAuraFrame);
+      }
+      if (dangerousDebuffs.includes(dotinfo.name)) {
+        dotAuraFrame.SetScale(1.5);
+      } else {
+        dotAuraFrame.SetScale(1);
       }
     });
   });
