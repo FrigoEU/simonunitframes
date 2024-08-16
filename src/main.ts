@@ -3,7 +3,10 @@
 import { dangerousDebuffs, getBuffIndex } from "./auras";
 import { makeConfig } from "./config";
 import { playerCanDispelFromParty } from "./dispellable";
-import { drawArenaTargetFrames } from "./draw/arenatargets";
+import {
+  drawArenaTargetedByFrames,
+  drawPartyTargetedByFrames,
+} from "./draw/arenatargets";
 import { drawFriendlyCooldownSection } from "./draw/cooldowns";
 import { drawDotFrames } from "./draw/dots";
 import { drawHealthbarFrames } from "./draw/healthbar";
@@ -101,12 +104,13 @@ function start() {
     }
     if (unitIsPlayer(unit) || unitIsParty(unit)) {
       const unitSource = sources[unit];
-      drawArenaTargetFrames(config, nameP, container, unitSource, sources);
+      drawPartyTargetedByFrames(config, nameP, container, unitSource, sources);
     }
 
     if (unitIsArena(unit)) {
       const unitSource = sources[unit];
       drawHealthbarFrames(config, nameP, container, unitSource);
+      drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
     }
   }
 
