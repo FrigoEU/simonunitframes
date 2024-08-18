@@ -79,6 +79,8 @@ export function drawPartyTargetedByFrames(
           applyAuraToAuraframe(offensiveCooldownActive, frame);
           frame.border.SetVertexColor(255, 0, 0);
         } else {
+          frame.border.SetVertexColor(0, 0, 0);
+          frame.cooldown.Hide();
           frame.icon.SetTexture(
             "Interface\\AddOns\\DefaultUIScript\\ClassIcons\\" +
               class_ +

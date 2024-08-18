@@ -213,6 +213,7 @@ export class Source<T> implements Source<T> {
   }
   public observe(f: (currentVal: T) => void) {
     this.observers.push(f);
+    f(this.get());
     // return () => {
     //   this.observers = this.observers.filter((f2) => f2 !== f);
     // };
