@@ -1,7 +1,9 @@
 {
   "dependencies": {},
   "scripts": {
+    "start": "npm run build && npm run deploy",
     "build": "tstl",
+    "deploy": "node src/scripts/deploy.js",
     "updatetypes": "./updatetypes.sh",
     "regendefs": "python gendefs > src/wow.d.ts"
   },
