@@ -2,6 +2,7 @@
 
 import { config } from "../config";
 import { focusInfo, healthinfo, observeAll, targetInfo } from "../sources";
+import { createBackdropTemplateFrame } from "./shared";
 
 export function drawHighlightFrames(
   config: config,
@@ -10,29 +11,24 @@ export function drawHighlightFrames(
   unitSources: healthinfo,
   playerSources: targetInfo & focusInfo,
 ) {
-  const highlightContainerFrame = CreateFrame(
-    "Frame",
+  const highlightContainerFrame = createBackdropTemplateFrame(
     namePrefix + "BorderContainer",
     container,
-    "BackdropTemplate",
-  ) as SimpleFrame & {
-    // Fixing missing typings
-    SetBackdropBorderColor: (
-      r: number,
-      g: number,
-      b: number,
-      a: number,
-    ) => void;
-  };
-  highlightContainerFrame.SetAllPoints(container);
-  highlightContainerFrame.SetFrameStrata("HIGH");
+  );
 
-  const highlightFrame = CreateFrame("Frame", namePrefix + "Border", container);
-  highlightFrame.SetAllPoints(container);
-  highlightFrame.SetFrameStrata("HIGH");
+  highlightContainerFrame.SetFrameStrata("LOW");
+  highlightContainerFrame.SetPoint("TOPLEFT", container, "TOPLEFT", -4, 4);
+  highlightContainerFrame.SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", 4, -4);
 
-  const highlightTexture = highlightFrame.CreateTexture(undefined, "OVERLAY");
-  highlightTexture.SetAllPoints(highlightFrame);
+  highlightContainerFrame.SetBackdrop({
+      bgFile: "Interface\\ChatFrame\\ChatFrameBackground",
+      edgeFile: "Interface\\ChatFrame\\ChatFrameBackground",
+      edgeSize: 3,
+      tile: true,
+      insets: { left: 0, right: 0, top: 0, bottom: 0 },
+    })
+  highlightContainerFrame.SetBackdropColor(0, 0, 0, 0);
+  highlightContainerFrame.SetBackdropBorderColor(0, 0, 0, 1);
 
   observeAll(
     [unitSources.guid, playerSources.target, playerSources.focus],
@@ -51,8 +47,10 @@ export function drawHighlightFrames(
           color.b,
           color.a,
         );
+        highlightContainerFrame.Show()
       } else {
         highlightContainerFrame.SetBackdropBorderColor(0, 0, 0, 0);
+        highlightContainerFrame.Hide()
       }
     },
   );

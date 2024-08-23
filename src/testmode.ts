@@ -3,6 +3,8 @@
 import { sources } from "./sources";
 
 export function startTest(sources: sources) {
+  print("starting testing!")
+
   sources.playerGroupIndexZeroBased.set(1);
 
   sources.player.health.max.set(1000);
@@ -117,7 +119,7 @@ export function makeTestAura(
     throw new Error("Invalid spell");
   }
 
-  const spellInfo = GetSpellInfo(spellId);
+  const spellInfo = C_Spell.GetSpellInfo(spellId);
 
   return {
     applications: 1,
@@ -127,7 +129,7 @@ export function makeTestAura(
     dispelName: "Magic" as const,
     duration: 10,
     expirationTime: 7,
-    icon: spellInfo[2] as any,
+    icon: spellInfo.iconID,
     isBossAura: false,
     isFromPlayerOrPlayerPet: false,
     isHarmful: true, // N/A

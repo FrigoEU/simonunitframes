@@ -126,21 +126,21 @@ const specCanDispel: {
   [1467 as specializationId]: {
     // Devastation Evoker
     Poison: true,
-    Disease: () => IsUsableSpell(GetSpellInfo(374251 as spellID)[0])[0],
-    Curse: () => IsUsableSpell(GetSpellInfo(374251 as spellID)[0])[0],
+    Disease: () => IsUsableSpell(374251 as spellID)[0],
+    Curse: () => IsUsableSpell(374251 as spellID)[0],
   },
   [1468 as specializationId]: {
     // Preservation Evoker
     Magic: true,
     Poison: true,
-    Disease: () => IsUsableSpell(GetSpellInfo(374251 as spellID)[0])[0],
-    Curse: () => IsUsableSpell(GetSpellInfo(374251 as spellID)[0])[0],
+    Disease: () => IsUsableSpell(374251 as spellID)[0],
+    Curse: () => IsUsableSpell(374251 as spellID)[0],
   },
   [1473 as specializationId]: {
     // Augmentation Evoker
     Poison: true,
-    Disease: () => IsUsableSpell(GetSpellInfo(374251 as spellID)[0])[0],
-    Curse: () => IsUsableSpell(GetSpellInfo(374251 as spellID)[0])[0],
+    Disease: () => IsUsableSpell(374251 as spellID)[0],
+    Curse: () => IsUsableSpell(374251 as spellID)[0],
   },
   [577 as specializationId]: {
     // DH?

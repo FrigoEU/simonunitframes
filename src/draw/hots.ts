@@ -26,7 +26,7 @@ export function drawHotFrames(
       parent,
       "BOTTOMLEFT",
       4 + i * (config.unitFrame_smallIconGap + config.unitFrame_smallIconSize),
-      -4,
+      4,
     );
     const hotname = hotIndexToHotName(i);
 

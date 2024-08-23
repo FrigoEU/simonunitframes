@@ -23,7 +23,7 @@ export function setPosition(
     parent,
     point,
     x * (config.unitFrame_horizontalGap + config.unitFrame_fullWidth),
-    y * (config.unitFrame_verticalGap + config.unitFrame_fullHeight),
+    -y * (config.unitFrame_verticalGap + config.unitFrame_fullHeight),
   );
 }
 
@@ -52,6 +52,6 @@ function getUnitGridIndex(unit: (typeof allSupportedTranslatedUnits)[number]): {
       y: unitRaidIndex % 5,
     };
   } else {
-    return checkAllCasesHandled(unit);
+    return checkAllCasesHandled(unit, "getUnitGridIndex");
   }
 }

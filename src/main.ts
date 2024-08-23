@@ -56,11 +56,12 @@ const sources = start();
 SLASH_TEST1 = "/simontest";
 let testing = false;
 SlashCmdList["TEST"] = function () {
-  testing ? startTest(sources) : stopTest();
   testing = !testing;
+  testing ? startTest(sources) : stopTest();
 };
 
 export function stopTest() {
+  print("stopping testing!")
   // Just resetting everything
   handleWowEvent(sources, "PLAYER_ENTERING_WORLD", null, null);
 }
@@ -73,14 +74,23 @@ function start() {
   // Drawing ALL frames immediately
   const friendlyFramesParent = CreateFrame(
     "Frame",
-    "GladiusExPartyFrame",
+    "SimonPartyFrame",
     UIParent,
   );
+  friendlyFramesParent.SetClampedToScreen(true);
+  friendlyFramesParent.SetPoint("TOPRIGHT", UIParent, "CENTER", -500, -36);
+  friendlyFramesParent.SetSize(1, 1);
+  friendlyFramesParent.Show();
+
   const arenaFramesParent = CreateFrame(
     "Frame",
-    "GladiusExArenaFrame",
+    "SimonArenaFrame",
     UIParent,
   );
+  arenaFramesParent.SetClampedToScreen(true);
+  arenaFramesParent.SetPoint("TOPRIGHT", UIParent, "CENTER", 500, -36);
+  arenaFramesParent.SetSize(1, 1);
+  arenaFramesParent.Show();
 
   const nameP_ = "SimonUnitFrames";
 
@@ -101,6 +111,13 @@ function start() {
       drawFriendlyCooldownSection(config, nameP, container, unitSource);
       drawHotFrames(config, nameP, container, unitSource);
       drawDotFrames(config, nameP, container, unitSource);
+      unitSource.exists.observe(exists => {
+        if (exists === true) {
+          container.Show();
+        } else {
+          container.Hide();
+        }
+      })
     }
     if (unitIsPlayer(unit) || unitIsParty(unit)) {
       const unitSource = sources[unit];
@@ -119,7 +136,7 @@ function start() {
   for (let eventName of eventsWeListenTo) {
     eventFrame.RegisterEvent(eventName);
   }
-  eventFrame.SetScript("OnEvent", (ev, arg1, arg2) =>
+  eventFrame.SetScript("OnEvent", (self, ev, arg1, arg2) =>
     handleWowEvent(sources, ev, arg1, arg2),
   );
   return sources;
@@ -128,15 +145,17 @@ function start() {
 // Adding type safety to events
 // plus dispatching the correct functions for each wow event
 function handleWowEvent(
-  this: void,
   sources: sources,
   eventName: (typeof eventsWeListenTo)[number],
   arg1: any,
   arg2: any,
 ) {
+  if (testing) {
+    print(`Testmode: Ignoring event ${eventName}`);
+    return;
+  }
   switch (eventName) {
     case "PLAYER_ENTERING_WORLD": {
-      print("hello, world");
       const playerRaidIndex = UnitInRaid("player");
       sources.playerGroupIndexZeroBased.set(
         isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5),
@@ -214,14 +233,14 @@ function handleWowEvent(
     //   });
     // }
     default: {
-      return checkAllCasesHandled(eventName);
+      return checkAllCasesHandled(eventName, "eventName");
     }
   }
 }
 
 const allFrameparts = [
-  { tag: "health" } as const,
   { tag: "maxhealth" } as const,
+  { tag: "health" } as const,
   { tag: "power" } as const,
   { tag: "absorb" } as const,
   { tag: "character" } as const,
@@ -246,8 +265,8 @@ function updateInfo(
     target === "all"
       ? allSupportedUnits
       : [allSupportedUnits.find((u) => u === target) ?? null].filter(
-          (u) => !isNil(u),
-        );
+        (u) => !isNil(u),
+      );
 
   const infos = part_in === "all" ? allFrameparts : [part_in];
 
@@ -263,6 +282,7 @@ function updateInfo(
     const unitSource = sources[targetForSource];
     if (!UnitExists(unit)) {
       unitSource.exists.set(false);
+      continue;
     } else {
       unitSource.exists.set(true);
     }
@@ -329,6 +349,7 @@ function updateInfo(
           AuraUtil.ForEachAura(
             unit,
             "HELPFUL",
+            100,
             (aura) =>
               processNewHelpfulAura(
                 sources.player.class.get(),
@@ -343,6 +364,7 @@ function updateInfo(
             AuraUtil.ForEachAura(
               unit,
               "HARMFUL",
+              100,
               function handleNewHarmfulAura(aura: AuraData) {
                 if (
                   aura.dispelName !== null &&

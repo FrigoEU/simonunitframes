@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare global {
   type spellName = string;
@@ -155,19 +155,6 @@ declare global {
   ): LuaMultiReturn<
     [boolean /* player cant use */, boolean /* player has insuff nomana */]
   >;
-  function GetSpellInfo(
-    this: void,
-    s: spellName | spellID,
-  ): LuaMultiReturn<
-    [
-      spellName,
-      spellRank,
-      iconFilePath /* icon */,
-      castTime,
-      minSpellRange,
-      maxSpellRange,
-    ]
-  >;
   function GetSpecialization(this: void): null | specIndex;
   type specInfo = LuaMultiReturn<
     [
@@ -209,17 +196,20 @@ declare global {
     ]
   >;
 
+  /** @noSelf **/
   function CooldownFrame_Set(
     cooldown: CooldownFrame,
-    left: number,
+    start: number,
     duration: number,
-    something: number,
+    enable: boolean,
   ): void;
 
+  /** @noSelf **/
   namespace AuraUtil {
     function ForEachAura(
       unit: UnitId,
       filter: "HELPFUL" | "HARMFUL",
+      maxCount: null | number,
       cb: (this: void, aura: AuraData) => void,
       usePackedAura: true,
     ): void;
@@ -227,4 +217,5 @@ declare global {
 
   let SLASH_TEST1: string;
   const SlashCmdList: { [key: string]: () => any };
+
 }

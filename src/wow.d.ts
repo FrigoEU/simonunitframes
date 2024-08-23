@@ -1,4 +1,4 @@
-export {};
+export { };
 declare global {
   type BigInteger = number;
   type BigUInteger = number;
@@ -5879,7 +5879,7 @@ declare global {
     }
   }
 
-  namespace C_AccessibilityOptions {}
+  namespace C_AccessibilityOptions { }
 
   namespace C_AccountInfo {
     function GetIDFromBattleNetAccountGUID(
@@ -6026,7 +6026,7 @@ declare global {
     function SetAddonVersionCheck(this: void, enabled: boolean): void;
   }
 
-  namespace C_AdventureJournal {}
+  namespace C_AdventureJournal { }
 
   namespace C_AdventureMap {
     function GetAdventureMapTextureKit(this: void): textureKit;
@@ -7186,7 +7186,7 @@ declare global {
     function SetQAMode(this: void, qaModeEnabled: boolean): void;
   }
 
-  interface ScriptObject {}
+  interface ScriptObject { }
 
   namespace C_BattleNet {
     interface BNetAccountInfo {
@@ -7263,7 +7263,7 @@ declare global {
     ): BNetGameAccountInfo | undefined;
   }
 
-  namespace C_BattlePet {}
+  namespace C_BattlePet { }
 
   namespace C_BehavioralMessaging {
     function SendNotificationReceipt(
@@ -7274,7 +7274,7 @@ declare global {
     ): void;
   }
 
-  namespace C_BlackMarketInfo {}
+  namespace C_BlackMarketInfo { }
 
   interface BountyInfo {
     questID: number;
@@ -7284,7 +7284,7 @@ declare global {
     turninRequirementText?: string;
   }
 
-  namespace C_Browser {}
+  namespace C_Browser { }
 
   function GetBuildInfo(
     this: void,
@@ -8030,7 +8030,7 @@ declare global {
     ): boolean;
   }
 
-  namespace C_ClassTrial {}
+  namespace C_ClassTrial { }
 
   interface ClickBindingInfo {
     type: Enum.ClickBindingType;
@@ -8076,7 +8076,7 @@ declare global {
   function Screenshot(this: void): void;
   function UpdateWindow(this: void): void;
 
-  namespace C_ClientScene {}
+  namespace C_ClientScene { }
 
   namespace C_Club {
     interface ClubInfo {
@@ -8771,7 +8771,7 @@ declare global {
     function ShouldShowClubFinder(this: void): boolean;
   }
 
-  namespace C_CombatLog {}
+  namespace C_CombatLog { }
 
   namespace C_Commentator {
     interface CommentatorHistory {
@@ -9198,7 +9198,7 @@ declare global {
     function ZoomOut_Position(this: void, zoomAmount?: number): void;
   }
 
-  namespace C_CompactUnitFrames {}
+  namespace C_CompactUnitFrames { }
 
   namespace C_ConfigurationWarnings {
     function GetConfigurationWarningSeen(
@@ -10356,7 +10356,7 @@ declare global {
     function GetCursorItem(this: void): ItemLocation;
   }
 
-  namespace C_CursorUtil {}
+  namespace C_CursorUtil { }
 
   namespace C_CVar {
     interface CVarInfo {
@@ -10426,7 +10426,7 @@ declare global {
     function GetWeeklyResetStartTime(this: void): time_t;
   }
 
-  namespace C_DeathAlert {}
+  namespace C_DeathAlert { }
 
   namespace C_DeathInfo {
     interface GraveyardMapInfo {
@@ -10549,9 +10549,9 @@ declare global {
     ): void;
   }
 
-  namespace C_Deprecated {}
+  namespace C_Deprecated { }
 
-  namespace C_DuelInfo {}
+  namespace C_DuelInfo { }
 
   namespace C_EditMode {
     interface EditModeAnchorInfo {
@@ -10615,7 +10615,7 @@ declare global {
     function SetActiveLayout(this: void, activeLayout: number): void;
   }
 
-  namespace C_EncounterInfo {}
+  namespace C_EncounterInfo { }
 
   namespace C_EncounterJournal {
     interface DungeonEntranceMapInfo {
@@ -10865,7 +10865,7 @@ declare global {
   ): FontScriptInfo | undefined;
   function GetFonts(this: void): string[];
 
-  interface FrameAPIArchaeologyDigSiteFrame {}
+  interface FrameAPIArchaeologyDigSiteFrame { }
 
   interface FrameAPIBlob {
     DrawAll(): void;
@@ -12025,9 +12025,9 @@ declare global {
 
   function IsOnGlueScreen(this: void): boolean;
 
-  namespace C_GlyphInfo {}
+  namespace C_GlyphInfo { }
 
-  namespace C_GMTicketInfo {}
+  namespace C_GMTicketInfo { }
 
   namespace C_GossipInfo {
     interface FriendshipReputationInfo {
@@ -12385,7 +12385,7 @@ declare global {
     force?: boolean,
   ): void;
 
-  namespace C_InstanceEncounter {}
+  namespace C_InstanceEncounter { }
 
   namespace C_InterfaceFileManifest {
     function GetInterfaceArtFiles(this: void): string[];
@@ -12412,7 +12412,7 @@ declare global {
     ): number | undefined;
   }
 
-  namespace C_IslandsInfo {}
+  namespace C_IslandsInfo { }
 
   namespace C_IslandsQueue {
     interface IslandsQueueDifficultyInfo {
@@ -12819,7 +12819,7 @@ declare global {
     function CompleteSocketing(this: void): void;
   }
 
-  namespace C_ItemText {}
+  namespace C_ItemText { }
 
   namespace C_ItemUpgrade {
     interface ItemUpgradeCostDiscountInfo {
@@ -12927,7 +12927,7 @@ declare global {
     ): Enum.CustomBindingType | undefined;
   }
 
-  namespace C_KnowledgeBase {}
+  namespace C_KnowledgeBase { }
 
   namespace C_LegendaryCrafting {
     function CloseRuneforgeInteraction(this: void): void;
@@ -13373,7 +13373,7 @@ declare global {
     ): void;
   }
 
-  namespace C_LoadingScreen {}
+  namespace C_LoadingScreen { }
 
   interface LocaleInfo {
     localeId: number;
@@ -14264,7 +14264,7 @@ declare global {
     name: string;
   }
 
-  namespace C_NamePlateManager {}
+  namespace C_NamePlateManager { }
 
   namespace C_NewItems {
     function ClearAll(this: void): void;
@@ -14885,9 +14885,9 @@ declare global {
     ): void;
   }
 
-  interface PingPinFrame {}
+  interface PingPinFrame { }
 
-  namespace C_Platform {}
+  namespace C_Platform { }
 
   namespace C_PlayerChoice {
     interface PlayerChoiceInfo {
@@ -15331,7 +15331,7 @@ declare global {
   function ToggleSelfHighlight(this: void): boolean;
   function ToggleSheath(this: void): void;
 
-  namespace C_Pony {}
+  namespace C_Pony { }
 
   function SetPortraitToTexture(
     this: void,
@@ -16817,14 +16817,14 @@ declare global {
     ): ScriptedAnimationEffect[];
   }
 
-  namespace C_ScriptWarnings {}
+  namespace C_ScriptWarnings { }
 
   namespace C_SeasonInfo {
     function GetCurrentDisplaySeasonExpansion(this: void): number | undefined;
     function GetCurrentDisplaySeasonID(this: void): number;
   }
 
-  namespace C_SecureTransfer {}
+  namespace C_SecureTransfer { }
 
   interface ModelLight {
     omnidirectional?: boolean;
@@ -17241,7 +17241,7 @@ declare global {
     SetScaleTo(scaleX: number, scaleY: number): void;
   }
 
-  interface SimpleAnimScaleLine {}
+  interface SimpleAnimScaleLine { }
 
   interface SimpleAnimTextureCoordTranslation {
     GetOffset(): LuaMultiReturn<[number, number]>;
@@ -17253,7 +17253,7 @@ declare global {
     SetOffset(offsetX: uiUnit, offsetY: uiUnit): void;
   }
 
-  interface SimpleAnimTranslationLine {}
+  interface SimpleAnimTranslationLine { }
 
   interface SimpleAnimVertexColor {
     GetEndColor(): colorRGBA;
@@ -17806,7 +17806,7 @@ declare global {
     ): void;
   }
 
-  interface SimpleMaskTexture {}
+  interface SimpleMaskTexture { }
 
   interface SimpleMessageFrame {
     AddMessage(
@@ -18231,7 +18231,7 @@ declare global {
     ): void;
   }
 
-  namespace C_SkillInfo {}
+  namespace C_SkillInfo { }
 
   function AreDangerousScriptsAllowed(this: void): boolean;
   function SetAllowDangerousScripts(this: void, allowed?: boolean): void;
@@ -18666,9 +18666,9 @@ declare global {
     gender?: number,
   ): string | undefined;
 
-  namespace C_SpellActivationOverlay {}
+  namespace C_SpellActivationOverlay { }
 
-  namespace C_SpellBook {
+  namespace C_Spell {
     interface SpellBookItemInfo {
       actionID: number;
       spellID?: number;
@@ -19223,7 +19223,7 @@ declare global {
   function GetTime(this: void): number;
   function IsUsingFixedTimeStep(this: void): boolean;
 
-  namespace C_TalkingHead {}
+  namespace C_TalkingHead { }
 
   function AssistUnit(this: void, name?: string, exactMatch?: boolean): void;
   function AttackTarget(this: void): void;
@@ -19352,7 +19352,7 @@ declare global {
     minute: number;
   }
 
-  namespace C_TimerunningUI {}
+  namespace C_TimerunningUI { }
 
   function GetCurrentTitle(this: void): number;
   function GetNumTitles(this: void): number;
@@ -19721,7 +19721,7 @@ declare global {
     function SetDefaultFilters(this: void): void;
   }
 
-  namespace C_TradeInfo {}
+  namespace C_TradeInfo { }
 
   namespace C_TradeSkillUI {
     function CanStoreEnchantInItem(this: void, itemGUID: WOWGUID): boolean;
@@ -20234,9 +20234,9 @@ declare global {
     isSalvageRecipe?: boolean;
   }
 
-  namespace C_Trainer {}
+  namespace C_Trainer { }
 
-  namespace C_TraitConfig {}
+  namespace C_TraitConfig { }
 
   namespace C_Transmog {
     interface TransmogApplyWarningInfo {
@@ -22656,7 +22656,7 @@ declare global {
     function SubmitSuggestion(this: void, suggestion: string): boolean;
   }
 
-  namespace C_Vehicle {}
+  namespace C_Vehicle { }
 
   namespace C_VideoOptions {
     interface GxAdapterInfoDetails {
@@ -22944,7 +22944,7 @@ declare global {
     function ToggleMuted(this: void): void;
   }
 
-  namespace C_VoidStorageInfo {}
+  namespace C_VoidStorageInfo { }
 
   namespace C_CampaignInfo {
     interface CampaignChapterInfo {
@@ -23104,9 +23104,9 @@ declare global {
     function OnWorldLootObjectClick(this: void, unitToken: UnitToken): void;
   }
 
-  namespace C_WorldStateInfo {}
+  namespace C_WorldStateInfo { }
 
-  namespace C_WowEntitlementInfo {}
+  namespace C_WowEntitlementInfo { }
 
   namespace C_WowTokenUI {
     function StartTokenSell(this: void, tokenGUID: WOWGUID): void;

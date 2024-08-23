@@ -13,7 +13,7 @@ export function unitIsParty(u: supportedUnit): u is UnitIdParty {
 export function unitIsRaidUnit(
   u: supportedUnit,
 ): u is "myraid1" | "myraid2" | "myraid3" | "myraid4" | "myraid5" {
-  return u.startsWith("raid");
+  return u.startsWith("myraid");
 }
 
 export function unitIsPlayerPartyRaid(

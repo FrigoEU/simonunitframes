@@ -1,11 +1,11 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 
-go();
+go().catch(err => console.log(err));
 
 async function go() {
   const addonDir = path.normalize(
-    "C/Users/Simon/Program Files (x86)/World of Warcraft/_retail_/Interface/Addons/SimonUnitFrames",
+    "C:/Program Files (x86)/World of Warcraft/_retail_/Interface/AddOns/SimonUnitFrames",
   );
 
   await fs.mkdir(addonDir, { recursive: true });
@@ -24,4 +24,7 @@ async function go() {
     path.normalize("./templates.xml"),
     path.join(addonDir, "templates.xml"),
   );
+
+  console.log("Deploy successful");
+  console.log("");
 }

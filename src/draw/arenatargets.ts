@@ -20,7 +20,7 @@ export function drawPartyTargetedByFrames(
     config.unitFrame_bigIconSize,
     config.unitFrame_bigIconSize,
   );
-  arenaDps1TargetFrame.SetPoint("TOPRIGHT", parent, "TOPRIGHT", -4, 4);
+  arenaDps1TargetFrame.SetPoint("TOPRIGHT", parent, "TOPRIGHT", -4, -config.unitFrame_cooldownTopGap);
 
   const arenaDps2TargetFrame = createAuraFrame(
     namePrefix + "arenaDps2Target",
@@ -36,12 +36,19 @@ export function drawPartyTargetedByFrames(
     parent,
     "TOPRIGHT",
     -4 - (config.unitFrame_bigIconSize + config.unitFrame_bigIconGap),
-    4,
+    -config.unitFrame_cooldownTopGap,
   );
 
   observeAndUpdate(sources.guid, arena.arena1);
   observeAndUpdate(sources.guid, arena.arena2);
   observeAndUpdate(sources.guid, arena.arena3);
+
+  arena.arena2.exists.observe(exists => {
+    if (!exists) {
+      arenaDps1TargetFrame.Hide();
+      arenaDps2TargetFrame.Hide();
+    }
+  })
 
   function observeAndUpdate(
     unitGuidS: Source<WOWGUID>,
@@ -72,19 +79,21 @@ export function drawPartyTargetedByFrames(
           return;
         }
         if (unitGuid !== targetGuid) {
+          frame.Hide();
           return;
         }
 
+        frame.Show();
         if (offensiveCooldownActive) {
           applyAuraToAuraframe(offensiveCooldownActive, frame);
-          frame.border.SetVertexColor(255, 0, 0);
+          // frame.Border.SetVertexColor(255, 0, 0);
         } else {
-          frame.border.SetVertexColor(0, 0, 0);
+          // frame.Border.Hide();
           frame.cooldown.Hide();
           frame.icon.SetTexture(
             "Interface\\AddOns\\DefaultUIScript\\ClassIcons\\" +
-              class_ +
-              ".tga",
+            class_ +
+            ".tga",
           );
           frame.icon.SetAllPoints(frame);
         }
@@ -147,17 +156,19 @@ export function drawArenaTargetedByFrames(
       ],
       ([unitGuid, class_, targetGuid, offensiveCooldownActive]) => {
         if (unitGuid !== targetGuid) {
+          frame.Hide();
           return;
         }
+        frame.Show();
 
         if (offensiveCooldownActive) {
           applyAuraToAuraframe(offensiveCooldownActive, frame);
-          frame.border.SetVertexColor(255, 0, 0);
+          // frame.Border.SetVertexColor(255, 0, 0);
         } else {
           frame.icon.SetTexture(
             "Interface\\AddOns\\DefaultUIScript\\ClassIcons\\" +
-              class_ +
-              ".tga",
+            class_ +
+            ".tga",
           );
           frame.icon.SetAllPoints(frame);
         }
