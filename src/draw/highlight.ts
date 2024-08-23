@@ -2,7 +2,7 @@
 
 import { config } from "../config";
 import { focusInfo, healthinfo, observeAll, targetInfo } from "../sources";
-import { createBackdropTemplateFrame } from "./shared";
+import { createBackdropTemplateFrame } from "./auras";
 
 export function drawHighlightFrames(
   config: config,
@@ -21,12 +21,12 @@ export function drawHighlightFrames(
   highlightContainerFrame.SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", 4, -4);
 
   highlightContainerFrame.SetBackdrop({
-      bgFile: "Interface\\ChatFrame\\ChatFrameBackground",
-      edgeFile: "Interface\\ChatFrame\\ChatFrameBackground",
-      edgeSize: 3,
-      tile: true,
-      insets: { left: 0, right: 0, top: 0, bottom: 0 },
-    })
+    bgFile: "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeFile: "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeSize: 3,
+    tile: true,
+    insets: { left: 0, right: 0, top: 0, bottom: 0 },
+  })
   highlightContainerFrame.SetBackdropColor(0, 0, 0, 0);
   highlightContainerFrame.SetBackdropBorderColor(0, 0, 0, 1);
 

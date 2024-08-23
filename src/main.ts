@@ -61,7 +61,7 @@ SlashCmdList["TEST"] = function () {
 };
 
 export function stopTest() {
-  print("stopping testing!")
+  print("stopping testing!");
   // Just resetting everything
   handleWowEvent(sources, "PLAYER_ENTERING_WORLD", null, null);
 }
@@ -75,20 +75,28 @@ function start() {
   const friendlyFramesParent = CreateFrame(
     "Frame",
     "SimonPartyFrame",
-    UIParent,
+    UIParent
   );
   friendlyFramesParent.SetClampedToScreen(true);
-  friendlyFramesParent.SetPoint("TOPRIGHT", UIParent, "CENTER", -500, -36);
+  friendlyFramesParent.SetPoint(
+    "TOPRIGHT",
+    UIParent,
+    "CENTER",
+    -config.partyAndArenaContainersOffsetX,
+    config.partyAndArenaContainersOffsetY
+  );
   friendlyFramesParent.SetSize(1, 1);
   friendlyFramesParent.Show();
 
-  const arenaFramesParent = CreateFrame(
-    "Frame",
-    "SimonArenaFrame",
-    UIParent,
-  );
+  const arenaFramesParent = CreateFrame("Frame", "SimonArenaFrame", UIParent);
   arenaFramesParent.SetClampedToScreen(true);
-  arenaFramesParent.SetPoint("TOPRIGHT", UIParent, "CENTER", 500, -36);
+  arenaFramesParent.SetPoint(
+    "TOPRIGHT",
+    UIParent,
+    "CENTER",
+    config.partyAndArenaContainersOffsetX,
+    config.partyAndArenaContainersOffsetY
+  );
   arenaFramesParent.SetSize(1, 1);
   arenaFramesParent.Show();
 
@@ -106,18 +114,11 @@ function start() {
 
     if (unitIsPlayerPartyRaid(unit)) {
       const unitSource = sources[unit];
-      drawHealthbarFrames(config, nameP, container, unitSource);
+      drawHealthbarFrames(config, nameP, container, unitSource, "friendly");
       drawHighlightFrames(config, nameP, container, unitSource, sources.player);
       drawFriendlyCooldownSection(config, nameP, container, unitSource);
       drawHotFrames(config, nameP, container, unitSource);
       drawDotFrames(config, nameP, container, unitSource);
-      unitSource.exists.observe(exists => {
-        if (exists === true) {
-          container.Show();
-        } else {
-          container.Hide();
-        }
-      })
     }
     if (unitIsPlayer(unit) || unitIsParty(unit)) {
       const unitSource = sources[unit];
@@ -126,9 +127,18 @@ function start() {
 
     if (unitIsArena(unit)) {
       const unitSource = sources[unit];
-      drawHealthbarFrames(config, nameP, container, unitSource);
+      drawHealthbarFrames(config, nameP, container, unitSource, "arena");
       drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
     }
+
+    const unitSource = sources[unit];
+    unitSource.exists.observe((exists) => {
+      if (exists === true) {
+        container.Show();
+      } else {
+        container.Hide();
+      }
+    });
   }
 
   const eventFrame = CreateFrame("Frame");
@@ -137,7 +147,7 @@ function start() {
     eventFrame.RegisterEvent(eventName);
   }
   eventFrame.SetScript("OnEvent", (self, ev, arg1, arg2) =>
-    handleWowEvent(sources, ev, arg1, arg2),
+    handleWowEvent(sources, ev, arg1, arg2)
   );
   return sources;
 }
@@ -148,7 +158,7 @@ function handleWowEvent(
   sources: sources,
   eventName: (typeof eventsWeListenTo)[number],
   arg1: any,
-  arg2: any,
+  arg2: any
 ) {
   if (testing) {
     print(`Testmode: Ignoring event ${eventName}`);
@@ -158,7 +168,7 @@ function handleWowEvent(
     case "PLAYER_ENTERING_WORLD": {
       const playerRaidIndex = UnitInRaid("player");
       sources.playerGroupIndexZeroBased.set(
-        isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5),
+        isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5)
       );
       updateInfo(sources, "all", "all");
       return;
@@ -166,7 +176,7 @@ function handleWowEvent(
     case "GROUP_ROSTER_UPDATE": {
       const playerRaidIndex = UnitInRaid("player");
       sources.playerGroupIndexZeroBased.set(
-        isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5),
+        isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5)
       );
       updateInfo(sources, "all", "all");
       return;
@@ -259,14 +269,14 @@ type framepart = (typeof allFrameparts)[number];
 function updateInfo(
   sources: sources,
   target: "all" | UnitId,
-  part_in: "all" | framepart,
+  part_in: "all" | framepart
 ) {
   const units =
     target === "all"
       ? allSupportedUnits
       : [allSupportedUnits.find((u) => u === target) ?? null].filter(
-        (u) => !isNil(u),
-      );
+          (u) => !isNil(u)
+        );
 
   const infos = part_in === "all" ? allFrameparts : [part_in];
 
@@ -354,9 +364,9 @@ function updateInfo(
               processNewHelpfulAura(
                 sources.player.class.get(),
                 unitSource,
-                aura,
+                aura
               ),
-            true,
+            true
           );
 
           if ("dots" in unitSource) {
@@ -379,7 +389,7 @@ function updateInfo(
                   newDots.push(aura);
                 }
               },
-              true,
+              true
             );
             newDots.sort(sortDots);
             unitSource.dots.set(newDots);
@@ -401,7 +411,7 @@ function processAuraUpdateInfo(
   },
   unit: (typeof allSupportedUnits)[number],
   unitSource: sources[keyof sources],
-  sources: sources,
+  sources: sources
 ) {
   const auraUpdateInfo = info.auraUpdateInfo;
   if (isNil(auraUpdateInfo)) {
@@ -413,7 +423,7 @@ function processAuraUpdateInfo(
         updateAuraIfCorrectId(
           unit,
           auraInstanceID,
-          unitSource.defensiveCooldownActive,
+          unitSource.defensiveCooldownActive
         );
       }
 
@@ -421,14 +431,14 @@ function processAuraUpdateInfo(
         updateAuraIfCorrectId(
           unit,
           auraInstanceID,
-          unitSource.externalDefFromPlayerActive,
+          unitSource.externalDefFromPlayerActive
         );
       }
       if ("offensiveCooldownActive" in unitSource) {
         updateAuraIfCorrectId(
           unit,
           auraInstanceID,
-          unitSource.offensiveCooldownActive,
+          unitSource.offensiveCooldownActive
         );
       }
       if ("hot0" in unitSource) {
@@ -446,11 +456,11 @@ function processAuraUpdateInfo(
         if (found) {
           const newaura = C_UnitAuras.GetAuraDataByAuraInstanceID(
             unit,
-            auraInstanceID,
+            auraInstanceID
           );
           if (newaura) {
             const afterFilter = curr.filter(
-              (old) => old.auraInstanceID !== auraInstanceID,
+              (old) => old.auraInstanceID !== auraInstanceID
             );
             afterFilter.push(newaura);
             afterFilter.sort(sortDots);
@@ -465,20 +475,20 @@ function processAuraUpdateInfo(
       if ("defensiveCooldownActive" in unitSource) {
         clearAuraIfCorrectId(
           auraInstanceID,
-          unitSource.defensiveCooldownActive,
+          unitSource.defensiveCooldownActive
         );
       }
 
       if ("externalDefFromPlayerActive" in unitSource) {
         clearAuraIfCorrectId(
           auraInstanceID,
-          unitSource.externalDefFromPlayerActive,
+          unitSource.externalDefFromPlayerActive
         );
       }
       if ("offensiveCooldownActive" in unitSource) {
         clearAuraIfCorrectId(
           auraInstanceID,
-          unitSource.offensiveCooldownActive,
+          unitSource.offensiveCooldownActive
         );
       }
       if ("hot0" in unitSource) {
@@ -493,7 +503,7 @@ function processAuraUpdateInfo(
       if ("dots" in unitSource) {
         const curr = unitSource.dots.get();
         const afterFilter = curr.filter(
-          (old) => old.auraInstanceID !== auraInstanceID,
+          (old) => old.auraInstanceID !== auraInstanceID
         );
         if (curr.length !== afterFilter.length) {
           unitSource.dots.set(afterFilter);
@@ -530,7 +540,7 @@ function processAuraUpdateInfo(
 // It's kinda weird and tricky, but should do what we want in RBG's
 function translateUnit(
   sources: sources,
-  target_: "all" | UnitId,
+  target_: "all" | UnitId
 ): null | supportedUnit {
   if (
     target_ === "player" ||
@@ -599,13 +609,13 @@ function translateUnit(
 function processNewHelpfulAura(
   playerClass: className,
   unitSource: sources[keyof sources],
-  aura: AuraData,
+  aura: AuraData
 ) {
   const hotIndex = getBuffIndex(
     { name: playerClass },
     aura.sourceUnit,
     aura.name,
-    aura.spellId as spellID,
+    aura.spellId as spellID
   );
   if (hotIndex === null) {
     return;
@@ -632,7 +642,7 @@ function processNewHelpfulAura(
 
 function clearAuraIfCorrectId(
   auraInstanceID: number | undefined,
-  s: Source<AuraData | null>,
+  s: Source<AuraData | null>
 ) {
   const curr = s.get();
   if (curr && curr.auraInstanceID === auraInstanceID) {
@@ -642,13 +652,13 @@ function clearAuraIfCorrectId(
 function updateAuraIfCorrectId(
   unit: UnitId,
   auraInstanceID: number,
-  s: Source<AuraData | null>,
+  s: Source<AuraData | null>
 ) {
   const curr = s.get();
   if (curr && curr.auraInstanceID === auraInstanceID) {
     const newaura = C_UnitAuras.GetAuraDataByAuraInstanceID(
       unit,
-      auraInstanceID,
+      auraInstanceID
     );
     if (newaura) {
       s.set(newaura);

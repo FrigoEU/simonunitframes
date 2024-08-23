@@ -9,13 +9,14 @@ export type myAuraFrame = SimpleFrame & {
   Name: SimpleFontString;
   // Border: SimpleTexture;
   cooldown: SimpleFrame & CooldownFrame;
-  borderF: ReturnType<typeof createBackdropTemplateFrame>
+  borderF: ReturnType<typeof createBackdropTemplateFrame>;
 };
 
 export function createAuraFrame(
   name: string,
   parent: SimpleFrame,
   borderColor: null | { r: number; b: number; g: number },
+  showCount: boolean
 ): myAuraFrame {
   const auraF = CreateFrame(
     "Button",
@@ -31,20 +32,18 @@ export function createAuraFrame(
     swipecolor.r,
     swipecolor.g,
     swipecolor.b,
-    swipecolor.a,
+    swipecolor.a
   );
 
+  if (showCount === false) {
+    auraF.cooldown.SetHideCountdownNumbers(true);
+  }
+
   // Zoom icon?
-  auraF.icon.SetTexCoord(.08, .92, .08, .92);
+  auraF.icon.SetTexCoord(0.08, 0.92, 0.08, 0.92);
   auraF.borderF = createBackdropTemplateFrame(name + "Border", auraF);
   auraF.borderF.SetAllPoints(auraF);
-  auraF.borderF.SetBackdrop({
-      bgFile: "Interface\\ChatFrame\\ChatFrameBackground",
-      edgeFile: "Interface\\ChatFrame\\ChatFrameBackground",
-      edgeSize: 2,
-      tile: true,
-      insets: { left: 0, right: 0, top: 0, bottom: 0 },
-    })
+  auraF.borderF.SetBackdrop(getStandardBorderBackdropObj());
   auraF.borderF.SetBackdropColor(0, 0, 0, 0);
   auraF.borderF.SetBackdropBorderColor(0, 0, 0, 1);
 
@@ -60,12 +59,22 @@ export function createAuraFrame(
   return auraF;
 }
 
+export function getStandardBorderBackdropObj() {
+  return {
+    bgFile: "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeFile: "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeSize: 2,
+    tile: true,
+    insets: { left: 0, right: 0, top: 0, bottom: 0 },
+  };
+}
+
 export function applyAuraToAuraframe(
   aura: null | Pick<
     AuraData,
     "icon" | "duration" | "expirationTime" | "applications"
   >,
-  auraF: myAuraFrame,
+  auraF: myAuraFrame
 ) {
   if (isNil(aura)) {
     auraF.Hide();
@@ -79,7 +88,7 @@ export function applyAuraToAuraframe(
         auraF.cooldown,
         aura.expirationTime - aura.duration,
         aura.duration,
-        true,
+        true
       );
       auraF.cooldown.Show();
     } else {
@@ -89,7 +98,7 @@ export function applyAuraToAuraframe(
 
     // Stacks
     auraF.Count.SetText(
-      aura.applications > 1 ? aura.applications.toString() : (null as any),
+      aura.applications > 1 ? aura.applications.toString() : (null as any)
     );
 
     auraF.Show();
@@ -101,27 +110,29 @@ export function createBackdropTemplateFrame(name: string, parent: SimpleFrame) {
     "Frame",
     name + "BorderContainer",
     parent,
-    "BackdropTemplate",
+    "BackdropTemplate"
   ) as SimpleFrame & {
     // Fixing missing typings
     SetBackdrop: (opts: {
-      bgFile: string,
-      edgeFile: string,
-      tile: boolean,
-      edgeSize: number,
-      insets: { left: number, right: number, top: number, bottom: number }
-    }) => void,
-    SetBackdropColor: (
-      r: number,
-      g: number,
-      b: number,
-      a: number,
-    ) => void;
+      bgFile: string;
+      edgeFile: string;
+      tile: boolean;
+      edgeSize: number;
+      insets: { left: number; right: number; top: number; bottom: number };
+    }) => void;
+    GetBackdrop: () => {
+      bgFile: string;
+      edgeFile: string;
+      tile: boolean;
+      edgeSize: number;
+      insets: { left: number; right: number; top: number; bottom: number };
+    };
+    SetBackdropColor: (r: number, g: number, b: number, a: number) => void;
     SetBackdropBorderColor: (
       r: number,
       g: number,
       b: number,
-      a: number,
+      a: number
     ) => void;
   };
 }

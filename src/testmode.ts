@@ -3,7 +3,7 @@
 import { sources } from "./sources";
 
 export function startTest(sources: sources) {
-  print("starting testing!")
+  print("starting testing!");
 
   sources.playerGroupIndexZeroBased.set(1);
 
@@ -36,6 +36,11 @@ export function startTest(sources: sources) {
   sources.player.hot6.set(makeTestAura("Rejuvenation"));
 
   sources.party1.health.max.set(1000);
+  sources.party1.hot2.set(makeTestAura("Rejuvenation"));
+  sources.party1.dots.set([
+    makeTestAura("Shadow Word: Pain"),
+    makeTestAura("Shadow Word: Pain"),
+  ]);
   sources.party1.health.current.set(500);
   sources.party1.exists.set(true);
   sources.party1.target.set("arena1guid");
@@ -96,6 +101,8 @@ export function startTest(sources: sources) {
   sources.arena3.target.set(null);
 }
 
+let auraInstanceIDCounter = 1;
+
 export function makeTestAura(
   spell:
     | "Barkskin"
@@ -103,7 +110,7 @@ export function makeTestAura(
     | "Avatar"
     | "Ironbark"
     | "Unstable Affliction"
-    | "Shadow Word: Pain",
+    | "Shadow Word: Pain"
 ): AuraData {
   const spellIds: { [key in typeof spell]: spellID } = {
     Barkskin: 22812 as spellID,
@@ -121,14 +128,15 @@ export function makeTestAura(
 
   const spellInfo = C_Spell.GetSpellInfo(spellId);
 
+  const duration = auraInstanceIDCounter * 2;
   return {
     applications: 1,
-    auraInstanceID: 123,
+    auraInstanceID: 999 + auraInstanceIDCounter++,
     canApplyAura: false, // N/A
     charges: 0, // N/A
     dispelName: "Magic" as const,
-    duration: 10,
-    expirationTime: 7,
+    duration,
+    expirationTime: GetTime() + duration,
     icon: spellInfo.iconID,
     isBossAura: false,
     isFromPlayerOrPlayerPet: false,
@@ -144,6 +152,6 @@ export function makeTestAura(
     points: [],
     sourceUnit: "player", // N/A
     spellId: spellId,
-    timeMod: 0, // N/A
+    timeMod: 4, // N/A
   };
 }

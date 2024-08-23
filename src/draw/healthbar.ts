@@ -2,23 +2,21 @@
 
 import { config } from "../config";
 import { healthinfo } from "../sources";
-import { createBackdropTemplateFrame } from "./shared";
+import { createBackdropTemplateFrame } from "./auras";
 
 export function drawHealthbarFrames(
   config: config,
   namePrefix: string,
   container: SimpleFrame,
   sources: healthinfo,
+  side: "friendly" | "arena"
 ) {
   const healthbar = CreateFrame(
     "STATUSBAR",
     namePrefix + "Healthbar",
-    container,
+    container
   ) as SimpleStatusBar;
-  healthbar.SetSize(
-    config.unitFrame_fullWidth,
-    config.unitFrame_fullHeight,
-  );
+  healthbar.SetSize(config.unitFrame_fullWidth, config.unitFrame_fullHeight);
   healthbar.SetFrameStrata("MEDIUM");
   healthbar.SetFrameLevel(50);
   healthbar.SetPoint("TOPLEFT", container, "TOPLEFT", 0, 0);
@@ -28,7 +26,10 @@ export function drawHealthbarFrames(
   healthbar.SetMinMaxValues(0, 100);
   healthbar.SetValue(100);
 
-  const border = createBackdropTemplateFrame(namePrefix + "HealthbarBorder", healthbar);
+  const border = createBackdropTemplateFrame(
+    namePrefix + "HealthbarBorder",
+    healthbar
+  );
   border.SetFrameStrata("MEDIUM");
   border.SetFrameLevel(200);
   border.SetAllPoints(healthbar);
@@ -38,13 +39,13 @@ export function drawHealthbarFrames(
     edgeSize: 2,
     tile: true,
     insets: { left: 0, right: 0, top: 0, bottom: 0 },
-  })
+  });
   border.SetBackdropColor(0, 0, 0, 0);
   border.SetBackdropBorderColor(0, 0, 0, 1);
 
   const healthbarBackground = healthbar.CreateTexture(
     namePrefix + "HealthbarBackground",
-    "BACKGROUND",
+    "BACKGROUND"
   );
   healthbarBackground.SetAllPoints(healthbar);
   healthbarBackground.SetTexture(config.bartexturepath);
@@ -52,10 +53,38 @@ export function drawHealthbarFrames(
     config.unitFrame_healthbarBgColor.r / 255,
     config.unitFrame_healthbarBgColor.g / 255,
     config.unitFrame_healthbarBgColor.b / 255,
-    config.unitFrame_healthbarBgColor.a,
+    config.unitFrame_healthbarBgColor.a
   );
   // healthbarBackground.SetHorizTile(false); // Don't "tile" horizontally
   // healthbarBackground.SetVertTile(false); // Don't "tile" vertically
+
+  const topSection = CreateFrame(
+    "FRAME",
+    namePrefix + "CooldownSection",
+    container
+  );
+  topSection.SetFrameStrata("MEDIUM");
+  topSection.SetFrameLevel(100);
+  topSection.SetSize(
+    config.unitFrame_fullWidth,
+    config.unitFrame_fullHeight *
+      (side === "friendly"
+        ? config.unitFrame_cooldownSectionPercentage_friendly
+        : config.unitFrame_cooldownSectionPercentage_arena)
+  );
+  topSection.SetPoint("TOPRIGHT", container, "TOPRIGHT", 0, 0);
+
+  const topSectionBg = topSection.CreateTexture(
+    namePrefix + "CooldownSectionBackground"
+  );
+  topSectionBg.SetTexture(config.bartexturepath);
+  topSectionBg.SetAllPoints(topSection);
+  topSectionBg.SetVertexColor(
+    config.unitFrame_cooldownBackgroundColor.r / 255,
+    config.unitFrame_cooldownBackgroundColor.g / 255,
+    config.unitFrame_cooldownBackgroundColor.b / 255,
+    config.unitFrame_cooldownBackgroundColor.a
+  );
 
   sources.class.observe((className) => {
     const color = C_ClassColor.GetClassColor(className);
