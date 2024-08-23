@@ -1,4 +1,4 @@
-export { };
+export {};
 
 declare global {
   type spellName = string;
@@ -146,12 +146,12 @@ declare global {
     name?: string,
     parent?: SimpleFrame,
     template?: string,
-    id?: number,
+    id?: number
   ): SimpleFrame;
 
   function IsUsableSpell(
     this: void,
-    s: spellName | spellID,
+    s: spellName | spellID
   ): LuaMultiReturn<
     [boolean /* player cant use */, boolean /* player has insuff nomana */]
   >;
@@ -169,14 +169,14 @@ declare global {
   function GetSpecializationInfo(this: void, index: specIndex): null | specInfo;
   function GetArenaOpponentSpec(
     this: void,
-    num: 1 | 2 | 3,
+    num: 1 | 2 | 3
   ): null | LuaMultiReturn<[specializationId, number /* gender */]>;
   // 0 if not in party / raid
   function GetNumGroupMembers(this: void): number;
   function UnitBuff(
     this: void,
     unit: UnitId,
-    index: number,
+    index: number
   ): null | LuaMultiReturn<
     [
       string /* name */,
@@ -196,12 +196,21 @@ declare global {
     ]
   >;
 
+  function ToggleDropDownMenu(
+    level: number,
+    value: any,
+    dropDownFrame: SimpleFrame,
+    anchorName: string,
+    xOffset: number,
+    yOffset: number
+  ): void;
+
   /** @noSelf **/
   function CooldownFrame_Set(
     cooldown: CooldownFrame,
     start: number,
     duration: number,
-    enable: boolean,
+    enable: boolean
   ): void;
 
   /** @noSelf **/
@@ -211,11 +220,10 @@ declare global {
       filter: "HELPFUL" | "HARMFUL",
       maxCount: null | number,
       cb: (this: void, aura: AuraData) => void,
-      usePackedAura: true,
+      usePackedAura: true
     ): void;
   }
 
   let SLASH_TEST1: string;
   const SlashCmdList: { [key: string]: () => any };
-
 }

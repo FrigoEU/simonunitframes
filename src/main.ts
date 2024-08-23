@@ -114,7 +114,14 @@ function start() {
 
     if (unitIsPlayerPartyRaid(unit)) {
       const unitSource = sources[unit];
-      drawHealthbarFrames(config, nameP, container, unitSource, "friendly");
+      drawHealthbarFrames(
+        config,
+        nameP,
+        container,
+        unitSource,
+        "friendly",
+        unitIsParty(unit) || unitIsPlayer(unit) ? unit : null
+      );
       drawHighlightFrames(config, nameP, container, unitSource, sources.player);
       drawFriendlyCooldownSection(config, nameP, container, unitSource);
       drawHotFrames(config, nameP, container, unitSource);
@@ -127,7 +134,7 @@ function start() {
 
     if (unitIsArena(unit)) {
       const unitSource = sources[unit];
-      drawHealthbarFrames(config, nameP, container, unitSource, "arena");
+      drawHealthbarFrames(config, nameP, container, unitSource, "arena", null);
       drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
     }
 

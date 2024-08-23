@@ -9,7 +9,8 @@ export function drawHealthbarFrames(
   namePrefix: string,
   container: SimpleFrame,
   sources: healthinfo,
-  side: "friendly" | "arena"
+  side: "friendly" | "arena",
+  unit: UnitIdPlayer | UnitIdParty | UnitIdRaidPlayer | null
 ) {
   const healthbar = CreateFrame(
     "STATUSBAR",
@@ -61,7 +62,8 @@ export function drawHealthbarFrames(
   const topSection = CreateFrame(
     "FRAME",
     namePrefix + "CooldownSection",
-    container
+    container,
+    "SecureUnitButtonTemplate"
   );
   topSection.SetFrameStrata("MEDIUM");
   topSection.SetFrameLevel(100);
@@ -73,6 +75,20 @@ export function drawHealthbarFrames(
         : config.unitFrame_cooldownSectionPercentage_arena)
   );
   topSection.SetPoint("TOPRIGHT", container, "TOPRIGHT", 0, 0);
+
+  if (unit) {
+    const buttonSection = CreateFrame(
+      "BUTTON",
+      namePrefix + "CooldownSection",
+      container,
+      "SecureUnitButtonTemplate"
+    );
+    buttonSection.SetAllPoints(container);
+    buttonSection.SetAttribute("unit", unit);
+    (buttonSection as any).RegisterForClicks("AnyUp");
+    buttonSection.SetAttribute("*type1", "focus");
+    buttonSection.SetAttribute("*type2", "togglemenu");
+  }
 
   const topSectionBg = topSection.CreateTexture(
     namePrefix + "CooldownSectionBackground"
