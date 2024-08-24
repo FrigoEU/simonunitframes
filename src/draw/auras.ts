@@ -9,20 +9,25 @@ export type myAuraFrame = SimpleFrame & {
   Name: SimpleFontString;
   // Border: SimpleTexture;
   cooldown: SimpleFrame & CooldownFrame;
-  borderF: ReturnType<typeof createBackdropTemplateFrame>;
+  // borderF: ReturnType<typeof createBackdropTemplateFrame>;
+  setBorderColor: (border: null | { r: number; b: number; g: number }) => void;
+  setBorderSize: (num: null | number) => void;
 };
 
 export function createAuraFrame(
   name: string,
   parent: SimpleFrame,
-  borderColor: null | { r: number; b: number; g: number },
-  showCount: boolean
+  opts: {
+    defaultBorder: null | { r: number; b: number; g: number };
+    borderSize?: number;
+    showCount: boolean;
+  },
 ): myAuraFrame {
   const auraF = CreateFrame(
     "Button",
     name,
     parent,
-    "SimonUnitFramesAuraFrame"
+    "SimonUnitFramesAuraFrame",
   ) as ReturnType<typeof createAuraFrame>;
   auraF.SetFrameStrata("HIGH");
   auraF.cooldown.SetDrawSwipe(true);
@@ -32,38 +37,69 @@ export function createAuraFrame(
     swipecolor.r,
     swipecolor.g,
     swipecolor.b,
-    swipecolor.a
+    swipecolor.a,
   );
 
-  if (showCount === false) {
+  if (opts.showCount === false) {
     auraF.cooldown.SetHideCountdownNumbers(true);
   }
 
   // Zoom icon?
   auraF.icon.SetTexCoord(0.08, 0.92, 0.08, 0.92);
-  auraF.borderF = createBackdropTemplateFrame(name + "Border", auraF);
-  auraF.borderF.SetAllPoints(auraF);
-  auraF.borderF.SetBackdrop(getStandardBorderBackdropObj());
-  auraF.borderF.SetBackdropColor(0, 0, 0, 0);
-  auraF.borderF.SetBackdropBorderColor(0, 0, 0, 1);
+  const borderF = createBackdropTemplateFrame(name + "Border", auraF);
+  borderF.SetAllPoints(auraF);
+  borderF.SetBackdrop(
+    getStandardBorderBackdropObj({ edgeSize: opts.borderSize ?? 2 }),
+  );
+  borderF.SetBackdropColor(0, 0, 0, 0);
 
-  // f:SetBackdrop({ bgFile = "Interface/DialogFrame/UI-DialogBox-Background-Dark", edgeFile = "Interface/Tooltips/UI-Tooltip-Border", tile = true, edgeSize = 10, tileSize = 10, insets = { left = 1, right = 1, top = 1, bottom = 1, }, })
+  const defaultBorder = opts.defaultBorder;
+  if (defaultBorder) {
+    borderF.SetBackdropBorderColor(
+      defaultBorder.r,
+      defaultBorder.b,
+      defaultBorder.g,
+      1,
+    );
+  } else {
+    borderF.SetBackdropBorderColor(0, 0, 0, 1);
+  }
 
-  // if (!isNil(borderColor)) {
-  //   auraF.Border.SetVertexColor(borderColor.r, borderColor.g, borderColor.b);
-  //   auraF.Border.Show();
-  // } else {
-  //   auraF.Border.Hide();
-  // }
+  auraF.setBorderColor = function (
+    border: null | { r: number; b: number; g: number },
+  ) {
+    if (border) {
+      borderF.SetBackdropBorderColor(border.r, border.b, border.g, 1);
+    } else {
+      if (defaultBorder) {
+        borderF.SetBackdropBorderColor(
+          defaultBorder.r,
+          defaultBorder.b,
+          defaultBorder.g,
+          1,
+        );
+      } else {
+        borderF.SetBackdropBorderColor(0, 0, 0, 1);
+      }
+    }
+  };
+
+  auraF.setBorderSize = function (edgeSize: null | number) {
+    if (edgeSize !== null) {
+      getStandardBorderBackdropObj({ edgeSize: edgeSize });
+    } else {
+      getStandardBorderBackdropObj({ edgeSize: opts.borderSize ?? 2 });
+    }
+  };
 
   return auraF;
 }
 
-export function getStandardBorderBackdropObj() {
+export function getStandardBorderBackdropObj(opts?: { edgeSize?: number }) {
   return {
     bgFile: "Interface\\ChatFrame\\ChatFrameBackground",
     edgeFile: "Interface\\ChatFrame\\ChatFrameBackground",
-    edgeSize: 2,
+    edgeSize: opts?.edgeSize ?? 0,
     tile: true,
     insets: { left: 0, right: 0, top: 0, bottom: 0 },
   };
@@ -74,7 +110,7 @@ export function applyAuraToAuraframe(
     AuraData,
     "icon" | "duration" | "expirationTime" | "applications"
   >,
-  auraF: myAuraFrame
+  auraF: myAuraFrame,
 ) {
   if (isNil(aura)) {
     auraF.Hide();
@@ -88,7 +124,7 @@ export function applyAuraToAuraframe(
         auraF.cooldown,
         aura.expirationTime - aura.duration,
         aura.duration,
-        true
+        true,
       );
       auraF.cooldown.Show();
     } else {
@@ -98,7 +134,7 @@ export function applyAuraToAuraframe(
 
     // Stacks
     auraF.Count.SetText(
-      aura.applications > 1 ? aura.applications.toString() : (null as any)
+      aura.applications > 1 ? aura.applications.toString() : (null as any),
     );
 
     auraF.Show();
@@ -110,7 +146,7 @@ export function createBackdropTemplateFrame(name: string, parent: SimpleFrame) {
     "Frame",
     name + "BorderContainer",
     parent,
-    "BackdropTemplate"
+    "BackdropTemplate",
   ) as SimpleFrame & {
     // Fixing missing typings
     SetBackdrop: (opts: {
@@ -132,7 +168,7 @@ export function createBackdropTemplateFrame(name: string, parent: SimpleFrame) {
       r: number,
       g: number,
       b: number,
-      a: number
+      a: number,
     ) => void;
   };
 }
