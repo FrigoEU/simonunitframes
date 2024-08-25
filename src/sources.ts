@@ -224,7 +224,7 @@ export function observeAll<SOURCES extends Array<Source<any>>>(
   sources: [...SOURCES],
   cb: (ts: {
     [K in keyof SOURCES]: SOURCES[K] extends Source<infer S> ? S : never;
-  }) => void,
+  }) => void
 ) {
   for (let source of sources) {
     source.observe(() => {

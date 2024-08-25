@@ -1,7 +1,7 @@
 /** @noSelfInFile */
 
 import { config } from "../config";
-import { healthinfo } from "../sources";
+import { healthinfo, observeAll } from "../sources";
 import { createBackdropTemplateFrame } from "./auras";
 
 export function drawHealthbarFrames(
@@ -102,6 +102,9 @@ export function drawHealthbarFrames(
     config.unitFrame_cooldownBackgroundColor.a
   );
 
+  const healthStr = healthbar.CreateFontString();
+  healthStr.SetPoint("BOTTOMRIGHT", healthbar, "BOTTOMRIGHT", 4, 4);
+
   sources.class.observe((className) => {
     const color = C_ClassColor.GetClassColor(className);
     healthbar.SetStatusBarColor(color.r, color.g, color.b, 1);
@@ -112,6 +115,7 @@ export function drawHealthbarFrames(
   });
   sources.health.current.observe((currhealth) => {
     healthbar.SetValue(currhealth);
+    healthStr.SetText((currhealth / 1000).toString() + "K");
   });
 
   return healthbar;

@@ -78,7 +78,7 @@ export function getBuffIndex(
   playerClass: { name: className },
   source: string | null | undefined,
   name: string,
-  spellId: spellID,
+  spellId: spellID
 ): null | "defcd" | "externaldefbuff" | "offcd" | 0 | 1 | 2 | 3 | 4 | 5 | 6 {
   if (source === "player") {
     if (playerClass.name === "DRUID") {
@@ -117,13 +117,13 @@ export function getBuffIndex(
       if (spellId === 376788) {
         return 3; // Echo Dream Breath
       }
-      if (name === "Spiritbloom") {
+      if (name === "Lifebind") {
         return 4;
       }
       if (name === "Echo") {
         return 5;
       }
-      if (name === "Lifebind") {
+      if (name === "Spiritbloom") {
         return 6;
       }
     }
