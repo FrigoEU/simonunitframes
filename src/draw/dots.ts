@@ -10,20 +10,14 @@ export function drawDotFrames(
   config: config,
   nameP: string,
   parent: SimpleFrame,
-  sources: dotInfo
+  sources: dotInfo,
 ) {
   // Max 5 dots?
   const dotAuraFrames: myAuraFrame[] = ([0, 1, 2, 3, 4] as const).map((i) => {
-    const dotAuraFrame = createAuraFrame(
-      nameP + "Dot" + i,
-      parent,
-      {
-        r: 0,
-        g: 0,
-        b: 0,
-      },
-      false
-    );
+    const dotAuraFrame = createAuraFrame(nameP + "Dot" + i, parent, {
+      defaultBorder: { r: 0, g: 0, b: 0 },
+      showCount: false,
+    });
 
     if (!config.dots_show_timer_text) {
       (dotAuraFrame.cooldown as any).noCooldownCount = true; // so omniCC doesn't show anything
@@ -31,7 +25,7 @@ export function drawDotFrames(
 
     dotAuraFrame.SetSize(
       config.unitFrame_smallIconSize,
-      config.unitFrame_smallIconSize
+      config.unitFrame_smallIconSize,
     );
     dotAuraFrame.SetPoint(
       "TOPRIGHT",
@@ -42,7 +36,7 @@ export function drawDotFrames(
         config.unitFrame_cooldownSectionPercentage_friendly *
           config.unitFrame_fullHeight +
         4
-      )
+      ),
     );
 
     return dotAuraFrame;
@@ -55,19 +49,11 @@ export function drawDotFrames(
       if (!isNil(dotAuraFrame)) {
         dotAuraFrame.Show();
         applyAuraToAuraframe(dotinfo, dotAuraFrame);
-        if (dangerousDebuffs.includes(dotinfo.name)) {
-          // dotAuraFrame.SetSize(
-          //   config.unitFrame_bigIconSize,
-          //   config.unitFrame_bigIconSize,
-          // )
-          dotAuraFrame.borderF.SetBackdropBorderColor(255, 0, 0, 1);
-        } else {
-          // dotAuraFrame.SetSize(
-          //   config.unitFrame_smallIconSize,
-          //   config.unitFrame_smallIconSize,
-          // );
-          dotAuraFrame.borderF.SetBackdropBorderColor(0, 0, 0, 1);
-        }
+        dotAuraFrame.setBorderColor(
+          dangerousDebuffs.includes(dotinfo.name)
+            ? { r: 255, g: 0, b: 0 }
+            : { r: 0, g: 0, b: 0 },
+        );
       }
     });
   });
