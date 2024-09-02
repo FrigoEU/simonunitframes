@@ -21,13 +21,13 @@ export function createAuraFrame(
     defaultBorder: null | { r: number; b: number; g: number };
     borderSize?: number;
     showCount: boolean;
-  },
+  }
 ): myAuraFrame {
   const auraF = CreateFrame(
     "Button",
     name,
     parent,
-    "SimonUnitFramesAuraFrame",
+    "SimonUnitFramesAuraFrame"
   ) as ReturnType<typeof createAuraFrame>;
   auraF.SetFrameStrata("HIGH");
   auraF.cooldown.SetDrawSwipe(true);
@@ -37,7 +37,7 @@ export function createAuraFrame(
     swipecolor.r,
     swipecolor.g,
     swipecolor.b,
-    swipecolor.a,
+    swipecolor.a
   );
 
   if (opts.showCount === false) {
@@ -49,34 +49,34 @@ export function createAuraFrame(
   const borderF = createBackdropTemplateFrame(name + "Border", auraF);
   borderF.SetAllPoints(auraF);
   borderF.SetBackdrop(
-    getStandardBorderBackdropObj({ edgeSize: opts.borderSize ?? 2 }),
+    getStandardBorderBackdropObj({ edgeSize: opts.borderSize ?? 2 })
   );
   borderF.SetBackdropColor(0, 0, 0, 0);
 
   const defaultBorder = opts.defaultBorder;
-  if (defaultBorder) {
+  if (!isNil(defaultBorder)) {
     borderF.SetBackdropBorderColor(
       defaultBorder.r,
-      defaultBorder.b,
       defaultBorder.g,
-      1,
+      defaultBorder.b,
+      1
     );
   } else {
     borderF.SetBackdropBorderColor(0, 0, 0, 1);
   }
 
   auraF.setBorderColor = function (
-    border: null | { r: number; b: number; g: number },
+    border: null | { r: number; b: number; g: number }
   ) {
-    if (border) {
-      borderF.SetBackdropBorderColor(border.r, border.b, border.g, 1);
+    if (!isNil(border)) {
+      borderF.SetBackdropBorderColor(border.r, border.g, border.b, 1);
     } else {
-      if (defaultBorder) {
+      if (!isNil(defaultBorder)) {
         borderF.SetBackdropBorderColor(
           defaultBorder.r,
-          defaultBorder.b,
           defaultBorder.g,
-          1,
+          defaultBorder.b,
+          1
         );
       } else {
         borderF.SetBackdropBorderColor(0, 0, 0, 1);
@@ -110,7 +110,7 @@ export function applyAuraToAuraframe(
     AuraData,
     "icon" | "duration" | "expirationTime" | "applications"
   >,
-  auraF: myAuraFrame,
+  auraF: myAuraFrame
 ) {
   if (isNil(aura)) {
     auraF.Hide();
@@ -124,7 +124,7 @@ export function applyAuraToAuraframe(
         auraF.cooldown,
         aura.expirationTime - aura.duration,
         aura.duration,
-        true,
+        true
       );
       auraF.cooldown.Show();
     } else {
@@ -134,7 +134,7 @@ export function applyAuraToAuraframe(
 
     // Stacks
     auraF.Count.SetText(
-      aura.applications > 1 ? aura.applications.toString() : (null as any),
+      aura.applications > 1 ? aura.applications.toString() : (null as any)
     );
 
     auraF.Show();
@@ -146,7 +146,7 @@ export function createBackdropTemplateFrame(name: string, parent: SimpleFrame) {
     "Frame",
     name + "BorderContainer",
     parent,
-    "BackdropTemplate",
+    "BackdropTemplate"
   ) as SimpleFrame & {
     // Fixing missing typings
     SetBackdrop: (opts: {
@@ -168,7 +168,7 @@ export function createBackdropTemplateFrame(name: string, parent: SimpleFrame) {
       r: number,
       g: number,
       b: number,
-      a: number,
+      a: number
     ) => void;
   };
 }

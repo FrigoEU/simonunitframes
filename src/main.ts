@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { dangerousDebuffs, getBuffIndex } from "./auras";
+import { dangerousDebuffs, getBuffIndex, ignoredDebuffs } from "./auras";
 import { makeConfig } from "./config";
 import { playerCanDispelFromParty } from "./dispellable";
 import {
@@ -13,6 +13,7 @@ import { drawHealthbarFrames } from "./draw/healthbar";
 import { drawHighlightFrames } from "./draw/highlight";
 import { drawHotFrames, hotIndexToHotName } from "./draw/hots";
 import { setPosition } from "./draw/position";
+import { sortDots } from "./sortdots";
 import { makeSources, Source, sources } from "./sources";
 import { startTest } from "./testmode";
 import {
@@ -313,6 +314,7 @@ function updateInfo(
         const cl = UnitClass(unit)[1];
         unitSource.class.set(cl as className);
         unitSource.guid.set(UnitGUID(unit) || "");
+        unitSource.name.set(UnitName(unit)[0] || "");
       } else if (info.tag === "power" || info.tag === "absorb") {
         // TODO!
       } else if (info.tag === "target") {
@@ -383,22 +385,16 @@ function updateInfo(
               "HARMFUL",
               100,
               function handleNewHarmfulAura(aura: AuraData) {
-                if (
-                  aura.dispelName !== null &&
-                  (aura.dispelName === "Curse" ||
-                    aura.dispelName === "Magic" ||
-                    aura.dispelName === "Disease" ||
-                    aura.dispelName === "Poison") &&
-                  playerCanDispelFromParty(aura.dispelName)
-                ) {
-                  newDots.push(aura);
-                } else if (dangerousDebuffs.includes(aura.name)) {
+                // print(aura.name);
+                // DevTools_Dump(aura);
+                if (shouldShowDot(aura)) {
                   newDots.push(aura);
                 }
               },
               true
             );
             newDots.sort(sortDots);
+            // print(`Setting dots ${newDots.length}`);
             unitSource.dots.set(newDots);
           }
         } else {
@@ -409,6 +405,43 @@ function updateInfo(
       }
     }
   }
+}
+
+function shouldShowDot(aura: AuraData): boolean {
+  // Showing only DoT's here
+  if (aura.isHarmful === false) {
+    return false;
+  }
+  if (aura.sourceUnit === "player") {
+    return false;
+  }
+
+  if (ignoredDebuffs.includes(aura.name)) {
+    return false;
+  }
+
+  // Showing all PvE Auras
+  if (aura.isBossAura || aura.isRaid || !aura.isFromPlayerOrPlayerPet) {
+    return true;
+  }
+
+  // Showing dispellable PvP auras
+  if (
+    aura.dispelName !== null &&
+    (aura.dispelName === "Curse" ||
+      aura.dispelName === "Magic" ||
+      aura.dispelName === "Disease" ||
+      aura.dispelName === "Poison") &&
+    playerCanDispelFromParty(aura.dispelName)
+  ) {
+    return true;
+  }
+
+  // Showing dangerous PvP auras
+  if (dangerousDebuffs.includes(aura.name)) {
+    return true;
+  }
+  return false;
 }
 
 function processAuraUpdateInfo(
@@ -459,15 +492,15 @@ function processAuraUpdateInfo(
       }
       if ("dots" in unitSource) {
         const curr = unitSource.dots.get();
-        const found = curr.find((old) => old.auraInstanceID !== auraInstanceID);
+        const found = curr.find((old) => old.auraInstanceID === auraInstanceID);
         if (found) {
           const newaura = C_UnitAuras.GetAuraDataByAuraInstanceID(
             unit,
             auraInstanceID
           );
-          if (newaura) {
+          if (newaura !== undefined) {
             const afterFilter = curr.filter(
-              (old) => old.auraInstanceID !== auraInstanceID
+              (old) => old.auraInstanceID === auraInstanceID
             );
             afterFilter.push(newaura);
             afterFilter.sort(sortDots);
@@ -523,20 +556,13 @@ function processAuraUpdateInfo(
       if (aura.isHelpful) {
         processNewHelpfulAura(sources.player.class.get(), unitSource, aura);
       }
-      if (
-        "dots" in unitSource &&
-        aura.isHarmful &&
-        !isNil(aura.dispelName) &&
-        (aura.dispelName === "Curse" ||
-          aura.dispelName === "Magic" ||
-          aura.dispelName === "Disease" ||
-          aura.dispelName === "Poison") &&
-        playerCanDispelFromParty(aura.dispelName)
-      ) {
+      // DevTools_Dump(aura);
+      if ("dots" in unitSource && shouldShowDot(aura)) {
         const curr = unitSource.dots.get();
-        curr.push(aura);
-        curr.sort(sortDots);
-        unitSource.dots.set(curr);
+        const n = curr.concat([aura]);
+        n.sort(sortDots);
+        // print(`Setting dots ${n.length}`);
+        unitSource.dots.set(n);
       }
     }
   }
@@ -671,11 +697,4 @@ function updateAuraIfCorrectId(
       s.set(newaura);
     }
   }
-}
-
-function sortDots(a: AuraData, b: AuraData): -1 | 1 {
-  const prioA = dangerousDebuffs.includes(a.name) ? 99999999 : a.spellId;
-  const prioB = dangerousDebuffs.includes(b.name) ? 99999999 : b.spellId;
-
-  return prioA > prioB ? 1 : -1;
 }

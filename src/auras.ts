@@ -28,6 +28,8 @@ const defensiveCdsWeTrack = [
   "Unending Resolve",
 ].map((s) => s.toLowerCase());
 
+export const ignoredDebuffs = ["Temporal Displacement"];
+
 export const dangerousDebuffs = [
   "Feral Frenzy",
   "Final Reckoning",

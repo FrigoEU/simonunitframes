@@ -4,6 +4,7 @@ export type healthinfo = {
   guid: Source<WOWGUID>;
   exists: Source<boolean>;
   class: Source<className>;
+  name: Source<string>;
   health: {
     max: Source<number>;
     current: Source<number>;
@@ -14,6 +15,7 @@ function makeHealthInfo(): healthinfo {
     exists: new Source(false),
     guid: new Source(""),
     class: new Source("WARRIOR" as className),
+    name: new Source(""),
     health: {
       max: new Source(100),
       current: new Source(100),

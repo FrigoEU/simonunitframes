@@ -62,8 +62,7 @@ export function drawHealthbarFrames(
   const topSection = CreateFrame(
     "FRAME",
     namePrefix + "CooldownSection",
-    container,
-    "SecureUnitButtonTemplate"
+    container
   );
   topSection.SetFrameStrata("MEDIUM");
   topSection.SetFrameLevel(100);
@@ -79,7 +78,7 @@ export function drawHealthbarFrames(
   if (unit) {
     const buttonSection = CreateFrame(
       "BUTTON",
-      namePrefix + "CooldownSection",
+      namePrefix + "HealthbarButton",
       container,
       "SecureUnitButtonTemplate"
     );
@@ -102,8 +101,9 @@ export function drawHealthbarFrames(
     config.unitFrame_cooldownBackgroundColor.a
   );
 
-  const healthStr = healthbar.CreateFontString();
-  healthStr.SetPoint("BOTTOMRIGHT", healthbar, "BOTTOMRIGHT", 4, 4);
+  const namestr = healthbar.CreateFontString();
+  namestr.SetPoint("BOTTOMRIGHT", healthbar, "BOTTOMRIGHT", -4, 48);
+  namestr.SetFont("Fonts\\FRIZQT__.TTF", 12, "");
 
   sources.class.observe((className) => {
     const color = C_ClassColor.GetClassColor(className);
@@ -113,9 +113,16 @@ export function drawHealthbarFrames(
   sources.health.max.observe((maxhealth) => {
     healthbar.SetMinMaxValues(0, maxhealth);
   });
-  sources.health.current.observe((currhealth) => {
+  observeAll([sources.health.current, sources.name], ([currhealth, n]) => {
     healthbar.SetValue(currhealth);
-    healthStr.SetText((currhealth / 1000).toString() + "K");
+    namestr.SetText(
+      n +
+        " " +
+        Math.floor(currhealth / 1000)
+          .toString()
+          .padStart(6, " ") +
+        "K"
+    );
   });
 
   return healthbar;

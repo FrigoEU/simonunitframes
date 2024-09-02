@@ -167,6 +167,7 @@ declare global {
     ]
   >;
   function GetSpecializationInfo(this: void, index: specIndex): null | specInfo;
+  function DevTools_Dump(this: void, str: any): void;
   function GetArenaOpponentSpec(
     this: void,
     num: 1 | 2 | 3

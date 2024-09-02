@@ -5,12 +5,12 @@
 import { isNil } from "./utils";
 
 export function playerCanDispelFromParty(
-  dispelType: "Curse" | "Magic" | "Poison" | "Disease",
+  dispelType: "Curse" | "Magic" | "Poison" | "Disease"
 ): boolean {
   const specIndex = GetSpecialization() || (1 as specIndex);
-  const spec = GetSpecializationInfo(specIndex);
+  const spec = GetSpecializationInfo(specIndex) as unknown as specializationId; // ??
   if (!isNil(spec)) {
-    const specDispels = specCanDispel[spec[0]];
+    const specDispels = specCanDispel[spec];
     if (specDispels && specDispels[dispelType] === true) {
       return true;
     } else {
