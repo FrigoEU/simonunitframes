@@ -458,6 +458,7 @@ function processAuraUpdateInfo(
     return;
   }
   if (!isNil(auraUpdateInfo.updatedAuraInstanceIDs)) {
+    print(auraUpdateInfo.updatedAuraInstanceIDs);
     for (let auraInstanceID of auraUpdateInfo.updatedAuraInstanceIDs) {
       if ("defensiveCooldownActive" in unitSource) {
         updateAuraIfCorrectId(
@@ -500,7 +501,7 @@ function processAuraUpdateInfo(
           );
           if (newaura !== undefined) {
             const afterFilter = curr.filter(
-              (old) => old.auraInstanceID === auraInstanceID
+              (old) => old.auraInstanceID !== auraInstanceID
             );
             afterFilter.push(newaura);
             afterFilter.sort(sortDots);
