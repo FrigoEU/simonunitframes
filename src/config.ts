@@ -10,8 +10,8 @@ export function makeConfig() {
     partyAndArenaContainersOffsetY: 0,
     partyAndArenaContainersOffsetX: 500,
 
-    hots_show_timer_text: false,
-    dots_show_timer_text: false,
+    hots_show_timer_text: true,
+    dots_show_timer_text: true,
 
     unitFrame_fullHeight: 110,
     unitFrame_fullWidth: 340,

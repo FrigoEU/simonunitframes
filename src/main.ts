@@ -458,7 +458,7 @@ function processAuraUpdateInfo(
     return;
   }
   if (!isNil(auraUpdateInfo.updatedAuraInstanceIDs)) {
-    print(auraUpdateInfo.updatedAuraInstanceIDs);
+    // print(auraUpdateInfo.updatedAuraInstanceIDs);
     for (let auraInstanceID of auraUpdateInfo.updatedAuraInstanceIDs) {
       if ("defensiveCooldownActive" in unitSource) {
         updateAuraIfCorrectId(
