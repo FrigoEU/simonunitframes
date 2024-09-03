@@ -4,7 +4,12 @@ import { dangerousDebuffs } from "../auras";
 import { config } from "../config";
 import { dotInfo } from "../sources";
 import { isNil } from "../utils";
-import { applyAuraToAuraframe, createAuraFrame, myAuraFrame } from "./auras";
+import {
+  applyAuraToAuraframe,
+  createAuraFrame,
+  hideAuraCooldownText,
+  myAuraFrame,
+} from "./auras";
 
 const defaultBorder = { r: 0.5, g: 0.5, b: 0 };
 
@@ -23,7 +28,7 @@ export function drawDotFrames(
       });
 
       if (!config.dots_show_timer_text) {
-        (dotAuraFrame.cooldown as any).noCooldownCount = true; // so omniCC doesn't show anything
+        hideAuraCooldownText(dotAuraFrame);
       }
 
       dotAuraFrame.SetSize(

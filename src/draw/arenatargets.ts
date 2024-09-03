@@ -2,47 +2,52 @@
 
 import { config } from "../config";
 import { healthinfo, observeAll, Source, sources } from "../sources";
-import { applyAuraToAuraframe, createAuraFrame, myAuraFrame } from "./auras";
+import {
+  applyAuraToAuraframe,
+  createAuraFrame,
+  hideAuraCooldownText,
+  myAuraFrame,
+} from "./auras";
 
 export function drawPartyTargetedByFrames(
   config: config,
   namePrefix: string,
   parent: SimpleFrame,
   sources: healthinfo,
-  arena: Pick<sources, "arena1" | "arena2" | "arena3">,
+  arena: Pick<sources, "arena1" | "arena2" | "arena3">
 ) {
   const arenaDps1TargetFrame = createAuraFrame(
     namePrefix + "arenaDps1Target",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false },
+    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
   );
   arenaDps1TargetFrame.SetSize(
     config.unitFrame_bigIconSize,
-    config.unitFrame_bigIconSize,
+    config.unitFrame_bigIconSize
   );
   arenaDps1TargetFrame.SetPoint(
     "TOPRIGHT",
     parent,
     "TOPRIGHT",
     -4,
-    -config.unitFrame_cooldownTopGap,
+    -config.unitFrame_cooldownTopGap
   );
 
   const arenaDps2TargetFrame = createAuraFrame(
     namePrefix + "arenaDps2Target",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false },
+    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
   );
   arenaDps2TargetFrame.SetSize(
     config.unitFrame_bigIconSize,
-    config.unitFrame_bigIconSize,
+    config.unitFrame_bigIconSize
   );
   arenaDps2TargetFrame.SetPoint(
     "TOPRIGHT",
     parent,
     "TOPRIGHT",
     -4 - (config.unitFrame_bigIconSize + config.unitFrame_bigIconGap),
-    -config.unitFrame_cooldownTopGap,
+    -config.unitFrame_cooldownTopGap
   );
 
   observeAndUpdate(sources.guid, arena.arena1);
@@ -56,9 +61,14 @@ export function drawPartyTargetedByFrames(
     }
   });
 
+  if (!config.off_cds_show_timer_text) {
+    hideAuraCooldownText(arenaDps1TargetFrame);
+    hideAuraCooldownText(arenaDps2TargetFrame);
+  }
+
   function observeAndUpdate(
     unitGuidS: Source<WOWGUID>,
-    arenaUnit: sources["arena1"],
+    arenaUnit: sources["arena1"]
   ) {
     observeAll(
       [
@@ -91,7 +101,7 @@ export function drawPartyTargetedByFrames(
 
         frame.Show();
         renderIcon(frame, offensiveCooldownActive, class_);
-      },
+      }
     );
   }
 
@@ -101,7 +111,7 @@ export function drawPartyTargetedByFrames(
 function renderIcon(
   frame: myAuraFrame,
   offensiveCooldownActive: AuraData | null,
-  class_: className,
+  class_: className
 ) {
   if (offensiveCooldownActive) {
     applyAuraToAuraframe(offensiveCooldownActive, frame);
@@ -125,49 +135,54 @@ export function drawArenaTargetedByFrames(
   namePrefix: string,
   parent: SimpleFrame,
   sources: healthinfo,
-  party: Pick<sources, "party1" | "party2">,
+  party: Pick<sources, "party1" | "party2">
 ) {
   const arenaTargetedBy1Frame = createAuraFrame(
     namePrefix + "arenaTargetedBy1",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false },
+    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
   );
   arenaTargetedBy1Frame.SetSize(
     config.unitFrame_bigIconSize,
-    config.unitFrame_bigIconSize,
+    config.unitFrame_bigIconSize
   );
   arenaTargetedBy1Frame.SetPoint(
     "TOPRIGHT",
     parent,
     "TOPRIGHT",
     -4,
-    -config.unitFrame_cooldownTopGap,
+    -config.unitFrame_cooldownTopGap
   );
 
   const arenaTargetedBy2Frame = createAuraFrame(
     namePrefix + "arenaTargetedBy2",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false },
+    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
   );
   arenaTargetedBy2Frame.SetSize(
     config.unitFrame_bigIconSize,
-    config.unitFrame_bigIconSize,
+    config.unitFrame_bigIconSize
   );
   arenaTargetedBy2Frame.SetPoint(
     "TOPRIGHT",
     parent,
     "TOPRIGHT",
     -4 - (config.unitFrame_bigIconSize + config.unitFrame_bigIconGap),
-    -config.unitFrame_cooldownTopGap,
+    -config.unitFrame_cooldownTopGap
   );
 
   observeAndUpdate(sources.guid, party.party1, arenaTargetedBy1Frame);
   observeAndUpdate(sources.guid, party.party2, arenaTargetedBy2Frame);
 
+  if (!config.off_cds_show_timer_text) {
+    hideAuraCooldownText(arenaTargetedBy1Frame);
+    hideAuraCooldownText(arenaTargetedBy2Frame);
+  }
+
   function observeAndUpdate(
     unitGuidS: Source<WOWGUID>,
     partyUnit: sources["party1"],
-    frame: myAuraFrame,
+    frame: myAuraFrame
   ) {
     observeAll(
       [
@@ -184,7 +199,7 @@ export function drawArenaTargetedByFrames(
         frame.Show();
 
         renderIcon(frame, offensiveCooldownActive, class_);
-      },
+      }
     );
   }
 

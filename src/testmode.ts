@@ -51,6 +51,7 @@ export function startTest(sources: sources) {
   sources.party2.exists.set(true);
   sources.party2.target.set("arena1guid");
   sources.party2.class.set("MONK");
+  sources.party2.offensiveCooldownActive.set(makeTestAura("Avatar"));
 
   sources.party3.health.max.set(1000);
   sources.party3.health.current.set(200);

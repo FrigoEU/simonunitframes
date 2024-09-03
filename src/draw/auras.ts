@@ -172,3 +172,7 @@ export function createBackdropTemplateFrame(name: string, parent: SimpleFrame) {
     ) => void;
   };
 }
+
+export function hideAuraCooldownText(frame: myAuraFrame): void {
+  (frame.cooldown as any).noCooldownCount = true; // so omniCC doesn't show anything
+}

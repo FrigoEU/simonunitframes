@@ -82,6 +82,9 @@ export function getBuffIndex(
   name: string,
   spellId: spellID
 ): null | "defcd" | "externaldefbuff" | "offcd" | 0 | 1 | 2 | 3 | 4 | 5 | 6 {
+  // Layout =
+  // 4 5 6
+  // 0 1 2 3
   if (source === "player") {
     if (playerClass.name === "DRUID") {
       if (name === "Ironbark") {
@@ -102,6 +105,9 @@ export function getBuffIndex(
       if (name === "Wild Growth") {
         return 4;
       }
+      if (name === "Rejuvenation (Germination)") {
+        return 5;
+      }
     }
     if (playerClass.name === "EVOKER") {
       if (name === "Time Dilation") {
@@ -110,20 +116,20 @@ export function getBuffIndex(
       if (spellId === 366155) {
         return 0; // Reversion
       }
-      if (spellId === 367364) {
-        return 1; // Echo Reversion
-      }
       if (spellId === 355941) {
-        return 2; // Dream Breath
-      }
-      if (spellId === 376788) {
-        return 3; // Echo Dream Breath
+        return 1; // Dream Breath
       }
       if (name === "Lifebind") {
-        return 4;
+        return 2;
       }
       if (name === "Echo") {
-        return 5;
+        return 3;
+      }
+      if (spellId === 367364) {
+        return 4; // Echo Reversion
+      }
+      if (spellId === 376788) {
+        return 5; // Echo Dream Breath
       }
       if (name === "Spiritbloom") {
         return 6;
