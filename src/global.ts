@@ -225,6 +225,11 @@ declare global {
     ): void;
   }
 
+  /** @noSelf **/
+  namespace C_NamePlate {
+    function SetNamePlateFriendlySize(x: number, y: number): void;
+  }
+
   let SLASH_TEST1: string;
   const SlashCmdList: { [key: string]: () => any };
 }

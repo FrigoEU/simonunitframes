@@ -13,6 +13,7 @@ import { drawHealthbarFrames } from "./draw/healthbar";
 import { drawHighlightFrames } from "./draw/highlight";
 import { drawHotFrames, hotIndexToHotName } from "./draw/hots";
 import { setPosition } from "./draw/position";
+import { runNonUnitFrameStuff } from "./nonunitframestuff";
 import { sortDots } from "./sortdots";
 import { makeSources, Source, sources } from "./sources";
 import { startTest } from "./testmode";
@@ -174,6 +175,7 @@ function handleWowEvent(
   }
   switch (eventName) {
     case "PLAYER_ENTERING_WORLD": {
+      runNonUnitFrameStuff();
       const playerRaidIndex = UnitInRaid("player");
       sources.playerGroupIndexZeroBased.set(
         isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5)
