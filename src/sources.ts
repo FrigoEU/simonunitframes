@@ -1,5 +1,7 @@
 /** @noSelfInFile */
 
+import { hotName } from "./auras";
+
 export type healthinfo = {
   guid: Source<WOWGUID>;
   exists: Source<boolean>;
@@ -65,15 +67,7 @@ function makeExternalDefFromPlayerInfo(): externalDefFromPlayerInfo {
   return { externalDefFromPlayerActive: new Source(null as null | AuraData) };
 }
 
-export type hotInfo = {
-  hot0: Source<null | AuraData>;
-  hot1: Source<null | AuraData>;
-  hot2: Source<null | AuraData>;
-  hot3: Source<null | AuraData>;
-  hot4: Source<null | AuraData>;
-  hot5: Source<null | AuraData>;
-  hot6: Source<null | AuraData>;
-};
+export type hotInfo = { [i in hotName]: Source<null | AuraData> };
 function makeHotInfo(): hotInfo {
   return {
     hot0: new Source(null as null | AuraData),
@@ -83,6 +77,7 @@ function makeHotInfo(): hotInfo {
     hot4: new Source(null as null | AuraData),
     hot5: new Source(null as null | AuraData),
     hot6: new Source(null as null | AuraData),
+    hot7: new Source(null as null | AuraData),
   };
 }
 

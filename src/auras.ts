@@ -76,14 +76,32 @@ const offensiveCdsWeTrack = [
   "Dark Soul: Misery",
 ].map((s) => s.toLowerCase());
 
+export const hotIndexes = [
+  0 as const,
+  1 as const,
+  2 as const,
+  3 as const,
+  4 as const,
+  5 as const,
+  6 as const,
+  7 as const,
+];
+
+export type hotIndex = (typeof hotIndexes)[number];
+export type hotName = `hot${hotIndex}`;
+
+export function hotIndexToHotName(i: hotIndex): hotName {
+  return ("hot" + i.toString()) as hotName;
+}
+
 export function getBuffIndex(
   playerClass: { name: className },
   source: string | null | undefined,
   name: string,
   spellId: spellID
-): null | "defcd" | "externaldefbuff" | "offcd" | 0 | 1 | 2 | 3 | 4 | 5 | 6 {
+): null | "defcd" | "externaldefbuff" | "offcd" | hotIndex {
   // Layout =
-  // 4 5 6
+  // 4 5 6 7
   // 0 1 2 3
   if (source === "player") {
     if (playerClass.name === "DRUID") {
@@ -102,37 +120,40 @@ export function getBuffIndex(
       if (name === "Cenarion Ward") {
         return 3;
       }
-      if (name === "Wild Growth") {
-        return 4;
-      }
       if (name === "Rejuvenation (Germination)") {
         return 5;
+      }
+      if (name === "Symbiotic Blooms") {
+        return 6;
+      }
+      if (name === "Wild Growth") {
+        return 7;
       }
     }
     if (playerClass.name === "EVOKER") {
       if (name === "Time Dilation") {
         return "externaldefbuff";
       }
+      if (name === "Echo") {
+        return 0;
+      }
       if (spellId === 366155) {
-        return 0; // Reversion
+        return 1; // Reversion
       }
       if (spellId === 355941) {
-        return 1; // Dream Breath
+        return 2; // Dream Breath
       }
       if (name === "Lifebind") {
-        return 2;
-      }
-      if (name === "Echo") {
         return 3;
       }
       if (spellId === 367364) {
-        return 4; // Echo Reversion
+        return 5; // Echo Reversion
       }
       if (spellId === 376788) {
-        return 5; // Echo Dream Breath
+        return 6; // Echo Dream Breath
       }
       if (name === "Spiritbloom") {
-        return 6;
+        return 7;
       }
     }
     if (playerClass.name === "SHAMAN") {

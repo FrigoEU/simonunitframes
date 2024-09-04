@@ -1,5 +1,6 @@
 /** @noSelfInFile */
 
+import { hotIndexes, hotIndexToHotName } from "./auras";
 import { sources } from "./sources";
 
 export function startTest(sources: sources) {
@@ -27,13 +28,10 @@ export function startTest(sources: sources) {
     makeTestAura("Shadow Word: Pain"),
   ]);
 
-  sources.player.hot0.set(makeTestAura("Rejuvenation"));
-  sources.player.hot1.set(makeTestAura("Rejuvenation"));
-  sources.player.hot2.set(makeTestAura("Rejuvenation"));
-  sources.player.hot3.set(makeTestAura("Rejuvenation"));
-  sources.player.hot4.set(makeTestAura("Rejuvenation"));
-  sources.player.hot5.set(makeTestAura("Rejuvenation"));
-  sources.player.hot6.set(makeTestAura("Rejuvenation"));
+  for (let hotIndex of hotIndexes) {
+    const hotName = hotIndexToHotName(hotIndex);
+    sources.player[hotName].set(makeTestAura("Rejuvenation"));
+  }
 
   sources.party1.health.max.set(1000);
   sources.party1.hot2.set(makeTestAura("Rejuvenation"));

@@ -1,5 +1,6 @@
 /** @noSelfInFile */
 
+import { hotIndex, hotIndexes, hotIndexToHotName } from "../auras";
 import { config } from "../config";
 import { hotInfo } from "../sources";
 import { checkAllCasesHandled } from "../utils";
@@ -15,7 +16,7 @@ export function drawHotFrames(
   parent: SimpleFrame,
   sources: hotInfo
 ) {
-  for (let i of [0, 1, 2, 3, 4, 5, 6] as const) {
+  for (let i of hotIndexes) {
     const hotAuraFrame = createAuraFrame(nameP + "Hot" + i, parent, {
       defaultBorder: { r: 0, g: 0, b: 0 },
       showCount: false,
@@ -30,7 +31,7 @@ export function drawHotFrames(
       config.unitFrame_smallIconSize
     );
     // Layout =
-    // 4 5 6
+    // 4 5 6 7
     // 0 1 2 3
     if (i <= 3) {
       hotAuraFrame.SetPoint(
@@ -58,24 +59,4 @@ export function drawHotFrames(
       applyAuraToAuraframe(hotinfo, hotAuraFrame)
     );
   }
-}
-
-export function hotIndexToHotName(
-  i: 0 | 1 | 2 | 3 | 4 | 5 | 6
-): "hot0" | "hot1" | "hot2" | "hot3" | "hot4" | "hot5" | "hot6" {
-  return i === 0
-    ? ("hot0" as const)
-    : i === 1
-      ? ("hot1" as const)
-      : i === 2
-        ? "hot2"
-        : i === 3
-          ? "hot3"
-          : i === 4
-            ? "hot4"
-            : i === 5
-              ? "hot5"
-              : i === 6
-                ? "hot6"
-                : checkAllCasesHandled(i);
 }

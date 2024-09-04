@@ -92,6 +92,8 @@ export function createAuraFrame(
     }
   };
 
+  auraF.cooldown.SetReverse(true);
+
   return auraF;
 }
 

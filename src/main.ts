@@ -1,6 +1,12 @@
 /** @noSelfInFile */
 
-import { dangerousDebuffs, getBuffIndex, ignoredDebuffs } from "./auras";
+import {
+  dangerousDebuffs,
+  getBuffIndex,
+  hotIndexes,
+  hotIndexToHotName,
+  ignoredDebuffs,
+} from "./auras";
 import { makeConfig } from "./config";
 import { playerCanDispelFromParty } from "./dispellable";
 import {
@@ -11,7 +17,7 @@ import { drawFriendlyCooldownSection } from "./draw/cooldowns";
 import { drawDotFrames } from "./draw/dots";
 import { drawHealthbarFrames } from "./draw/healthbar";
 import { drawHighlightFrames } from "./draw/highlight";
-import { drawHotFrames, hotIndexToHotName } from "./draw/hots";
+import { drawHotFrames } from "./draw/hots";
 import { setPosition } from "./draw/position";
 import { runNonUnitFrameStuff } from "./nonunitframestuff";
 import { sortDots } from "./sortdots";
@@ -358,13 +364,10 @@ function updateInfo(
             unitSource.offensiveCooldownActive.set(null);
           }
           if ("hot0" in unitSource) {
-            unitSource.hot0.set(null);
-            unitSource.hot1.set(null);
-            unitSource.hot2.set(null);
-            unitSource.hot3.set(null);
-            unitSource.hot4.set(null);
-            unitSource.hot5.set(null);
-            unitSource.hot6.set(null);
+            for (let hotIndex of hotIndexes) {
+              const hotName = hotIndexToHotName(hotIndex);
+              unitSource[hotName].set(null);
+            }
           }
 
           AuraUtil.ForEachAura(
@@ -485,13 +488,10 @@ function processAuraUpdateInfo(
         );
       }
       if ("hot0" in unitSource) {
-        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot0);
-        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot1);
-        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot2);
-        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot3);
-        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot4);
-        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot5);
-        updateAuraIfCorrectId(unit, auraInstanceID, unitSource.hot6);
+        for (let hotIndex of hotIndexes) {
+          const hotName = hotIndexToHotName(hotIndex);
+          updateAuraIfCorrectId(unit, auraInstanceID, unitSource[hotName]);
+        }
       }
       if ("dots" in unitSource) {
         const curr = unitSource.dots.get();
@@ -535,13 +535,10 @@ function processAuraUpdateInfo(
         );
       }
       if ("hot0" in unitSource) {
-        clearAuraIfCorrectId(auraInstanceID, unitSource.hot0);
-        clearAuraIfCorrectId(auraInstanceID, unitSource.hot1);
-        clearAuraIfCorrectId(auraInstanceID, unitSource.hot2);
-        clearAuraIfCorrectId(auraInstanceID, unitSource.hot3);
-        clearAuraIfCorrectId(auraInstanceID, unitSource.hot4);
-        clearAuraIfCorrectId(auraInstanceID, unitSource.hot5);
-        clearAuraIfCorrectId(auraInstanceID, unitSource.hot6);
+        for (let hotIndex of hotIndexes) {
+          const hotName = hotIndexToHotName(hotIndex);
+          clearAuraIfCorrectId(auraInstanceID, unitSource[hotName]);
+        }
       }
       if ("dots" in unitSource) {
         const curr = unitSource.dots.get();
