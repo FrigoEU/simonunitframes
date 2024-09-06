@@ -14,7 +14,7 @@ export function setPosition(
   config: config,
   parent: SimpleFrame,
   frame: SimpleFrame,
-  unit: (typeof allSupportedTranslatedUnits)[number],
+  unit: (typeof allSupportedTranslatedUnits)[number]
 ) {
   const point = unitIsPlayerPartyRaid(unit) ? "TOPRIGHT" : "TOPLEFT";
   const { x, y } = getUnitGridIndex(unit);
@@ -23,7 +23,7 @@ export function setPosition(
     parent,
     point,
     x * (config.unitFrame_horizontalGap + config.unitFrame_fullWidth),
-    -y * (config.unitFrame_verticalGap + config.unitFrame_fullHeight),
+    -y * (config.unitFrame_verticalGap + config.unitFrame_fullHeight)
   );
 }
 
@@ -46,9 +46,9 @@ function getUnitGridIndex(unit: (typeof allSupportedTranslatedUnits)[number]): {
     const i = parseInt(unit.substring(5, 6));
     return { x: 0, y: i - 1 };
   } else if (unitIsRaidUnit(unit)) {
-    const unitRaidIndex = parseInt(unit.substring(4, 6)) - 1;
+    const unitRaidIndex = parseInt(unit.substring(6, 8)) - 1;
     return {
-      x: 1,
+      x: -1,
       y: unitRaidIndex % 5,
     };
   } else {

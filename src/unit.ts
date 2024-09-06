@@ -11,13 +11,13 @@ export function unitIsParty(u: supportedUnit): u is UnitIdParty {
 }
 
 export function unitIsRaidUnit(
-  u: supportedUnit,
+  u: supportedUnit
 ): u is "myraid1" | "myraid2" | "myraid3" | "myraid4" | "myraid5" {
   return u.startsWith("myraid");
 }
 
 export function unitIsPlayerPartyRaid(
-  u: supportedUnit,
+  u: supportedUnit
 ): u is
   | UnitIdPlayer
   | UnitIdParty
@@ -30,7 +30,7 @@ export function unitIsPlayerPartyRaid(
 }
 
 export function unitIsArena(
-  u: supportedUnit,
+  u: supportedUnit
 ): u is "arena1" | "arena2" | "arena3" {
   if (u.startsWith("arena")) {
     return true;

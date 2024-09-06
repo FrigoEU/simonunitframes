@@ -31,6 +31,7 @@ import {
   unitIsParty,
   unitIsPlayer,
   unitIsPlayerPartyRaid,
+  unitIsRaidUnit,
 } from "./unit";
 import { checkAllCasesHandled, isNil } from "./utils";
 
@@ -128,7 +129,7 @@ function start() {
         container,
         unitSource,
         "friendly",
-        unitIsParty(unit) || unitIsPlayer(unit) ? unit : null
+        unit
       );
       drawHighlightFrames(config, nameP, container, unitSource, sources.player);
       drawFriendlyCooldownSection(config, nameP, container, unitSource);
@@ -323,6 +324,7 @@ function updateInfo(
         unitSource.class.set(cl as className);
         unitSource.guid.set(UnitGUID(unit) || "");
         unitSource.name.set(UnitName(unit)[0] || "");
+        unitSource.unitId.set(unit);
       } else if (info.tag === "power" || info.tag === "absorb") {
         // TODO!
       } else if (info.tag === "target") {

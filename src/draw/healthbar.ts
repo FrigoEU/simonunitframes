@@ -2,6 +2,7 @@
 
 import { config } from "../config";
 import { healthinfo, observeAll } from "../sources";
+import { supportedUnit, unitIsPlayerPartyRaid } from "../unit";
 import { createBackdropTemplateFrame } from "./auras";
 
 export function drawHealthbarFrames(
@@ -10,7 +11,7 @@ export function drawHealthbarFrames(
   container: SimpleFrame,
   sources: healthinfo,
   side: "friendly" | "arena",
-  unit: UnitIdPlayer | UnitIdParty | UnitIdRaidPlayer | null
+  unit: supportedUnit
 ) {
   const healthbar = CreateFrame(
     "STATUSBAR",
@@ -75,7 +76,7 @@ export function drawHealthbarFrames(
   );
   topSection.SetPoint("TOPRIGHT", container, "TOPRIGHT", 0, 0);
 
-  if (unit) {
+  if (unitIsPlayerPartyRaid(unit)) {
     const buttonSection = CreateFrame(
       "BUTTON",
       namePrefix + "HealthbarButton",
@@ -83,10 +84,16 @@ export function drawHealthbarFrames(
       "SecureUnitButtonTemplate"
     );
     buttonSection.SetAllPoints(container);
-    buttonSection.SetAttribute("unit", unit);
     (buttonSection as any).RegisterForClicks("AnyUp");
     buttonSection.SetAttribute("*type1", "focus");
     buttonSection.SetAttribute("*type2", "togglemenu");
+    sources.unitId.observe((unitId) => {
+      // Have to use real unit as attribute,
+      // which can change in case of raid
+      if (unitId !== null) {
+        buttonSection.SetAttribute("unit", unitId);
+      }
+    });
   }
 
   const topSectionBg = topSection.CreateTexture(
