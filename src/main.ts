@@ -143,7 +143,7 @@ function start() {
 
     if (unitIsArena(unit)) {
       const unitSource = sources[unit];
-      drawHealthbarFrames(config, nameP, container, unitSource, "arena", null);
+      drawHealthbarFrames(config, nameP, container, unitSource, "arena", unit);
       drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
     }
 
