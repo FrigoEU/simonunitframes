@@ -185,55 +185,15 @@ function handleWowEvent(
     print(`Testmode: Ignoring event ${eventName}`);
     return;
   }
-  function getRaidGroupIndex(): null | 0 | 1 | 2 {
-    const inRaid = UnitInRaid("player" as UnitId);
-    const playerGuid = UnitGUID("player");
-    if (isNil(inRaid)) {
-      return null;
-    }
-    if (
-      UnitGUID("raid1") === playerGuid ||
-      UnitGUID("raid2") === playerGuid ||
-      UnitGUID("raid3") === playerGuid ||
-      UnitGUID("raid4") === playerGuid ||
-      UnitGUID("raid5") === playerGuid
-    ) {
-      print(0);
-      return 0;
-    }
-    if (
-      UnitGUID("raid6") === playerGuid ||
-      UnitGUID("raid7") === playerGuid ||
-      UnitGUID("raid8") === playerGuid ||
-      UnitGUID("raid9") === playerGuid ||
-      UnitGUID("raid10") === playerGuid
-    ) {
-      print(1);
-      return 1;
-    }
-    if (
-      UnitGUID("raid11") === playerGuid ||
-      UnitGUID("raid12") === playerGuid ||
-      UnitGUID("raid13") === playerGuid ||
-      UnitGUID("raid14") === playerGuid ||
-      UnitGUID("raid15") === playerGuid
-    ) {
-      print(2);
-      return 2;
-    }
-    return null;
-  }
-
   switch (eventName) {
     case "PLAYER_ENTERING_WORLD": {
       runNonUnitFrameStuff();
-      sources.playerGroupIndexZeroBased.set(getRaidGroupIndex() || 0);
+      sources.playerGroupIndexZeroBased.set(calcRaidGroupIndex() || 0);
       updateInfo(sources, "all", "all");
       return;
     }
     case "GROUP_ROSTER_UPDATE": {
-      const playerRaidIndex = UnitInRaid("player");
-      sources.playerGroupIndexZeroBased.set(getRaidGroupIndex() || 0);
+      sources.playerGroupIndexZeroBased.set(calcRaidGroupIndex() || 0);
       updateInfo(sources, "all", "all");
       return;
     }
@@ -345,10 +305,12 @@ function updateInfo(
     if (translatedUnit === null) {
       continue;
     }
-    // print(unit);
-    // print(translatedUnit);
+    // print(unit + " -> " + translatedUnit);
     const unitSource = sources[translatedUnit];
-    if (!UnitExists(unit)) {
+    if (
+      !UnitExists(unit) ||
+      (unitIsArena(translatedUnit) && GetInstanceInfo()[1] !== "arena")
+    ) {
       unitSource.exists.set(false);
       continue;
     } else {
@@ -669,4 +631,43 @@ function updateAuraIfCorrectId(
       s.set(newaura);
     }
   }
+}
+
+function calcRaidGroupIndex(): null | 0 | 1 | 2 {
+  const inRaid = UnitInRaid("player" as UnitId);
+  const playerGuid = UnitGUID("player");
+  if (isNil(inRaid)) {
+    return null;
+  }
+  if (
+    UnitGUID("raid1") === playerGuid ||
+    UnitGUID("raid2") === playerGuid ||
+    UnitGUID("raid3") === playerGuid ||
+    UnitGUID("raid4") === playerGuid ||
+    UnitGUID("raid5") === playerGuid
+  ) {
+    print(0);
+    return 0;
+  }
+  if (
+    UnitGUID("raid6") === playerGuid ||
+    UnitGUID("raid7") === playerGuid ||
+    UnitGUID("raid8") === playerGuid ||
+    UnitGUID("raid9") === playerGuid ||
+    UnitGUID("raid10") === playerGuid
+  ) {
+    print(1);
+    return 1;
+  }
+  if (
+    UnitGUID("raid11") === playerGuid ||
+    UnitGUID("raid12") === playerGuid ||
+    UnitGUID("raid13") === playerGuid ||
+    UnitGUID("raid14") === playerGuid ||
+    UnitGUID("raid15") === playerGuid
+  ) {
+    print(2);
+    return 2;
+  }
+  return null;
 }

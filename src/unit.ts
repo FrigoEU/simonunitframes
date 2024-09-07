@@ -275,7 +275,7 @@ export function translateUnit(
                 : checkAllCasesHandled(target_);
     } else if (sources.playerGroupIndexZeroBased.get() === 1) {
       return null;
-    } else if (sources.playerGroupIndexZeroBased.get() === 1) {
+    } else if (sources.playerGroupIndexZeroBased.get() === 2) {
       return target_ === "raid6"
         ? "myraid6"
         : target_ === "raid7"
