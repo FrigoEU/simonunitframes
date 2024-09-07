@@ -47,11 +47,12 @@ function getUnitGridIndex(unit: (typeof allSupportedTranslatedUnits)[number]): {
     return { x: 0, y: i - 1 };
   } else if (unitIsRaidUnit(unit)) {
     const unitRaidIndex = parseInt(unit.substring(6, 8)) - 1;
-    print(unitRaidIndex);
-    return {
-      x: unitRaidIndex <= 5 ? -1 : -2,
-      y: unitRaidIndex % 5,
-    };
+    const x = unitRaidIndex < 5 ? -1 : -2;
+    const y = unitRaidIndex % 5;
+    // print(unit);
+    // print(unitRaidIndex);
+    // print(x + " | " + y);
+    return { x, y };
   } else {
     return checkAllCasesHandled(unit, "getUnitGridIndex");
   }

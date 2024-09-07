@@ -6,7 +6,7 @@ import { sources } from "./sources";
 export function startTest(sources: sources) {
   print("starting testing!");
 
-  sources.playerGroupIndexZeroBased.set(1);
+  sources.playerGroupIndexZeroBased.set(0);
 
   sources.player.health.max.set(1000);
   sources.player.health.current.set(500);
@@ -75,6 +75,16 @@ export function startTest(sources: sources) {
   sources.myraid3.health.current.set(500);
   sources.myraid3.exists.set(true);
   sources.myraid3.class.set("EVOKER");
+
+  sources.myraid6.health.max.set(1000);
+  sources.myraid6.health.current.set(500);
+  sources.myraid6.exists.set(true);
+  sources.myraid6.class.set("HUNTER");
+
+  sources.myraid7.health.max.set(1000);
+  sources.myraid7.health.current.set(500);
+  sources.myraid7.exists.set(true);
+  sources.myraid7.class.set("DEMONHUNTER");
 
   sources.arena1.exists.set(true);
   sources.arena1.guid.set("arena1guid");

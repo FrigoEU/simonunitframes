@@ -345,6 +345,8 @@ function updateInfo(
     if (translatedUnit === null) {
       continue;
     }
+    // print(unit);
+    // print(translatedUnit);
     const unitSource = sources[translatedUnit];
     if (!UnitExists(unit)) {
       unitSource.exists.set(false);
