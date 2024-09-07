@@ -8,6 +8,7 @@ export type healthinfo = {
   class: Source<className>;
   name: Source<string>;
   unitId: Source<null | UnitId>;
+  isInHealingRange: Source<boolean>;
   health: {
     max: Source<number>;
     current: Source<number>;
@@ -20,6 +21,7 @@ function makeHealthInfo(): healthinfo {
     class: new Source("WARRIOR" as className),
     name: new Source(""),
     unitId: new Source(null as null | UnitId),
+    isInHealingRange: new Source(true),
     health: {
       max: new Source(100),
       current: new Source(100),
@@ -116,7 +118,12 @@ export type sources = {
     | "myraid2"
     | "myraid3"
     | "myraid4"
-    | "myraid5"]: healthinfo &
+    | "myraid5"
+    | "myraid6"
+    | "myraid7"
+    | "myraid8"
+    | "myraid9"
+    | "myraid10"]: healthinfo &
     defensiveCdInfo &
     externalDefFromPlayerInfo &
     hotInfo &
@@ -152,6 +159,12 @@ export function makeSources(): sources {
     myraid3: makeRaidSources(),
     myraid4: makeRaidSources(),
     myraid5: makeRaidSources(),
+
+    myraid6: makeRaidSources(),
+    myraid7: makeRaidSources(),
+    myraid8: makeRaidSources(),
+    myraid9: makeRaidSources(),
+    myraid10: makeRaidSources(),
 
     arena1: makeArenaSources(),
     arena2: makeArenaSources(),

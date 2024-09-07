@@ -117,6 +117,14 @@ export function drawHealthbarFrames(
     healthbar.SetStatusBarColor(color.r, color.g, color.b, 1);
   });
 
+  sources.isInHealingRange.observe((inRange) => {
+    if (inRange === true) {
+      container.SetAlpha(1);
+    } else {
+      container.SetAlpha(0.4);
+    }
+  });
+
   sources.health.max.observe((maxhealth) => {
     healthbar.SetMinMaxValues(0, maxhealth);
   });

@@ -155,6 +155,13 @@ declare global {
   ): LuaMultiReturn<
     [boolean /* player cant use */, boolean /* player has insuff nomana */]
   >;
+
+  // function IsSpellInRange(
+  //   this: void,
+  //   spellName: string,
+  //   unit: UnitId
+  // ): null /* invalid unit */ | 0 | 1;
+
   function GetSpecialization(this: void): null | specIndex;
   type specInfo = LuaMultiReturn<
     [

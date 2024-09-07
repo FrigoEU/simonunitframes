@@ -20,6 +20,7 @@ import { drawHighlightFrames } from "./draw/highlight";
 import { drawHotFrames } from "./draw/hots";
 import { setPosition } from "./draw/position";
 import { runNonUnitFrameStuff } from "./nonunitframestuff";
+import { startCheckingRange } from "./rangecheck";
 import { sortDots } from "./sortdots";
 import { makeSources, Source, sources } from "./sources";
 import { startTest } from "./testmode";
@@ -27,6 +28,7 @@ import {
   allSupportedTranslatedUnits,
   allSupportedUnits,
   supportedUnit,
+  translateUnit,
   unitIsArena,
   unitIsParty,
   unitIsPlayer,
@@ -165,6 +167,9 @@ function start() {
   eventFrame.SetScript("OnEvent", (self, ev, arg1, arg2) =>
     handleWowEvent(sources, ev, arg1, arg2)
   );
+
+  startCheckingRange(sources);
+
   return sources;
 }
 
@@ -180,21 +185,55 @@ function handleWowEvent(
     print(`Testmode: Ignoring event ${eventName}`);
     return;
   }
+  function getRaidGroupIndex(): null | 0 | 1 | 2 {
+    const inRaid = UnitInRaid("player" as UnitId);
+    const playerGuid = UnitGUID("player");
+    if (isNil(inRaid)) {
+      return null;
+    }
+    if (
+      UnitGUID("raid1") === playerGuid ||
+      UnitGUID("raid2") === playerGuid ||
+      UnitGUID("raid3") === playerGuid ||
+      UnitGUID("raid4") === playerGuid ||
+      UnitGUID("raid5") === playerGuid
+    ) {
+      print(0);
+      return 0;
+    }
+    if (
+      UnitGUID("raid6") === playerGuid ||
+      UnitGUID("raid7") === playerGuid ||
+      UnitGUID("raid8") === playerGuid ||
+      UnitGUID("raid9") === playerGuid ||
+      UnitGUID("raid10") === playerGuid
+    ) {
+      print(1);
+      return 1;
+    }
+    if (
+      UnitGUID("raid11") === playerGuid ||
+      UnitGUID("raid12") === playerGuid ||
+      UnitGUID("raid13") === playerGuid ||
+      UnitGUID("raid14") === playerGuid ||
+      UnitGUID("raid15") === playerGuid
+    ) {
+      print(2);
+      return 2;
+    }
+    return null;
+  }
+
   switch (eventName) {
     case "PLAYER_ENTERING_WORLD": {
       runNonUnitFrameStuff();
-      const playerRaidIndex = UnitInRaid("player");
-      sources.playerGroupIndexZeroBased.set(
-        isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5)
-      );
+      sources.playerGroupIndexZeroBased.set(getRaidGroupIndex() || 0);
       updateInfo(sources, "all", "all");
       return;
     }
     case "GROUP_ROSTER_UPDATE": {
       const playerRaidIndex = UnitInRaid("player");
-      sources.playerGroupIndexZeroBased.set(
-        isNil(playerRaidIndex) ? 0 : Math.floor(playerRaidIndex / 5)
-      );
+      sources.playerGroupIndexZeroBased.set(getRaidGroupIndex() || 0);
       updateInfo(sources, "all", "all");
       return;
     }
@@ -302,11 +341,11 @@ function updateInfo(
     //
     // Trickiest part of the whole app
     // Translating real raidunit names to "our" raid unit names because I want to always show the party and then max 1 more raid party
-    const targetForSource = translateUnit(sources, unit);
-    if (targetForSource === null) {
+    const translatedUnit = translateUnit(sources, unit);
+    if (translatedUnit === null) {
       continue;
     }
-    const unitSource = sources[targetForSource];
+    const unitSource = sources[translatedUnit];
     if (!UnitExists(unit)) {
       unitSource.exists.set(false);
       continue;
@@ -568,77 +607,6 @@ function processAuraUpdateInfo(
       }
     }
   }
-}
-
-// We want to show always the first/second raid group, and call it raid1 - 5.
-// We do that translation here
-// It's kinda weird and tricky, but should do what we want in RBG's
-function translateUnit(
-  sources: sources,
-  target_: "all" | UnitId
-): null | supportedUnit {
-  if (
-    target_ === "player" ||
-    target_ === "party1" ||
-    target_ === "party2" ||
-    target_ === "party3" ||
-    target_ === "party4" ||
-    target_ === "arena1" ||
-    target_ === "arena2" ||
-    target_ === "arena3"
-  ) {
-    return target_;
-  }
-
-  if (
-    target_ === "raid1" ||
-    target_ === "raid2" ||
-    target_ === "raid3" ||
-    target_ === "raid4" ||
-    target_ === "raid5"
-  ) {
-    if (sources.playerGroupIndexZeroBased.get() === 0) {
-      // we ignore first raid group if we are in it
-      return null;
-    } else {
-      return target_ === "raid1"
-        ? "myraid1"
-        : target_ === "raid2"
-          ? "myraid2"
-          : target_ === "raid3"
-            ? "myraid3"
-            : target_ === "raid4"
-              ? "myraid4"
-              : target_ === "raid5"
-                ? "myraid5"
-                : checkAllCasesHandled(target_);
-    }
-  }
-
-  if (
-    target_ === "raid6" ||
-    target_ === "raid7" ||
-    target_ === "raid8" ||
-    target_ === "raid9" ||
-    target_ === "raid10"
-  ) {
-    if (sources.playerGroupIndexZeroBased.get() === 0) {
-      return target_ === "raid6"
-        ? "myraid1"
-        : target_ === "raid7"
-          ? "myraid2"
-          : target_ === "raid8"
-            ? "myraid3"
-            : target_ === "raid9"
-              ? "myraid4"
-              : target_ === "raid10"
-                ? "myraid5"
-                : checkAllCasesHandled(target_);
-    } else {
-      return null;
-    }
-  }
-  return null;
 }
 
 function processNewHelpfulAura(

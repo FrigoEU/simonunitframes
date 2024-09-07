@@ -7,7 +7,7 @@ export function makeConfig() {
     // bartexturepath: "Interface\\RAIDFRAME\\Raid-Bar-Hp-Fill",
     bartexturepath: "Interface\\ChatFrame\\ChatFrameBackground",
 
-    partyAndArenaContainersOffsetY: 0,
+    partyAndArenaContainersOffsetY: 40,
     partyAndArenaContainersOffsetX: 500,
 
     hots_show_timer_text: false,
@@ -15,7 +15,7 @@ export function makeConfig() {
     def_cds_show_timer_text: false,
     off_cds_show_timer_text: false,
 
-    unitFrame_fullHeight: 110,
+    unitFrame_fullHeight: 112,
     unitFrame_fullWidth: 250,
 
     unitFrame_verticalGap: 8,
@@ -23,7 +23,7 @@ export function makeConfig() {
 
     unitFrame_healthbarBgColor: { r: 28, g: 28, b: 28, a: 1 },
 
-    unitFrame_cooldownSectionPercentage_friendly: 0.42,
+    unitFrame_cooldownSectionPercentage_friendly: 0.4,
     unitFrame_cooldownSectionPercentage_arena: 0.5,
     unitFrame_cooldownBackgroundColor: { r: 116, g: 116, b: 116, a: 1 },
     unitFrame_cooldownTopGap: 4,
@@ -44,7 +44,7 @@ export function makeConfig() {
     unitFrame_bigIconSize: 38,
     unitFrame_bigIconGap: 6,
 
-    unitFrame_smallIconSize: 28,
+    unitFrame_smallIconSize: 27,
     unitFrame_smallIconGap: 2,
   };
 }
