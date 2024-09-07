@@ -49,9 +49,9 @@ function getUnitGridIndex(unit: (typeof allSupportedTranslatedUnits)[number]): {
     const unitRaidIndex = parseInt(unit.substring(6, 8)) - 1;
     const x = unitRaidIndex < 5 ? -1 : -2;
     const y = unitRaidIndex % 5;
-    print(unit);
-    print(unitRaidIndex);
-    print(x + " | " + y);
+    // print(unit);
+    // print(unitRaidIndex);
+    // print(x + " | " + y);
     return { x, y };
   } else {
     return checkAllCasesHandled(unit, "getUnitGridIndex");

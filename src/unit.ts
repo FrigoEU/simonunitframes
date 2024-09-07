@@ -212,108 +212,127 @@ export function unitIsInPlayerRaidGroup(unit: UnitIdRaidPlayer): boolean {
 // We want to show always the first/second raid group, and call it raid1 - 5.
 // We do that translation here
 // It's kinda weird and tricky, but should do what we want in RBG's
+// const unitsDone: UnitId[] = [];
 export function translateUnit(
   sources: sources,
-  target_: "all" | UnitId
+  unit: UnitId
 ): null | supportedUnit {
   if (
-    target_ === "player" ||
-    target_ === "party1" ||
-    target_ === "party2" ||
-    target_ === "party3" ||
-    target_ === "party4" ||
-    target_ === "arena1" ||
-    target_ === "arena2" ||
-    target_ === "arena3"
+    unit === "player" ||
+    unit === "party1" ||
+    unit === "party2" ||
+    unit === "party3" ||
+    unit === "party4" ||
+    unit === "arena1" ||
+    unit === "arena2" ||
+    unit === "arena3"
   ) {
-    return target_;
+    return unit;
   }
 
-  if (
-    target_ === "raid1" ||
-    target_ === "raid2" ||
-    target_ === "raid3" ||
-    target_ === "raid4" ||
-    target_ === "raid5"
-  ) {
-    if (sources.playerGroupIndexZeroBased.get() === 0) {
-      // we ignore first raid group if we are in it
-      return null;
-    } else {
-      return target_ === "raid1"
-        ? "myraid1"
-        : target_ === "raid2"
-          ? "myraid2"
-          : target_ === "raid3"
-            ? "myraid3"
-            : target_ === "raid4"
-              ? "myraid4"
-              : target_ === "raid5"
-                ? "myraid5"
-                : checkAllCasesHandled(target_);
+  if (!unit.startsWith("raid")) {
+    return null;
+  }
+  const raidIndex = UnitInRaid(unit);
+  if (isNil(raidIndex)) {
+    return null;
+  }
+  const [name, rank, subgroup_] = GetRaidRosterInfo(raidIndex);
+  if (isNil(name)) {
+    return null;
+  }
+  const playerSubGroup = sources.playerGroupIndexZeroBased.get();
+  const subgroup = subgroup_ - 1;
+  const unitGroupIndexZerobased =
+    ((parseInt(unit.substring(4, 6)) - 1) % 5) + 1;
+  let myraidIndex = null;
+  if (subgroup === playerSubGroup) {
+    // we ignore group if we are in it
+    // return null;
+  } else if (subgroup < playerSubGroup) {
+    myraidIndex = subgroup * 5 + unitGroupIndexZerobased;
+    // return ("myraid" + myraidIndex.toString()) as supportedUnit;
+  } else if (subgroup > playerSubGroup) {
+    myraidIndex = (subgroup - 1) * 5 + unitGroupIndexZerobased;
+    // return ("myraid" + myraidIndex.toString()) as supportedUnit;
+  } else {
+    // return null;
+  }
+  if (myraidIndex === null) {
+    return null;
+  } else {
+    const res = ("myraid" + myraidIndex.toString()) as supportedUnit;
+    // if (!unitsDone.includes(unit)) {
+    //   print(
+    //     `${unit} | playerSub: ${playerSubGroup} | sub ${subgroup} | unitGroupIndex ${unitGroupIndexZerobased} | res: ${res}`
+    //   );
+    //   unitsDone.push(unit);
+    // }
+    return res;
+  }
+
+  // doesn't work because raid leader screws with it unless he's in party 1
+  // raid5 -> 5
+  // if (
+  //   unit === "raid1" ||
+  //   unit === "raid2" ||
+  //   unit === "raid3" ||
+  //   unit === "raid4" ||
+  //   unit === "raid5"
+  // ) {
+  //   if (sources.playerGroupIndexZeroBased.get() === 0) {
+  //     return null;
+  //   } else {
+  //     return ("myraid" + unitRaidIndex1Based.toString()) as supportedUnit;
+  //   }
+  // }
+
+  // if (
+  //   unit === "raid6" ||
+  //   unit === "raid7" ||
+  //   unit === "raid8" ||
+  //   unit === "raid9" ||
+  //   unit === "raid10"
+  // ) {
+  //   if (sources.playerGroupIndexZeroBased.get() === 0) {
+  //     return ("myraid" + (unitRaidIndex1Based - 5).toString()) as supportedUnit;
+  //   } else if (sources.playerGroupIndexZeroBased.get() === 1) {
+  //     return null;
+  //   } else if (sources.playerGroupIndexZeroBased.get() === 2) {
+  //     return ("myraid" + unitRaidIndex1Based.toString()) as supportedUnit;
+  //   }
+  // }
+
+  // if (
+  //   unit === "raid11" ||
+  //   unit === "raid12" ||
+  //   unit === "raid13" ||
+  //   unit === "raid14" ||
+  //   unit === "raid15"
+  // ) {
+  //   if (
+  //     sources.playerGroupIndexZeroBased.get() === 0 ||
+  //     sources.playerGroupIndexZeroBased.get() === 1
+  //   ) {
+  //     return ("myraid" + (unitRaidIndex1Based - 5).toString()) as supportedUnit;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+  // return null;
+}
+
+export function calcRaidGroupIndex(sources: sources): null | number {
+  const playerName = sources.player.name.get();
+  print(`player: ${playerName}`);
+  for (let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]) {
+    const [name, rank, subgroup] = GetRaidRosterInfo(i);
+    if (name) {
+      print(`${i}. raid name: ${name}, subgroup ${subgroup}`);
     }
-  }
-
-  if (
-    target_ === "raid6" ||
-    target_ === "raid7" ||
-    target_ === "raid8" ||
-    target_ === "raid9" ||
-    target_ === "raid10"
-  ) {
-    if (sources.playerGroupIndexZeroBased.get() === 0) {
-      return target_ === "raid6"
-        ? "myraid1"
-        : target_ === "raid7"
-          ? "myraid2"
-          : target_ === "raid8"
-            ? "myraid3"
-            : target_ === "raid9"
-              ? "myraid4"
-              : target_ === "raid10"
-                ? "myraid5"
-                : checkAllCasesHandled(target_);
-    } else if (sources.playerGroupIndexZeroBased.get() === 1) {
-      return null;
-    } else if (sources.playerGroupIndexZeroBased.get() === 2) {
-      return target_ === "raid6"
-        ? "myraid6"
-        : target_ === "raid7"
-          ? "myraid7"
-          : target_ === "raid8"
-            ? "myraid8"
-            : target_ === "raid9"
-              ? "myraid9"
-              : target_ === "raid10"
-                ? "myraid10"
-                : checkAllCasesHandled(target_);
-    }
-  }
-
-  if (
-    target_ === "raid11" ||
-    target_ === "raid12" ||
-    target_ === "raid13" ||
-    target_ === "raid14" ||
-    target_ === "raid15"
-  ) {
-    if (
-      sources.playerGroupIndexZeroBased.get() === 0 ||
-      sources.playerGroupIndexZeroBased.get() === 1
-    ) {
-      return target_ === "raid11"
-        ? "myraid6"
-        : target_ === "raid12"
-          ? "myraid7"
-          : target_ === "raid13"
-            ? "myraid8"
-            : target_ === "raid14"
-              ? "myraid9"
-              : target_ === "raid15"
-                ? "myraid10"
-                : checkAllCasesHandled(target_);
-    } else {
-      return null;
+    if (name && name === playerName) {
+      print(`Found: subgroup ${subgroup} - 1`);
+      return subgroup - 1;
     }
   }
   return null;

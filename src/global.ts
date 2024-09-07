@@ -214,6 +214,23 @@ declare global {
   ): void;
 
   /** @noSelf **/
+  function GetRaidRosterInfo(index: number): LuaMultiReturn<
+    [
+      string | null, // name
+      number | null, // rank
+      number, // subgroup
+      number | null, // level
+      string | null, // class - localized
+      className | null, // class - localized
+      string | null, // zone
+      boolean | null, // online
+      boolean | null, // isDead
+      string | null, // role
+      boolean | null, // is master looter
+    ]
+  >;
+
+  /** @noSelf **/
   function CooldownFrame_Set(
     cooldown: CooldownFrame,
     start: number,
