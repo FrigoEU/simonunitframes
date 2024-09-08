@@ -191,26 +191,22 @@ function handleWowEvent(
       runNonUnitFrameStuff();
       sources.player.name.set(UnitName("player")[0]);
       sources.playerGroupIndexZeroBased.set(calcRaidGroupIndex(sources) || 0);
-      print("player group index: " + sources.playerGroupIndexZeroBased.get());
+      // print("player group index: " + sources.playerGroupIndexZeroBased.get());
       updateInfo(sources, "all", "all");
-      return;
     }
     case "GROUP_ROSTER_UPDATE": {
       sources.playerGroupIndexZeroBased.set(calcRaidGroupIndex(sources) || 0);
-      print("player group index: " + sources.playerGroupIndexZeroBased.get());
+      // print("player group index: " + sources.playerGroupIndexZeroBased.get());
       updateInfo(sources, "all", "all");
-      return;
     }
     case "ARENA_OPPONENT_UPDATE":
     case "ARENA_PREP_OPPONENT_SPECIALIZATIONS": {
       updateInfo(sources, "arena1", "all");
       updateInfo(sources, "arena2", "all");
       updateInfo(sources, "arena3", "all");
-      return;
     }
     case "PLAYER_REGEN_ENABLED": {
       updateInfo(sources, "all", "all");
-      return;
     }
     case "UNIT_HEALTH": {
       updateInfo(sources, arg1 as UnitId, { tag: "health" });

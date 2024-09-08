@@ -234,26 +234,36 @@ export function translateUnit(
     return null;
   }
   const raidIndex = UnitInRaid(unit);
-  if (isNil(raidIndex)) {
-    return null;
+  // raid6 -> 6
+  const parsedNum = parseInt(unit.substring(4, 6));
+  // raid6 -> 1
+  const unitGroupIndexOneBased = ((parsedNum - 1) % 5) + 1;
+  // we're in "group2" (on UI) -> 1
+  const playerSubGroup = sources.playerGroupIndexZeroBased.get();
+
+  if (isNil(raidIndex) || raidIndex == 0) {
+    if (parsedNum <= 10) {
+      // We're not in a raid -> Just pass it on so it gets exists = false
+      return ("myraid" + parsedNum) as supportedUnit;
+    } else {
+      // we only have myraid1 -> myraid10
+      return null;
+    }
   }
   const [name, rank, subgroup_] = GetRaidRosterInfo(raidIndex);
   if (isNil(name)) {
     return null;
   }
-  const playerSubGroup = sources.playerGroupIndexZeroBased.get();
   const subgroup = subgroup_ - 1;
-  const unitGroupIndexZerobased =
-    ((parseInt(unit.substring(4, 6)) - 1) % 5) + 1;
   let myraidIndex = null;
   if (subgroup === playerSubGroup) {
     // we ignore group if we are in it
     // return null;
   } else if (subgroup < playerSubGroup) {
-    myraidIndex = subgroup * 5 + unitGroupIndexZerobased;
+    myraidIndex = subgroup * 5 + unitGroupIndexOneBased;
     // return ("myraid" + myraidIndex.toString()) as supportedUnit;
   } else if (subgroup > playerSubGroup) {
-    myraidIndex = (subgroup - 1) * 5 + unitGroupIndexZerobased;
+    myraidIndex = (subgroup - 1) * 5 + unitGroupIndexOneBased;
     // return ("myraid" + myraidIndex.toString()) as supportedUnit;
   } else {
     // return null;
