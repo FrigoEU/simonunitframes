@@ -117,7 +117,7 @@ export function drawHealthbarFrames(
     healthbar.SetStatusBarColor(color.r, color.g, color.b, 1);
   });
 
-  sources.isInHealingRange.observe((inRange) => {
+  sources.isInRange.observe((inRange) => {
     if (inRange === true) {
       container.SetAlpha(1);
     } else {

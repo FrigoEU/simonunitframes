@@ -8,7 +8,7 @@ export type healthinfo = {
   class: Source<className>;
   name: Source<string>;
   unitId: Source<null | UnitId>;
-  isInHealingRange: Source<boolean>;
+  isInRange: Source<boolean>;
   health: {
     max: Source<number>;
     current: Source<number>;
@@ -21,7 +21,7 @@ function makeHealthInfo(): healthinfo {
     class: new Source("WARRIOR" as className),
     name: new Source(""),
     unitId: new Source(null as null | UnitId),
-    isInHealingRange: new Source(true),
+    isInRange: new Source(true),
     health: {
       max: new Source(100),
       current: new Source(100),

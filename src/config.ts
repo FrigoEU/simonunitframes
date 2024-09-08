@@ -24,7 +24,7 @@ export function makeConfig() {
     unitFrame_healthbarBgColor: { r: 28, g: 28, b: 28, a: 1 },
 
     unitFrame_cooldownSectionPercentage_friendly: 0.4,
-    unitFrame_cooldownSectionPercentage_arena: 0.5,
+    unitFrame_cooldownSectionPercentage_arena: 0.4,
     unitFrame_cooldownBackgroundColor: { r: 116, g: 116, b: 116, a: 1 },
     unitFrame_cooldownTopGap: 4,
 

@@ -17,15 +17,22 @@ export function startCheckingRange(sources: sources) {
         const unitSource = sources[translatedUnit];
         if (unitSource.exists.get() === true) {
           const playerClass = sources.player.class.get();
+          const isFriendly = unitIsPlayerPartyRaid(translatedUnit);
           const spell =
             playerClass === "DRUID"
-              ? "Rejuvenation"
+              ? isFriendly
+                ? "Rejuvenation"
+                : "Wrath"
               : playerClass === "EVOKER"
-                ? "Reversion"
+                ? isFriendly
+                  ? "Reversion"
+                  : "Disintegrate"
                 : playerClass === "SHAMAN"
-                  ? "Riptide"
+                  ? isFriendly
+                    ? "Riptide"
+                    : "Flame Shock"
                   : "Heal"; // TODO?
-          unitSource.isInHealingRange.set(
+          unitSource.isInRange.set(
             C_Spell.IsSpellInRange(spell, unit) || false
           );
         }

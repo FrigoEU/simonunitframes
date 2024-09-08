@@ -321,14 +321,20 @@ function updateInfo(
       continue;
     }
     const unitSource = sources[translatedUnit];
-    if (
-      !UnitExists(unit) ||
-      (unitIsArena(translatedUnit) && GetInstanceInfo()[1] !== "arena")
-    ) {
+    if (unitIsArena(translatedUnit) && GetInstanceInfo()[1] !== "arena") {
       unitSource.exists.set(false);
       continue;
-    } else {
+    }
+    if (
+      UnitExists(unit) ||
+      // UnitExists doesn't work very well for arenax
+      (unitIsArena(translatedUnit) &&
+        getIndexFromArenaUnit(translatedUnit) <= getArenaSize())
+    ) {
       unitSource.exists.set(true);
+    } else {
+      unitSource.exists.set(false);
+      continue;
     }
     // if (unit.startsWith("raid")) {
     //   print(unit + " -> " + translatedUnit + " -> " + UnitClass(unit)[0]);
@@ -649,4 +655,19 @@ function updateAuraIfCorrectId(
       s.set(newaura);
     }
   }
+}
+
+function getIndexFromArenaUnit(
+  unit: "arena1" | "arena2" | "arena3"
+): 1 | 2 | 3 {
+  return parseInt(unit.substring(5, 6)) as 1 | 2 | 3;
+}
+function getArenaSize(): number {
+  if (UnitExists("arena3") || UnitExists("party2")) {
+    return 3;
+  }
+  if (UnitExists("arena2") || UnitExists("party1")) {
+    return 2;
+  }
+  throw new Error("Function not implemented.");
 }
