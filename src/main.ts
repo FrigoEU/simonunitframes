@@ -22,7 +22,7 @@ import { setPosition } from "./draw/position";
 import { runNonUnitFrameStuff } from "./nonunitframestuff";
 import { startCheckingRange } from "./rangecheck";
 import { sortDots } from "./sortdots";
-import { makeSources, Source, sources } from "./sources";
+import { healthinfo, makeSources, Source, sources } from "./sources";
 import { startTest } from "./testmode";
 import {
   allSupportedTranslatedUnits,
@@ -77,6 +77,8 @@ export function stopTest() {
   // Just resetting everything
   handleWowEvent(sources, "PLAYER_ENTERING_WORLD", null, null);
 }
+
+const redrawAfterCombatQueue: [healthinfo, SimpleFrame][] = [];
 
 function start() {
   // Making all sources immediately
@@ -152,10 +154,15 @@ function start() {
 
     const unitSource = sources[unit];
     unitSource.exists.observe((exists) => {
-      if (exists === true) {
-        container.Show();
+      if (UnitAffectingCombat("player") === true) {
+        // Can't show/hide frames in combat (because we use SecureButtonTemplate)
+        redrawAfterCombatQueue.push([unitSource, container]);
       } else {
-        container.Hide();
+        if (exists === true) {
+          container.Show();
+        } else {
+          container.Hide();
+        }
       }
     });
   }
@@ -207,6 +214,14 @@ function handleWowEvent(
     }
     case "PLAYER_REGEN_ENABLED": {
       updateInfo(sources, "all", "all");
+      for (let redrawTarget of redrawAfterCombatQueue) {
+        if (redrawTarget[0].exists.get() === true) {
+          redrawTarget[1].Show();
+        } else {
+          redrawTarget[1].Hide();
+        }
+      }
+      redrawAfterCombatQueue.length = 0;
     }
     case "UNIT_HEALTH": {
       updateInfo(sources, arg1 as UnitId, { tag: "health" });
