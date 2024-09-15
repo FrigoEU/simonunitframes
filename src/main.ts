@@ -22,7 +22,7 @@ import { setPosition } from "./draw/position";
 import { runNonUnitFrameStuff } from "./nonunitframestuff";
 import { startCheckingRange } from "./rangecheck";
 import { sortDots } from "./sortdots";
-import { healthinfo, makeSources, Source, sources } from "./sources";
+import { arenaInfo, healthinfo, makeSources, Source, sources } from "./sources";
 import { startTest } from "./testmode";
 import {
   allSupportedTranslatedUnits,
@@ -350,29 +350,10 @@ function updateInfo(
         const cl = UnitClass(unit)[1];
         unitSource.class.set(cl as className);
         unitSource.guid.set(UnitGUID(unit) || "");
-        // print(`guid ${unitSource.class.get()} - ${unitSource.guid.get()}`);
         unitSource.name.set(UnitName(unit)[0] || "");
         unitSource.unitId.set(unit);
         if ("arenaDpsIndex" in unitSource && unitIsArena(translatedUnit)) {
-          if (arenaUnitIsHealer(translatedUnit)) {
-            unitSource.arenaDpsIndex.set(null);
-          } else {
-            if (translatedUnit === "arena1") {
-              unitSource.arenaDpsIndex.set(1);
-            } else if (translatedUnit === "arena2") {
-              if (arenaUnitIsHealer("arena1")) {
-                unitSource.arenaDpsIndex.set(1);
-              } else {
-                unitSource.arenaDpsIndex.set(2);
-              }
-            } else if (translatedUnit === "arena3") {
-              if (arenaUnitIsHealer("arena1") || arenaUnitIsHealer("arena2")) {
-                unitSource.arenaDpsIndex.set(2);
-              } else {
-                unitSource.arenaDpsIndex.set(null); // triple dps, not supported
-              }
-            }
-          }
+          unitSource.arenaDpsIndex.set(calcArenaDpsIndex(translatedUnit));
         }
       } else if (info.tag === "power" || info.tag === "absorb") {
         // TODO!
@@ -462,6 +443,30 @@ function updateInfo(
       } else {
         checkAllCasesHandled(info);
       }
+    }
+  }
+}
+
+function calcArenaDpsIndex(translatedUnit: "arena1" | "arena2" | "arena3") {
+  if (arenaUnitIsHealer(translatedUnit)) {
+    return null;
+  } else {
+    if (translatedUnit === "arena1") {
+      return 1;
+    } else if (translatedUnit === "arena2") {
+      if (arenaUnitIsHealer("arena1")) {
+        return 1;
+      } else {
+        return 2;
+      }
+    } else if (translatedUnit === "arena3") {
+      if (arenaUnitIsHealer("arena1") || arenaUnitIsHealer("arena2")) {
+        return 2;
+      } else {
+        return null; // Triple DPS, not supported
+      }
+    } else {
+      return checkAllCasesHandled(translatedUnit);
     }
   }
 }
