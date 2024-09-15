@@ -3,6 +3,7 @@
 import { config } from "../config";
 import { healthinfo, observeAll } from "../sources";
 import { supportedUnit, unitIsPlayerPartyRaid } from "../unit";
+import { isNil } from "../utils";
 import { createBackdropTemplateFrame } from "./auras";
 
 export function drawHealthbarFrames(
@@ -113,8 +114,10 @@ export function drawHealthbarFrames(
   namestr.SetFont("Fonts\\FRIZQT__.TTF", 12, "");
 
   sources.class.observe((className) => {
-    const color = C_ClassColor.GetClassColor(className);
-    healthbar.SetStatusBarColor(color.r, color.g, color.b, 1);
+    if (!isNil(className)) {
+      const color = C_ClassColor.GetClassColor(className);
+      healthbar.SetStatusBarColor(color.r, color.g, color.b, 1);
+    }
   });
 
   sources.isInRange.observe((inRange) => {

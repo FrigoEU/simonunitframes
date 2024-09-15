@@ -37,6 +37,7 @@ export const dangerousDebuffs = [
   "Deathmark",
   "Summon Demonic Tyrant",
   "Unstable Affliction",
+  "Frost Bomb",
 ];
 
 const offensiveCdsWeTrack = [

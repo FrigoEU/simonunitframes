@@ -8,7 +8,7 @@ export function makeConfig() {
     bartexturepath: "Interface\\ChatFrame\\ChatFrameBackground",
 
     partyAndArenaContainersOffsetY: 40,
-    partyAndArenaContainersOffsetX: 500,
+    partyAndArenaContainersOffsetX: 600,
 
     hots_show_timer_text: false,
     dots_show_timer_text: false,

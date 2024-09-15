@@ -350,13 +350,38 @@ function updateInfo(
         const cl = UnitClass(unit)[1];
         unitSource.class.set(cl as className);
         unitSource.guid.set(UnitGUID(unit) || "");
+        // print(`guid ${unitSource.class.get()} - ${unitSource.guid.get()}`);
         unitSource.name.set(UnitName(unit)[0] || "");
         unitSource.unitId.set(unit);
+        if ("arenaDpsIndex" in unitSource && unitIsArena(translatedUnit)) {
+          if (arenaUnitIsHealer(translatedUnit)) {
+            unitSource.arenaDpsIndex.set(null);
+          } else {
+            if (translatedUnit === "arena1") {
+              unitSource.arenaDpsIndex.set(1);
+            } else if (translatedUnit === "arena2") {
+              if (arenaUnitIsHealer("arena1")) {
+                unitSource.arenaDpsIndex.set(1);
+              } else {
+                unitSource.arenaDpsIndex.set(2);
+              }
+            } else if (translatedUnit === "arena3") {
+              if (arenaUnitIsHealer("arena1") || arenaUnitIsHealer("arena2")) {
+                unitSource.arenaDpsIndex.set(2);
+              } else {
+                unitSource.arenaDpsIndex.set(null); // triple dps, not supported
+              }
+            }
+          }
+        }
       } else if (info.tag === "power" || info.tag === "absorb") {
         // TODO!
       } else if (info.tag === "target") {
         if ("target" in unitSource) {
           unitSource.target.set(UnitGUID(unit + "target") || null);
+          // print(
+          //   `target ${unitSource.class.get()} - ${unitSource.target.get()}`
+          // );
         }
       } else if (info.tag === "focus") {
         if (unit === "player") {
@@ -669,5 +694,18 @@ function getArenaSize(): number {
   if (UnitExists("arena2") || UnitExists("party1")) {
     return 2;
   }
-  throw new Error("Function not implemented.");
+  return 0;
+}
+
+function arenaUnitIsHealer(unit: "arena1" | "arena2" | "arena3"): boolean {
+  const exists = UnitExists(unit);
+  if (!exists) {
+    return false;
+  }
+  const [specId, _] = GetArenaOpponentSpec(getIndexFromArenaUnit(unit))!;
+  const [_a, _b, _c, _d, role] = GetSpecializationInfoForSpecID(specId);
+  if (role === "HEALER") {
+    return true;
+  }
+  return false;
 }
