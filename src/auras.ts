@@ -57,7 +57,7 @@ const offensiveCdsWeTrack = [
   "Bloodlust",
 
   "Trueshot Aura",
-  "Bestial Wrath",
+  // "Bestial Wrath",
 
   "Combustion",
   "Icy Veins",

@@ -162,6 +162,21 @@ declare global {
   //   unit: UnitId
   // ): null /* invalid unit */ | 0 | 1;
 
+  function GetSpecializationInfoByID(
+    this: void,
+    specId: number
+  ): LuaMultiReturn<
+    [
+      number, // id
+      string, // name
+      string, // description
+      iconFilePath,
+      backgroundTextureName,
+      role,
+      className,
+    ]
+  >;
+
   function GetSpecialization(this: void): null | specIndex;
   type specInfo = LuaMultiReturn<
     [
@@ -175,10 +190,7 @@ declare global {
   >;
   function GetSpecializationInfo(this: void, index: specIndex): null | specInfo;
   function DevTools_Dump(this: void, str: any): void;
-  function GetArenaOpponentSpec(
-    this: void,
-    num: 1 | 2 | 3
-  ): null | LuaMultiReturn<[specializationId, number /* gender */]>;
+  function GetArenaOpponentSpec(this: void, num: 1 | 2 | 3): null | number;
   // 0 if not in party / raid
   function GetNumGroupMembers(this: void): number;
   function UnitBuff(

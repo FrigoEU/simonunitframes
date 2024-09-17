@@ -1,6 +1,7 @@
 /** @noSelfInFile */
 
 import { hotIndexes, hotIndexToHotName } from "./auras";
+import { sortDots } from "./sortdots";
 import { sources } from "./sources";
 
 export function startTest(sources: sources) {
@@ -19,14 +20,17 @@ export function startTest(sources: sources) {
   sources.player.defensiveCooldownActive.set(makeTestAura("Barkskin"));
   sources.player.offensiveCooldownActive.set(makeTestAura("Avatar"));
   sources.player.externalDefFromPlayerActive.set(makeTestAura("Ironbark"));
-  sources.player.dots.set([
+  const dots = [
     makeTestAura("Unstable Affliction"),
     makeTestAura("Shadow Word: Pain"),
     makeTestAura("Shadow Word: Pain"),
     makeTestAura("Shadow Word: Pain"),
     makeTestAura("Shadow Word: Pain"),
     makeTestAura("Shadow Word: Pain"),
-  ]);
+    makeTestAura("Shadow Word: Pain"),
+  ];
+  dots.sort(sortDots);
+  sources.player.dots.set(dots);
 
   for (let hotIndex of hotIndexes) {
     const hotName = hotIndexToHotName(hotIndex);

@@ -348,7 +348,14 @@ function updateInfo(
         unitSource.health.max.set(UnitHealthMax(unit));
       } else if (info.tag === "character") {
         const cl = UnitClass(unit)[1];
-        unitSource.class.set(cl as className);
+        if (isNil(cl) && unitIsArena(translatedUnit)) {
+          const [_a, _b, _c, _d, _e, cl] = GetSpecializationInfoByID(
+            GetArenaOpponentSpec(getIndexFromArenaUnit(translatedUnit))!
+          );
+          unitSource.class.set(cl as className);
+        } else {
+          unitSource.class.set(cl as className);
+        }
         unitSource.guid.set(UnitGUID(unit) || "");
         unitSource.name.set(UnitName(unit)[0] || "");
         unitSource.unitId.set(unit);
@@ -707,7 +714,7 @@ function arenaUnitIsHealer(unit: "arena1" | "arena2" | "arena3"): boolean {
   if (!exists) {
     return false;
   }
-  const [specId, _] = GetArenaOpponentSpec(getIndexFromArenaUnit(unit))!;
+  const specId = GetArenaOpponentSpec(getIndexFromArenaUnit(unit))!;
   const [_a, _b, _c, _d, role] = GetSpecializationInfoForSpecID(specId);
   if (role === "HEALER") {
     return true;
