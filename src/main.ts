@@ -19,6 +19,7 @@ import { drawHealthbarFrames } from "./draw/healthbar";
 import { drawHighlightFrames } from "./draw/highlight";
 import { drawHotFrames } from "./draw/hots";
 import { setPosition } from "./draw/position";
+import { drawArenaSpecs } from "./draw/spec";
 import { runNonUnitFrameStuff } from "./nonunitframestuff";
 import { startCheckingRange } from "./rangecheck";
 import { sortDots } from "./sortdots";
@@ -150,6 +151,7 @@ function start() {
       const unitSource = sources[unit];
       drawHealthbarFrames(config, nameP, container, unitSource, "arena", unit);
       drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
+      drawArenaSpecs(config, nameP, container, unitSource);
     }
 
     const unitSource = sources[unit];
@@ -349,9 +351,12 @@ function updateInfo(
       } else if (info.tag === "character") {
         const cl = UnitClass(unit)[1];
         if (isNil(cl) && unitIsArena(translatedUnit)) {
-          const [_a, _b, _c, _d, _e, cl] = GetSpecializationInfoByID(
+          const [_a, _b, _c, icon, _e, cl] = GetSpecializationInfoByID(
             GetArenaOpponentSpec(getIndexFromArenaUnit(translatedUnit))!
           );
+          if ("specIcon" in unitSource) {
+            unitSource.specIcon.set(icon);
+          }
           unitSource.class.set(cl as className);
         } else {
           unitSource.class.set(cl as className);

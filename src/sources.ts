@@ -58,10 +58,16 @@ function makeOffensiveCdInfo(): offensiveCdInfo {
 }
 
 export type arenaInfo = {
+  // spec: Source<null | specializationId>;
+  specIcon: Source<null | iconFilePath>;
   arenaDpsIndex: Source<null | 1 | 2>;
 };
 function makeArenaInfo(): arenaInfo {
-  return { arenaDpsIndex: new Source(null as null | 1 | 2) };
+  return {
+    arenaDpsIndex: new Source(null as null | 1 | 2),
+    // spec: new Source(null as null | specializationId),
+    specIcon: new Source(null as null | iconFilePath),
+  };
 }
 
 export type externalDefFromPlayerInfo = {

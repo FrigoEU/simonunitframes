@@ -15,6 +15,8 @@ export function makeConfig() {
     def_cds_show_timer_text: false,
     off_cds_show_timer_text: false,
 
+    arenatarget_show_icons: false,
+
     unitFrame_fullHeight: 112,
     unitFrame_fullWidth: 250,
 

@@ -117,6 +117,11 @@ export function drawHealthbarFrames(
     if (!isNil(className)) {
       const color = C_ClassColor.GetClassColor(className);
       healthbar.SetStatusBarColor(color.r, color.g, color.b, 1);
+      if (className === "PRIEST") {
+        namestr.SetTextColor(0.6, 0.6, 0.6);
+      } else {
+        namestr.SetTextColor(1, 1, 1);
+      }
     }
   });
 

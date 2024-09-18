@@ -100,7 +100,7 @@ export function drawPartyTargetedByFrames(
         }
 
         frame.Show();
-        renderIcon(frame, offensiveCooldownActive, class_);
+        renderIcon(config, frame, offensiveCooldownActive, class_);
       }
     );
   }
@@ -109,6 +109,7 @@ export function drawPartyTargetedByFrames(
 }
 
 function renderIcon(
+  config: config,
   frame: myAuraFrame,
   offensiveCooldownActive: AuraData | null,
   class_: className
@@ -121,8 +122,14 @@ function renderIcon(
     frame.setBorderSize(null);
     frame.setBorderColor(null);
     frame.cooldown.Hide();
-    frame.icon.SetTexture(getClassIconTexturePath(class_));
     frame.icon.SetAllPoints(frame);
+
+    if (config.arenatarget_show_icons === true) {
+      frame.icon.SetTexture(getClassIconTexturePath(class_));
+    } else {
+      const color = C_ClassColor.GetClassColor(class_);
+      frame.icon.SetColorTexture(color.r, color.g, color.b, 1);
+    }
   }
 }
 
@@ -198,7 +205,7 @@ export function drawArenaTargetedByFrames(
         }
         frame.Show();
 
-        renderIcon(frame, offensiveCooldownActive, class_);
+        renderIcon(config, frame, offensiveCooldownActive, class_);
       }
     );
   }

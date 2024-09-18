@@ -98,6 +98,8 @@ export function startTest(sources: sources) {
   sources.arena1.health.current.set(800);
   sources.arena1.target.set("playerguid");
   sources.arena1.offensiveCooldownActive.set(makeTestAura("Avatar"));
+  const [_a, _b, _c, _icon, bg] = GetSpecializationInfoByID(102);
+  sources.arena1.specIcon.set(_icon);
 
   sources.arena2.exists.set(true);
   sources.arena2.class.set("WARLOCK");
@@ -108,6 +110,7 @@ export function startTest(sources: sources) {
 
   sources.arena3.exists.set(true);
   sources.arena3.class.set("PRIEST");
+  sources.arena3.name.set("JosPeters");
   sources.arena3.arenaDpsIndex.set(null);
   sources.arena3.health.max.set(1000);
   sources.arena3.health.current.set(800);
