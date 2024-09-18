@@ -9,6 +9,8 @@ import {
   myAuraFrame,
 } from "./auras";
 
+const defaultBorder = { r: 255, g: 255, b: 255 };
+
 export function drawPartyTargetedByFrames(
   config: config,
   namePrefix: string,
@@ -19,7 +21,7 @@ export function drawPartyTargetedByFrames(
   const arenaDps1TargetFrame = createAuraFrame(
     namePrefix + "arenaDps1Target",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
+    { defaultBorder, showCount: false }
   );
   arenaDps1TargetFrame.SetSize(
     config.unitFrame_bigIconSize,
@@ -36,7 +38,7 @@ export function drawPartyTargetedByFrames(
   const arenaDps2TargetFrame = createAuraFrame(
     namePrefix + "arenaDps2Target",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
+    { defaultBorder, showCount: false }
   );
   arenaDps2TargetFrame.SetSize(
     config.unitFrame_bigIconSize,
@@ -117,7 +119,7 @@ function renderIcon(
   if (offensiveCooldownActive) {
     applyAuraToAuraframe(offensiveCooldownActive, frame);
     frame.setBorderSize(3);
-    frame.setBorderColor({ r: 255, g: 0, b: 0 });
+    frame.setBorderColor({ r: 1, g: 0.5, b: 0 });
   } else {
     frame.setBorderSize(null);
     frame.setBorderColor(null);
@@ -147,7 +149,7 @@ export function drawArenaTargetedByFrames(
   const arenaTargetedBy1Frame = createAuraFrame(
     namePrefix + "arenaTargetedBy1",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
+    { defaultBorder, showCount: false }
   );
   arenaTargetedBy1Frame.SetSize(
     config.unitFrame_bigIconSize,
@@ -164,7 +166,7 @@ export function drawArenaTargetedByFrames(
   const arenaTargetedBy2Frame = createAuraFrame(
     namePrefix + "arenaTargetedBy2",
     parent,
-    { defaultBorder: { r: 0, g: 0, b: 0 }, showCount: false }
+    { defaultBorder, showCount: false }
   );
   arenaTargetedBy2Frame.SetSize(
     config.unitFrame_bigIconSize,
