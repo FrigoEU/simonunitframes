@@ -119,7 +119,7 @@ function renderIcon(
   if (offensiveCooldownActive) {
     applyAuraToAuraframe(offensiveCooldownActive, frame);
     frame.setBorderSize(3);
-    frame.setBorderColor({ r: 1, g: 0.5, b: 0 });
+    frame.setBorderColor({ r: 1, g: 0, b: 0 });
   } else {
     frame.setBorderSize(null);
     frame.setBorderColor(null);

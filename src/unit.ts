@@ -236,6 +236,9 @@ export function translateUnit(
   const raidIndex = UnitInRaid(unit);
   // raid6 -> 6
   const parsedNum = parseInt(unit.substring(4, 6));
+  if (parsedNum > 15) {
+    return null;
+  }
   // raid6 -> 1
   const unitGroupIndexOneBased = ((parsedNum - 1) % 5) + 1;
   // we're in "group2" (on UI) -> 1

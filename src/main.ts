@@ -323,6 +323,11 @@ function updateInfo(
       continue;
     }
     const unitSource = sources[translatedUnit];
+    if (isNil(unitSource)) {
+      // shouldn't happen
+      print(`Unit source nil for ${translatedUnit}`);
+      continue;
+    }
     if (unitIsArena(translatedUnit) && GetInstanceInfo()[1] !== "arena") {
       unitSource.exists.set(false);
       continue;
@@ -367,7 +372,9 @@ function updateInfo(
         if ("arenaDpsIndex" in unitSource && unitIsArena(translatedUnit)) {
           unitSource.arenaDpsIndex.set(calcArenaDpsIndex(translatedUnit));
         }
-      } else if (info.tag === "power" || info.tag === "absorb") {
+      } else if (info.tag === "absorb") {
+        unitSource.health.absorbs.set(UnitGetTotalAbsorbs(unit));
+      } else if (info.tag === "power") {
         // TODO!
       } else if (info.tag === "target") {
         if ("target" in unitSource) {

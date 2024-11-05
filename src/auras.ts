@@ -38,6 +38,7 @@ export const dangerousDebuffs = [
   "Summon Demonic Tyrant",
   "Unstable Affliction",
   "Frost Bomb",
+  "Wailing Arrow",
 ];
 
 const offensiveCdsWeTrack = [
@@ -53,7 +54,6 @@ const offensiveCdsWeTrack = [
   "Berserk",
   "Celestial Alignment",
 
-  "Ascendance",
   "Bloodlust",
 
   "Trueshot Aura",
@@ -166,6 +166,23 @@ export function getBuffIndex(
       }
       if (name === "Riptide") {
         return 1;
+      }
+    }
+    if (playerClass.name === "PRIEST") {
+      if (name === "Pain Suppression") {
+        return "externaldefbuff";
+      }
+      if (name === "Power Word: Shield") {
+        return 0;
+      }
+      if (name === "Atonement") {
+        return 1;
+      }
+      if (name === "Renew") {
+        return 2;
+      }
+      if (name === "Prayer of Mending") {
+        return 3;
       }
     }
   }

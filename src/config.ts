@@ -24,6 +24,9 @@ export function makeConfig() {
     unitFrame_horizontalGap: 20,
 
     unitFrame_healthbarBgColor: { r: 28, g: 28, b: 28, a: 1 },
+    // unitFrame_absorbsBgColor: { r: 255, g: 0, b: 0, a: 1 },
+    // unitFrame_absorbsBgColor: { r: 255, g: 255, b: 255, a: 0.6 },
+    unitFrame_absorbsBgColor: { r: 255, g: 216, b: 0, a: 0.3 },
 
     unitFrame_cooldownSectionPercentage_friendly: 0.4,
     unitFrame_cooldownSectionPercentage_arena: 0.4,
@@ -48,5 +51,7 @@ export function makeConfig() {
 
     unitFrame_smallIconSize: 27,
     unitFrame_smallIconGap: 2,
+
+    unitFrame_hugeIconSize: 68,
   };
 }

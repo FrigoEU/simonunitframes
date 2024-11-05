@@ -58,6 +58,7 @@ export function drawHealthbarFrames(
     config.unitFrame_healthbarBgColor.b / 255,
     config.unitFrame_healthbarBgColor.a
   );
+
   // healthbarBackground.SetHorizTile(false); // Don't "tile" horizontally
   // healthbarBackground.SetVertTile(false); // Don't "tile" vertically
 
@@ -147,6 +148,57 @@ export function drawHealthbarFrames(
         "K"
     );
   });
+
+  const absorbsFrame = CreateFrame("Frame", namePrefix + "Absorbs", container);
+  absorbsFrame.SetFrameStrata("MEDIUM");
+  absorbsFrame.SetFrameLevel(60);
+  const absorbsTexture = absorbsFrame.CreateTexture(
+    namePrefix + "AbsorbsT",
+    "OVERLAY"
+  );
+  absorbsTexture.SetHeight(
+    config.unitFrame_fullHeight *
+      (1 - config.unitFrame_cooldownSectionPercentage_arena) -
+      4 // border
+  );
+  absorbsTexture.SetTexture(config.bartexturepath);
+  absorbsTexture.SetVertexColor(
+    config.unitFrame_absorbsBgColor.r / 255,
+    config.unitFrame_absorbsBgColor.g / 255,
+    config.unitFrame_absorbsBgColor.b / 255,
+    config.unitFrame_absorbsBgColor.a
+  );
+
+  observeAll(
+    [sources.health.max, sources.health.current, sources.health.absorbs],
+    ([maxhealth, currhealth, absorbs]) => {
+      if (absorbs <= 0) {
+        absorbsTexture.Hide();
+        return;
+      }
+      absorbsTexture.Show();
+      // print(`Absorbs: ${absorbs}`);
+      const positionOfHealthbarEnd =
+        (currhealth / maxhealth) * config.unitFrame_fullWidth;
+      // print(`positionOfHealthbarEnd ${positionOfHealthbarEnd}`);
+      // "absolute" positioning of absorbs bar
+      absorbsTexture.SetPoint(
+        "BOTTOMLEFT",
+        container,
+        "BOTTOMLEFT",
+        positionOfHealthbarEnd,
+        2 // border
+      );
+      const width = (absorbs / maxhealth) * config.unitFrame_fullWidth;
+      // print(`width ${width}`);
+      absorbsTexture.SetWidth(width);
+
+      // const left = currhealth / maxhealth;
+      // const right = (currhealth + absorbs) / maxhealth;
+      // print(`left right ${left} ${right}`);
+      // absorbsTexture.SetTexCoord(left, right, 0, 1);
+    }
+  );
 
   return healthbar;
 }

@@ -12,6 +12,7 @@ export type healthinfo = {
   health: {
     max: Source<number>;
     current: Source<number>;
+    absorbs: Source<number>;
   };
 };
 function makeHealthInfo(): healthinfo {
@@ -25,6 +26,7 @@ function makeHealthInfo(): healthinfo {
     health: {
       max: new Source(100),
       current: new Source(100),
+      absorbs: new Source(0),
     },
   };
 }
@@ -61,12 +63,14 @@ export type arenaInfo = {
   // spec: Source<null | specializationId>;
   specIcon: Source<null | iconFilePath>;
   arenaDpsIndex: Source<null | 1 | 2>;
+  isInRangeOfCyclone: Source<boolean>;
 };
 function makeArenaInfo(): arenaInfo {
   return {
     arenaDpsIndex: new Source(null as null | 1 | 2),
     // spec: new Source(null as null | specializationId),
     specIcon: new Source(null as null | iconFilePath),
+    isInRangeOfCyclone: new Source(false),
   };
 }
 
@@ -95,7 +99,9 @@ export type dotInfo = {
   dots: Source<AuraData[]>;
 };
 function makeDotInfo(): dotInfo {
-  return { dots: new Source([] as AuraData[]) };
+  return {
+    dots: new Source([] as AuraData[]),
+  };
 }
 
 export type sources = {

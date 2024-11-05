@@ -140,6 +140,8 @@ declare global {
 
   const UIParent: SimpleFrame;
 
+  function LibStub(this: void, s: string): any;
+
   function CreateFrame(
     this: void,
     frameType: string,
@@ -268,4 +270,8 @@ declare global {
 
   let SLASH_TEST1: string;
   const SlashCmdList: { [key: string]: () => any };
+  /** @noSelf **/
+  namespace bit {
+    function band(a: number, b: number): number;
+  }
 }

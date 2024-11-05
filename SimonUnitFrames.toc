@@ -2,4 +2,6 @@
 ## Title: Typescript Test
 
 templates.xml
+LibStub.lua
+LibPlayerSpells-1.0/lib.xml
 SimonUnitFrames.lua

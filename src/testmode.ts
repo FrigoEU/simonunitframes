@@ -11,11 +11,12 @@ export function startTest(sources: sources) {
 
   sources.player.health.max.set(1000);
   sources.player.health.current.set(500);
+  sources.player.health.absorbs.set(750);
   sources.player.exists.set(true);
   sources.player.focus.set("party1guid");
   sources.player.target.set("arena1guid");
   sources.player.guid.set("playerguid");
-  sources.player.class.set("DRUID");
+  // sources.player.class.set("DRUID");
 
   sources.player.defensiveCooldownActive.set(makeTestAura("Barkskin"));
   sources.player.offensiveCooldownActive.set(makeTestAura("Avatar"));
@@ -41,7 +42,7 @@ export function startTest(sources: sources) {
   sources.party1.hot2.set(makeTestAura("Rejuvenation"));
   sources.party1.dots.set([
     makeTestAura("Shadow Word: Pain"),
-    makeTestAura("Shadow Word: Pain"),
+    makeTestAura("Entangling Roots"),
   ]);
   sources.party1.health.current.set(500);
   sources.party1.exists.set(true);
@@ -54,6 +55,7 @@ export function startTest(sources: sources) {
   sources.party2.target.set("arena1guid");
   sources.party2.class.set("MONK");
   sources.party2.offensiveCooldownActive.set(makeTestAura("Avatar"));
+  sources.party2.dots.set([makeTestAura("Kidney Shot")]);
 
   sources.party3.health.max.set(1000);
   sources.party3.health.current.set(200);
@@ -127,6 +129,8 @@ export function makeTestAura(
     | "Ironbark"
     | "Unstable Affliction"
     | "Shadow Word: Pain"
+    | "Entangling Roots"
+    | "Kidney Shot"
 ): AuraData {
   const spellIds: { [key in typeof spell]: spellID } = {
     Barkskin: 22812 as spellID,
@@ -135,6 +139,8 @@ export function makeTestAura(
     Ironbark: 102342 as spellID,
     "Unstable Affliction": 30108 as spellID,
     "Shadow Word: Pain": 589 as spellID,
+    "Entangling Roots": 339 as spellID,
+    "Kidney Shot": 408 as spellID,
   };
 
   const spellId: undefined | spellID = spellIds[spell];
@@ -150,7 +156,7 @@ export function makeTestAura(
     auraInstanceID: 999 + auraInstanceIDCounter++,
     canApplyAura: false, // N/A
     charges: 0, // N/A
-    dispelName: "Magic" as const,
+    dispelName: spell === "Kidney Shot" ? undefined : ("Magic" as const),
     duration,
     expirationTime: GetTime() + duration,
     icon: spellInfo.iconID,

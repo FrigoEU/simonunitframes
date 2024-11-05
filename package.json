@@ -1,7 +1,7 @@
 {
   "dependencies": {},
   "scripts": {
-    "start": "npm run build && npm run deploy",
+    "start": "npm run deploy",
     "build": "tstl",
     "deploy": "npm run build && node src/scripts/deploy.mjs",
     "updatetypes": "./updatetypes.sh",
