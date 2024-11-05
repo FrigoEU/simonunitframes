@@ -120,9 +120,7 @@ export function drawDotFrames(
     if (ccAura) {
       ccAuraFrame.Show();
       applyAuraToAuraframe(ccAura, ccAuraFrame);
-      if (isStun(ccAura)) {
-        ccAuraFrame.setBorderColor({ r: 1, g: 1, b: 1 });
-      } else if (
+      if (
         ccAura.dispelName !== undefined &&
         ccAura.dispelName !== null &&
         (ccAura.dispelName === "Curse" ||
@@ -132,6 +130,8 @@ export function drawDotFrames(
         playerCanDispelFromParty(ccAura.dispelName)
       ) {
         ccAuraFrame.setBorderColor({ r: 0, g: 0.8, b: 0 });
+      } else if (isStun(ccAura)) {
+        ccAuraFrame.setBorderColor({ r: 1, g: 1, b: 1 });
       } else {
         ccAuraFrame.setBorderColor({ r: 0, g: 0, b: 0 });
       }
