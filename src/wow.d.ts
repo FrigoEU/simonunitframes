@@ -57,7 +57,7 @@ declare global {
     nameplateShowPersonal: boolean;
     points: any[];
     sourceUnit?: string;
-    spellId: number;
+    spellId: spellID;
     timeMod: number;
   };
   type AzeriteEmpoweredItemLocation = any;
