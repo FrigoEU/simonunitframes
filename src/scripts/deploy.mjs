@@ -25,17 +25,6 @@ async function go() {
     path.join(addonDir, "templates.xml")
   );
 
-  await fs.copyFile(
-    path.normalize("./lib/LibStub.lua"),
-    path.join(addonDir, "LibStub.lua")
-  );
-
-  await fs.cp(
-    path.normalize("./lib/LibPlayerSpells-1.0"),
-    path.join(addonDir, "LibPlayerSpells-1.0"),
-    { recursive: true }
-  );
-
   console.log("Deploy successful");
   console.log("");
 }

@@ -1,9 +1,8 @@
 /** @noSelfInFile */
 
-import { dangerousDebuffs } from "../auras";
+import { ccsWeTrack, dangerousDebuffs, stunsWeTracks } from "../auras";
 import { config } from "../config";
 import { playerCanDispelFromParty } from "../dispellable";
-import { isCc, isStun } from "../libplayerspells";
 import { dotInfo } from "../sources";
 import { isNil } from "../utils";
 import {
@@ -19,7 +18,7 @@ export function drawDotFrames(
   config: config,
   nameP: string,
   parent: SimpleFrame,
-  sources: dotInfo,
+  sources: dotInfo
 ) {
   // Max 6 dots?
   const dotAuraFrames: myAuraFrame[] = ([0, 1, 2, 3, 4, 5] as const).map(
@@ -35,7 +34,7 @@ export function drawDotFrames(
 
       dotAuraFrame.SetSize(
         config.unitFrame_smallIconSize,
-        config.unitFrame_smallIconSize,
+        config.unitFrame_smallIconSize
       );
       dotAuraFrame.SetPoint(
         "BOTTOMRIGHT",
@@ -48,7 +47,7 @@ export function drawDotFrames(
           // Second row of dots
           (i >= 3
             ? config.unitFrame_smallIconGap + config.unitFrame_smallIconSize
-            : 0),
+            : 0)
       );
       // dotAuraFrame.SetPoint(
       //   "TOPRIGHT",
@@ -63,7 +62,7 @@ export function drawDotFrames(
       // );
 
       return dotAuraFrame;
-    },
+    }
   );
   const ccAuraFrame = createAuraFrame(nameP + "CC", parent, {
     defaultBorder: { r: 0, g: 0, b: 0 },
@@ -73,15 +72,16 @@ export function drawDotFrames(
 
   ccAuraFrame.SetSize(
     config.unitFrame_hugeIconSize,
-    config.unitFrame_hugeIconSize,
+    config.unitFrame_hugeIconSize
   );
   ccAuraFrame.SetPoint("LEFT", parent, "RIGHT", 4, 0);
 
   sources.dots.observe((dots) => {
     dotAuraFrames.forEach((f) => f.Hide());
     const ccAura =
-      dots.find((s) => isStun(s.spellId)) || dots.find((s) => isCc(s.spellId));
-    if (ccAura) {
+      dots.find((s) => stunsWeTracks.includes(s.name)) ||
+      dots.find((s) => ccsWeTrack.includes(s.name));
+    if (!isNil(ccAura)) {
       ccAuraFrame.Show();
       applyAuraToAuraframe(ccAura, ccAuraFrame);
       if (
@@ -94,7 +94,7 @@ export function drawDotFrames(
         playerCanDispelFromParty(ccAura.dispelName)
       ) {
         ccAuraFrame.setBorderColor({ r: 0, g: 0.8, b: 0 });
-      } else if (isStun(ccAura.spellId)) {
+      } else if (stunsWeTracks.includes(ccAura.name)) {
         ccAuraFrame.setBorderColor({ r: 1, g: 1, b: 1 });
       } else {
         ccAuraFrame.setBorderColor({ r: 0, g: 0, b: 0 });
@@ -112,7 +112,7 @@ export function drawDotFrames(
           dotAuraFrame.setBorderColor(
             dangerousDebuffs.includes(dotinfo.name)
               ? { r: 255, g: 0, b: 0 }
-              : null,
+              : null
           );
         }
       });

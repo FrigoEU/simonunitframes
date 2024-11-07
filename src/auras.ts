@@ -77,6 +77,110 @@ const offensiveCdsWeTrack = [
   "Dark Soul: Misery",
 ].map((s) => s.toLowerCase());
 
+export const stunsWeTracks = [
+  // DK
+  "Asphyxiate",
+
+  // DH
+  "Chaos Nova",
+
+  // Druid
+  "Bash",
+  "Maim",
+
+  // Evoker
+  "Deep Breath",
+
+  // Hunter
+  "Initimidation",
+
+  // Mage
+
+  // Monk
+  "Leg Sweep",
+
+  // Paladin
+  "Hammer of Justice",
+
+  // Priest
+  "Psychic Horror",
+
+  // Rogue
+  "Cheap Shot",
+  "Kidney Shot",
+
+  // Shaman
+  "Capacitor Totem",
+  "Lightning Lasso",
+
+  // Warlock
+  "Axe Toss",
+
+  // Warrior
+  "Storm Bolt",
+];
+
+export const ccsWeTrack = [
+  // DK
+  "Strangulate",
+
+  // DH
+  "Imprison",
+
+  // Druid
+  "Entangling Roots",
+  "Cyclone",
+  "Incapacitating Roar",
+  "Mass Entanglement",
+
+  // Evoker
+  "Sleep Walk",
+  "Landslide",
+
+  // Hunter
+  "Freezing Trap",
+  "Entrapment",
+  "Diamond Ice",
+  "Silencing Shot",
+
+  // Mage
+  "Polymorph",
+  "Frost Nova",
+  "Dragon's Breath",
+  "Ice Nova",
+  "Freeze",
+
+  // Monk
+  "Paralysis",
+  "Song of Chi-Ji",
+
+  // Paladin
+  "Repentance",
+  "Blinding Light",
+
+  // Priest
+  "Psychic Scream",
+  "Void Tendrils",
+  "Silence",
+
+  // Rogue
+  "Blind",
+  "Sap",
+  "Garrote",
+
+  // Shaman
+  "Hex",
+  "Earthgrab Totem",
+
+  // Warlock
+  "Fear",
+  "Death Coil",
+  "Shadowfury",
+
+  // Warrior
+  "Intimidating Shout",
+];
+
 export const hotIndexes = [
   0 as const,
   1 as const,

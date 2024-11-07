@@ -1,12 +1,13 @@
 import {
+  ccsWeTrack,
   dangerousDebuffs,
   getBuffIndex,
   hotIndexes,
   hotIndexToHotName,
   ignoredDebuffs,
+  stunsWeTracks,
 } from "../auras";
 import { playerCanDispelFromParty } from "../dispellable";
-import { getCcFlags, isCc_ } from "../libplayerspells";
 import { sortDots } from "../sortdots";
 import {
   arenaInfo,
@@ -52,7 +53,7 @@ export function handleAuraUpdates(
         hotInfo &
         dotInfo),
   unit: (typeof allSupportedUnits)[number],
-  sources: sources,
+  sources: sources
 ) {
   if (isNil(info.auraUpdateInfo) || info.auraUpdateInfo.isFullUpdate === true) {
     // Resetting aura's
@@ -76,7 +77,7 @@ export function handleAuraUpdates(
       100,
       (aura) =>
         processNewHelpfulAura(sources.player.class.get(), unitSource, aura),
-      true,
+      true
     );
 
     if ("dots" in unitSource) {
@@ -92,7 +93,7 @@ export function handleAuraUpdates(
             newDots.push(aura);
           }
         },
-        true,
+        true
       );
       newDots.sort(sortDots);
       // print(`Setting dots ${newDots.length}`);
@@ -109,7 +110,7 @@ function processAuraUpdateInfo(
   },
   unit: (typeof allSupportedUnits)[number],
   unitSource: sources[keyof sources],
-  sources: sources,
+  sources: sources
 ) {
   const auraUpdateInfo = info.auraUpdateInfo;
   if (isNil(auraUpdateInfo)) {
@@ -122,7 +123,7 @@ function processAuraUpdateInfo(
         updateAuraIfCorrectId(
           unit,
           auraInstanceID,
-          unitSource.defensiveCooldownActive,
+          unitSource.defensiveCooldownActive
         );
       }
 
@@ -130,14 +131,14 @@ function processAuraUpdateInfo(
         updateAuraIfCorrectId(
           unit,
           auraInstanceID,
-          unitSource.externalDefFromPlayerActive,
+          unitSource.externalDefFromPlayerActive
         );
       }
       if ("offensiveCooldownActive" in unitSource) {
         updateAuraIfCorrectId(
           unit,
           auraInstanceID,
-          unitSource.offensiveCooldownActive,
+          unitSource.offensiveCooldownActive
         );
       }
       if ("hot0" in unitSource) {
@@ -152,11 +153,11 @@ function processAuraUpdateInfo(
         if (found) {
           const newaura = C_UnitAuras.GetAuraDataByAuraInstanceID(
             unit,
-            auraInstanceID,
+            auraInstanceID
           );
           if (newaura !== undefined) {
             const afterFilter = curr.filter(
-              (old) => old.auraInstanceID !== auraInstanceID,
+              (old) => old.auraInstanceID !== auraInstanceID
             );
             afterFilter.push(newaura);
             afterFilter.sort(sortDots);
@@ -171,20 +172,20 @@ function processAuraUpdateInfo(
       if ("defensiveCooldownActive" in unitSource) {
         clearAuraIfCorrectId(
           auraInstanceID,
-          unitSource.defensiveCooldownActive,
+          unitSource.defensiveCooldownActive
         );
       }
 
       if ("externalDefFromPlayerActive" in unitSource) {
         clearAuraIfCorrectId(
           auraInstanceID,
-          unitSource.externalDefFromPlayerActive,
+          unitSource.externalDefFromPlayerActive
         );
       }
       if ("offensiveCooldownActive" in unitSource) {
         clearAuraIfCorrectId(
           auraInstanceID,
-          unitSource.offensiveCooldownActive,
+          unitSource.offensiveCooldownActive
         );
       }
       if ("hot0" in unitSource) {
@@ -196,7 +197,7 @@ function processAuraUpdateInfo(
       if ("dots" in unitSource) {
         const curr = unitSource.dots.get();
         const afterFilter = curr.filter(
-          (old) => old.auraInstanceID !== auraInstanceID,
+          (old) => old.auraInstanceID !== auraInstanceID
         );
         if (curr.length !== afterFilter.length) {
           unitSource.dots.set(afterFilter);
@@ -224,13 +225,13 @@ function processAuraUpdateInfo(
 function processNewHelpfulAura(
   playerClass: className,
   unitSource: sources[keyof sources],
-  aura: AuraData,
+  aura: AuraData
 ) {
   const hotIndex = getBuffIndex(
     { name: playerClass },
     aura.sourceUnit,
     aura.name,
-    aura.spellId as spellID,
+    aura.spellId as spellID
   );
   if (hotIndex === null) {
     return;
@@ -257,7 +258,7 @@ function processNewHelpfulAura(
 
 function clearAuraIfCorrectId(
   auraInstanceID: number | undefined,
-  s: Source<AuraData | null>,
+  s: Source<AuraData | null>
 ) {
   const curr = s.get();
   if (curr && curr.auraInstanceID === auraInstanceID) {
@@ -267,13 +268,13 @@ function clearAuraIfCorrectId(
 function updateAuraIfCorrectId(
   unit: UnitId,
   auraInstanceID: number,
-  s: Source<AuraData | null>,
+  s: Source<AuraData | null>
 ) {
   const curr = s.get();
   if (curr && curr.auraInstanceID === auraInstanceID) {
     const newaura = C_UnitAuras.GetAuraDataByAuraInstanceID(
       unit,
-      auraInstanceID,
+      auraInstanceID
     );
     if (newaura) {
       s.set(newaura);
@@ -316,8 +317,7 @@ function shouldShowDot(aura: AuraData): boolean {
     return true;
   }
 
-  const ccFlags = getCcFlags(aura.spellId);
-  if (isCc_(ccFlags)) {
+  if (stunsWeTracks.includes(aura.name) || ccsWeTrack.includes(aura.name)) {
     return true;
   }
 

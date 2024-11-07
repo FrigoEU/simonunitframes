@@ -28,7 +28,7 @@ export function startCheckingRange(sources: sources) {
         unitIsPlayerPartyRaid(translatedUnit)
       ) {
         const unitSource = sources[translatedUnit];
-        if (unitSource.exists.get() === true) {
+        if (unitSource && unitSource.exists.get() === true) {
           const isFriendly = unitIsPlayerPartyRaid(translatedUnit);
           const spell =
             playerClass === "DRUID"
