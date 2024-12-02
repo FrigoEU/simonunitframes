@@ -52,6 +52,6 @@ export function makeConfig() {
     unitFrame_smallIconSize: 27,
     unitFrame_smallIconGap: 2,
 
-    unitFrame_hugeIconSize: 68,
+    unitFrame_hugeIconSize: 80,
   };
 }

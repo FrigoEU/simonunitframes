@@ -28,7 +28,11 @@ const defensiveCdsWeTrack = [
   "Unending Resolve",
 ].map((s) => s.toLowerCase());
 
-export const ignoredDebuffs = ["Temporal Displacement"];
+export const ignoredDebuffs = [
+  "Temporal Displacement",
+  "Shadow Embrace",
+  "Earthbind",
+];
 
 export const dangerousDebuffs = [
   "Feral Frenzy",
@@ -39,6 +43,8 @@ export const dangerousDebuffs = [
   "Unstable Affliction",
   "Frost Bomb",
   "Wailing Arrow",
+  "Thunderous Roar",
+  "",
 ];
 
 const offensiveCdsWeTrack = [
@@ -170,11 +176,12 @@ export const ccsWeTrack = [
 
   // Shaman
   "Hex",
-  "Earthgrab Totem",
+  "Earthgrab",
 
   // Warlock
   "Fear",
   "Death Coil",
+  "Howl of Terror",
   "Shadowfury",
 
   // Warrior
@@ -261,6 +268,17 @@ export function getBuffIndex(
         return 7;
       }
     }
+    if (playerClass.name === "MONK") {
+      if (name === "Life Cocoon") {
+        return "externaldefbuff";
+      }
+      if (name === "Renewing Mist") {
+        return 0;
+      }
+      if (name === "Enveloping Mist") {
+        return 1;
+      }
+    }
     if (playerClass.name === "SHAMAN") {
       if (name === "Earthen Wall Totem") {
         return "externaldefbuff";
@@ -270,6 +288,17 @@ export function getBuffIndex(
       }
       if (name === "Riptide") {
         return 1;
+      }
+    }
+    if (playerClass.name === "PALADIN") {
+      if (
+        name === "Blessing of Protection" ||
+        name === "Blessing of Sacrifice"
+      ) {
+        return "externaldefbuff";
+      }
+      if (name === "Beacon of Light" || name === "Beacon of Faith") {
+        return 0;
       }
     }
     if (playerClass.name === "PRIEST") {

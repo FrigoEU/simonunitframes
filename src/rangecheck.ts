@@ -39,15 +39,23 @@ export function startCheckingRange(sources: sources) {
                 ? isFriendly
                   ? "Reversion"
                   : "Disintegrate"
-                : playerClass === "SHAMAN"
+                : playerClass === "PALADIN"
                   ? isFriendly
-                    ? "Riptide"
-                    : "Flame Shock"
-                  : playerClass === "PRIEST"
+                    ? "Holy Shock"
+                    : "Holy Shock"
+                  : playerClass === "MONK"
                     ? isFriendly
-                      ? "Renew"
-                      : "Mind Blast"
-                    : "Heal"; // TODO?
+                      ? "Renewing Mist"
+                      : "Paralysis"
+                    : playerClass === "SHAMAN"
+                      ? isFriendly
+                        ? "Riptide"
+                        : "Flame Shock"
+                      : playerClass === "PRIEST"
+                        ? isFriendly
+                          ? "Renew"
+                          : "Mind Blast"
+                        : "Heal"; // TODO?
           unitSource.isInRange.set(
             C_Spell.IsSpellInRange(spell, unit) || false
           );
