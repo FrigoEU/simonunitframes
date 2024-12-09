@@ -14,6 +14,7 @@ export function makeConfig() {
     dots_show_timer_text: false,
     def_cds_show_timer_text: false,
     off_cds_show_timer_text: false,
+    off_cds_show: false,
 
     arenatarget_show_icons: false,
 

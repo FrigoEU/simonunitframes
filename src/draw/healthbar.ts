@@ -81,7 +81,11 @@ export function drawHealthbarFrames(
   if (unitIsPlayerPartyRaid(unit)) {
     const buttonSection = CreateFrame(
       "BUTTON",
-      namePrefix + "HealthbarButton",
+      unit === "player"
+        ? "SimonUnitFramesButton1"
+        : unit.startsWith("party")
+          ? "SimonUnitFramesButton" + (parseInt(unit.substring(5)) + 1)
+          : namePrefix + "HealthbarButton",
       container,
       "SecureUnitButtonTemplate"
     );

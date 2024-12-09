@@ -102,7 +102,13 @@ export function drawPartyTargetedByFrames(
         }
 
         frame.Show();
-        renderIcon(config, frame, offensiveCooldownActive, class_);
+        renderIcon(
+          config,
+          frame,
+          offensiveCooldownActive,
+          class_,
+          config.off_cds_show
+        );
       }
     );
   }
@@ -114,9 +120,10 @@ function renderIcon(
   config: config,
   frame: myAuraFrame,
   offensiveCooldownActive: AuraData | null,
-  class_: className
+  class_: className,
+  off_cds_show: boolean
 ) {
-  if (offensiveCooldownActive) {
+  if (offensiveCooldownActive && off_cds_show) {
     applyAuraToAuraframe(offensiveCooldownActive, frame);
     frame.setBorderSize(3);
     frame.setBorderColor({ r: 1, g: 0, b: 0 });
@@ -207,7 +214,13 @@ export function drawArenaTargetedByFrames(
         }
         frame.Show();
 
-        renderIcon(config, frame, offensiveCooldownActive, class_);
+        renderIcon(
+          config,
+          frame,
+          offensiveCooldownActive,
+          class_,
+          config.off_cds_show
+        );
       }
     );
   }

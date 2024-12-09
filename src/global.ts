@@ -274,4 +274,31 @@ declare global {
   namespace bit {
     function band(a: number, b: number): number;
   }
+
+  // type OmniCD = {
+  //   // Delay: just pass 1, only vuhdo passes 2
+  //   /** @noSelf **/
+  //   AddUnitFrameData: (
+  //     addon: string,
+  //     frame: SimpleFrame,
+  //     unit: UnitId,
+  //     delay?: number,
+  //     testFunc?: (isTestEnabled: boolean) => void,
+  //     index?: number
+  //   ) => void;
+  // };
+  // const OmniCD: OmniCD;
+
+  namespace OmniCD {
+    /** @noSelf **/
+    function AddUnitFrameData(
+      addon: string,
+      frame: string,
+      unit: string,
+      delay?: number,
+      testFunc?: (isTestEnabled: boolean) => void,
+      index?: number
+    ): void;
+    // function Refresh(): void;
+  }
 }

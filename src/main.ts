@@ -44,6 +44,7 @@ const eventsWeListenTo = [
   "PLAYER_FOCUS_CHANGED" as const,
   "PLAYER_TARGET_CHANGED" as const,
   "UNIT_TARGET" as const,
+  "ADDON_LOADED" as const,
 
   // "UNIT_SPELLCAST_SUCCEEDED" as const,
 
@@ -69,6 +70,8 @@ export function stopTest() {
   handleWowEvent(sources, "PLAYER_ENTERING_WORLD", null, null);
 }
 
+// OmniCD stuff
+const omnicd = OmniCD || null;
 const redrawAfterCombatQueue: [healthinfo, SimpleFrame][] = [];
 
 function start() {
@@ -80,7 +83,7 @@ function start() {
   const friendlyFramesParent = CreateFrame(
     "Frame",
     "SimonPartyFrame",
-    UIParent,
+    UIParent
   );
   friendlyFramesParent.SetClampedToScreen(true);
   friendlyFramesParent.SetPoint(
@@ -88,7 +91,7 @@ function start() {
     UIParent,
     "CENTER",
     -config.partyAndArenaContainersOffsetX,
-    config.partyAndArenaContainersOffsetY,
+    config.partyAndArenaContainersOffsetY
   );
   friendlyFramesParent.SetSize(1, 1);
   friendlyFramesParent.Show();
@@ -100,7 +103,7 @@ function start() {
     UIParent,
     "CENTER",
     config.partyAndArenaContainersOffsetX,
-    config.partyAndArenaContainersOffsetY,
+    config.partyAndArenaContainersOffsetY
   );
   arenaFramesParent.SetSize(1, 1);
   arenaFramesParent.Show();
@@ -119,13 +122,13 @@ function start() {
 
     if (unitIsPlayerPartyRaid(unit)) {
       const unitSource = sources[unit];
-      drawHealthbarFrames(
+      const healthbar = drawHealthbarFrames(
         config,
         nameP,
         container,
         unitSource,
         "friendly",
-        unit,
+        unit
       );
       drawHighlightFrames(config, nameP, container, unitSource, sources.player);
       drawFriendlyCooldownSection(config, nameP, container, unitSource);
@@ -165,7 +168,7 @@ function start() {
     eventFrame.RegisterEvent(eventName);
   }
   eventFrame.SetScript("OnEvent", (self, ev, arg1, arg2) =>
-    handleWowEvent(sources, ev, arg1, arg2),
+    handleWowEvent(sources, ev, arg1, arg2)
   );
 
   startCheckingRange(sources);
@@ -173,19 +176,35 @@ function start() {
   return sources;
 }
 
+let omniCdInitialized = false;
 // Adding type safety to events
 // plus dispatching the correct functions for each wow event
 function handleWowEvent(
   sources: sources,
   eventName: (typeof eventsWeListenTo)[number],
   arg1: any,
-  arg2: any,
+  arg2: any
 ) {
   if (testing) {
     print(`Testmode: Ignoring event ${eventName}`);
     return;
   }
   switch (eventName) {
+    case "ADDON_LOADED": {
+      if (omniCdInitialized === false && omnicd !== null) {
+        omnicd.AddUnitFrameData(
+          "SimonUnitFrames",
+          "SimonUnitFramesButton",
+          "unit",
+          1,
+          (isTestEnabled) => true,
+          5
+        );
+        // omnicd.Refresh();
+        omniCdInitialized = true;
+        print("OmniCD initialized");
+      }
+    }
     case "PLAYER_ENTERING_WORLD": {
       runNonUnitFrameStuff();
       sources.player.name.set(UnitName("player")[0]);
@@ -292,13 +311,13 @@ type framepart = (typeof allFrameparts)[number];
 function updateInfo(
   sources: sources,
   target: "all" | UnitId,
-  part_in: "all" | framepart,
+  part_in: "all" | framepart
 ) {
   const units =
     target === "all"
       ? allSupportedUnits
       : [allSupportedUnits.find((u) => u === target) ?? null].filter(
-          (u) => !isNil(u),
+          (u) => !isNil(u)
         );
 
   const infos = part_in === "all" ? allFrameparts : [part_in];
@@ -347,7 +366,7 @@ function updateInfo(
         const cl = UnitClass(unit)[1];
         if (isNil(cl) && unitIsArena(translatedUnit)) {
           const [_a, _b, _c, icon, _e, cl] = GetSpecializationInfoByID(
-            GetArenaOpponentSpec(getIndexFromArenaUnit(translatedUnit))!,
+            GetArenaOpponentSpec(getIndexFromArenaUnit(translatedUnit))!
           );
           if ("specIcon" in unitSource) {
             unitSource.specIcon.set(icon);
@@ -428,7 +447,7 @@ function calcArenaDpsIndex(translatedUnit: "arena1" | "arena2" | "arena3") {
 }
 
 function getIndexFromArenaUnit(
-  unit: "arena1" | "arena2" | "arena3",
+  unit: "arena1" | "arena2" | "arena3"
 ): 1 | 2 | 3 {
   return parseInt(unit.substring(5, 6)) as 1 | 2 | 3;
 }
