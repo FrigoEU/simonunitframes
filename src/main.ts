@@ -55,6 +55,7 @@ const eventsWeListenTo = [
   // "UNIT_PORTRAIT_UPDATE" as const,
 ];
 
+const redrawAfterCombatQueue: [healthinfo, SimpleFrame][] = [];
 const sources = start();
 
 SLASH_TEST1 = "/simontest";
@@ -72,7 +73,6 @@ export function stopTest() {
 
 // OmniCD stuff
 const omnicd = OmniCD || null;
-const redrawAfterCombatQueue: [healthinfo, SimpleFrame][] = [];
 
 function start() {
   // Making all sources immediately

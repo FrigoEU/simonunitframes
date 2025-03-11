@@ -44,7 +44,6 @@ export const dangerousDebuffs = [
   "Frost Bomb",
   "Wailing Arrow",
   "Thunderous Roar",
-  "",
 ];
 
 const offensiveCdsWeTrack = [
@@ -278,6 +277,15 @@ export function getBuffIndex(
       if (name === "Enveloping Mist") {
         return 1;
       }
+      if (name === "Soothing Mist") {
+        return 2;
+      }
+      if (name === "Sphere of Hope") {
+        return 3;
+      }
+      if (name === "Life Cocoon") {
+        return 4;
+      }
     }
     if (playerClass.name === "SHAMAN") {
       if (name === "Earthen Wall Totem") {
@@ -299,6 +307,18 @@ export function getBuffIndex(
       }
       if (name === "Beacon of Light" || name === "Beacon of Faith") {
         return 0;
+      }
+      if (name === "Holy Bulwark") {
+        return 1;
+      }
+      if (name === "Sacred Weapon") {
+        return 2;
+      }
+      if (name === "Blessing of Protection") {
+        return 3;
+      }
+      if (name === "Blessing of Freedom") {
+        return 4;
       }
     }
     if (playerClass.name === "PRIEST") {

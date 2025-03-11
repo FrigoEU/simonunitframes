@@ -21,6 +21,8 @@ export function drawDotFrames(
   sources: dotInfo
 ) {
   // Max 6 dots?
+  let firstFrame: null | SimpleFrame = null;
+  let prevFrame: null | SimpleFrame = null;
   const dotAuraFrames: myAuraFrame[] = ([0, 1, 2, 3, 4, 5] as const).map(
     (i) => {
       const dotAuraFrame = createAuraFrame(nameP + "Dot" + i, parent, {
@@ -33,22 +35,34 @@ export function drawDotFrames(
       }
 
       dotAuraFrame.SetSize(
-        config.unitFrame_smallIconSize,
-        config.unitFrame_smallIconSize
+        config.unitFrame_smallIconSize * config.unitFrame_dotScale,
+        config.unitFrame_smallIconSize * config.unitFrame_dotScale
       );
-      dotAuraFrame.SetPoint(
-        "BOTTOMRIGHT",
-        parent,
-        "BOTTOMRIGHT",
-        -4 -
-          (i % 3) *
-            (config.unitFrame_smallIconGap + config.unitFrame_smallIconSize),
-        4 +
-          // Second row of dots
-          (i >= 3
-            ? config.unitFrame_smallIconGap + config.unitFrame_smallIconSize
-            : 0)
-      );
+      if (prevFrame === null) {
+        dotAuraFrame.SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", -4, 4);
+      } else {
+        if (i === 3 && firstFrame !== null) {
+          dotAuraFrame.SetPoint(
+            "BOTTOMLEFT",
+            firstFrame,
+            "TOPLEFT",
+            0,
+            config.unitFrame_smallIconGap
+          );
+        } else {
+          dotAuraFrame.SetPoint(
+            "TOPRIGHT",
+            prevFrame,
+            "TOPLEFT",
+            -config.unitFrame_smallIconGap,
+            0
+          );
+        }
+      }
+      prevFrame = dotAuraFrame;
+      if (i === 0) {
+        firstFrame = dotAuraFrame;
+      }
       // dotAuraFrame.SetPoint(
       //   "TOPRIGHT",
       //   parent,
@@ -84,7 +98,9 @@ export function drawDotFrames(
     if (!isNil(ccAura)) {
       ccAuraFrame.Show();
       applyAuraToAuraframe(ccAura, ccAuraFrame);
-      if (
+      if (stunsWeTracks.includes(ccAura.name)) {
+        ccAuraFrame.setBorderColor({ r: 1, g: 1, b: 1 });
+      } else if (
         ccAura.dispelName !== undefined &&
         ccAura.dispelName !== null &&
         (ccAura.dispelName === "Curse" ||
@@ -94,8 +110,6 @@ export function drawDotFrames(
         playerCanDispelFromParty(ccAura.dispelName)
       ) {
         ccAuraFrame.setBorderColor({ r: 0, g: 0.8, b: 0 });
-      } else if (stunsWeTracks.includes(ccAura.name)) {
-        ccAuraFrame.setBorderColor({ r: 1, g: 1, b: 1 });
       } else {
         ccAuraFrame.setBorderColor({ r: 0, g: 0, b: 0 });
       }
@@ -109,11 +123,20 @@ export function drawDotFrames(
         if (!isNil(dotAuraFrame)) {
           dotAuraFrame.Show();
           applyAuraToAuraframe(dotinfo, dotAuraFrame);
-          dotAuraFrame.setBorderColor(
-            dangerousDebuffs.includes(dotinfo.name)
-              ? { r: 255, g: 0, b: 0 }
-              : null
-          );
+          if (dangerousDebuffs.includes(dotinfo.name)) {
+            dotAuraFrame.setBorderColor({ r: 255, g: 0, b: 0 });
+            dotAuraFrame.SetSize(
+              config.unitFrame_smallIconSize *
+                (config.unitFrame_dotScale + 0.3),
+              config.unitFrame_smallIconSize * (config.unitFrame_dotScale + 0.3)
+            );
+          } else {
+            dotAuraFrame.setBorderColor(null);
+            dotAuraFrame.SetSize(
+              config.unitFrame_smallIconSize * config.unitFrame_dotScale,
+              config.unitFrame_smallIconSize * config.unitFrame_dotScale
+            );
+          }
         }
       });
   });
