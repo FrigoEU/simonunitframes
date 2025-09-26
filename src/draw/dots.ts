@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { ccsWeTrack, dangerousDebuffs, stunsWeTracks } from "../auras";
+import { ccsWeTrack, dangerousDebuffs, stunsWeTracks } from "../aura_lists";
 import { config } from "../config";
 import { playerCanDispelFromParty } from "../dispellable";
 import { dotInfo } from "../sources";

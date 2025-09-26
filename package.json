@@ -1,5 +1,4 @@
 {
-  "dependencies": {},
   "scripts": {
     "start": "npm run deploy",
     "build": "tstl",
@@ -8,6 +7,7 @@
     "regendefs": "python gendefs > src/wow.d.ts"
   },
   "devDependencies": {
+    "@types/node": "^20.19.17",
     "esbuild": "0.19.12",
     "esbuild-plugin-copy-watch": "^2.1.0",
     "esbuild-plugin-pipe": "^0.2.0",
@@ -15,7 +15,7 @@
     "prettier": "^3.3.3",
     "tsx": "^4.7.1",
     "typescript": "5.5.2",
-    "typescript-language-server": "^4.3.3",
+    "typescript-language-server": "^4.4.1",
     "typescript-to-lua": "^1.26.2",
     "vscode-json-languageserver": "^1.3.4"
   }

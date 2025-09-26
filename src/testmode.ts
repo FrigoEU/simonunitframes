@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { hotIndexes, hotIndexToHotName } from "./auras";
+import { hotIndexes, hotIndexToHotName } from "./aura_lists";
 import { sortDots } from "./sortdots";
 import { sources } from "./sources";
 

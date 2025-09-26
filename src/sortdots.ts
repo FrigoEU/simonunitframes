@@ -1,4 +1,4 @@
-import { dangerousDebuffs } from "./auras";
+import { dangerousDebuffs } from "./aura_lists";
 import { isNil } from "./utils";
 
 export function sortDots(a: AuraData, b: AuraData): -1 | 1 {

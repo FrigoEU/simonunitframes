@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { hotIndex, hotIndexes, hotIndexToHotName } from "../auras";
+import { hotIndex, hotIndexes, hotIndexToHotName } from "../aura_lists";
 import { config } from "../config";
 import { hotInfo } from "../sources";
 import { checkAllCasesHandled } from "../utils";

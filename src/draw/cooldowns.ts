@@ -52,7 +52,7 @@ export function drawFriendlyCooldownSection(
     config.unitFrame_bigIconSize
   );
 
-  if (!config.def_cds_show_timer_text) {
+  if (config.def_cds_show_timer_text === false) {
     hideAuraCooldownText(defensiveCdFrame);
     hideAuraCooldownText(externalDefCdFrame);
   }

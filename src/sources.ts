@@ -1,6 +1,6 @@
 /** @noSelfInFile */
 
-import { hotName } from "./auras";
+import { hotName } from "./aura_lists";
 
 export type healthinfo = {
   guid: Source<WOWGUID>;

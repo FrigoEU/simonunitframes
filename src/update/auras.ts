@@ -6,7 +6,7 @@ import {
   hotIndexToHotName,
   ignoredDebuffs,
   stunsWeTracks,
-} from "../auras";
+} from "../aura_lists";
 import { playerCanDispelFromParty } from "../dispellable";
 import { sortDots } from "../sortdots";
 import {
@@ -76,7 +76,12 @@ export function handleAuraUpdates(
       "HELPFUL",
       100,
       (aura) =>
-        processNewHelpfulAura(sources.player.class.get(), unitSource, aura),
+        processNewHelpfulAura(
+          sources.player.class.get(),
+          unit,
+          unitSource,
+          aura
+        ),
       true
     );
 
@@ -208,7 +213,12 @@ function processAuraUpdateInfo(
   if (!isNil(auraUpdateInfo.addedAuras)) {
     for (let aura of auraUpdateInfo.addedAuras) {
       if (aura.isHelpful) {
-        processNewHelpfulAura(sources.player.class.get(), unitSource, aura);
+        processNewHelpfulAura(
+          sources.player.class.get(),
+          unit,
+          unitSource,
+          aura
+        );
       }
       // DevTools_Dump(aura);
       if ("dots" in unitSource && shouldShowDot(aura)) {
@@ -224,6 +234,7 @@ function processAuraUpdateInfo(
 
 function processNewHelpfulAura(
   playerClass: className,
+  unit: (typeof allSupportedUnits)[number],
   unitSource: sources[keyof sources],
   aura: AuraData
 ) {
@@ -233,6 +244,19 @@ function processNewHelpfulAura(
     aura.name,
     aura.spellId as spellID
   );
+
+  // if (unit.startsWith("arena")) {
+  //   print(`Updating aura for ${unit} - ${aura.name} - ${hotIndex}`);
+  // }
+
+  // if (unit.startsWith("arena") && hotIndex === "offcd") {
+  //   print(`ARENA - Found offcd for ARENA!`);
+  // }
+  // if (unit.startsWith("party") && hotIndex === "offcd") {
+  //   print(`Updating aura for ${unit} - ${aura.name} - ${hotIndex}`);
+  //   print(`PARTY - Found offcd for PARTY!`);
+  // }
+
   if (hotIndex === null) {
     return;
   } else if (hotIndex === "defcd") {

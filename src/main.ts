@@ -69,6 +69,7 @@ export function stopTest() {
   print("stopping testing!");
   // Just resetting everything
   handleWowEvent(sources, "PLAYER_ENTERING_WORLD", null, null);
+  handleWowEvent(sources, "PLAYER_REGEN_ENABLED", null, null);
 }
 
 // OmniCD stuff
@@ -225,6 +226,9 @@ function handleWowEvent(
     }
     case "PLAYER_REGEN_ENABLED": {
       updateInfo(sources, "all", "all");
+      if (UnitAffectingCombat("player") === true) {
+        return;
+      }
       for (let redrawTarget of redrawAfterCombatQueue) {
         if (redrawTarget[0].exists.get() === true) {
           redrawTarget[1].Show();
@@ -396,28 +400,28 @@ function updateInfo(
         if (unit === "player") {
           sources.player.focus.set(UnitGUID("focus") || null);
         }
-        // } else if (info.tag === "spellcast") {
-        //   if ("offensiveCooldownActive" in unitSource) {
-        //     if (offensiveSpellsWeTrack.includes(info.spellName)) {
-        //       const spellInfo = GetSpellInfo(info.spellName);
-        //       if (spellInfo) {
-        //         // Testing
-        //         unitSource.offensiveCooldownActive.set({
-        //           name: info.spellName,
-        //           icon: spellInfo[2] as unknown as number,
-        //           duration: 6,
-        //           expirationTime: 6,
-        //           applications: 0,
-        //           auraInstanceID: -1,
-        //         } as AuraData);
-        //       }
-        //     }
-        //   }
       } else if (info.tag === "aura") {
         handleAuraUpdates(info, unitSource, unit, sources);
       } else {
         checkAllCasesHandled(info);
       }
+      // } else if (info.tag === "spellcast") {
+      //   if ("offensiveCooldownActive" in unitSource) {
+      //     if (offensiveSpellsWeTrack.includes(info.spellName)) {
+      //       const spellInfo = GetSpellInfo(info.spellName);
+      //       if (spellInfo) {
+      //         // Testing
+      //         unitSource.offensiveCooldownActive.set({
+      //           name: info.spellName,
+      //           icon: spellInfo[2] as unknown as number,
+      //           duration: 6,
+      //           expirationTime: 6,
+      //           applications: 0,
+      //           auraInstanceID: -1,
+      //         } as AuraData);
+      //       }
+      //     }
+      //   }
     }
   }
 }

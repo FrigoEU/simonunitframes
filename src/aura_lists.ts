@@ -37,6 +37,8 @@ export const ignoredDebuffs = [
 export const dangerousDebuffs = [
   "Feral Frenzy",
   "Final Reckoning",
+  "Explosive Shot",
+  "Ravenous Leap",
   "Vendetta",
   "Deathmark",
   "Summon Demonic Tyrant",
@@ -47,36 +49,60 @@ export const dangerousDebuffs = [
 ];
 
 const offensiveCdsWeTrack = [
+  // Warrior
   "Avatar",
   "Bladestorm",
   "Recklessness",
 
+  // Demon Hunter
   "Metamorphosis",
+  "Essence Break",
 
+  // Death Knight
   "Pillar of Frost",
   "Unholy Frenzy",
+  "Unholy Assault",
+  "Abomination Limb",
+  "Chill Streak",
 
+  // Shaman
+  "Ascendance",
+  "Doom Winds",
+
+  // Druid
   "Berserk",
   "Celestial Alignment",
+  "Incarnation: King of the Jungle",
+  "Incarnation: Chosen of Elune",
 
-  "Bloodlust",
+  // Evoker
+  "Dragonrage",
 
-  "Trueshot Aura",
-  // "Bestial Wrath",
+  // Hunter
+  "Trueshot",
+  "Bestial Wrath",
+  "Call of the Wild",
 
+  // Mage
   "Combustion",
   "Icy Veins",
-  "Arcane Power",
+  "Arcane Surge",
 
+  // Monk
+  "Storm, Earth and Fire",
   "Serenity",
 
+  // Paladin
   "Avenging Wrath",
 
+  // Priest
   "Power Infusion",
-  "Voidform",
+  "Dark Ascension",
 
+  // Rogue
   "Shadow Dance",
   "Adrenaline Rush",
+  "Shadow Blades",
 
   "Dark Soul: Instability",
   "Dark Soul: Misery",
@@ -334,9 +360,9 @@ export function getBuffIndex(
       if (name === "Renew") {
         return 2;
       }
-      if (name === "Prayer of Mending") {
-        return 3;
-      }
+      // if (name === "Prayer of Mending") {
+      //   return 3;
+      // }
     }
   }
   if (defensiveCdsWeTrack.includes(name.toLowerCase())) {

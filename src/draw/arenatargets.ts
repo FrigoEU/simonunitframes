@@ -34,6 +34,23 @@ export function drawPartyTargetedByFrames(
     -4,
     -config.unitFrame_cooldownTopGap
   );
+  const arenaDps1TargetOffCdFrame = createAuraFrame(
+    namePrefix + "arenaDps1TargetOffCd",
+    parent,
+    { defaultBorder, showCount: false }
+  );
+  arenaDps1TargetOffCdFrame.SetSize(
+    config.unitFrame_smallIconSize,
+    config.unitFrame_smallIconSize
+  );
+  arenaDps1TargetOffCdFrame.SetPoint(
+    "BOTTOMRIGHT",
+    arenaDps1TargetFrame,
+    "BOTTOMRIGHT",
+    0,
+    0
+  );
+  arenaDps1TargetOffCdFrame.Hide();
 
   const arenaDps2TargetFrame = createAuraFrame(
     namePrefix + "arenaDps2Target",
@@ -51,6 +68,23 @@ export function drawPartyTargetedByFrames(
     -4 - (config.unitFrame_bigIconSize + config.unitFrame_bigIconGap),
     -config.unitFrame_cooldownTopGap
   );
+  const arenaDps2TargetOffCdFrame = createAuraFrame(
+    namePrefix + "arenaDps2TargetOffCd",
+    parent,
+    { defaultBorder, showCount: false }
+  );
+  arenaDps2TargetOffCdFrame.SetSize(
+    config.unitFrame_smallIconSize,
+    config.unitFrame_smallIconSize
+  );
+  arenaDps2TargetOffCdFrame.SetPoint(
+    "BOTTOMRIGHT",
+    arenaDps2TargetFrame,
+    "BOTTOMRIGHT",
+    0,
+    0
+  );
+  arenaDps2TargetOffCdFrame.Hide();
 
   observeAndUpdate(sources.guid, arena.arena1);
   observeAndUpdate(sources.guid, arena.arena2);
@@ -63,9 +97,11 @@ export function drawPartyTargetedByFrames(
     }
   });
 
+  hideAuraCooldownText(arenaDps1TargetFrame);
+  hideAuraCooldownText(arenaDps2TargetFrame);
   if (!config.off_cds_show_timer_text) {
-    hideAuraCooldownText(arenaDps1TargetFrame);
-    hideAuraCooldownText(arenaDps2TargetFrame);
+    hideAuraCooldownText(arenaDps1TargetOffCdFrame);
+    hideAuraCooldownText(arenaDps2TargetOffCdFrame);
   }
 
   function observeAndUpdate(
@@ -93,11 +129,18 @@ export function drawPartyTargetedByFrames(
             : arenaDpsIndex === 1
               ? arenaDps1TargetFrame
               : arenaDps2TargetFrame;
-        if (!frame) {
+        const offCdFrame =
+          arenaDpsIndex === null
+            ? null
+            : arenaDpsIndex === 1
+              ? arenaDps1TargetOffCdFrame
+              : arenaDps2TargetOffCdFrame;
+        if (!frame || !offCdFrame) {
           return;
         }
         if (unitGuid !== targetGuid) {
           frame.Hide();
+          offCdFrame.Hide();
           return;
         }
 
@@ -105,6 +148,7 @@ export function drawPartyTargetedByFrames(
         renderIcon(
           config,
           frame,
+          offCdFrame,
           offensiveCooldownActive,
           class_,
           config.off_cds_show
@@ -119,26 +163,25 @@ export function drawPartyTargetedByFrames(
 function renderIcon(
   config: config,
   frame: myAuraFrame,
+  offCdFrame: myAuraFrame,
   offensiveCooldownActive: AuraData | null,
   class_: className,
   off_cds_show: boolean
 ) {
-  if (offensiveCooldownActive && off_cds_show) {
-    applyAuraToAuraframe(offensiveCooldownActive, frame);
-    frame.setBorderSize(3);
-    frame.setBorderColor({ r: 1, g: 0, b: 0 });
+  if (config.arenatarget_show_icons === true) {
+    frame.icon.SetTexture(getClassIconTexturePath(class_));
   } else {
-    frame.setBorderSize(null);
-    frame.setBorderColor(null);
-    frame.cooldown.Hide();
-    frame.icon.SetAllPoints(frame);
+    const color = C_ClassColor.GetClassColor(class_);
+    frame.icon.SetColorTexture(color.r, color.g, color.b, 1);
+  }
 
-    if (config.arenatarget_show_icons === true) {
-      frame.icon.SetTexture(getClassIconTexturePath(class_));
-    } else {
-      const color = C_ClassColor.GetClassColor(class_);
-      frame.icon.SetColorTexture(color.r, color.g, color.b, 1);
-    }
+  if (offensiveCooldownActive !== null && off_cds_show === true) {
+    applyAuraToAuraframe(offensiveCooldownActive, offCdFrame);
+    offCdFrame.setBorderSize(1);
+    offCdFrame.SetFrameLevel(10);
+    // offCdFrame.setBorderColor({ r: 1, g: 0, b: 0 });
+  } else {
+    offCdFrame.Hide();
   }
 }
 
@@ -169,6 +212,23 @@ export function drawArenaTargetedByFrames(
     -4,
     -config.unitFrame_cooldownTopGap
   );
+  const arenaTargetedBy1TargetOffCdFrame = createAuraFrame(
+    namePrefix + "arenaDps1TargetOffCd",
+    parent,
+    { defaultBorder, showCount: false }
+  );
+  arenaTargetedBy1TargetOffCdFrame.SetSize(
+    config.unitFrame_smallIconSize,
+    config.unitFrame_smallIconSize
+  );
+  arenaTargetedBy1TargetOffCdFrame.SetPoint(
+    "BOTTOMRIGHT",
+    arenaTargetedBy1Frame,
+    "BOTTOMRIGHT",
+    0,
+    0
+  );
+  arenaTargetedBy1TargetOffCdFrame.Hide();
 
   const arenaTargetedBy2Frame = createAuraFrame(
     namePrefix + "arenaTargetedBy2",
@@ -186,19 +246,50 @@ export function drawArenaTargetedByFrames(
     -4 - (config.unitFrame_bigIconSize + config.unitFrame_bigIconGap),
     -config.unitFrame_cooldownTopGap
   );
+  const arenaTargetedBy2TargetOffCdFrame = createAuraFrame(
+    namePrefix + "arenaDps1TargetOffCd",
+    parent,
+    { defaultBorder, showCount: false }
+  );
+  arenaTargetedBy2TargetOffCdFrame.SetSize(
+    config.unitFrame_smallIconSize,
+    config.unitFrame_smallIconSize
+  );
+  arenaTargetedBy2TargetOffCdFrame.SetPoint(
+    "BOTTOMRIGHT",
+    arenaTargetedBy2Frame,
+    "BOTTOMRIGHT",
+    0,
+    0
+  );
+  arenaTargetedBy2TargetOffCdFrame.Hide();
 
-  observeAndUpdate(sources.guid, party.party1, arenaTargetedBy1Frame);
-  observeAndUpdate(sources.guid, party.party2, arenaTargetedBy2Frame);
+  observeAndUpdate(
+    sources.guid,
+    party.party1,
+    arenaTargetedBy1Frame,
+    arenaTargetedBy1TargetOffCdFrame
+  );
+  observeAndUpdate(
+    sources.guid,
+    party.party2,
+    arenaTargetedBy2Frame,
+    arenaTargetedBy2TargetOffCdFrame
+  );
+
+  hideAuraCooldownText(arenaTargetedBy1Frame);
+  hideAuraCooldownText(arenaTargetedBy2Frame);
 
   if (!config.off_cds_show_timer_text) {
-    hideAuraCooldownText(arenaTargetedBy1Frame);
-    hideAuraCooldownText(arenaTargetedBy2Frame);
+    hideAuraCooldownText(arenaTargetedBy1TargetOffCdFrame);
+    hideAuraCooldownText(arenaTargetedBy2TargetOffCdFrame);
   }
 
   function observeAndUpdate(
     unitGuidS: Source<WOWGUID>,
     partyUnit: sources["party1"],
-    frame: myAuraFrame
+    frame: myAuraFrame,
+    offCdFrame: myAuraFrame
   ) {
     observeAll(
       [
@@ -217,6 +308,7 @@ export function drawArenaTargetedByFrames(
         renderIcon(
           config,
           frame,
+          offCdFrame,
           offensiveCooldownActive,
           class_,
           config.off_cds_show
