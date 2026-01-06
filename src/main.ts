@@ -156,7 +156,7 @@ function start() {
         unitSource,
         "arena",
         unit,
-        { drawTopBar: false, renderText: false },
+        { drawTopBar: true, renderText: true },
       );
       // drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
       drawArenaSpecs(config, nameP, container, unitSource);

@@ -10,14 +10,14 @@ export function makeConfig() {
     partyContainersOffsetY: 150,
     partyContainersOffsetX: 450,
 
-    arenaContainersOffsetY: 90,
+    arenaContainersOffsetY: 150,
     arenaContainersOffsetX: 450,
 
     hots_show_timer_text: false,
     dots_show_timer_text: false,
     def_cds_show_timer_text: false,
     off_cds_show_timer_text: false,
-    off_cds_show: false,
+    off_cds_show: true,
 
     arenatarget_show_icons: false,
 
@@ -27,12 +27,12 @@ export function makeConfig() {
         width: 250,
       },
       arena: {
-        height: 80,
-        width: 200,
+        height: 112,
+        width: 250
       }
     },
 
-    unitFrame_verticalGap: 4,
+    unitFrame_verticalGap: 8,
     unitFrame_horizontalGap: 20,
 
     unitFrame_healthbarBgColor: { r: 28, g: 28, b: 28, a: 1 },
