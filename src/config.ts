@@ -7,11 +7,11 @@ export function makeConfig() {
     // bartexturepath: "Interface\\RAIDFRAME\\Raid-Bar-Hp-Fill",
     bartexturepath: "Interface\\ChatFrame\\ChatFrameBackground",
 
-    partyContainersOffsetY: 185,
-    partyContainersOffsetX: 380,
+    partyContainersOffsetY: 150,
+    partyContainersOffsetX: 450,
 
-    arenaContainersOffsetY: -160,
-    arenaContainersOffsetX: -290,
+    arenaContainersOffsetY: 90,
+    arenaContainersOffsetX: 450,
 
     hots_show_timer_text: false,
     dots_show_timer_text: false,
@@ -27,8 +27,8 @@ export function makeConfig() {
         width: 250,
       },
       arena: {
-        height: 70,
-        width: 150,
+        height: 80,
+        width: 200,
       }
     },
 
