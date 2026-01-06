@@ -8,18 +8,20 @@ import { createBackdropTemplateFrame } from "./auras";
 
 export function drawHealthbarFrames(
   config: config,
+  size: {width: number; height: number},
   namePrefix: string,
   container: SimpleFrame,
   sources: healthinfo,
   side: "friendly" | "arena",
-  unit: supportedUnit
+  unit: supportedUnit,
+  opts: {drawTopBar: boolean, renderText: boolean}
 ) {
   const healthbar = CreateFrame(
     "STATUSBAR",
     namePrefix + "Healthbar",
     container
   ) as SimpleStatusBar;
-  healthbar.SetSize(config.unitFrame_fullWidth, config.unitFrame_fullHeight);
+  healthbar.SetSize(size.width, size.height);
   healthbar.SetFrameStrata("MEDIUM");
   healthbar.SetFrameLevel(50);
   healthbar.SetPoint("TOPLEFT", container, "TOPLEFT", 0, 0);
@@ -70,8 +72,8 @@ export function drawHealthbarFrames(
   topSection.SetFrameStrata("MEDIUM");
   topSection.SetFrameLevel(100);
   topSection.SetSize(
-    config.unitFrame_fullWidth,
-    config.unitFrame_fullHeight *
+    size.width,
+    size.height *
       (side === "friendly"
         ? config.unitFrame_cooldownSectionPercentage_friendly
         : config.unitFrame_cooldownSectionPercentage_arena)
@@ -102,17 +104,19 @@ export function drawHealthbarFrames(
     });
   }
 
-  const topSectionBg = topSection.CreateTexture(
-    namePrefix + "CooldownSectionBackground"
-  );
-  topSectionBg.SetTexture(config.bartexturepath);
-  topSectionBg.SetAllPoints(topSection);
-  topSectionBg.SetVertexColor(
-    config.unitFrame_cooldownBackgroundColor.r / 255,
-    config.unitFrame_cooldownBackgroundColor.g / 255,
-    config.unitFrame_cooldownBackgroundColor.b / 255,
-    config.unitFrame_cooldownBackgroundColor.a
-  );
+  if (opts.drawTopBar === true){
+    const topSectionBg = topSection.CreateTexture(
+      namePrefix + "CooldownSectionBackground"
+    );
+    topSectionBg.SetTexture(config.bartexturepath);
+    topSectionBg.SetAllPoints(topSection);
+    topSectionBg.SetVertexColor(
+      config.unitFrame_cooldownBackgroundColor.r / 255,
+      config.unitFrame_cooldownBackgroundColor.g / 255,
+      config.unitFrame_cooldownBackgroundColor.b / 255,
+      config.unitFrame_cooldownBackgroundColor.a
+    );
+  }
 
   const namestr = healthbar.CreateFontString();
   namestr.SetPoint("BOTTOMRIGHT", healthbar, "BOTTOMRIGHT", -4, 48);
@@ -143,14 +147,16 @@ export function drawHealthbarFrames(
   });
   observeAll([sources.health.current, sources.name], ([currhealth, n]) => {
     healthbar.SetValue(currhealth);
-    namestr.SetText(
-      n +
-        " " +
-        Math.floor(currhealth / 1000)
-          .toString()
-          .padStart(6, " ") +
-        "K"
-    );
+    if (opts.renderText === true){
+      namestr.SetText(
+        n +
+          " " +
+          Math.floor(currhealth / 1000)
+            .toString()
+            .padStart(6, " ") +
+          "K"
+      );
+    }
   });
 
   const absorbsFrame = CreateFrame("Frame", namePrefix + "Absorbs", container);
@@ -161,7 +167,7 @@ export function drawHealthbarFrames(
     "OVERLAY"
   );
   absorbsTexture.SetHeight(
-    config.unitFrame_fullHeight *
+    size.height *
       (1 - config.unitFrame_cooldownSectionPercentage_arena) -
       4 // border
   );
@@ -183,7 +189,7 @@ export function drawHealthbarFrames(
       absorbsTexture.Show();
       // print(`Absorbs: ${absorbs}`);
       const positionOfHealthbarEnd =
-        (currhealth / maxhealth) * config.unitFrame_fullWidth;
+        (currhealth / maxhealth) * size.width;
       // print(`positionOfHealthbarEnd ${positionOfHealthbarEnd}`);
       // "absolute" positioning of absorbs bar
       absorbsTexture.SetPoint(
@@ -193,7 +199,7 @@ export function drawHealthbarFrames(
         positionOfHealthbarEnd,
         2 // border
       );
-      const width = (absorbs / maxhealth) * config.unitFrame_fullWidth;
+      const width = (absorbs / maxhealth) * size.width;
       // print(`width ${width}`);
       absorbsTexture.SetWidth(width);
 

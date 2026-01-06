@@ -84,15 +84,15 @@ function start() {
   const friendlyFramesParent = CreateFrame(
     "Frame",
     "SimonPartyFrame",
-    UIParent
+    UIParent,
   );
   friendlyFramesParent.SetClampedToScreen(true);
   friendlyFramesParent.SetPoint(
     "TOPRIGHT",
     UIParent,
     "CENTER",
-    -config.partyAndArenaContainersOffsetX,
-    config.partyAndArenaContainersOffsetY
+    -config.partyContainersOffsetX,
+    config.partyContainersOffsetY,
   );
   friendlyFramesParent.SetSize(1, 1);
   friendlyFramesParent.Show();
@@ -103,8 +103,8 @@ function start() {
     "TOPRIGHT",
     UIParent,
     "CENTER",
-    config.partyAndArenaContainersOffsetX,
-    config.partyAndArenaContainersOffsetY
+    config.arenaContainersOffsetX,
+    config.arenaContainersOffsetY,
   );
   arenaFramesParent.SetSize(1, 1);
   arenaFramesParent.Show();
@@ -117,19 +117,24 @@ function start() {
     const parent = unitIsArena(unit) ? arenaFramesParent : friendlyFramesParent;
 
     const container = CreateFrame("Frame", nameP, parent, "BackdropTemplate");
-    container.SetSize(config.unitFrame_fullWidth, config.unitFrame_fullHeight);
+    const size = unitIsArena(unit)
+      ? config.framesize.arena
+      : config.framesize.party;
+    container.SetSize(size.width, size.height);
     container.SetClampedToScreen(true); // Frame can't move offscreen
-    setPosition(config, parent, container, unit);
+    setPosition(config, size, parent, container, unit);
 
     if (unitIsPlayerPartyRaid(unit)) {
       const unitSource = sources[unit];
       const healthbar = drawHealthbarFrames(
         config,
+        size,
         nameP,
         container,
         unitSource,
         "friendly",
-        unit
+        unit,
+        { drawTopBar: true, renderText: true},
       );
       drawHighlightFrames(config, nameP, container, unitSource, sources.player);
       drawFriendlyCooldownSection(config, nameP, container, unitSource);
@@ -143,8 +148,17 @@ function start() {
 
     if (unitIsArena(unit)) {
       const unitSource = sources[unit];
-      drawHealthbarFrames(config, nameP, container, unitSource, "arena", unit);
-      drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
+      drawHealthbarFrames(
+        config,
+        size,
+        nameP,
+        container,
+        unitSource,
+        "arena",
+        unit,
+        { drawTopBar: false, renderText: false },
+      );
+      // drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
       drawArenaSpecs(config, nameP, container, unitSource);
     }
 
@@ -169,7 +183,7 @@ function start() {
     eventFrame.RegisterEvent(eventName);
   }
   eventFrame.SetScript("OnEvent", (self, ev, arg1, arg2) =>
-    handleWowEvent(sources, ev, arg1, arg2)
+    handleWowEvent(sources, ev, arg1, arg2),
   );
 
   startCheckingRange(sources);
@@ -184,7 +198,7 @@ function handleWowEvent(
   sources: sources,
   eventName: (typeof eventsWeListenTo)[number],
   arg1: any,
-  arg2: any
+  arg2: any,
 ) {
   if (testing) {
     print(`Testmode: Ignoring event ${eventName}`);
@@ -199,7 +213,7 @@ function handleWowEvent(
           "unit",
           1,
           (isTestEnabled) => true,
-          5
+          5,
         );
         // omnicd.Refresh();
         omniCdInitialized = true;
@@ -315,13 +329,13 @@ type framepart = (typeof allFrameparts)[number];
 function updateInfo(
   sources: sources,
   target: "all" | UnitId,
-  part_in: "all" | framepart
+  part_in: "all" | framepart,
 ) {
   const units =
     target === "all"
       ? allSupportedUnits
       : [allSupportedUnits.find((u) => u === target) ?? null].filter(
-          (u) => !isNil(u)
+          (u) => !isNil(u),
         );
 
   const infos = part_in === "all" ? allFrameparts : [part_in];
@@ -338,7 +352,7 @@ function updateInfo(
     const unitSource = sources[translatedUnit];
     if (isNil(unitSource)) {
       // shouldn't happen
-      print(`Unit source nil for ${translatedUnit}`);
+      // print(`Unit source nil for ${translatedUnit}`);
       continue;
     }
     if (unitIsArena(translatedUnit) && GetInstanceInfo()[1] !== "arena") {
@@ -370,7 +384,7 @@ function updateInfo(
         const cl = UnitClass(unit)[1];
         if (isNil(cl) && unitIsArena(translatedUnit)) {
           const [_a, _b, _c, icon, _e, cl] = GetSpecializationInfoByID(
-            GetArenaOpponentSpec(getIndexFromArenaUnit(translatedUnit))!
+            GetArenaOpponentSpec(getIndexFromArenaUnit(translatedUnit))!,
           );
           if ("specIcon" in unitSource) {
             unitSource.specIcon.set(icon);
@@ -451,7 +465,7 @@ function calcArenaDpsIndex(translatedUnit: "arena1" | "arena2" | "arena3") {
 }
 
 function getIndexFromArenaUnit(
-  unit: "arena1" | "arena2" | "arena3"
+  unit: "arena1" | "arena2" | "arena3",
 ): 1 | 2 | 3 {
   return parseInt(unit.substring(5, 6)) as 1 | 2 | 3;
 }

@@ -7,21 +7,32 @@ export function makeConfig() {
     // bartexturepath: "Interface\\RAIDFRAME\\Raid-Bar-Hp-Fill",
     bartexturepath: "Interface\\ChatFrame\\ChatFrameBackground",
 
-    partyAndArenaContainersOffsetY: 40,
-    partyAndArenaContainersOffsetX: 600,
+    partyContainersOffsetY: 185,
+    partyContainersOffsetX: 380,
+
+    arenaContainersOffsetY: -160,
+    arenaContainersOffsetX: -290,
 
     hots_show_timer_text: false,
     dots_show_timer_text: false,
     def_cds_show_timer_text: false,
     off_cds_show_timer_text: false,
-    off_cds_show: true,
+    off_cds_show: false,
 
     arenatarget_show_icons: false,
 
-    unitFrame_fullHeight: 112,
-    unitFrame_fullWidth: 250,
+    framesize: {
+      party: {
+        height: 112,
+        width: 250,
+      },
+      arena: {
+        height: 70,
+        width: 150,
+      }
+    },
 
-    unitFrame_verticalGap: 8,
+    unitFrame_verticalGap: 4,
     unitFrame_horizontalGap: 20,
 
     unitFrame_healthbarBgColor: { r: 28, g: 28, b: 28, a: 1 },

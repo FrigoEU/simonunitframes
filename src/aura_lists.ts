@@ -1,7 +1,7 @@
 /** @noSelfInFile */
 
 const defensiveCdsWeTrack = [
-  "Barkskin",
+  "Barkskin", 
   "Ironbark",
   "Obsidian Scales",
   "Renewing Blaze",
@@ -35,17 +35,25 @@ export const ignoredDebuffs = [
 ];
 
 export const dangerousDebuffs = [
+  // Warrior
+  "Sharpen Blade",
+  "Kingsbane",
+
   "Feral Frenzy",
   "Final Reckoning",
   "Explosive Shot",
   "Ravenous Leap",
   "Vendetta",
   "Deathmark",
-  "Summon Demonic Tyrant",
+  // "Summon Demonic Tyrant",
   "Unstable Affliction",
   "Frost Bomb",
-  "Wailing Arrow",
+  // "Wailing Arrow",
+
   "Thunderous Roar",
+  "Warbreaker",
+
+  "Scorpid Venom"
 ];
 
 const offensiveCdsWeTrack = [
@@ -68,10 +76,13 @@ const offensiveCdsWeTrack = [
   // Shaman
   "Ascendance",
   "Doom Winds",
+  "Stormkeeper",
+  "Feral Spirit",
 
   // Druid
   "Berserk",
   "Celestial Alignment",
+  "Incarnation: Avatar of Ashamane",
   "Incarnation: King of the Jungle",
   "Incarnation: Chosen of Elune",
 
@@ -80,7 +91,8 @@ const offensiveCdsWeTrack = [
 
   // Hunter
   "Trueshot",
-  "Bestial Wrath",
+  // "Bestial Wrath",
+  "Coordinated Assault",
   "Call of the Wild",
 
   // Mage
@@ -89,11 +101,13 @@ const offensiveCdsWeTrack = [
   "Arcane Surge",
 
   // Monk
-  "Storm, Earth and Fire",
+  "Storm, Earth, and Fire",
   "Serenity",
 
   // Paladin
+  "Avenging Crusader",
   "Avenging Wrath",
+  "Crusade",
 
   // Priest
   "Power Infusion",
@@ -104,8 +118,19 @@ const offensiveCdsWeTrack = [
   "Adrenaline Rush",
   "Shadow Blades",
 
-  "Dark Soul: Instability",
-  "Dark Soul: Misery",
+  // Warlock
+  "Summon Infernal",
+  "Summon Darkglare",
+  "Malevolence",
+  "Bloodstone",
+].map((s) => s.toLowerCase());
+
+export const otherAbilitiesWeTrack = [
+  // Evoker
+  // "Deep Breath",
+
+  // warlock
+  "Summon Demonic Tyrant"
 ].map((s) => s.toLowerCase());
 
 export const stunsWeTracks = [
@@ -180,6 +205,7 @@ export const ccsWeTrack = [
   "Dragon's Breath",
   "Ice Nova",
   "Freeze",
+  "Ring of Frost",
 
   // Monk
   "Paralysis",
@@ -235,7 +261,7 @@ export function getBuffIndex(
   playerClass: { name: className },
   source: string | null | undefined,
   name: string,
-  spellId: spellID
+  spellId: spellID,
 ): null | "defcd" | "externaldefbuff" | "offcd" | hotIndex {
   // Layout =
   // 4 5 6 7
@@ -334,10 +360,12 @@ export function getBuffIndex(
       if (name === "Beacon of Light" || name === "Beacon of Faith") {
         return 0;
       }
-      if (name === "Holy Bulwark") {
+      if (name === "Holy Bulwark" // || (name === "Dawnlight" && spellId === 431381)
+      ) {
         return 1;
       }
-      if (name === "Sacred Weapon") {
+      if (name === "Sacred Weapon" // || name === "Eternal Flame"
+      ) {
         return 2;
       }
       if (name === "Blessing of Protection") {
@@ -345,6 +373,10 @@ export function getBuffIndex(
       }
       if (name === "Blessing of Freedom") {
         return 4;
+      }
+      if (name === "Tempered in Battle"
+      ) {
+        return 6;
       }
     }
     if (playerClass.name === "PRIEST") {

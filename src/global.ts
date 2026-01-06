@@ -268,6 +268,9 @@ declare global {
     function SetNamePlateFriendlySize(x: number, y: number): void;
   }
 
+  /** @noSelf **/
+  function SetCVar(cvar: string, val: any): void;
+
   let SLASH_TEST1: string;
   const SlashCmdList: { [key: string]: () => any };
   /** @noSelf **/

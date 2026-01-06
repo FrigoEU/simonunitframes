@@ -12,6 +12,7 @@ import { checkAllCasesHandled } from "../utils";
 
 export function setPosition(
   config: config,
+  size: {width: number; height: number},
   parent: SimpleFrame,
   frame: SimpleFrame,
   unit: (typeof allSupportedTranslatedUnits)[number]
@@ -22,8 +23,8 @@ export function setPosition(
     point,
     parent,
     point,
-    x * (config.unitFrame_horizontalGap + config.unitFrame_fullWidth),
-    -y * (config.unitFrame_verticalGap + config.unitFrame_fullHeight)
+    x * (config.unitFrame_horizontalGap + size.width),
+    -y * (config.unitFrame_verticalGap + size.height)
   );
 }
 

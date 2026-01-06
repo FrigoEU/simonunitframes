@@ -57,40 +57,44 @@ export function startTest(sources: sources) {
   sources.party2.offensiveCooldownActive.set(makeTestAura("Avatar"));
   sources.party2.dots.set([makeTestAura("Kidney Shot")]);
 
-  sources.party3.health.max.set(1000);
-  sources.party3.health.current.set(200);
-  sources.party3.exists.set(true);
-  sources.party3.class.set("DEATHKNIGHT");
+  const showRaid = false as boolean;
 
-  sources.party4.health.max.set(1000);
-  sources.party4.health.current.set(500);
-  sources.party4.exists.set(true);
-  sources.party4.class.set("ROGUE");
+  if (showRaid === true){
+    sources.party3.health.max.set(1000);
+    sources.party3.health.current.set(200);
+    sources.party3.exists.set(true);
+    sources.party3.class.set("DEATHKNIGHT");
 
-  sources.myraid1.health.max.set(1000);
-  sources.myraid1.health.current.set(500);
-  sources.myraid1.exists.set(true);
-  sources.myraid1.class.set("SHAMAN");
+    sources.party4.health.max.set(1000);
+    sources.party4.health.current.set(500);
+    sources.party4.exists.set(true);
+    sources.party4.class.set("ROGUE");
 
-  sources.myraid2.health.max.set(1000);
-  sources.myraid2.health.current.set(500);
-  sources.myraid2.exists.set(true);
-  sources.myraid2.class.set("PALADIN");
+    sources.myraid1.health.max.set(1000);
+    sources.myraid1.health.current.set(500);
+    sources.myraid1.exists.set(true);
+    sources.myraid1.class.set("SHAMAN");
 
-  sources.myraid3.health.max.set(1000);
-  sources.myraid3.health.current.set(500);
-  sources.myraid3.exists.set(true);
-  sources.myraid3.class.set("EVOKER");
+    sources.myraid2.health.max.set(1000);
+    sources.myraid2.health.current.set(500);
+    sources.myraid2.exists.set(true);
+    sources.myraid2.class.set("PALADIN");
 
-  sources.myraid6.health.max.set(1000);
-  sources.myraid6.health.current.set(500);
-  sources.myraid6.exists.set(true);
-  sources.myraid6.class.set("HUNTER");
+    sources.myraid3.health.max.set(1000);
+    sources.myraid3.health.current.set(500);
+    sources.myraid3.exists.set(true);
+    sources.myraid3.class.set("EVOKER");
 
-  sources.myraid7.health.max.set(1000);
-  sources.myraid7.health.current.set(500);
-  sources.myraid7.exists.set(true);
-  sources.myraid7.class.set("DEMONHUNTER");
+    sources.myraid6.health.max.set(1000);
+    sources.myraid6.health.current.set(500);
+    sources.myraid6.exists.set(true);
+    sources.myraid6.class.set("HUNTER");
+
+    sources.myraid7.health.max.set(1000);
+    sources.myraid7.health.current.set(500);
+    sources.myraid7.exists.set(true);
+    sources.myraid7.class.set("DEMONHUNTER");
+  }
 
   sources.arena1.exists.set(true);
   sources.arena1.guid.set("arena1guid");
