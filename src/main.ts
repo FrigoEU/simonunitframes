@@ -158,7 +158,7 @@ function start() {
         unit,
         { drawTopBar: true, renderText: true },
       );
-      // drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
+      drawArenaTargetedByFrames(config, nameP, container, unitSource, sources);
       drawArenaSpecs(config, nameP, container, unitSource);
     }
 

@@ -12,7 +12,7 @@ export function drawArenaSpecs(
     defaultBorder: null,
     showCount: false,
   });
-  frame.SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", 0, 0);
+  frame.SetPoint("TOPLEFT", parent, "TOPRIGHT", 4, 0);
   frame.SetSize(
     config.unitFrame_smallIconSize * 0.75,
     config.unitFrame_smallIconSize * 0.75
